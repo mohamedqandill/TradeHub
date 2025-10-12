@@ -5,6 +5,7 @@ abstract class AppAssets {
   static const String facebook = "assets/icons/2021_Facebook_icon 1.svg";
   static const String google = "assets/icons/google.svg";
   static const String successFrame = "assets/images/Group 9.svg";
+  static const String splashLogo = "assets/images/splashLogo.svg";
   static const String passwordProtection =
       "assets/images/Cybersecurity with password protection.svg";
   static const String dataSecurity = "assets/images/data security.svg";
