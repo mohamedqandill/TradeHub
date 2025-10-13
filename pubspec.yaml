@@ -38,6 +38,9 @@ dependencies:
   google_fonts:
   flutter_screenutil:
   flutter_svg:
+  smooth_page_indicator:
+  shared_preferences:
+  device_preview:
 
 dev_dependencies:
   flutter_test:

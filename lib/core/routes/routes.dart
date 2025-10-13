@@ -1,9 +1,10 @@
 abstract class Routes {
   static const String onBoarding = "onBoarding";
-  static const String login = "onBoarding";
-  static const String signUp = "onBoarding";
-  static const String forgetPassword = "onBoarding";
-  static const String verifyEmail = "onBoarding";
-  static const String newPassword = "onBoarding";
-  static const String successfulNewPassword = "onBoarding";
+  static const String login = "login";
+  static const String signUp = "signUp";
+  static const String forgetPassword = "forgetPass";
+  static const String verifyEmail = "verifyEmail";
+  static const String newPassword = "newPass";
+  static const String successfulNewPassword = "successPass";
+  static const String splash = "splash";
 }
