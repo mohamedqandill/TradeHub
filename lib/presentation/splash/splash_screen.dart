@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:tradehub/core/assets/app_assets.dart';
+import 'package:tradehub/core/routes/routes.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -21,6 +22,12 @@ class _SplashScreenState extends State<SplashScreen>
         _opacity = 1.0;
       });
     });
+    Future.delayed(
+      const Duration(seconds: 3),
+      () {
+        Navigator.pushReplacementNamed(context, Routes.onBoarding);
+      },
+    );
   }
 
   @override
@@ -33,10 +40,10 @@ class _SplashScreenState extends State<SplashScreen>
           const Spacer(),
           AnimatedScale(
             scale: _opacity,
-            duration: const Duration(seconds: 2),
+            duration: const Duration(seconds: 1),
             curve: Curves.easeOutBack,
             child: AnimatedOpacity(
-              duration: const Duration(seconds: 2),
+              duration: const Duration(seconds: 1),
               opacity: _opacity,
               child: SvgPicture.asset(AppAssets.splashLogo),
             ),
