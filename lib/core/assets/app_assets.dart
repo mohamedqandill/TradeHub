@@ -6,6 +6,7 @@ abstract class AppAssets {
   static const String google = "assets/icons/google.svg";
   static const String splashLogo = "assets/images/splashLogo.svg";
   static const String blackGirl = "assets/images/black girl with cart.png";
+  static const String topWave = "assets/images/topWave.png";
 
   static const String passwordProtection =
       "assets/images/Cybersecurity with password protection.png";

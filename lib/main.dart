@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tradehub/core/constants/app_constants.dart';
@@ -10,16 +11,27 @@ import 'core/utils/shared_prefs/prefs.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
   await SharedPrefsHelper.init();
   SharedPrefsHelper prefs = SharedPrefsHelper();
   bool? isFirstTime = prefs.getBool(AppConstants.firstTime);
-  runApp(MyApp(
-    isTrue: isFirstTime ?? true,
+  runApp(EasyLocalization(
+    startLocale: const Locale(AppConstants.en),
+    supportedLocales: const [
+      Locale(AppConstants.en, AppConstants.us),
+      Locale(AppConstants.ar, AppConstants.eg)
+    ],
+    path: 'assets/translations', // <-- change the path of the translation files
+    fallbackLocale: const Locale(AppConstants.en, AppConstants.us),
+    child: MyApp(
+      isTrue: isFirstTime ?? true,
+    ),
   ));
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key, required this.isTrue});
+
   final bool isTrue;
 
   // This widget is the root of your application.
@@ -33,6 +45,9 @@ class MyApp extends StatelessWidget {
         screenHeight: MediaQuery.of(context).size.height,
         screenWidth: MediaQuery.of(context).size.width,
         child: MaterialApp(
+          localizationsDelegates: context.localizationDelegates,
+          supportedLocales: context.supportedLocales,
+          locale: context.locale,
           title: 'Flutter Demo',
           theme: AppTheme.lightTheme,
           debugShowCheckedModeBanner: false,

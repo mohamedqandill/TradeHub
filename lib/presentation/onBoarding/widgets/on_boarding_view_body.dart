@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -11,6 +12,7 @@ import 'package:tradehub/core/utils/shared_prefs/prefs.dart';
 import 'package:tradehub/presentation/onBoarding/widgets/custom_body_widget.dart';
 
 import '../../../core/base/base_inherited_widgets.dart';
+import '../../../core/localization/local_keys/local_keys.dart';
 import '../../../core/shared_widgets/custom_main_button.dart';
 
 class OnBoardingViewBody extends StatefulWidget {
@@ -75,7 +77,7 @@ class _OnBoardingViewBodyState extends State<OnBoardingViewBody> {
         ),
         currentPage == 2
             ? CustomMainButton(
-                text: AppConstants.getStarted,
+                text: LocalKeys.getStarted.tr(),
                 width: 335.w,
                 height: 48.h,
                 onPressed: () {
@@ -86,13 +88,13 @@ class _OnBoardingViewBodyState extends State<OnBoardingViewBody> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   CustomMainOutlineButton(
-                    text: AppConstants.skip,
+                    text: LocalKeys.skip.tr(),
                     onPressed: () {
                       saveOnBoardingState();
                     },
                   ),
                   CustomMainButton(
-                    text: AppConstants.next,
+                    text: LocalKeys.next.tr(),
                     onPressed: () {
                       if (pageController.page! < 2.0) {
                         pageController.nextPage(
@@ -129,15 +131,15 @@ class OnBoardingBodyData {
 
 List<OnBoardingBodyData> onBoardingData = [
   OnBoardingBodyData(
-      title: "${AppConstants.shopSmarter},\n${AppConstants.tradeBetter}",
+      title: "${LocalKeys.shopSmarter.tr()},\n${LocalKeys.tradeBetter.tr()}",
       image: AppAssets.blackGirl,
-      subTitles: AppConstants.discoverTopProducts),
+      subTitles: LocalKeys.discoverTopProduct.tr()),
   OnBoardingBodyData(
-      title: AppConstants.securePayment,
+      title: LocalKeys.securePayment.tr(),
       image: AppAssets.onlinePayment,
-      subTitles: AppConstants.expTransaction),
+      subTitles: LocalKeys.expSeamless.tr()),
   OnBoardingBodyData(
-      title: AppConstants.trackOrders,
+      title: LocalKeys.trackOrder.tr(),
       image: AppAssets.trackOrder,
-      subTitles: AppConstants.stayUpdate),
+      subTitles: LocalKeys.stayUpdate.tr()),
 ];

@@ -2,7 +2,14 @@ abstract class AppConstants {
   static const String shopSmarter = "Shop Smarter";
   static const String tradeBetter = "Trade Better";
   static const String next = "Next";
+  static const String en = "en";
+  static const String ar = "ar";
+  static const String us = "US";
+  static const String eg = "EG";
   static const String skip = "Skip";
+  static const String login = "Login";
+  static const String emailAddress = "E-mail Address";
+  static const String password = "Password";
   static const String getStarted = "Get Started";
   static const String firstTime = "First Time";
   static const String securePayment = "Secure\n Payments";
