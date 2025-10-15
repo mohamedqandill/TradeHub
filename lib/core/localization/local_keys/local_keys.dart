@@ -31,4 +31,8 @@ abstract class LocalKeys {
   static const String enterDigit = "enterDigit";
   static const String haventGetCode = "haventGetCode";
   static const String resendCode = "resendCode";
+  static const String createNewPassword = "createNewPassword";
+  static const String passwordMustBeDiff = "passwordMustBeDiff";
+  static const String save = "save";
+  static const String newPassword = "newPassword";
 }
