@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pinput/pinput.dart';
 import 'package:tradehub/core/extensions/base_inherited_context.dart';
+import 'package:tradehub/core/routes/routes.dart';
 import 'package:tradehub/core/shared_widgets/custom_rich_text.dart';
 
 import '../../../../core/assets/app_assets.dart';
@@ -42,6 +43,9 @@ class VerifyEmailViewBody extends StatelessWidget {
           height: 34.h,
         ),
         CustomLargeMainButton(
+          onPressed: () {
+            Navigator.pushNamed(context, Routes.newPassword);
+          },
           text: LocalKeys.verifyCode.tr(),
         ),
         SizedBox(

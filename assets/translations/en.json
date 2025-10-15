@@ -30,5 +30,10 @@
   "verifyCode": "Verify Code",
   "enterDigit": "Please Enter The 5 Digit Code Send\nTo",
   "haventGetCode": "Haven’t got the code yet? ",
-  "resendCode": "Resend code"
+  "resendCode": "Resend code",
+  "createNewPassword": "Create New Password",
+  "passwordMustBeDiff": "Your New Password Must Be Different \nFrom Previously Used Password.",
+  "save": "Save",
+  "newPassword": "New Password"
+
 }

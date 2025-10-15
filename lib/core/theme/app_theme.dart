@@ -58,4 +58,6 @@ abstract class AppTheme {
             fontWeight: FontWeight.w600,
             color: AppColors.black),
       ));
+  static ThemeData darkTheme =
+      ThemeData(scaffoldBackgroundColor: AppColors.black);
 }
