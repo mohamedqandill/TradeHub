@@ -91,10 +91,14 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                         .copyWith(color: AppColors.grey),
                   ),
                   const Spacer(),
-                  Text(
-                    LocalKeys.forgetPassword.tr(),
-                    style: base.theme.textTheme.bodyMedium!
-                        .copyWith(color: AppColors.mainColor),
+                  InkWell(
+                    onTap: () =>
+                        Navigator.pushNamed(context, Routes.forgetPassword),
+                    child: Text(
+                      LocalKeys.forgetPassword.tr(),
+                      style: base.theme.textTheme.bodyMedium!
+                          .copyWith(color: AppColors.mainColor),
+                    ),
                   ),
                 ],
               ),
