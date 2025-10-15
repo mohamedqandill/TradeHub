@@ -6,6 +6,18 @@ import 'package:tradehub/core/colors/app_colors.dart';
 abstract class AppTheme {
   static ThemeData lightTheme = ThemeData(
       scaffoldBackgroundColor: AppColors.white,
+      inputDecorationTheme: InputDecorationTheme(
+        labelStyle: GoogleFonts.inter(
+            fontSize: 16.sp,
+            fontWeight: FontWeight.w600,
+            color: AppColors.grey),
+        enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(8.r))),
+        disabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(8.r))),
+        focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(8.r))),
+      ),
       textTheme: TextTheme(
         headlineLarge: GoogleFonts.poppins(
             fontSize: 36.sp,
@@ -21,7 +33,11 @@ abstract class AppTheme {
         ),
         bodySmall: GoogleFonts.poppins(
           fontSize: 12.sp,
-          fontWeight: FontWeight.w400,
+          fontWeight: FontWeight.w500,
+        ),
+        labelSmall: GoogleFonts.poppins(
+          fontSize: 16.sp,
+          fontWeight: FontWeight.w700,
         ),
         bodyLarge: GoogleFonts.poppins(
           fontSize: 36.sp,

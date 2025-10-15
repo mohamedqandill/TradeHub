@@ -41,6 +41,7 @@ dependencies:
   smooth_page_indicator:
   shared_preferences:
   device_preview:
+  easy_localization:
 
 dev_dependencies:
   flutter_test:
@@ -68,6 +69,7 @@ flutter:
   assets:
      - assets/images/
      - assets/icons/
+     - assets/translations/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

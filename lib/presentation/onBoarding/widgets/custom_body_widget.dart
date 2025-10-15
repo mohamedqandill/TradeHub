@@ -92,9 +92,9 @@ class _CustomBodyWidgetState extends State<CustomBodyWidget>
         ),
         FadeTransition(
           opacity: _fade,
-          child: Flexible(
+          child: Expanded(
             child: Image.asset(
-              height: 280.h,
+              height: base.screenHeight > 800 ? 270.h : 230.h,
               widget.image,
               fit: BoxFit.contain,
             ),
