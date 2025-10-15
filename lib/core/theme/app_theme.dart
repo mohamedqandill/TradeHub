@@ -6,6 +6,16 @@ import 'package:tradehub/core/colors/app_colors.dart';
 abstract class AppTheme {
   static ThemeData lightTheme = ThemeData(
       scaffoldBackgroundColor: AppColors.white,
+      appBarTheme: AppBarTheme(
+        backgroundColor: Colors.transparent,
+        centerTitle: true,
+        titleTextStyle: GoogleFonts.poppins(
+            fontSize: 24.sp,
+            fontWeight: FontWeight.w600,
+            color: AppColors.black),
+        elevation: 0,
+        scrolledUnderElevation: 0,
+      ),
       inputDecorationTheme: InputDecorationTheme(
         labelStyle: GoogleFonts.inter(
             fontSize: 16.sp,

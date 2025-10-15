@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:tradehub/core/routes/routes.dart';
 import 'package:tradehub/presentation/splash/splash_screen.dart';
 
+import '../../presentation/authentication/forget password/view/forget_password_screen.dart';
 import '../../presentation/authentication/login/view/login_screen.dart';
 import '../../presentation/authentication/register/view/register_screen.dart';
+import '../../presentation/authentication/verify email/view/verify_email_screen.dart';
 import '../../presentation/onBoarding/view/on_boarding_view.dart';
 
 abstract class AppRoutes {
@@ -24,6 +26,14 @@ abstract class AppRoutes {
       case Routes.signUp:
         return MaterialPageRoute(
           builder: (context) => const RegisterScreen(),
+        );
+      case Routes.forgetPassword:
+        return MaterialPageRoute(
+          builder: (context) => const ForgetPasswordScreen(),
+        );
+      case Routes.verifyEmail:
+        return MaterialPageRoute(
+          builder: (context) => const VerifyEmailScreen(),
         );
       default:
         return MaterialPageRoute(

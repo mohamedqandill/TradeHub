@@ -22,5 +22,13 @@
   "lastName":"Last Name",
   "alreadyHaveAccount":"Already have an account? ",
   "agreeTerms": "I agree to terms & conditions",
-  "orContinueWith": "Or continue with"
+  "orContinueWith": "Or continue with",
+  "forgetPass": "Forget Password",
+  "send": "Send",
+  "enterEmail": "Please Enter Your Email Address To\nRecieve a Verification Code.",
+  "verifyEmail": "Verify Your Email",
+  "verifyCode": "Verify Code",
+  "enterDigit": "Please Enter The 5 Digit Code Send\nTo",
+  "haventGetCode": "Haven’t got the code yet? ",
+  "resendCode": "Resend code"
 }

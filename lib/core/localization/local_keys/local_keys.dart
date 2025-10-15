@@ -23,4 +23,12 @@ abstract class LocalKeys {
   static const String alreadyHaveAccount = "alreadyHaveAccount";
   static const String agreeTerms = "agreeTerms";
   static const String orContinueWith = "orContinueWith";
+  static const String forgetPass = "forgetPass";
+  static const String send = "send";
+  static const String enterEmail = "enterEmail";
+  static const String verifyEmail = "verifyEmail";
+  static const String verifyCode = "verifyCode";
+  static const String enterDigit = "enterDigit";
+  static const String haventGetCode = "haventGetCode";
+  static const String resendCode = "resendCode";
 }

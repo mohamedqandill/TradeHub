@@ -39,7 +39,7 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
               fit: BoxFit.fill,
               height: base.screenHeight < 750
                   ? 100.h
-                  : base.screenHeight < 870
+                  : base.screenHeight < 866
                       ? 150.h
                       : null,
             ),
