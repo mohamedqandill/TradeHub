@@ -14,4 +14,13 @@ abstract class LocalKeys {
   static const String password = "password";
   static const String forgetPassword = "forgetPassword";
   static const String emailAddress = "emailAddress";
+  static const String orLoginWith = "orLoginWith";
+  static const String dontHaveAccount = "dontHaveAccount";
+  static const String create = "create";
+  static const String firstName = "firstName";
+  static const String register = "register";
+  static const String lastName = "lastName";
+  static const String alreadyHaveAccount = "alreadyHaveAccount";
+  static const String agreeTerms = "agreeTerms";
+  static const String orContinueWith = "orContinueWith";
 }

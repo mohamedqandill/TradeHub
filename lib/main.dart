@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tradehub/core/constants/app_constants.dart';
 import 'package:tradehub/core/routes/app_routes.dart';
 import 'package:tradehub/core/routes/routes.dart';
+import 'package:tradehub/core/shared_widgets/device_preview.dart';
 import 'package:tradehub/core/theme/app_theme.dart';
 
 import 'core/base/base_inherited_widgets.dart';
@@ -16,15 +17,17 @@ void main() async {
   SharedPrefsHelper prefs = SharedPrefsHelper();
   bool? isFirstTime = prefs.getBool(AppConstants.firstTime);
   runApp(EasyLocalization(
-    startLocale: const Locale(AppConstants.en),
+    startLocale: const Locale(AppConstants.ar),
     supportedLocales: const [
       Locale(AppConstants.en, AppConstants.us),
       Locale(AppConstants.ar, AppConstants.eg)
     ],
     path: 'assets/translations', // <-- change the path of the translation files
     fallbackLocale: const Locale(AppConstants.en, AppConstants.us),
-    child: MyApp(
-      isTrue: isFirstTime ?? true,
+    child: DevicePreviewWidget(
+      child: MyApp(
+        isTrue: isFirstTime ?? true,
+      ),
     ),
   ));
 }

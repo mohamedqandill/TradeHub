@@ -13,5 +13,15 @@
   "emailAddress": "البريد الالكتروني",
   "password": "كلمه المرور",
   "rememberMe": "تذكرني",
-  "forgetPassword": "نسيت كلمه السر؟"
+  "forgetPassword": "نسيت كلمه السر؟",
+  "orLoginWith": "او قم بتسجيل الدخول",
+  "dontHaveAccount": "ليس لديك حساب؟ ",
+  "create": "تسجيل حساب",
+  "register":"إنشاء حساب جديد",
+  "firstName":"الاسم الاول",
+  "lastName":"اسم العائلة",
+  "alreadyHaveAccount":"بالفعل لديك حساب؟  ",
+  "agreeTerms": "انا اوافق علي الشروط & الاحكام",
+  "orContinueWith": "او المتابعه بأستخدام"
+
 }

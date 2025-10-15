@@ -13,5 +13,15 @@
   "emailAddress": "E-mail Address",
   "password": "Password",
   "rememberMe": "Remember Me",
-  "forgetPassword": "Forget Password?"
+  "forgetPassword": "Forget Password?",
+  "orLoginWith": "Or login with",
+  "dontHaveAccount": "Don’t have an account? ",
+  "create": "Create",
+  "register":"Register",
+  "firstName":"First Name",
+  "lastName":"Last Name",
+  "alreadyHaveAccount":"Already have an account? ",
+  "agreeTerms": "I agree to terms & conditions",
+  "orContinueWith": "Or continue with"
+
 }

@@ -11,7 +11,6 @@ import 'package:tradehub/core/shared_widgets/custom_main_outline_button.dart';
 import 'package:tradehub/core/utils/shared_prefs/prefs.dart';
 import 'package:tradehub/presentation/onBoarding/widgets/custom_body_widget.dart';
 
-import '../../../core/base/base_inherited_widgets.dart';
 import '../../../core/localization/local_keys/local_keys.dart';
 import '../../../core/shared_widgets/custom_main_button.dart';
 
@@ -47,11 +46,10 @@ class _OnBoardingViewBodyState extends State<OnBoardingViewBody> {
 
   @override
   Widget build(BuildContext context) {
-    final base = BaseInheritedWidget.of(context);
     return Column(
       children: [
         SizedBox(
-          height: 70.h,
+          height: MediaQuery.of(context).size.height > 800 ? 70.h : 30.h,
         ),
         Center(
           child: SvgPicture.asset(

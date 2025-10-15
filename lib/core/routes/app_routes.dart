@@ -3,6 +3,7 @@ import 'package:tradehub/core/routes/routes.dart';
 import 'package:tradehub/presentation/splash/splash_screen.dart';
 
 import '../../presentation/authentication/login/view/login_screen.dart';
+import '../../presentation/authentication/register/view/register_screen.dart';
 import '../../presentation/onBoarding/view/on_boarding_view.dart';
 
 abstract class AppRoutes {
@@ -19,6 +20,10 @@ abstract class AppRoutes {
       case Routes.login:
         return MaterialPageRoute(
           builder: (context) => const LoginScreen(),
+        );
+      case Routes.signUp:
+        return MaterialPageRoute(
+          builder: (context) => const RegisterScreen(),
         );
       default:
         return MaterialPageRoute(
