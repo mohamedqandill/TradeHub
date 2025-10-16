@@ -24,6 +24,7 @@ class LoginViewBody extends StatefulWidget {
 
 class _LoginViewBodyState extends State<LoginViewBody> {
   bool isRememberMe = false;
+  bool isObscureText = false;
   @override
   Widget build(BuildContext context) {
     var base = BaseInheritedWidget.of(context);
@@ -62,7 +63,13 @@ class _LoginViewBodyState extends State<LoginViewBody> {
               CustomTextField(
                 labelText: LocalKeys.password.tr(),
                 suffixIcon: IconButton(
-                    onPressed: () {}, icon: const Icon(Icons.remove_red_eye)),
+                    onPressed: () {
+                      isObscureText = !isObscureText;
+                      setState(() {});
+                    },
+                    icon: isObscureText
+                        ? const Icon(Icons.visibility)
+                        : const Icon(Icons.visibility_off)),
               ),
               Row(
                 children: [

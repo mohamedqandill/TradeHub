@@ -23,12 +23,11 @@ class CustomMainButton extends StatelessWidget {
 
     return ElevatedButton(
         style: ButtonStyle(
-            shape: WidgetStatePropertyAll(RoundedRectangleBorder(
-                borderRadius:
-                    BorderRadius.all(Radius.circular(radius ?? 12.r)))),
-            fixedSize:
-                WidgetStatePropertyAll(Size(width ?? 160.w, height ?? 48.h)),
-            backgroundColor: const WidgetStatePropertyAll(AppColors.mainColor)),
+          shape: WidgetStatePropertyAll(RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(radius ?? 12.r)))),
+          fixedSize:
+              WidgetStatePropertyAll(Size(width ?? 160.w, height ?? 48.h)),
+        ),
         onPressed: onPressed,
         child: Text(
           text,
