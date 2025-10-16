@@ -6,7 +6,6 @@ import 'package:tradehub/core/extensions/base_inherited_context.dart';
 import '../../../../core/assets/app_assets.dart';
 import '../../../../core/colors/app_colors.dart';
 import '../../../../core/localization/local_keys/local_keys.dart';
-import '../../../../core/routes/routes.dart';
 import '../../../../core/shared_widgets/custom_large_main_button.dart';
 import '../../../../core/shared_widgets/custom_text_field.dart';
 
@@ -41,9 +40,6 @@ class NewPasswordViewBody extends StatelessWidget {
           height: 34.h,
         ),
         CustomLargeMainButton(
-          onPressed: () {
-            Navigator.pushNamed(context, Routes.verifyEmail);
-          },
           text: LocalKeys.save.tr(),
         )
       ],

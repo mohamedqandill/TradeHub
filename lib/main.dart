@@ -5,6 +5,7 @@ import 'package:tradehub/core/constants/app_constants.dart';
 import 'package:tradehub/core/routes/app_routes.dart';
 import 'package:tradehub/core/routes/routes.dart';
 import 'package:tradehub/core/theme/app_theme.dart';
+import 'package:tradehub/presentation/onBoarding/view_model/language_view_model.dart';
 
 import 'core/base/base_inherited_widgets.dart';
 import 'core/utils/shared_prefs/prefs.dart';
@@ -14,13 +15,13 @@ void main() async {
   await EasyLocalization.ensureInitialized();
   await SharedPrefsHelper.init();
   SharedPrefsHelper prefs = SharedPrefsHelper();
+  final languageViewModel = LanguageViewModel();
+  await languageViewModel.loadLanguage();
   bool? isFirstTime = prefs.getBool(AppConstants.firstTime);
   runApp(EasyLocalization(
+    saveLocale: true,
     startLocale: const Locale(AppConstants.en),
-    supportedLocales: const [
-      Locale(AppConstants.en, AppConstants.us),
-      Locale(AppConstants.ar, AppConstants.eg)
-    ],
+    supportedLocales: const [Locale(AppConstants.en), Locale(AppConstants.ar)],
     path: 'assets/translations', // <-- change the path of the translation files
     fallbackLocale: const Locale(AppConstants.en, AppConstants.us),
     child: MyApp(

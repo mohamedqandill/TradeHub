@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_advanced_switch/flutter_advanced_switch.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -44,78 +45,132 @@ class _OnBoardingViewBodyState extends State<OnBoardingViewBody> {
     Navigator.pushReplacementNamed(context, Routes.login);
   }
 
+  var controller = ValueNotifier<bool>(false);
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          height: MediaQuery.of(context).size.height > 800 ? 70.h : 30.h,
-        ),
-        Center(
-          child: SvgPicture.asset(
-            AppAssets.mainLogo,
+    List<OnBoardingBodyData> onBoardingData = [
+      OnBoardingBodyData(
+          title:
+              "${LocalKeys.shopSmarter.tr()},\n${LocalKeys.tradeBetter.tr()}",
+          image: AppAssets.blackGirl,
+          subTitles: LocalKeys.discoverTopProduct.tr()),
+      OnBoardingBodyData(
+          title: LocalKeys.securePayment.tr(),
+          image: AppAssets.onlinePayment,
+          subTitles: LocalKeys.expSeamless.tr()),
+      OnBoardingBodyData(
+          title: LocalKeys.trackOrder.tr(),
+          image: AppAssets.trackOrder,
+          subTitles: LocalKeys.stayUpdate.tr()),
+    ];
+    return SafeArea(
+      child: Column(
+        children: [
+          SizedBox(
+            height: 5.h,
           ),
-        ),
-        Expanded(
-          child: PageView.builder(
-            controller: pageController,
-            itemCount: onBoardingData.length,
-            onPageChanged: (value) {
-              setState(() {
-                currentPage = value;
-              });
-            },
-            itemBuilder: (context, index) {
-              return CustomBodyWidget(
-                  image: onBoardingData[index].image,
-                  title: onBoardingData[index].title,
-                  subTitle: onBoardingData[index].subTitles);
-            },
-          ),
-        ),
-        currentPage == 2
-            ? CustomMainButton(
-                text: LocalKeys.getStarted.tr(),
-                width: 335.w,
-                height: 48.h,
-                onPressed: () {
-                  saveOnBoardingState();
+          Align(
+            alignment: Alignment.centerRight,
+            child: Padding(
+              padding: EdgeInsets.only(right: 17.sp),
+              child: AdvancedSwitch(
+                thumb: !controller.value
+                    ? Image.asset(AppAssets.egypt)
+                    : Image.asset(AppAssets.america),
+                controller: controller,
+                activeColor: AppColors.mainColor,
+                inactiveColor: AppColors.mainColor,
+                activeChild: context.locale.languageCode == AppConstants.en
+                    ? const Text(AppConstants.enCap)
+                    : const Text(AppConstants.arCap),
+                borderRadius: BorderRadius.all(Radius.circular(35.r)),
+                width: 64.0,
+                height: 30.0,
+                enabled: true,
+                disabledOpacity: 0.5,
+                initialValue: controller.value,
+                onChanged: (value) {
+                  controller.value = value;
+                  if (controller.value == false) {
+                    context.setLocale(const Locale(AppConstants.ar));
+                  } else {
+                    context.setLocale(const Locale(AppConstants.en));
+                  }
+                  setState(() {});
                 },
-              )
-            : Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  CustomMainOutlineButton(
-                    text: LocalKeys.skip.tr(),
-                    onPressed: () {
-                      saveOnBoardingState();
-                    },
-                  ),
-                  CustomMainButton(
-                    text: LocalKeys.next.tr(),
-                    onPressed: () {
-                      if (pageController.page! < 2.0) {
-                        pageController.nextPage(
-                            duration: const Duration(milliseconds: 400),
-                            curve: Curves.easeInSine);
-                      }
-                    },
-                  )
-                ],
               ),
-        SizedBox(
-          height: 40.h,
-        ),
-        SmoothPageIndicator(
-          controller: pageController, // PageController
-          count: 3,
-          axisDirection: Axis.horizontal,
-          effect: const WormEffect(activeDotColor: AppColors.mainColor),
-        ),
-        SizedBox(
-          height: 20.h,
-        ),
-      ],
+            ),
+          ),
+          SizedBox(
+            height: MediaQuery.of(context).size.height > 800 ? 10.h : 5.h,
+          ),
+          Center(
+            child: SvgPicture.asset(
+              AppAssets.mainLogo,
+            ),
+          ),
+          Expanded(
+            child: PageView.builder(
+              controller: pageController,
+              itemCount: onBoardingData.length,
+              onPageChanged: (value) {
+                setState(() {
+                  currentPage = value;
+                });
+              },
+              itemBuilder: (context, index) {
+                return CustomBodyWidget(
+                    image: onBoardingData[index].image,
+                    title: onBoardingData[index].title,
+                    subTitle: onBoardingData[index].subTitles);
+              },
+            ),
+          ),
+          currentPage == 2
+              ? CustomMainButton(
+                  text: LocalKeys.getStarted.tr(),
+                  width: 335.w,
+                  height: 48.h,
+                  onPressed: () {
+                    saveOnBoardingState();
+                  },
+                )
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    CustomMainOutlineButton(
+                      text: LocalKeys.skip.tr(),
+                      onPressed: () {
+                        saveOnBoardingState();
+                      },
+                    ),
+                    CustomMainButton(
+                      text: LocalKeys.next.tr(),
+                      onPressed: () {
+                        if (pageController.page! < 2.0) {
+                          pageController.nextPage(
+                              duration: const Duration(milliseconds: 400),
+                              curve: Curves.easeInSine);
+                        }
+                      },
+                    )
+                  ],
+                ),
+          SizedBox(
+            height: 40.h,
+          ),
+          SmoothPageIndicator(
+            controller: pageController, // PageController
+            count: 3,
+            axisDirection: Axis.horizontal,
+            effect: const WormEffect(activeDotColor: AppColors.mainColor),
+          ),
+          SizedBox(
+            height: 20.h,
+          ),
+        ],
+      ),
     );
   }
 }
@@ -126,18 +181,3 @@ class OnBoardingBodyData {
   OnBoardingBodyData(
       {required this.title, required this.image, required this.subTitles});
 }
-
-List<OnBoardingBodyData> onBoardingData = [
-  OnBoardingBodyData(
-      title: "${LocalKeys.shopSmarter.tr()},\n${LocalKeys.tradeBetter.tr()}",
-      image: AppAssets.blackGirl,
-      subTitles: LocalKeys.discoverTopProduct.tr()),
-  OnBoardingBodyData(
-      title: LocalKeys.securePayment.tr(),
-      image: AppAssets.onlinePayment,
-      subTitles: LocalKeys.expSeamless.tr()),
-  OnBoardingBodyData(
-      title: LocalKeys.trackOrder.tr(),
-      image: AppAssets.trackOrder,
-      subTitles: LocalKeys.stayUpdate.tr()),
-];

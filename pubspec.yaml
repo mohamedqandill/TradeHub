@@ -43,6 +43,8 @@ dependencies:
   device_preview:
   easy_localization:
   pinput:
+  flutter_advanced_switch:
+  provider:
 
 dev_dependencies:
   flutter_test:

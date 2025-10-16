@@ -55,7 +55,7 @@ class _CustomBodyWidgetState extends State<CustomBodyWidget>
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SizedBox(height: 33.h),
+        SizedBox(height: 13.h),
         AnimatedBuilder(
           animation: _controller,
           builder: (context, child) {
@@ -92,12 +92,10 @@ class _CustomBodyWidgetState extends State<CustomBodyWidget>
         ),
         FadeTransition(
           opacity: _fade,
-          child: Expanded(
-            child: Image.asset(
-              height: base.screenHeight > 800 ? 270.h : 230.h,
-              widget.image,
-              fit: BoxFit.contain,
-            ),
+          child: Image.asset(
+            height: base.screenHeight > 800 ? 270.h : 230.h,
+            widget.image,
+            fit: BoxFit.contain,
           ),
         ),
         SizedBox(height: 50.h),
