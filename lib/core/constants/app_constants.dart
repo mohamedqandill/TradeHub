@@ -6,6 +6,7 @@ abstract class AppConstants {
   static const String ar = "ar";
   static const String enCap = "EN";
   static const String arCap = "AR";
+  static const String isDarkMode = "isDarkMode";
   static const String langKey = "languageKey";
   static const String us = "US";
   static const String eg = "EG";

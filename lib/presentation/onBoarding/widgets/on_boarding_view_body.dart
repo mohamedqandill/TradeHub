@@ -1,3 +1,5 @@
+import 'dart:ui' as ui;
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_switch/flutter_advanced_switch.dart';
@@ -76,12 +78,15 @@ class _OnBoardingViewBodyState extends State<OnBoardingViewBody> {
               padding: EdgeInsets.only(right: 17.sp),
               child: AdvancedSwitch(
                 thumb: !controller.value
-                    ? Image.asset(AppAssets.egypt)
-                    : Image.asset(AppAssets.america),
+                    ? Image.asset(AppAssets.america)
+                    : Image.asset(AppAssets.egypt),
                 controller: controller,
                 activeColor: AppColors.mainColor,
                 inactiveColor: AppColors.mainColor,
                 activeChild: context.locale.languageCode == AppConstants.en
+                    ? const Text(AppConstants.enCap)
+                    : const Text(AppConstants.arCap),
+                inactiveChild: context.locale.languageCode == AppConstants.en
                     ? const Text(AppConstants.enCap)
                     : const Text(AppConstants.arCap),
                 borderRadius: BorderRadius.all(Radius.circular(35.r)),
@@ -92,7 +97,8 @@ class _OnBoardingViewBodyState extends State<OnBoardingViewBody> {
                 initialValue: controller.value,
                 onChanged: (value) {
                   controller.value = value;
-                  if (controller.value == false) {
+                  print(controller.value);
+                  if (controller.value == true) {
                     context.setLocale(const Locale(AppConstants.ar));
                   } else {
                     context.setLocale(const Locale(AppConstants.en));
@@ -160,11 +166,18 @@ class _OnBoardingViewBodyState extends State<OnBoardingViewBody> {
           SizedBox(
             height: 40.h,
           ),
-          SmoothPageIndicator(
-            controller: pageController, // PageController
-            count: 3,
-            axisDirection: Axis.horizontal,
-            effect: const WormEffect(activeDotColor: AppColors.mainColor),
+          Directionality(
+            textDirection: context.locale.languageCode == AppConstants.ar
+                ? ui.TextDirection.rtl
+                : ui.TextDirection.ltr,
+            child: SmoothPageIndicator(
+              controller: pageController,
+              // PageController
+              count: 3,
+              axisDirection: Axis.horizontal,
+
+              effect: const WormEffect(activeDotColor: AppColors.mainColor),
+            ),
           ),
           SizedBox(
             height: 20.h,
