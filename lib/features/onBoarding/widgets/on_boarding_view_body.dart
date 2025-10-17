@@ -4,18 +4,18 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_switch/flutter_advanced_switch.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:tradehub/Core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/assets/app_assets.dart';
 import 'package:tradehub/core/colors/app_colors.dart';
 import 'package:tradehub/core/constants/app_constants.dart';
+import 'package:tradehub/core/localization/local_keys/local_keys.dart';
 import 'package:tradehub/core/routes/routes.dart';
+import 'package:tradehub/core/shared_widgets/custom_main_button.dart';
 import 'package:tradehub/core/shared_widgets/custom_main_outline_button.dart';
+import 'package:tradehub/core/shared_widgets/main_logo.dart';
 import 'package:tradehub/core/utils/shared_prefs/prefs.dart';
-import 'package:tradehub/presentation/onBoarding/widgets/custom_body_widget.dart';
-
-import '../../../core/localization/local_keys/local_keys.dart';
-import '../../../core/shared_widgets/custom_main_button.dart';
+import 'package:tradehub/features/onBoarding/widgets/custom_body_widget.dart';
 
 class OnBoardingViewBody extends StatefulWidget {
   const OnBoardingViewBody({super.key});
@@ -81,14 +81,41 @@ class _OnBoardingViewBodyState extends State<OnBoardingViewBody> {
                     ? Image.asset(AppAssets.america)
                     : Image.asset(AppAssets.egypt),
                 controller: controller,
-                activeColor: AppColors.mainColor,
-                inactiveColor: AppColors.mainColor,
+                activeColor: context.isDarkMode
+                    ? Colors.white
+                    : AppColors.grey.withOpacity(0.3),
+                inactiveColor:
+                    context.isDarkMode ? Colors.white : AppColors.mainColor,
                 activeChild: context.locale.languageCode == AppConstants.en
-                    ? const Text(AppConstants.enCap)
-                    : const Text(AppConstants.arCap),
+                    ? Text(
+                        AppConstants.enCap,
+                        style: TextStyle(
+                            color: context.isDarkMode
+                                ? AppColors.black
+                                : Colors.white),
+                      )
+                    : Text(
+                        AppConstants.arCap,
+                        style: TextStyle(
+                            color: context.isDarkMode
+                                ? AppColors.black
+                                : Colors.white),
+                      ),
                 inactiveChild: context.locale.languageCode == AppConstants.en
-                    ? const Text(AppConstants.enCap)
-                    : const Text(AppConstants.arCap),
+                    ? Text(
+                        AppConstants.enCap,
+                        style: TextStyle(
+                            color: context.isDarkMode
+                                ? AppColors.black
+                                : Colors.white),
+                      )
+                    : Text(
+                        AppConstants.arCap,
+                        style: TextStyle(
+                            color: context.isDarkMode
+                                ? AppColors.black
+                                : Colors.white),
+                      ),
                 borderRadius: BorderRadius.all(Radius.circular(35.r)),
                 width: 64.0,
                 height: 30.0,
@@ -111,11 +138,7 @@ class _OnBoardingViewBodyState extends State<OnBoardingViewBody> {
           SizedBox(
             height: MediaQuery.of(context).size.height > 800 ? 10.h : 5.h,
           ),
-          Center(
-            child: SvgPicture.asset(
-              AppAssets.mainLogo,
-            ),
-          ),
+          const Center(child: MainLogo()),
           Expanded(
             child: PageView.builder(
               controller: pageController,
@@ -176,7 +199,10 @@ class _OnBoardingViewBodyState extends State<OnBoardingViewBody> {
               count: 3,
               axisDirection: Axis.horizontal,
 
-              effect: const WormEffect(activeDotColor: AppColors.mainColor),
+              effect: WormEffect(
+                  activeDotColor: context.isDarkMode
+                      ? AppColors.mainDarkColor
+                      : AppColors.mainColor),
             ),
           ),
           SizedBox(

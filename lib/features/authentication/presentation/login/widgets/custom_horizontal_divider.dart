@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/colors/app_colors.dart';
+import '../../../../../Core/colors/app_colors.dart';
 
 class CustomHorizontalDivider extends StatelessWidget {
   const CustomHorizontalDivider({super.key, this.indent, this.enIndent});

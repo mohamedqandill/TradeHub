@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tradehub/Core/extensions/is_dark_mode.dart';
 
-import '../../../../core/colors/app_colors.dart';
-import '../../../../core/shared_widgets/svg_widget.dart';
+import '../../../../../Core/colors/app_colors.dart';
+import '../../../../../Core/shared_widgets/svg_widget.dart';
 
 class CustomSocialContainer extends StatelessWidget {
   const CustomSocialContainer({super.key, required this.icon});
@@ -12,7 +13,12 @@ class CustomSocialContainer extends StatelessWidget {
     return Container(
       width: 70.w,
       decoration: BoxDecoration(
-          border: Border.all(width: 2, color: AppColors.lightGrey),
+          color: context.isDarkMode ? AppColors.grey : Colors.transparent,
+          border: Border.all(
+              width: 2,
+              color: context.isDarkMode
+                  ? AppColors.mainDarkColor
+                  : AppColors.lightGrey),
           borderRadius: BorderRadius.circular(10.r)),
       child: Center(
         child: SvgWidget(

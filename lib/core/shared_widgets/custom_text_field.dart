@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tradehub/Core/colors/app_colors.dart';
+import 'package:tradehub/Core/extensions/is_dark_mode.dart';
 
 class CustomTextField extends StatelessWidget {
   const CustomTextField(
@@ -34,6 +36,8 @@ class CustomTextField extends StatelessWidget {
             labelText: labelText,
             prefixIcon: prefixIcon,
             hintText: hintText,
+            suffixIconColor:
+                context.isDarkMode ? AppColors.white : AppColors.grey,
             suffixIcon: suffixIcon),
       ),
     );
