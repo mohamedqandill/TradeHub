@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tradehub/Core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/base/base_inherited_widgets.dart';
+import 'package:tradehub/core/extensions/main_color.dart';
 
 import '../colors/app_colors.dart';
 
@@ -21,13 +23,13 @@ class CustomRichText extends StatelessWidget {
           text: TextSpan(children: [
         TextSpan(
             text: firstText,
-            style: base.theme.textTheme.labelSmall!
-                .copyWith(color: AppColors.grey)),
+            style: base.theme.textTheme.labelSmall!.copyWith(
+                color: context.isDarkMode ? AppColors.white : AppColors.grey)),
         TextSpan(
             text: secondText,
             style: base.theme.textTheme.labelSmall!.copyWith(
                 fontWeight: FontWeight.bold,
-                color: AppColors.mainColor,
+                color: context.mainColor,
                 fontSize: 17.sp)),
       ])),
     );

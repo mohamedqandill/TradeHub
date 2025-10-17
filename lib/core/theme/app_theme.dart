@@ -74,10 +74,8 @@ abstract class AppTheme {
         elevation: 0,
         scrolledUnderElevation: 0,
       ),
-      elevatedButtonTheme: const ElevatedButtonThemeData(
-          style: ButtonStyle(
-              backgroundColor:
-                  WidgetStatePropertyAll(AppColors.mainDarkColor))),
+      elevatedButtonTheme:
+          ElevatedButtonThemeData(style: ElevatedButton.styleFrom()),
       inputDecorationTheme: InputDecorationTheme(
         labelStyle: GoogleFonts.inter(
             fontSize: 16.sp,
@@ -97,30 +95,30 @@ abstract class AppTheme {
         headlineLarge: GoogleFonts.poppins(
             fontSize: 36.sp,
             fontWeight: FontWeight.w600,
-            color: AppColors.mainDarkColor),
+            color: AppColors.white),
         headlineMedium: GoogleFonts.poppins(
             fontSize: 20.sp,
             fontWeight: FontWeight.w400,
-            color: AppColors.mainDarkColor),
+            color: AppColors.grey),
         bodyMedium: GoogleFonts.inter(
             fontSize: 16.sp,
             fontWeight: FontWeight.w600,
             color: AppColors.mainDarkColor),
         bodySmall: GoogleFonts.poppins(
-            fontSize: 12.sp,
-            fontWeight: FontWeight.w500,
-            color: AppColors.mainDarkColor),
+          fontSize: 12.sp,
+          fontWeight: FontWeight.w500,
+        ),
         labelSmall: GoogleFonts.poppins(
             fontSize: 16.sp,
             fontWeight: FontWeight.w700,
-            color: AppColors.mainDarkColor),
+            color: AppColors.white),
         bodyLarge: GoogleFonts.poppins(
             fontSize: 36.sp,
             fontWeight: FontWeight.w700,
             color: AppColors.mainDarkColor),
         titleLarge: GoogleFonts.poppins(
-            fontSize: 24.sp,
-            fontWeight: FontWeight.w600,
-            color: AppColors.mainDarkColor),
+          fontSize: 24.sp,
+          fontWeight: FontWeight.w600,
+        ),
       ));
 }

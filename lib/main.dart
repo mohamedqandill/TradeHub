@@ -6,8 +6,8 @@ import 'package:tradehub/core/constants/app_constants.dart';
 import 'package:tradehub/core/routes/app_routes.dart';
 import 'package:tradehub/core/routes/routes.dart';
 import 'package:tradehub/core/theme/app_theme.dart';
-import 'package:tradehub/presentation/onBoarding/view_model/language_view_model.dart';
-import 'package:tradehub/presentation/onBoarding/view_model/theme_view_model.dart';
+import 'package:tradehub/features/onBoarding/view_model/language_view_model.dart';
+import 'package:tradehub/features/onBoarding/view_model/theme_view_model.dart';
 
 import 'core/base/base_inherited_widgets.dart';
 import 'core/utils/shared_prefs/prefs.dart';
@@ -15,6 +15,7 @@ import 'core/utils/shared_prefs/prefs.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
+  await ScreenUtil.ensureScreenSize();
   await SharedPrefsHelper.init();
   SharedPrefsHelper prefs = SharedPrefsHelper();
   final languageViewModel = LanguageViewModel();

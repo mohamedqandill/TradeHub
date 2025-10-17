@@ -1,17 +1,20 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tradehub/Core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/assets/app_assets.dart';
 import 'package:tradehub/core/base/base_inherited_widgets.dart';
 import 'package:tradehub/core/constants/app_constants.dart';
+import 'package:tradehub/core/extensions/main_color.dart';
 import 'package:tradehub/core/routes/routes.dart';
 import 'package:tradehub/core/shared_widgets/custom_text_field.dart';
-import 'package:tradehub/core/shared_widgets/svg_widget.dart';
+import 'package:tradehub/core/shared_widgets/main_logo.dart';
+import 'package:tradehub/core/shared_widgets/main_top_wave.dart';
 
-import '../../../../core/colors/app_colors.dart';
-import '../../../../core/localization/local_keys/local_keys.dart';
-import '../../../../core/shared_widgets/custom_large_main_button.dart';
-import '../../../../core/shared_widgets/custom_rich_text.dart';
+import '../../../../../Core/colors/app_colors.dart';
+import '../../../../../Core/localization/local_keys/local_keys.dart';
+import '../../../../../Core/shared_widgets/custom_large_main_button.dart';
+import '../../../../../Core/shared_widgets/custom_rich_text.dart';
 import 'custom_horizontal_divider.dart';
 import 'custom_social_container.dart';
 
@@ -25,22 +28,19 @@ class LoginViewBody extends StatefulWidget {
 class _LoginViewBodyState extends State<LoginViewBody> {
   bool isRememberMe = false;
   bool isObscureText = false;
+
   @override
   Widget build(BuildContext context) {
     var base = BaseInheritedWidget.of(context);
     print(MediaQuery.of(context).size.height);
     return Column(
       children: [
-        Image.asset(
-          AppAssets.topWave,
-          width: double.infinity,
-          fit: BoxFit.fill,
-          height: MediaQuery.of(context).size.height < 800 ? 100 : null,
-        ),
+        MainTopWave(
+            height: MediaQuery.of(context).size.height < 750 ? 100 : null),
         SizedBox(
           height: 10.h,
         ),
-        const SvgWidget(assetName: AppAssets.mainLogo),
+        const MainLogo(),
         Text(
           LocalKeys.login.tr(),
           style: base.theme.textTheme.bodyLarge,
@@ -61,6 +61,7 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                 height: 16.h,
               ),
               CustomTextField(
+                obscureText: !isObscureText,
                 labelText: LocalKeys.password.tr(),
                 suffixIcon: IconButton(
                     onPressed: () {
@@ -68,8 +69,12 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                       setState(() {});
                     },
                     icon: isObscureText
-                        ? const Icon(Icons.visibility)
-                        : const Icon(Icons.visibility_off)),
+                        ? const Icon(
+                            Icons.visibility,
+                          )
+                        : const Icon(
+                            Icons.visibility_off,
+                          )),
               ),
               Row(
                 children: [
@@ -84,7 +89,7 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                           borderRadius: BorderRadius.circular(3.r)),
                       value: isRememberMe,
                       checkColor: AppColors.white,
-                      activeColor: AppColors.mainColor,
+                      activeColor: context.mainColor,
                       onChanged: (value) {
                         setState(() {
                           isRememberMe = value!;
@@ -94,8 +99,10 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                   ),
                   Text(
                     LocalKeys.rememberMe.tr(),
-                    style: base.theme.textTheme.bodyMedium!
-                        .copyWith(color: AppColors.grey),
+                    style: base.theme.textTheme.bodyMedium!.copyWith(
+                        color: context.isDarkMode
+                            ? AppColors.white
+                            : AppColors.grey),
                   ),
                   const Spacer(),
                   InkWell(
@@ -103,8 +110,9 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                         Navigator.pushNamed(context, Routes.forgetPassword),
                     child: Text(
                       LocalKeys.forgetPassword.tr(),
-                      style: base.theme.textTheme.bodyMedium!
-                          .copyWith(color: AppColors.mainColor),
+                      style: base.theme.textTheme.bodyMedium!.copyWith(
+                        color: context.mainColor,
+                      ),
                     ),
                   ),
                 ],
@@ -125,8 +133,10 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                   ),
                   Text(
                     LocalKeys.orLoginWith.tr(),
-                    style: base.theme.textTheme.bodyMedium!
-                        .copyWith(color: AppColors.grey.withOpacity(0.8)),
+                    style: base.theme.textTheme.bodyMedium!.copyWith(
+                        color: context.isDarkMode
+                            ? AppColors.white
+                            : AppColors.grey.withOpacity(0.8)),
                   ),
                   const CustomHorizontalDivider(
                     indent: 10,

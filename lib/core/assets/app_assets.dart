@@ -9,7 +9,9 @@ abstract class AppAssets {
   static const String blackGirl = "assets/images/black girl with cart.png";
   static const String topWave = "assets/images/topWave.png";
   static const String america = "assets/icons/en.png";
+  static const String mainDarkLogo = "assets/images/mainDarkLogo.svg";
   static const String egypt = "assets/icons/eg.png";
+  static const String topDarkWave = "assets/images/darkTopWave.png";
 
   static const String passwordProtection =
       "assets/images/Cybersecurity with password protection.png";
