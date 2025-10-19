@@ -25,6 +25,12 @@ abstract class AppTheme {
             fontSize: 16.sp,
             fontWeight: FontWeight.w600,
             color: AppColors.grey),
+        focusedErrorBorder: OutlineInputBorder(
+            borderSide: const BorderSide(width: 1, color: AppColors.red),
+            borderRadius: BorderRadius.all(Radius.circular(8.r))),
+        errorBorder: OutlineInputBorder(
+            borderSide: const BorderSide(width: 1, color: AppColors.red),
+            borderRadius: BorderRadius.all(Radius.circular(8.r))),
         enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(8.r))),
         disabledBorder: OutlineInputBorder(
@@ -81,6 +87,12 @@ abstract class AppTheme {
             fontSize: 16.sp,
             fontWeight: FontWeight.w600,
             color: AppColors.white),
+        focusedErrorBorder: OutlineInputBorder(
+            borderSide: const BorderSide(width: 1, color: AppColors.red),
+            borderRadius: BorderRadius.all(Radius.circular(8.r))),
+        errorBorder: OutlineInputBorder(
+            borderSide: const BorderSide(width: 1, color: AppColors.red),
+            borderRadius: BorderRadius.all(Radius.circular(8.r))),
         enabledBorder: OutlineInputBorder(
             borderSide: const BorderSide(width: 1, color: AppColors.white),
             borderRadius: BorderRadius.all(Radius.circular(8.r))),

@@ -34,7 +34,30 @@
   "createNewPassword": "إنشاء كلمة مرور جديدة",
   "passwordMustBeDiff": "يجب أن تكون كلمة المرور الجديدة مختلفة\n عن كلمات المرور المستخدمة سابقًا.",
   "save": "حفظ",
-  "newPassword": "كلمه المرور الجديده"
+  "newPassword": "كلمه المرور الجديده",
+  "pleaseEnterName": "من فضلك أدخل الاسم الكامل.",
+  "pleaseEnterUserName": "من فضلك أدخل اسم المستخدم.",
+  "userNameLength": "يجب أن يكون اسم المستخدم بين 3 و16 حرفًا.",
+  "userNameRules": "اسم المستخدم يمكن أن يحتوي فقط على أحرف أو أرقام أو شرطة سفلية.",
+  "pleaseEnterFirstName": "من فضلك أدخل الاسم الأول.",
+  "pleaseEnterLastName": "من فضلك أدخل الاسم الأخير.",
+  "namesLengthRule": "يجب أن يحتوي الاسم على 3 أحرف على الأقل.",
+  "namesRules": "الاسم يمكن أن يحتوي على أحرف فقط.",
+  "pleaseEnterAddress": "من فضلك أدخل العنوان.",
+  "pleaseEnterValidAddress": "من فضلك أدخل عنوانًا صالحًا.",
+  "pleaseEnterValidRecipient": "من فضلك أدخل اسم المستلم بشكل صحيح.",
+  "pleaseEnterEmail": "من فضلك أدخل البريد الإلكتروني.",
+  "pleaseEnterValidEmail": "من فضلك أدخل بريدًا إلكترونيًا صالحًا.",
+  "pleaseEnterPhoneNumber": "من فضلك أدخل رقم الهاتف.",
+  "phoneNumberRules": "من فضلك أدخل رقم هاتف مصري صحيح.",
+  "pleaseEnterPassword": "من فضلك أدخل كلمة المرور.",
+  "passwordLength": "يجب أن تحتوي كلمة المرور على 8 أحرف على الأقل.",
+  "uppercaseRulePassword": "يجب أن تحتوي كلمة المرور على حرف كبير واحد على الأقل.",
+  "lowercaseRulePassword": "يجب أن تحتوي كلمة المرور على حرف صغير واحد على الأقل.",
+  "digitRulePassword": "يجب أن تحتوي كلمة المرور على رقم واحد على الأقل.",
+  "specialCharactersRulePassword": "يجب أن تحتوي كلمة المرور على رمز خاص واحد على الأقل.",
+  "pleaseConfirmPassword": "من فضلك أكد كلمة المرور.",
+  "noMatch": "كلمتا المرور غير متطابقتين."
 
 
 

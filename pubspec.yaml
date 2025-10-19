@@ -47,6 +47,8 @@ dependencies:
   provider:
 
 dev_dependencies:
+  build_runner:
+  easy_localization_generator:
   flutter_test:
     sdk: flutter
 
