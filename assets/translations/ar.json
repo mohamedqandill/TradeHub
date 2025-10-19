@@ -44,6 +44,7 @@
   "namesLengthRule": "يجب أن يحتوي الاسم على 3 أحرف على الأقل.",
   "namesRules": "الاسم يمكن أن يحتوي على أحرف فقط.",
   "pleaseEnterAddress": "من فضلك أدخل العنوان.",
+  "phoneNumber": "رقم الهاتف",
   "pleaseEnterValidAddress": "من فضلك أدخل عنوانًا صالحًا.",
   "pleaseEnterValidRecipient": "من فضلك أدخل اسم المستلم بشكل صحيح.",
   "pleaseEnterEmail": "من فضلك أدخل البريد الإلكتروني.",

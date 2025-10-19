@@ -48,6 +48,7 @@ abstract class  LocaleKeys {
   static const namesLengthRule = 'namesLengthRule';
   static const namesRules = 'namesRules';
   static const pleaseEnterAddress = 'pleaseEnterAddress';
+  static const phoneNumber = 'phoneNumber';
   static const pleaseEnterValidAddress = 'pleaseEnterValidAddress';
   static const pleaseEnterValidRecipient = 'pleaseEnterValidRecipient';
   static const pleaseEnterEmail = 'pleaseEnterEmail';

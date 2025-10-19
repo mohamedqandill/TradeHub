@@ -32,6 +32,7 @@
   "haventGetCode": "Haven’t got the code yet? ",
   "resendCode": "Resend code",
   "createNewPassword": "Create New Password",
+  "phoneNumber": "Phone Number",
   "passwordMustBeDiff": "Your New Password Must Be Different \nFrom Previously Used Password.",
   "save": "Save",
   "newPassword": "New Password",
