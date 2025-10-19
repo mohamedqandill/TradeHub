@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:tradehub/Core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/assets/app_assets.dart';
 import 'package:tradehub/core/routes/routes.dart';
 
@@ -45,7 +46,9 @@ class _SplashScreenState extends State<SplashScreen>
             child: AnimatedOpacity(
               duration: const Duration(seconds: 1),
               opacity: _opacity,
-              child: SvgPicture.asset(AppAssets.splashLogo),
+              child: SvgPicture.asset(context.isDarkMode
+                  ? AppAssets.darkSplash
+                  : AppAssets.splashLogo),
             ),
           ),
           const Spacer(),
@@ -53,7 +56,7 @@ class _SplashScreenState extends State<SplashScreen>
             width: double.infinity,
             child: SvgPicture.asset(
               fit: BoxFit.fill,
-              AppAssets.wave,
+              context.isDarkMode ? AppAssets.bottomDarkWave : AppAssets.wave,
             ),
           )
         ],

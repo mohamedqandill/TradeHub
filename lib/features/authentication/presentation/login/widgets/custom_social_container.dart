@@ -23,6 +23,7 @@ class CustomSocialContainer extends StatelessWidget {
       child: Center(
         child: SvgWidget(
           assetName: icon,
+          height: 22.h,
         ),
       ),
     );

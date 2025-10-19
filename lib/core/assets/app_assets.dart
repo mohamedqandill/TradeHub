@@ -12,6 +12,8 @@ abstract class AppAssets {
   static const String mainDarkLogo = "assets/images/mainDarkLogo.svg";
   static const String egypt = "assets/icons/eg.png";
   static const String topDarkWave = "assets/images/darkTopWave.png";
+  static const String bottomDarkWave = "assets/images/darkbottomsplash.svg";
+  static const String darkSplash = "assets/images/darksplash.svg";
 
   static const String passwordProtection =
       "assets/images/Cybersecurity with password protection.png";
