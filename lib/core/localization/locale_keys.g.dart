@@ -1,0 +1,66 @@
+// DO NOT EDIT. This is code generated via package:easy_localization/generate.dart
+
+// ignore_for_file: constant_identifier_names
+
+abstract class  LocaleKeys {
+  static const shopSmarter = 'shopSmarter';
+  static const tradeBetter = 'tradeBetter';
+  static const discoverTopProduct = 'discoverTopProduct';
+  static const next = 'next';
+  static const skip = 'skip';
+  static const securePayment = 'securePayment';
+  static const expSeamless = 'expSeamless';
+  static const trackOrder = 'trackOrder';
+  static const stayUpdate = 'stayUpdate';
+  static const getStarted = 'getStarted';
+  static const login = 'login';
+  static const emailAddress = 'emailAddress';
+  static const password = 'password';
+  static const rememberMe = 'rememberMe';
+  static const forgetPassword = 'forgetPassword';
+  static const orLoginWith = 'orLoginWith';
+  static const dontHaveAccount = 'dontHaveAccount';
+  static const create = 'create';
+  static const register = 'register';
+  static const firstName = 'firstName';
+  static const lastName = 'lastName';
+  static const alreadyHaveAccount = 'alreadyHaveAccount';
+  static const agreeTerms = 'agreeTerms';
+  static const orContinueWith = 'orContinueWith';
+  static const forgetPass = 'forgetPass';
+  static const send = 'send';
+  static const enterEmail = 'enterEmail';
+  static const verifyEmail = 'verifyEmail';
+  static const verifyCode = 'verifyCode';
+  static const enterDigit = 'enterDigit';
+  static const haventGetCode = 'haventGetCode';
+  static const resendCode = 'resendCode';
+  static const createNewPassword = 'createNewPassword';
+  static const passwordMustBeDiff = 'passwordMustBeDiff';
+  static const save = 'save';
+  static const newPassword = 'newPassword';
+  static const pleaseEnterName = 'pleaseEnterName';
+  static const pleaseEnterUserName = 'pleaseEnterUserName';
+  static const userNameLength = 'userNameLength';
+  static const userNameRules = 'userNameRules';
+  static const pleaseEnterFirstName = 'pleaseEnterFirstName';
+  static const pleaseEnterLastName = 'pleaseEnterLastName';
+  static const namesLengthRule = 'namesLengthRule';
+  static const namesRules = 'namesRules';
+  static const pleaseEnterAddress = 'pleaseEnterAddress';
+  static const pleaseEnterValidAddress = 'pleaseEnterValidAddress';
+  static const pleaseEnterValidRecipient = 'pleaseEnterValidRecipient';
+  static const pleaseEnterEmail = 'pleaseEnterEmail';
+  static const pleaseEnterValidEmail = 'pleaseEnterValidEmail';
+  static const pleaseEnterPhoneNumber = 'pleaseEnterPhoneNumber';
+  static const phoneNumberRules = 'phoneNumberRules';
+  static const pleaseEnterPassword = 'pleaseEnterPassword';
+  static const passwordLength = 'passwordLength';
+  static const uppercaseRulePassword = 'uppercaseRulePassword';
+  static const lowercaseRulePassword = 'lowercaseRulePassword';
+  static const digitRulePassword = 'digitRulePassword';
+  static const specialCharactersRulePassword = 'specialCharactersRulePassword';
+  static const pleaseConfirmPassword = 'pleaseConfirmPassword';
+  static const noMatch = 'noMatch';
+
+}
