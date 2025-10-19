@@ -15,7 +15,8 @@ import 'package:tradehub/core/shared_widgets/custom_main_button.dart';
 import 'package:tradehub/core/shared_widgets/custom_main_outline_button.dart';
 import 'package:tradehub/core/shared_widgets/main_logo.dart';
 import 'package:tradehub/core/utils/shared_prefs/prefs.dart';
-import 'package:tradehub/features/onBoarding/widgets/custom_body_widget.dart';
+
+import 'custom_body_widget.dart';
 
 class OnBoardingViewBody extends StatefulWidget {
   const OnBoardingViewBody({super.key});

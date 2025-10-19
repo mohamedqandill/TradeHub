@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../../../core/base/base_inherited_widgets.dart';
+import 'package:tradehub/Core/extensions/base_inherited_context.dart';
 
 class CustomBodyWidget extends StatefulWidget {
   const CustomBodyWidget({
@@ -50,8 +49,6 @@ class _CustomBodyWidgetState extends State<CustomBodyWidget>
 
   @override
   Widget build(BuildContext context) {
-    final base = BaseInheritedWidget.of(context);
-
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -73,7 +70,7 @@ class _CustomBodyWidgetState extends State<CustomBodyWidget>
                     child: Text(
                       textAlign: TextAlign.center,
                       widget.title,
-                      style: base.theme.textTheme.headlineLarge,
+                      style: context.base.theme.textTheme.headlineLarge,
                     ),
                   ),
                 ),
@@ -87,13 +84,13 @@ class _CustomBodyWidgetState extends State<CustomBodyWidget>
           child: Text(
             textAlign: TextAlign.center,
             widget.subTitle,
-            style: base.theme.textTheme.headlineMedium,
+            style: context.base.theme.textTheme.headlineMedium,
           ),
         ),
         FadeTransition(
           opacity: _fade,
           child: Image.asset(
-            height: base.screenHeight > 800 ? 270.h : 230.h,
+            height: context.base.screenHeight > 800 ? 270.h : 230.h,
             widget.image,
             fit: BoxFit.contain,
           ),

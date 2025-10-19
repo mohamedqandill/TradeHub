@@ -7,10 +7,10 @@ import 'package:tradehub/core/extensions/base_inherited_context.dart';
 import 'package:tradehub/core/routes/routes.dart';
 import 'package:tradehub/core/shared_widgets/custom_rich_text.dart';
 
-import '../../../../../Core/assets/app_assets.dart';
-import '../../../../../Core/colors/app_colors.dart';
-import '../../../../../Core/localization/local_keys/local_keys.dart';
-import '../../../../../Core/shared_widgets/custom_large_main_button.dart';
+import '../../../../../../Core/assets/app_assets.dart';
+import '../../../../../../Core/colors/app_colors.dart';
+import '../../../../../../Core/localization/local_keys/local_keys.dart';
+import '../../../../../../Core/shared_widgets/custom_large_main_button.dart';
 
 class VerifyEmailViewBody extends StatelessWidget {
   const VerifyEmailViewBody({super.key});

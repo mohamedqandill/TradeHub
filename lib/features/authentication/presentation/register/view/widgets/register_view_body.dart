@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tradehub/Core/extensions/base_inherited_context.dart';
 import 'package:tradehub/Core/extensions/is_dark_mode.dart';
+import 'package:tradehub/Core/shared_widgets/custom_large_main_button.dart';
 import 'package:tradehub/core/base/base_inherited_widgets.dart';
 import 'package:tradehub/core/constants/app_constants.dart';
 import 'package:tradehub/core/extensions/main_color.dart';
@@ -10,14 +11,13 @@ import 'package:tradehub/core/shared_widgets/custom_text_field.dart';
 import 'package:tradehub/core/shared_widgets/main_top_wave.dart';
 import 'package:tradehub/core/validations/validation.dart';
 
-import '../../../../../Core/colors/app_colors.dart';
-import '../../../../../Core/localization/local_keys/local_keys.dart';
-import '../../../../../Core/routes/routes.dart';
-import '../../../../../Core/shared_widgets/custom_large_main_button.dart';
-import '../../../../../Core/shared_widgets/custom_rich_text.dart';
-import '../../login/widgets/custom_horizontal_divider.dart';
-import '../../login/widgets/custom_social_container.dart';
-import '../../login/widgets/login_view_body.dart';
+import '../../../../../../Core/colors/app_colors.dart';
+import '../../../../../../Core/localization/local_keys/local_keys.dart';
+import '../../../../../../Core/shared_widgets/custom_rich_text.dart';
+import '../../../../../../core/routes/routes.dart';
+import '../../../login/view/widgets/custom_horizontal_divider.dart';
+import '../../../login/view/widgets/custom_social_container.dart';
+import '../../../login/view/widgets/login_view_body.dart';
 
 class RegisterViewBody extends StatefulWidget {
   const RegisterViewBody({super.key});

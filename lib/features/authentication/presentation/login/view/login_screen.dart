@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../widgets/login_view_body.dart';
+import 'package:tradehub/features/authentication/presentation/login/view/widgets/login_view_body.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});

@@ -8,8 +8,8 @@ import 'package:tradehub/core/routes/routes.dart';
 import 'package:tradehub/core/shared_widgets/custom_large_main_button.dart';
 import 'package:tradehub/core/shared_widgets/custom_text_field.dart';
 
-import '../../../../../Core/assets/app_assets.dart';
-import '../../../../../Core/localization/local_keys/local_keys.dart';
+import '../../../../../../Core/assets/app_assets.dart';
+import '../../../../../../Core/localization/local_keys/local_keys.dart';
 
 class ForgetPassViewBody extends StatelessWidget {
   const ForgetPassViewBody({super.key});

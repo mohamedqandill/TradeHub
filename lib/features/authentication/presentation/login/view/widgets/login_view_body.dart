@@ -11,11 +11,11 @@ import 'package:tradehub/core/shared_widgets/custom_text_field.dart';
 import 'package:tradehub/core/shared_widgets/main_logo.dart';
 import 'package:tradehub/core/shared_widgets/main_top_wave.dart';
 
-import '../../../../../Core/colors/app_colors.dart';
-import '../../../../../Core/localization/local_keys/local_keys.dart';
-import '../../../../../Core/shared_widgets/custom_large_main_button.dart';
-import '../../../../../Core/shared_widgets/custom_rich_text.dart';
-import '../../../../../core/validations/validation.dart';
+import '../../../../../../Core/colors/app_colors.dart';
+import '../../../../../../Core/localization/local_keys/local_keys.dart';
+import '../../../../../../Core/shared_widgets/custom_large_main_button.dart';
+import '../../../../../../Core/shared_widgets/custom_rich_text.dart';
+import '../../../../../../core/validations/validation.dart';
 import 'custom_horizontal_divider.dart';
 import 'custom_social_container.dart';
 

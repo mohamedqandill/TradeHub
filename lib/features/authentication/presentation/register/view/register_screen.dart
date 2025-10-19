@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../widgets/register_view_body.dart';
+import 'package:tradehub/features/authentication/presentation/register/view/widgets/register_view_body.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
