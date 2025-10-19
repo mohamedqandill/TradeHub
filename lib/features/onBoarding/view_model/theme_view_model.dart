@@ -6,7 +6,7 @@ class ThemeViewModel extends ChangeNotifier {
   late ThemeMode mode;
   SharedPrefsHelper prefs = SharedPrefsHelper();
   getSavedTheme() {
-    bool isDark = prefs.getBool(AppConstants.isDarkMode) ?? true;
+    bool isDark = prefs.getBool(AppConstants.isDarkMode) ?? false;
     mode = isDark ? ThemeMode.dark : ThemeMode.light;
   }
 
