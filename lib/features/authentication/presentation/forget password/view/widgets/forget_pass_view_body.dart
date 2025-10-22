@@ -9,7 +9,7 @@ import 'package:tradehub/core/shared_widgets/custom_large_main_button.dart';
 import 'package:tradehub/core/shared_widgets/custom_text_field.dart';
 
 import '../../../../../../Core/assets/app_assets.dart';
-import '../../../../../../Core/localization/local_keys/local_keys.dart';
+import '../../../../../../core/localization/locale_keys.g.dart';
 
 class ForgetPassViewBody extends StatelessWidget {
   const ForgetPassViewBody({super.key});
@@ -27,7 +27,7 @@ class ForgetPassViewBody extends StatelessWidget {
         ),
         Text(
           textAlign: TextAlign.center,
-          LocalKeys.enterEmail.tr(),
+          LocaleKeys.enterEmail.tr(),
           style: context.base.theme.textTheme.bodyMedium!.copyWith(
               color: context.isDarkMode ? AppColors.white : AppColors.grey),
         ),
@@ -35,7 +35,7 @@ class ForgetPassViewBody extends StatelessWidget {
           height: 34.h,
         ),
         CustomTextField(
-          labelText: LocalKeys.emailAddress.tr(),
+          labelText: LocaleKeys.emailAddress.tr(),
           suffixIcon: const Icon(Icons.email),
         ),
         SizedBox(
@@ -45,7 +45,7 @@ class ForgetPassViewBody extends StatelessWidget {
           onPressed: () {
             Navigator.pushNamed(context, Routes.verifyEmail);
           },
-          text: LocalKeys.send.tr(),
+          text: LocaleKeys.send.tr(),
         )
       ],
     );

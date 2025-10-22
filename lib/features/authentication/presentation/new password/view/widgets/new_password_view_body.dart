@@ -6,8 +6,8 @@ import 'package:tradehub/core/extensions/base_inherited_context.dart';
 
 import '../../../../../../Core/assets/app_assets.dart';
 import '../../../../../../Core/colors/app_colors.dart';
-import '../../../../../../Core/localization/local_keys/local_keys.dart';
 import '../../../../../../Core/shared_widgets/custom_large_main_button.dart';
+import '../../../../../../core/localization/locale_keys.g.dart';
 import '../../../../../../core/shared_widgets/custom_text_field.dart';
 
 class NewPasswordViewBody extends StatelessWidget {
@@ -26,7 +26,7 @@ class NewPasswordViewBody extends StatelessWidget {
         ),
         Text(
           textAlign: TextAlign.center,
-          LocalKeys.passwordMustBeDiff.tr(),
+          LocaleKeys.passwordMustBeDiff.tr(),
           style: context.base.theme.textTheme.bodyMedium!.copyWith(
               color: context.isDarkMode ? AppColors.white : AppColors.grey),
         ),
@@ -34,14 +34,14 @@ class NewPasswordViewBody extends StatelessWidget {
           height: 34.h,
         ),
         CustomTextField(
-          labelText: LocalKeys.newPassword.tr(),
+          labelText: LocaleKeys.newPassword.tr(),
           suffixIcon: const Icon(Icons.remove_red_eye),
         ),
         SizedBox(
           height: 34.h,
         ),
         CustomLargeMainButton(
-          text: LocalKeys.save.tr(),
+          text: LocaleKeys.save.tr(),
         )
       ],
     );

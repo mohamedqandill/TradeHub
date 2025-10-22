@@ -12,7 +12,6 @@ import 'package:tradehub/core/shared_widgets/custom_text_field.dart';
 import 'package:tradehub/core/validations/validation.dart';
 
 import '../../../../../../Core/colors/app_colors.dart';
-import '../../../../../../Core/localization/local_keys/local_keys.dart';
 import '../../../../../../Core/shared_widgets/custom_rich_text.dart';
 import '../../../../../../core/routes/routes.dart';
 import '../../../../../../core/shared_widgets/main_logo.dart';
@@ -50,10 +49,10 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
           children: [
             // MainTopWave(
             //     height: context.base.screenHeight < 750
-            //         ? .h
+            //         ? 0.h
             //         : context.base.screenHeight < 866
             //             ? 150.h
-            //             : waveHeight),
+            //             : 150.h),
             SizedBox(
               height: context.base.screenHeight < 750 ? 10.h : 50.h,
             ),
@@ -64,7 +63,7 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
               height: 10.h,
             ),
             Text(
-              LocalKeys.register.tr(),
+              LocaleKeys.register.tr(),
               style: base.theme.textTheme.bodyLarge,
             ),
             SizedBox(
@@ -76,7 +75,7 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CustomTextField(
-                    labelText: LocalKeys.firstName.tr(),
+                    labelText: LocaleKeys.firstName.tr(),
                     validator: ValidateFunctions.getInstance()
                         .validationOfFirstOrLastName,
                   ),
@@ -84,7 +83,7 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                     height: spaceHeight,
                   ),
                   CustomTextField(
-                    labelText: LocalKeys.lastName.tr(),
+                    labelText: LocaleKeys.lastName.tr(),
                     validator: ValidateFunctions.getInstance()
                         .validationOfFirstOrLastName,
                   ),
@@ -100,7 +99,7 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                     height: spaceHeight,
                   ),
                   CustomTextField(
-                    labelText: LocalKeys.emailAddress.tr(),
+                    labelText: LocaleKeys.emailAddress.tr(),
                     validator:
                         ValidateFunctions.getInstance().validationOfEmail,
                     suffixIcon: IconButton(
@@ -114,7 +113,7 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                     height: spaceHeight,
                   ),
                   CustomTextField(
-                    labelText: LocalKeys.password.tr(),
+                    labelText: LocaleKeys.password.tr(),
                     validator:
                         ValidateFunctions.getInstance().validationOfPassword,
                     suffixIcon: IconButton(
@@ -151,7 +150,7 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                         ),
                       ),
                       Text(
-                        LocalKeys.agreeTerms.tr(),
+                        LocaleKeys.agreeTerms.tr(),
                         style: base.theme.textTheme.bodyMedium!.copyWith(
                             color: context.isDarkMode
                                 ? AppColors.white
@@ -169,7 +168,7 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                         setState(() {});
                       }
                     },
-                    text: LocalKeys.create.tr(),
+                    text: LocaleKeys.create.tr(),
                   ),
                   SizedBox(
                     height: 24.h,
@@ -180,7 +179,7 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                         enIndent: 10,
                       ),
                       Text(
-                        LocalKeys.orContinueWith.tr(),
+                        LocaleKeys.orContinueWith.tr(),
                         style: base.theme.textTheme.bodyMedium!.copyWith(
                             color: context.isDarkMode
                                 ? AppColors.white
@@ -225,8 +224,8 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
               onTap: () {
                 Navigator.pushReplacementNamed(context, Routes.login);
               },
-              firstText: LocalKeys.alreadyHaveAccount.tr(),
-              secondText: LocalKeys.login.tr(),
+              firstText: LocaleKeys.alreadyHaveAccount.tr(),
+              secondText: LocaleKeys.login.tr(),
             )),
           ],
         ),

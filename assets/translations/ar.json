@@ -17,10 +17,10 @@
   "orLoginWith": "او قم بتسجيل الدخول",
   "dontHaveAccount": "ليس لديك حساب؟ ",
   "create": "تسجيل حساب",
-  "register":"إنشاء حساب جديد",
-  "firstName":"الاسم الاول",
-  "lastName":"اسم العائلة",
-  "alreadyHaveAccount":"بالفعل لديك حساب؟  ",
+  "register": "إنشاء حساب جديد",
+  "firstName": "الاسم الاول",
+  "lastName": "اسم العائلة",
+  "alreadyHaveAccount": "بالفعل لديك حساب؟  ",
   "agreeTerms": "انا اوافق علي الشروط & الاحكام",
   "orContinueWith": "او المتابعه بأستخدام",
   "forgetPass": "نسيت كلمة المرور",
@@ -58,10 +58,14 @@
   "digitRulePassword": "يجب أن تحتوي كلمة المرور على رقم واحد على الأقل.",
   "specialCharactersRulePassword": "يجب أن تحتوي كلمة المرور على رمز خاص واحد على الأقل.",
   "pleaseConfirmPassword": "من فضلك أكد كلمة المرور.",
-  "noMatch": "كلمتا المرور غير متطابقتين."
-
-
-
-
-
+  "noMatch": "كلمتا المرور غير متطابقتين.",
+  "errorConnectionTimeout": "انتهت مهلة الاتصال، تأكد من اتصالك بالإنترنت.",
+  "errorSendTimeout": "انتهت مهلة الطلب، حاول مرة أخرى.",
+  "errorReceiveTimeout": "انتهت مهلة الاستقبال، تحقق من الشبكة.",
+  "errorConnectionError": "خطأ في الاتصال، حاول مجددًا.",
+  "errorCancel": "تم إلغاء الطلب.",
+  "errorUnauthorized": "غير مصرح لك بالوصول.",
+  "errorNotFound": "العنصر المطلوب غير موجود.",
+  "errorServer": "خطأ في الخادم.",
+  "errorUnexpected": "حدث خطأ غير متوقع."
 }

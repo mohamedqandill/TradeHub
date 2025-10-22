@@ -3,6 +3,7 @@ abstract class AppConstants {
   static const String tradeBetter = "Trade Better";
   static const String next = "Next";
   static const String en = "en";
+  static const String baseUrl = "baseUrl";
   static const String ar = "ar";
   static const String enCap = "EN";
   static const String arCap = "AR";

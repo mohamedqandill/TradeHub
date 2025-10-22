@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:injectable/injectable.dart';
 import 'package:tradehub/core/constants/app_constants.dart';
 import 'package:tradehub/core/utils/shared_prefs/prefs.dart';
 
+@injectable
 class ThemeViewModel extends ChangeNotifier {
   late ThemeMode mode;
   SharedPrefsHelper prefs = SharedPrefsHelper();
