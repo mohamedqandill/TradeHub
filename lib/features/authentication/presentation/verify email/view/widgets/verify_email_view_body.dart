@@ -4,12 +4,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pinput/pinput.dart';
 import 'package:tradehub/Core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/extensions/base_inherited_context.dart';
+import 'package:tradehub/core/localization/locale_keys.g.dart';
 import 'package:tradehub/core/routes/routes.dart';
 import 'package:tradehub/core/shared_widgets/custom_rich_text.dart';
 
 import '../../../../../../Core/assets/app_assets.dart';
 import '../../../../../../Core/colors/app_colors.dart';
-import '../../../../../../Core/localization/local_keys/local_keys.dart';
 import '../../../../../../Core/shared_widgets/custom_large_main_button.dart';
 
 class VerifyEmailViewBody extends StatelessWidget {
@@ -30,7 +30,7 @@ class VerifyEmailViewBody extends StatelessWidget {
                 style: context.base.theme.textTheme.bodyMedium!.copyWith(
                     color:
                         context.isDarkMode ? AppColors.white : AppColors.grey),
-                text: LocalKeys.enterDigit.tr(),
+                text: LocaleKeys.enterDigit.tr(),
               ),
               TextSpan(
                   text: " Moh****@gmail.com",
@@ -50,14 +50,14 @@ class VerifyEmailViewBody extends StatelessWidget {
           onPressed: () {
             Navigator.pushNamed(context, Routes.newPassword);
           },
-          text: LocalKeys.verifyCode.tr(),
+          text: LocaleKeys.verifyCode.tr(),
         ),
         SizedBox(
           height: 48.h,
         ),
         CustomRichText(
-            firstText: LocalKeys.haventGetCode.tr(),
-            secondText: LocalKeys.resendCode.tr())
+            firstText: LocaleKeys.haventGetCode.tr(),
+            secondText: LocaleKeys.resendCode.tr())
       ],
     );
   }

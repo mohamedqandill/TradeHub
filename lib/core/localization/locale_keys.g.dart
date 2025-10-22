@@ -63,5 +63,14 @@ abstract class  LocaleKeys {
   static const specialCharactersRulePassword = 'specialCharactersRulePassword';
   static const pleaseConfirmPassword = 'pleaseConfirmPassword';
   static const noMatch = 'noMatch';
+  static const errorConnectionTimeout = 'errorConnectionTimeout';
+  static const errorSendTimeout = 'errorSendTimeout';
+  static const errorReceiveTimeout = 'errorReceiveTimeout';
+  static const errorConnectionError = 'errorConnectionError';
+  static const errorCancel = 'errorCancel';
+  static const errorUnauthorized = 'errorUnauthorized';
+  static const errorNotFound = 'errorNotFound';
+  static const errorServer = 'errorServer';
+  static const errorUnexpected = 'errorUnexpected';
 
 }

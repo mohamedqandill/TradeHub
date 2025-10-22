@@ -1,0 +1,59 @@
+import "package:dio/dio.dart";
+import 'package:easy_localization/easy_localization.dart';
+
+import '../../localization/locale_keys.g.dart';
+import 'api_error_model.dart';
+
+ServerExceptions handleDioErrors(DioException e) {
+  switch (e.type) {
+    case DioExceptionType.connectionTimeout:
+      return ServerExceptions(
+          errorsModel:
+              ErrorsModel(message: LocaleKeys.errorConnectionTimeout.tr()));
+
+    case DioExceptionType.sendTimeout:
+      return ServerExceptions(
+          errorsModel: ErrorsModel(message: LocaleKeys.errorSendTimeout.tr()));
+
+    case DioExceptionType.receiveTimeout:
+      return ServerExceptions(
+          errorsModel:
+              ErrorsModel(message: LocaleKeys.errorReceiveTimeout.tr()));
+
+    case DioExceptionType.connectionError:
+      return ServerExceptions(
+          errorsModel:
+              ErrorsModel(message: LocaleKeys.errorConnectionError.tr()));
+
+    case DioExceptionType.cancel:
+      return ServerExceptions(
+          errorsModel: ErrorsModel(message: LocaleKeys.errorCancel.tr()));
+
+    case DioExceptionType.badResponse:
+      switch (e.response?.statusCode) {
+        case 401:
+          return ServerExceptions(
+              errorsModel:
+                  ErrorsModel(message: LocaleKeys.errorUnauthorized.tr()));
+        case 404:
+          return ServerExceptions(
+              errorsModel: ErrorsModel(message: LocaleKeys.errorNotFound.tr()));
+        case 500:
+        case 502:
+        case 503:
+        case 504:
+          return ServerExceptions(
+              errorsModel: ErrorsModel(message: LocaleKeys.errorServer.tr()));
+        default:
+          return ServerExceptions(
+              errorsModel:
+                  ErrorsModel(message: LocaleKeys.errorUnexpected.tr()));
+      }
+
+    case DioExceptionType.badCertificate:
+    case DioExceptionType.unknown:
+    default:
+      return ServerExceptions(
+          errorsModel: ErrorsModel(message: LocaleKeys.errorUnexpected.tr()));
+  }
+}

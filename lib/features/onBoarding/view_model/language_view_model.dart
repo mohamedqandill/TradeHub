@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
+import 'package:injectable/injectable.dart';
 import 'package:tradehub/core/constants/app_constants.dart';
 import 'package:tradehub/core/utils/shared_prefs/prefs.dart';
 
+@injectable
 class LanguageViewModel extends ChangeNotifier {
   static const String languagekey = AppConstants.langKey;
 

@@ -9,13 +9,13 @@ import 'package:tradehub/Core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/assets/app_assets.dart';
 import 'package:tradehub/core/colors/app_colors.dart';
 import 'package:tradehub/core/constants/app_constants.dart';
-import 'package:tradehub/core/localization/local_keys/local_keys.dart';
 import 'package:tradehub/core/routes/routes.dart';
 import 'package:tradehub/core/shared_widgets/custom_main_button.dart';
 import 'package:tradehub/core/shared_widgets/custom_main_outline_button.dart';
 import 'package:tradehub/core/shared_widgets/main_logo.dart';
 import 'package:tradehub/core/utils/shared_prefs/prefs.dart';
 
+import '../../../../core/localization/locale_keys.g.dart';
 import 'custom_body_widget.dart';
 
 class OnBoardingViewBody extends StatefulWidget {
@@ -55,17 +55,17 @@ class _OnBoardingViewBodyState extends State<OnBoardingViewBody> {
     List<OnBoardingBodyData> onBoardingData = [
       OnBoardingBodyData(
           title:
-              "${LocalKeys.shopSmarter.tr()},\n${LocalKeys.tradeBetter.tr()}",
+              "${LocaleKeys.shopSmarter.tr()},\n${LocaleKeys.tradeBetter.tr()}",
           image: AppAssets.blackGirl,
-          subTitles: LocalKeys.discoverTopProduct.tr()),
+          subTitles: LocaleKeys.discoverTopProduct.tr()),
       OnBoardingBodyData(
-          title: LocalKeys.securePayment.tr(),
+          title: LocaleKeys.securePayment.tr(),
           image: AppAssets.onlinePayment,
-          subTitles: LocalKeys.expSeamless.tr()),
+          subTitles: LocaleKeys.expSeamless.tr()),
       OnBoardingBodyData(
-          title: LocalKeys.trackOrder.tr(),
+          title: LocaleKeys.trackOrder.tr(),
           image: AppAssets.trackOrder,
-          subTitles: LocalKeys.stayUpdate.tr()),
+          subTitles: LocaleKeys.stayUpdate.tr()),
     ];
     return SafeArea(
       child: Column(
@@ -159,7 +159,7 @@ class _OnBoardingViewBodyState extends State<OnBoardingViewBody> {
           ),
           currentPage == 2
               ? CustomMainButton(
-                  text: LocalKeys.getStarted.tr(),
+                  text: LocaleKeys.getStarted.tr(),
                   width: 335.w,
                   height: 48.h,
                   onPressed: () {
@@ -170,13 +170,13 @@ class _OnBoardingViewBodyState extends State<OnBoardingViewBody> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     CustomMainOutlineButton(
-                      text: LocalKeys.skip.tr(),
+                      text: LocaleKeys.skip.tr(),
                       onPressed: () {
                         saveOnBoardingState();
                       },
                     ),
                     CustomMainButton(
-                      text: LocalKeys.next.tr(),
+                      text: LocaleKeys.next.tr(),
                       onPressed: () {
                         if (pageController.page! < 2.0) {
                           pageController.nextPage(

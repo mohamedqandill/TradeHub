@@ -35,5 +35,17 @@
   "createNewPassword": "Create New Password",
   "passwordMustBeDiff": "Your New Password Must Be Different \nFrom Previously Used Password.",
   "save": "Save",
-  "newPassword": "New Password"
+  "newPassword": "New Password",
+
+  "errorConnectionTimeout": "Connection timeout, please check your internet.",
+  "errorSendTimeout": "Request timeout, please try again.",
+  "errorReceiveTimeout": "Receiving timeout, please check your network.",
+  "errorConnectionError": "Connection error, please try again.",
+  "errorCancel": "Request cancelled.",
+  "errorUnauthorized": "Unauthorized access.",
+  "errorNotFound": "Requested resource not found.",
+  "errorServer": "Internal server error.",
+  "errorUnexpected": "Unexpected error occurred."
+
+
 }

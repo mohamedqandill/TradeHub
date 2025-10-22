@@ -12,9 +12,9 @@ import 'package:tradehub/core/shared_widgets/main_logo.dart';
 import 'package:tradehub/core/shared_widgets/main_top_wave.dart';
 
 import '../../../../../../Core/colors/app_colors.dart';
-import '../../../../../../Core/localization/local_keys/local_keys.dart';
 import '../../../../../../Core/shared_widgets/custom_large_main_button.dart';
 import '../../../../../../Core/shared_widgets/custom_rich_text.dart';
+import '../../../../../../core/localization/locale_keys.g.dart';
 import '../../../../../../core/validations/validation.dart';
 import 'custom_horizontal_divider.dart';
 import 'custom_social_container.dart';
@@ -46,7 +46,7 @@ class _LoginViewBodyState extends State<LoginViewBody> {
           ),
           const MainLogo(),
           Text(
-            LocalKeys.login.tr(),
+            LocaleKeys.login.tr(),
             style: base.theme.textTheme.bodyLarge,
           ),
           SizedBox(
@@ -58,7 +58,7 @@ class _LoginViewBodyState extends State<LoginViewBody> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CustomTextField(
-                  labelText: LocalKeys.emailAddress.tr(),
+                  labelText: LocaleKeys.emailAddress.tr(),
                   suffixIcon: Icon(
                     Icons.email,
                     size: 22.sp,
@@ -72,7 +72,7 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                   validator:
                       ValidateFunctions.getInstance().validationOfPassword,
                   obscureText: !isObscureText,
-                  labelText: LocalKeys.password.tr(),
+                  labelText: LocaleKeys.password.tr(),
                   suffixIcon: IconButton(
                       onPressed: () {
                         isObscureText = !isObscureText;
@@ -110,7 +110,7 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                       ),
                     ),
                     Text(
-                      LocalKeys.rememberMe.tr(),
+                      LocaleKeys.rememberMe.tr(),
                       style: base.theme.textTheme.bodyMedium!.copyWith(
                           color: context.isDarkMode
                               ? AppColors.white
@@ -121,7 +121,7 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                       onTap: () =>
                           Navigator.pushNamed(context, Routes.forgetPassword),
                       child: Text(
-                        LocalKeys.forgetPassword.tr(),
+                        LocaleKeys.forgetPassword.tr(),
                         style: base.theme.textTheme.bodyMedium!.copyWith(
                           color: context.mainColor,
                         ),
@@ -136,7 +136,7 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                   onPressed: () {
                     if (formKey.currentState!.validate()) return;
                   },
-                  text: LocalKeys.login.tr(),
+                  text: LocaleKeys.login.tr(),
                 ),
                 SizedBox(
                   height: 24.h,
@@ -147,7 +147,7 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                       enIndent: 10,
                     ),
                     Text(
-                      LocalKeys.orLoginWith.tr(),
+                      LocaleKeys.orLoginWith.tr(),
                       style: base.theme.textTheme.bodyMedium!.copyWith(
                           color: context.isDarkMode
                               ? AppColors.white
@@ -189,8 +189,8 @@ class _LoginViewBodyState extends State<LoginViewBody> {
             onTap: () {
               Navigator.pushNamed(context, Routes.signUp);
             },
-            firstText: LocalKeys.dontHaveAccount.tr(),
-            secondText: LocalKeys.create.tr(),
+            firstText: LocaleKeys.dontHaveAccount.tr(),
+            secondText: LocaleKeys.create.tr(),
           )),
           const Spacer()
         ],
