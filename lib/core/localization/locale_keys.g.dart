@@ -72,5 +72,9 @@ abstract class  LocaleKeys {
   static const errorNotFound = 'errorNotFound';
   static const errorServer = 'errorServer';
   static const errorUnexpected = 'errorUnexpected';
+  static const pleaseAgreeTerms = 'pleaseAgreeTerms';
+  static const accountCreatedSuccessfully = 'accountCreatedSuccessfully';
+  static const congrats = 'congrats';
+  static const error = 'error';
 
 }

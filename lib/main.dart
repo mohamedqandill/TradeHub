@@ -76,3 +76,5 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+enum RequestStates { initial, error, success, loading }

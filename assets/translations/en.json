@@ -68,8 +68,11 @@
   "errorUnauthorized": "Unauthorized access.",
   "errorNotFound": "Requested resource not found.",
   "errorServer": "Internal server error.",
-  "errorUnexpected": "Unexpected error occurred."
+  "errorUnexpected": "Unexpected error occurred.",
 
-
+  "pleaseAgreeTerms": "You must agree to the terms and conditions.",
+  "accountCreatedSuccessfully": "Account Created Successfully",
+  "congrats": "Congratulations!",
+  "error": "Error!"
 
 }

@@ -4,7 +4,7 @@ import 'package:tradehub/core/api/api_errors/api_error_model.dart';
 import 'package:tradehub/core/api/api_result/api_result.dart';
 
 abstract class ApiExecutor {
-  Future<ApiResult<T>> executeApi<T>(
+  static Future<ApiResult<T>> executeApi<T>(
       {required Future<T> Function() apiCall}) async {
     try {
       var result = await apiCall.call();
