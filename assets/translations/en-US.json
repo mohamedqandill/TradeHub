@@ -49,5 +49,6 @@
   "pleaseAgreeTerms": "You must agree to the terms and conditions.",
   "accountCreatedSuccessfully": "Account Created Successfully",
   "congrats": "Congratulations!",
-  "error": "Error!"
+  "error": "Error!",
+  "sendOTP": "We’ve sent an OTP to your Gmail."
 }

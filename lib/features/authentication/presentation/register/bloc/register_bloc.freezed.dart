@@ -19,19 +19,25 @@ mixin _$RegisterEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function(RegisterBody registerBody) register,
+    required TResult Function() register,
+    required TResult Function() sendOTP,
+    required TResult Function() verifyAccount,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function(RegisterBody registerBody)? register,
+    TResult? Function()? register,
+    TResult? Function()? sendOTP,
+    TResult? Function()? verifyAccount,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function(RegisterBody registerBody)? register,
+    TResult Function()? register,
+    TResult Function()? sendOTP,
+    TResult Function()? verifyAccount,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -39,18 +45,24 @@ mixin _$RegisterEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
     required TResult Function(Register value) register,
+    required TResult Function(SendOTP value) sendOTP,
+    required TResult Function(VerifyAccount value) verifyAccount,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
     TResult? Function(Register value)? register,
+    TResult? Function(SendOTP value)? sendOTP,
+    TResult? Function(VerifyAccount value)? verifyAccount,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
     TResult Function(Register value)? register,
+    TResult Function(SendOTP value)? sendOTP,
+    TResult Function(VerifyAccount value)? verifyAccount,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -119,7 +131,9 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function(RegisterBody registerBody) register,
+    required TResult Function() register,
+    required TResult Function() sendOTP,
+    required TResult Function() verifyAccount,
   }) {
     return started();
   }
@@ -128,7 +142,9 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function(RegisterBody registerBody)? register,
+    TResult? Function()? register,
+    TResult? Function()? sendOTP,
+    TResult? Function()? verifyAccount,
   }) {
     return started?.call();
   }
@@ -137,7 +153,9 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function(RegisterBody registerBody)? register,
+    TResult Function()? register,
+    TResult Function()? sendOTP,
+    TResult Function()? verifyAccount,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -151,6 +169,8 @@ class _$StartedImpl implements _Started {
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
     required TResult Function(Register value) register,
+    required TResult Function(SendOTP value) sendOTP,
+    required TResult Function(VerifyAccount value) verifyAccount,
   }) {
     return started(this);
   }
@@ -160,6 +180,8 @@ class _$StartedImpl implements _Started {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
     TResult? Function(Register value)? register,
+    TResult? Function(SendOTP value)? sendOTP,
+    TResult? Function(VerifyAccount value)? verifyAccount,
   }) {
     return started?.call(this);
   }
@@ -169,6 +191,8 @@ class _$StartedImpl implements _Started {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
     TResult Function(Register value)? register,
+    TResult Function(SendOTP value)? sendOTP,
+    TResult Function(VerifyAccount value)? verifyAccount,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -187,8 +211,6 @@ abstract class _$$RegisterImplCopyWith<$Res> {
   factory _$$RegisterImplCopyWith(
           _$RegisterImpl value, $Res Function(_$RegisterImpl) then) =
       __$$RegisterImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({RegisterBody registerBody});
 }
 
 /// @nodoc
@@ -201,80 +223,60 @@ class __$$RegisterImplCopyWithImpl<$Res>
 
   /// Create a copy of RegisterEvent
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? registerBody = null,
-  }) {
-    return _then(_$RegisterImpl(
-      registerBody: null == registerBody
-          ? _value.registerBody
-          : registerBody // ignore: cast_nullable_to_non_nullable
-              as RegisterBody,
-    ));
-  }
 }
 
 /// @nodoc
 
 class _$RegisterImpl implements Register {
-  const _$RegisterImpl({required this.registerBody});
-
-  @override
-  final RegisterBody registerBody;
+  const _$RegisterImpl();
 
   @override
   String toString() {
-    return 'RegisterEvent.register(registerBody: $registerBody)';
+    return 'RegisterEvent.register()';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$RegisterImpl &&
-            (identical(other.registerBody, registerBody) ||
-                other.registerBody == registerBody));
+        (other.runtimeType == runtimeType && other is _$RegisterImpl);
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, registerBody);
-
-  /// Create a copy of RegisterEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$RegisterImplCopyWith<_$RegisterImpl> get copyWith =>
-      __$$RegisterImplCopyWithImpl<_$RegisterImpl>(this, _$identity);
+  int get hashCode => runtimeType.hashCode;
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function(RegisterBody registerBody) register,
+    required TResult Function() register,
+    required TResult Function() sendOTP,
+    required TResult Function() verifyAccount,
   }) {
-    return register(registerBody);
+    return register();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function(RegisterBody registerBody)? register,
+    TResult? Function()? register,
+    TResult? Function()? sendOTP,
+    TResult? Function()? verifyAccount,
   }) {
-    return register?.call(registerBody);
+    return register?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function(RegisterBody registerBody)? register,
+    TResult Function()? register,
+    TResult Function()? sendOTP,
+    TResult Function()? verifyAccount,
     required TResult orElse(),
   }) {
     if (register != null) {
-      return register(registerBody);
+      return register();
     }
     return orElse();
   }
@@ -284,6 +286,8 @@ class _$RegisterImpl implements Register {
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
     required TResult Function(Register value) register,
+    required TResult Function(SendOTP value) sendOTP,
+    required TResult Function(VerifyAccount value) verifyAccount,
   }) {
     return register(this);
   }
@@ -293,6 +297,8 @@ class _$RegisterImpl implements Register {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
     TResult? Function(Register value)? register,
+    TResult? Function(SendOTP value)? sendOTP,
+    TResult? Function(VerifyAccount value)? verifyAccount,
   }) {
     return register?.call(this);
   }
@@ -302,6 +308,8 @@ class _$RegisterImpl implements Register {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
     TResult Function(Register value)? register,
+    TResult Function(SendOTP value)? sendOTP,
+    TResult Function(VerifyAccount value)? verifyAccount,
     required TResult orElse(),
   }) {
     if (register != null) {
@@ -312,37 +320,266 @@ class _$RegisterImpl implements Register {
 }
 
 abstract class Register implements RegisterEvent {
-  const factory Register({required final RegisterBody registerBody}) =
-      _$RegisterImpl;
+  const factory Register() = _$RegisterImpl;
+}
 
-  RegisterBody get registerBody;
+/// @nodoc
+abstract class _$$SendOTPImplCopyWith<$Res> {
+  factory _$$SendOTPImplCopyWith(
+          _$SendOTPImpl value, $Res Function(_$SendOTPImpl) then) =
+      __$$SendOTPImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$SendOTPImplCopyWithImpl<$Res>
+    extends _$RegisterEventCopyWithImpl<$Res, _$SendOTPImpl>
+    implements _$$SendOTPImplCopyWith<$Res> {
+  __$$SendOTPImplCopyWithImpl(
+      _$SendOTPImpl _value, $Res Function(_$SendOTPImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of RegisterEvent
   /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$RegisterImplCopyWith<_$RegisterImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+
+class _$SendOTPImpl implements SendOTP {
+  const _$SendOTPImpl();
+
+  @override
+  String toString() {
+    return 'RegisterEvent.sendOTP()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$SendOTPImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function() register,
+    required TResult Function() sendOTP,
+    required TResult Function() verifyAccount,
+  }) {
+    return sendOTP();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? started,
+    TResult? Function()? register,
+    TResult? Function()? sendOTP,
+    TResult? Function()? verifyAccount,
+  }) {
+    return sendOTP?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function()? register,
+    TResult Function()? sendOTP,
+    TResult Function()? verifyAccount,
+    required TResult orElse(),
+  }) {
+    if (sendOTP != null) {
+      return sendOTP();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
+    required TResult Function(Register value) register,
+    required TResult Function(SendOTP value) sendOTP,
+    required TResult Function(VerifyAccount value) verifyAccount,
+  }) {
+    return sendOTP(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Started value)? started,
+    TResult? Function(Register value)? register,
+    TResult? Function(SendOTP value)? sendOTP,
+    TResult? Function(VerifyAccount value)? verifyAccount,
+  }) {
+    return sendOTP?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(Register value)? register,
+    TResult Function(SendOTP value)? sendOTP,
+    TResult Function(VerifyAccount value)? verifyAccount,
+    required TResult orElse(),
+  }) {
+    if (sendOTP != null) {
+      return sendOTP(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class SendOTP implements RegisterEvent {
+  const factory SendOTP() = _$SendOTPImpl;
+}
+
+/// @nodoc
+abstract class _$$VerifyAccountImplCopyWith<$Res> {
+  factory _$$VerifyAccountImplCopyWith(
+          _$VerifyAccountImpl value, $Res Function(_$VerifyAccountImpl) then) =
+      __$$VerifyAccountImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$VerifyAccountImplCopyWithImpl<$Res>
+    extends _$RegisterEventCopyWithImpl<$Res, _$VerifyAccountImpl>
+    implements _$$VerifyAccountImplCopyWith<$Res> {
+  __$$VerifyAccountImplCopyWithImpl(
+      _$VerifyAccountImpl _value, $Res Function(_$VerifyAccountImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of RegisterEvent
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$VerifyAccountImpl implements VerifyAccount {
+  const _$VerifyAccountImpl();
+
+  @override
+  String toString() {
+    return 'RegisterEvent.verifyAccount()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$VerifyAccountImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function() register,
+    required TResult Function() sendOTP,
+    required TResult Function() verifyAccount,
+  }) {
+    return verifyAccount();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? started,
+    TResult? Function()? register,
+    TResult? Function()? sendOTP,
+    TResult? Function()? verifyAccount,
+  }) {
+    return verifyAccount?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function()? register,
+    TResult Function()? sendOTP,
+    TResult Function()? verifyAccount,
+    required TResult orElse(),
+  }) {
+    if (verifyAccount != null) {
+      return verifyAccount();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
+    required TResult Function(Register value) register,
+    required TResult Function(SendOTP value) sendOTP,
+    required TResult Function(VerifyAccount value) verifyAccount,
+  }) {
+    return verifyAccount(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Started value)? started,
+    TResult? Function(Register value)? register,
+    TResult? Function(SendOTP value)? sendOTP,
+    TResult? Function(VerifyAccount value)? verifyAccount,
+  }) {
+    return verifyAccount?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(Register value)? register,
+    TResult Function(SendOTP value)? sendOTP,
+    TResult Function(VerifyAccount value)? verifyAccount,
+    required TResult orElse(),
+  }) {
+    if (verifyAccount != null) {
+      return verifyAccount(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class VerifyAccount implements RegisterEvent {
+  const factory VerifyAccount() = _$VerifyAccountImpl;
 }
 
 /// @nodoc
 mixin _$RegisterState {
   RequestStates get registerState => throw _privateConstructorUsedError;
+  RequestStates get sendOTPState => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(RequestStates registerState, String? errorMessage)
+    required TResult Function(RequestStates registerState,
+            RequestStates sendOTPState, String? errorMessage)
         initial,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(RequestStates registerState, String? errorMessage)?
+    TResult? Function(RequestStates registerState, RequestStates sendOTPState,
+            String? errorMessage)?
         initial,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(RequestStates registerState, String? errorMessage)?
+    TResult Function(RequestStates registerState, RequestStates sendOTPState,
+            String? errorMessage)?
         initial,
     required TResult orElse(),
   }) =>
@@ -377,7 +614,10 @@ abstract class $RegisterStateCopyWith<$Res> {
           RegisterState value, $Res Function(RegisterState) then) =
       _$RegisterStateCopyWithImpl<$Res, RegisterState>;
   @useResult
-  $Res call({RequestStates registerState, String? errorMessage});
+  $Res call(
+      {RequestStates registerState,
+      RequestStates sendOTPState,
+      String? errorMessage});
 }
 
 /// @nodoc
@@ -396,12 +636,17 @@ class _$RegisterStateCopyWithImpl<$Res, $Val extends RegisterState>
   @override
   $Res call({
     Object? registerState = null,
+    Object? sendOTPState = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_value.copyWith(
       registerState: null == registerState
           ? _value.registerState
           : registerState // ignore: cast_nullable_to_non_nullable
+              as RequestStates,
+      sendOTPState: null == sendOTPState
+          ? _value.sendOTPState
+          : sendOTPState // ignore: cast_nullable_to_non_nullable
               as RequestStates,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
@@ -419,7 +664,10 @@ abstract class _$$InitialImplCopyWith<$Res>
       __$$InitialImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({RequestStates registerState, String? errorMessage});
+  $Res call(
+      {RequestStates registerState,
+      RequestStates sendOTPState,
+      String? errorMessage});
 }
 
 /// @nodoc
@@ -436,12 +684,17 @@ class __$$InitialImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? registerState = null,
+    Object? sendOTPState = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_$InitialImpl(
       registerState: null == registerState
           ? _value.registerState
           : registerState // ignore: cast_nullable_to_non_nullable
+              as RequestStates,
+      sendOTPState: null == sendOTPState
+          ? _value.sendOTPState
+          : sendOTPState // ignore: cast_nullable_to_non_nullable
               as RequestStates,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
@@ -455,17 +708,22 @@ class __$$InitialImplCopyWithImpl<$Res>
 
 class _$InitialImpl implements _Initial {
   const _$InitialImpl(
-      {this.registerState = RequestStates.initial, this.errorMessage});
+      {this.registerState = RequestStates.initial,
+      this.sendOTPState = RequestStates.initial,
+      this.errorMessage});
 
   @override
   @JsonKey()
   final RequestStates registerState;
   @override
+  @JsonKey()
+  final RequestStates sendOTPState;
+  @override
   final String? errorMessage;
 
   @override
   String toString() {
-    return 'RegisterState.initial(registerState: $registerState, errorMessage: $errorMessage)';
+    return 'RegisterState.initial(registerState: $registerState, sendOTPState: $sendOTPState, errorMessage: $errorMessage)';
   }
 
   @override
@@ -475,12 +733,15 @@ class _$InitialImpl implements _Initial {
             other is _$InitialImpl &&
             (identical(other.registerState, registerState) ||
                 other.registerState == registerState) &&
+            (identical(other.sendOTPState, sendOTPState) ||
+                other.sendOTPState == sendOTPState) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, registerState, errorMessage);
+  int get hashCode =>
+      Object.hash(runtimeType, registerState, sendOTPState, errorMessage);
 
   /// Create a copy of RegisterState
   /// with the given fields replaced by the non-null parameter values.
@@ -493,30 +754,33 @@ class _$InitialImpl implements _Initial {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(RequestStates registerState, String? errorMessage)
+    required TResult Function(RequestStates registerState,
+            RequestStates sendOTPState, String? errorMessage)
         initial,
   }) {
-    return initial(registerState, errorMessage);
+    return initial(registerState, sendOTPState, errorMessage);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(RequestStates registerState, String? errorMessage)?
+    TResult? Function(RequestStates registerState, RequestStates sendOTPState,
+            String? errorMessage)?
         initial,
   }) {
-    return initial?.call(registerState, errorMessage);
+    return initial?.call(registerState, sendOTPState, errorMessage);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(RequestStates registerState, String? errorMessage)?
+    TResult Function(RequestStates registerState, RequestStates sendOTPState,
+            String? errorMessage)?
         initial,
     required TResult orElse(),
   }) {
     if (initial != null) {
-      return initial(registerState, errorMessage);
+      return initial(registerState, sendOTPState, errorMessage);
     }
     return orElse();
   }
@@ -553,10 +817,13 @@ class _$InitialImpl implements _Initial {
 abstract class _Initial implements RegisterState {
   const factory _Initial(
       {final RequestStates registerState,
+      final RequestStates sendOTPState,
       final String? errorMessage}) = _$InitialImpl;
 
   @override
   RequestStates get registerState;
+  @override
+  RequestStates get sendOTPState;
   @override
   String? get errorMessage;
 

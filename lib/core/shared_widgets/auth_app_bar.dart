@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tradehub/Core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/constants/app_constants.dart';
 import 'package:tradehub/core/extensions/main_color.dart';
 
@@ -27,10 +28,10 @@ class buildAuthAppBar extends StatelessWidget implements PreferredSizeWidget {
           alignment: Alignment.center,
           decoration:
               BoxDecoration(color: context.mainColor, shape: BoxShape.circle),
-          child: const Center(
+          child: Center(
             child: Icon(
               Icons.arrow_back_ios_new,
-              color: AppColors.black,
+              color: context.isDarkMode ? AppColors.black : AppColors.white,
             ),
           ),
         ),

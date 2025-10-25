@@ -24,6 +24,10 @@ import '../../../features/authentication/domain/repo_contract/register/register_
     as _i366;
 import '../../../features/authentication/domain/use_cases/register/register_use_case.dart'
     as _i490;
+import '../../../features/authentication/domain/use_cases/register/send_otp_use_case.dart'
+    as _i501;
+import '../../../features/authentication/domain/use_cases/register/verify_account_use_case.dart'
+    as _i461;
 import '../../../features/authentication/presentation/register/bloc/register_bloc.dart'
     as _i395;
 import '../../../features/onBoarding/view_model/language_view_model.dart'
@@ -64,8 +68,15 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i651.RegisterRepoImpl(gh<_i91.RegisterDataSource>()));
     gh.factory<_i490.RegisterUseCase>(
         () => _i490.RegisterUseCase(gh<_i366.RegisterRepo>()));
-    gh.factory<_i395.RegisterBloc>(
-        () => _i395.RegisterBloc(gh<_i490.RegisterUseCase>()));
+    gh.factory<_i501.SendOTPUseCase>(
+        () => _i501.SendOTPUseCase(gh<_i366.RegisterRepo>()));
+    gh.factory<_i461.VerifyAccountUseCase>(
+        () => _i461.VerifyAccountUseCase(gh<_i366.RegisterRepo>()));
+    gh.factory<_i395.RegisterBloc>(() => _i395.RegisterBloc(
+          gh<_i490.RegisterUseCase>(),
+          gh<_i501.SendOTPUseCase>(),
+          gh<_i461.VerifyAccountUseCase>(),
+        ));
     return this;
   }
 }

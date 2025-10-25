@@ -3,14 +3,15 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:tradehub/core/localization/locale_keys.g.dart';
 
-showSuccessSnackBar(BuildContext context, {required String messageTitle}) {
+showSuccessSnackBar(BuildContext context,
+    {required String messageTitle, String? title}) {
   var snackBar = SnackBar(
     /// need to set following properties for best effect of awesome_snackbar_content
     elevation: 0,
     behavior: SnackBarBehavior.floating,
     backgroundColor: Colors.transparent,
     content: AwesomeSnackbarContent(
-      title: tr(LocaleKeys.congrats),
+      title: title ?? tr(LocaleKeys.congrats),
       message: messageTitle,
 
       /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
@@ -27,6 +28,7 @@ showFailureSnackBar(BuildContext context, {required String messageTitle}) {
     behavior: SnackBarBehavior.floating,
     backgroundColor: Colors.transparent,
     content: AwesomeSnackbarContent(
+      inMaterialBanner: true,
       title: tr(LocaleKeys.error),
       message: messageTitle,
 

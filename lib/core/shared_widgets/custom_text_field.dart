@@ -11,6 +11,7 @@ class CustomTextField extends StatelessWidget {
       this.validator,
       this.obscureText = false,
       this.labelText,
+      this.autoFillHints = "",
       this.hintText,
       this.prefixIcon,
       this.suffixIcon});
@@ -22,12 +23,14 @@ class CustomTextField extends StatelessWidget {
   final String? hintText;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
+  final String autoFillHints;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: 335.w,
       child: TextFormField(
+        autofillHints: [autoFillHints!],
         autovalidateMode: AutovalidateMode.onUserInteraction,
         style: Theme.of(context).textTheme.labelSmall,
         controller: controller,

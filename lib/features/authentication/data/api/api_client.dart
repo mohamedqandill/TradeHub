@@ -19,4 +19,11 @@ abstract class AuthApiClient {
   @POST(ApiEndPoints.register)
   Future<RegisterResponse> register(
       {@Body() required RegisterRequestBody registerRequest});
+
+  @POST(ApiEndPoints.sendOTP)
+  Future<String> sendOTP({@Body() required Map<String, dynamic> email});
+
+  @POST(ApiEndPoints.verifyAccount)
+  Future<String> verifyAccount(
+      {@Body() required Map<String, dynamic> verifyAccountBody});
 }
