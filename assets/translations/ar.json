@@ -71,5 +71,7 @@
   "pleaseAgreeTerms": "يجب أن توافق على الشروط والأحكام.",
   "accountCreatedSuccessfully": "تم إنشاء الحساب بنجاح",
   "congrats": "تهانينا!",
-  "error": "خطأ!"
+  "error": "خطأ!",
+  "sendOTP": "تم إرسال كود التفعيل إلى Gmail الخاص بك.",
+  "otpSent": "تم إرسال رمز التحقق"
 }

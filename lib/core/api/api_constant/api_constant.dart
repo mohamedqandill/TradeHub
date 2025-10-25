@@ -1,5 +1,9 @@
 abstract class ApiConstants {
   static const String email = "email";
+  static const String emailCap = "Email";
+  static const String phone = "phone";
+  static const String phoneOrEmail = "PhoneOrEmail";
+  static const String message = "message";
   static const String password = "password";
   static const String phoneNumber = "phoneNumber";
   static const String firstName = "firstName";

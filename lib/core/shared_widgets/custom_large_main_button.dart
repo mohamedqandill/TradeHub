@@ -12,9 +12,11 @@ class CustomLargeMainButton extends StatelessWidget {
       this.width,
       this.height,
       this.radius,
+      this.isLoading = false,
       this.onPressed});
 
   final String text;
+  final bool isLoading;
   final double? width, height, radius;
   final void Function()? onPressed;
 
@@ -36,11 +38,15 @@ class CustomLargeMainButton extends StatelessWidget {
                       Size(width ?? 335.w, height ?? 48.h)),
                 ),
                 onPressed: onPressed,
-                child: Text(
-                  text,
-                  style: context.base.theme.textTheme.titleLarge!
-                      .copyWith(color: AppColors.white),
-                )),
+                child: isLoading
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : Text(
+                        text,
+                        style: context.base.theme.textTheme.titleLarge!
+                            .copyWith(color: AppColors.white),
+                      )),
           )
         : ElevatedButton(
             style: ButtonStyle(
@@ -51,10 +57,14 @@ class CustomLargeMainButton extends StatelessWidget {
                   WidgetStatePropertyAll(Size(width ?? 335.w, height ?? 48.h)),
             ),
             onPressed: onPressed,
-            child: Text(
-              text,
-              style: context.base.theme.textTheme.titleLarge!
-                  .copyWith(color: AppColors.white),
-            ));
+            child: isLoading
+                ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : Text(
+                    text,
+                    style: context.base.theme.textTheme.titleLarge!
+                        .copyWith(color: AppColors.white),
+                  ));
   }
 }

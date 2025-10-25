@@ -1,5 +1,6 @@
 import "package:dio/dio.dart";
 import 'package:easy_localization/easy_localization.dart';
+import 'package:tradehub/core/api/api_constant/api_constant.dart';
 
 import '../../localization/locale_keys.g.dart';
 import 'api_error_model.dart';
@@ -35,6 +36,10 @@ ServerExceptions handleDioErrors(DioException e) {
           return ServerExceptions(
               errorsModel:
                   ErrorsModel(message: LocaleKeys.errorUnauthorized.tr()));
+        case 400:
+          return ServerExceptions(
+              errorsModel:
+                  ErrorsModel(message: e.response!.data[ApiConstants.message]));
         case 404:
           return ServerExceptions(
               errorsModel: ErrorsModel(message: LocaleKeys.errorNotFound.tr()));

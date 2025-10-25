@@ -34,4 +34,37 @@ class RegisterDataSourceImpl implements RegisterDataSource {
         return Error(error: result.error);
     }
   }
+
+  @override
+  Future<ApiResult<String>> sendOTP({required String email}) async {
+    var result = await ApiExecutor.executeApi(
+      apiCall: () async {
+        return await _authApiClient
+            .sendOTP(email: {ApiConstants.phoneOrEmail: email});
+      },
+    );
+    switch (result) {
+      case Error():
+        return Error(error: result.error);
+      case Success():
+        return Success(data: result.data);
+    }
+  }
+
+  @override
+  Future<ApiResult<String>> verifyAccount(
+      {required String email, required String phone}) async {
+    var result = await ApiExecutor.executeApi(
+      apiCall: () => _authApiClient.verifyAccount(verifyAccountBody: {
+        ApiConstants.emailCap: email,
+        ApiConstants.phone: phone
+      }),
+    );
+    switch (result) {
+      case Success():
+        return Success(data: result.data);
+      case Error():
+        return Error(error: result.error);
+    }
+  }
 }

@@ -14,4 +14,15 @@ class RegisterRepoImpl implements RegisterRepo {
       {required RegisterBody registerBody}) async {
     return await _registerDataSource.register(registerBody: registerBody);
   }
+
+  @override
+  Future<ApiResult<String>> sendOTP({required String email}) async {
+    return await _registerDataSource.sendOTP(email: email);
+  }
+
+  @override
+  Future<ApiResult<String>> verifyAccount(
+      {required String email, required String phone}) async {
+    return await _registerDataSource.verifyAccount(email: email, phone: phone);
+  }
 }

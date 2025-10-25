@@ -6,4 +6,9 @@ import '../../models/register/register_body.dart';
 abstract class RegisterDataSource {
   Future<ApiResult<RegisterEntity>> register(
       {required RegisterBody registerBody});
+
+  Future<ApiResult<String>> sendOTP({required String email});
+
+  Future<ApiResult<String>> verifyAccount(
+      {required String email, required String phone});
 }
