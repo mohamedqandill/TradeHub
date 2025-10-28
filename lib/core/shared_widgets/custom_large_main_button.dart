@@ -59,7 +59,9 @@ class CustomLargeMainButton extends StatelessWidget {
             onPressed: onPressed,
             child: isLoading
                 ? const Center(
-                    child: CircularProgressIndicator(),
+                    child: CircularProgressIndicator(
+                      color: AppColors.white,
+                    ),
                   )
                 : Text(
                     text,
