@@ -7,6 +7,7 @@ import 'package:tradehub/core/api/api_result/api_result.dart';
 import 'package:tradehub/features/authentication/domain/use_cases/register/register_use_case.dart';
 import 'package:tradehub/features/authentication/domain/use_cases/register/send_otp_use_case.dart';
 import 'package:tradehub/features/authentication/domain/use_cases/register/verify_account_use_case.dart';
+import 'package:tradehub/features/authentication/domain/use_cases/sign_with_facebook_use_case.dart';
 import 'package:tradehub/features/authentication/domain/use_cases/sign_with_google_use_case.dart';
 
 import '../../../../../main.dart';
@@ -22,6 +23,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   final SendOTPUseCase _sendOTPUseCase;
   final VerifyAccountUseCase _verifyAccountUseCase;
   final SignWithGoogleUseCase _signWithGoogleUseCase;
+  final SignWithFacebookUseCase _signWithFacebookUseCase;
   final email = TextEditingController();
   final firstName = TextEditingController();
   final lastName = TextEditingController();
@@ -33,8 +35,12 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   double? waveHeight;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  RegisterBloc(this._registerUseCase, this._sendOTPUseCase,
-      this._verifyAccountUseCase, this._signWithGoogleUseCase)
+  RegisterBloc(
+      this._registerUseCase,
+      this._sendOTPUseCase,
+      this._verifyAccountUseCase,
+      this._signWithGoogleUseCase,
+      this._signWithFacebookUseCase)
       : super(const RegisterState.initial()) {
     on<Register>((event, emit) async {
       emit(state.copyWith(registerState: RequestStates.loading));
@@ -80,6 +86,19 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         case Error():
           emit(state.copyWith(
               signWithGoogleState: RequestStates.error,
+              errorMessage: result.error!.message));
+      }
+    });
+    on<SignWithFacebook>((event, emit) async {
+      emit(state.copyWith(signWithFacebookState: RequestStates.loading));
+
+      var result = await _signWithFacebookUseCase.call();
+      switch (result) {
+        case Success():
+          emit(state.copyWith(signWithFacebookState: RequestStates.success));
+        case Error():
+          emit(state.copyWith(
+              signWithFacebookState: RequestStates.error,
               errorMessage: result.error!.message));
       }
     });
