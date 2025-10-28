@@ -85,6 +85,7 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i501.SendOTPUseCase>(),
           gh<_i461.VerifyAccountUseCase>(),
           gh<_i1003.SignWithGoogleUseCase>(),
+          gh<_i261.SignWithFacebookUseCase>(),
         ));
     return this;
   }

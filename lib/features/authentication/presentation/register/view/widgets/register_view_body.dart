@@ -56,13 +56,17 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
         ),
         BlocListener<RegisterBloc, RegisterState>(
           listenWhen: (prev, curr) =>
-              prev.signWithGoogleState != curr.signWithGoogleState,
+              prev.signWithGoogleState != curr.signWithGoogleState ||
+              prev.signWithFacebookState != curr.signWithFacebookState,
           listener: (context, state) {
-            if (state.signWithGoogleState == RequestStates.loading) {
+            if (state.signWithGoogleState == RequestStates.loading ||
+                state.signWithFacebookState == RequestStates.loading) {
               showLoading(context);
-            } else if (state.signWithGoogleState == RequestStates.success) {
+            } else if (state.signWithGoogleState == RequestStates.success ||
+                state.signWithFacebookState == RequestStates.success) {
               hideDialog(context);
-            } else if (state.signWithGoogleState == RequestStates.error) {
+            } else if (state.signWithGoogleState == RequestStates.error ||
+                state.signWithFacebookState == RequestStates.error) {
               hideDialog(context);
               showFailureSnackBar(context,
                   messageTitle: state.errorMessage.toString());
@@ -277,8 +281,11 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                                 (index) {
                                   return InkWell(
                                     onTap: () {
-                                      if (index == 1) {
-                                        bloc.add(const SignWithGoogle());
+                                      switch (index) {
+                                        case 1:
+                                          bloc.add(const SignWithGoogle());
+                                        case 0:
+                                          bloc.add(const SignWithFacebook());
                                       }
                                     },
                                     child: Padding(
