@@ -127,6 +127,56 @@ class _AuthApiClient implements AuthApiClient {
     return _value;
   }
 
+  @override
+  Future<void> signWithGoogle({required String accessToken}) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'accessToken': accessToken};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<void>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          'api/account/google',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    await _dio.fetch<void>(_options);
+  }
+
+  @override
+  Future<void> signWithFacebook({required String accessToken}) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'accessToken': accessToken};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<void>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          'api/account/facebook',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    await _dio.fetch<void>(_options);
+  }
+
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||

@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -12,10 +13,14 @@ import 'package:tradehub/features/onBoarding/view_model/theme_view_model.dart';
 import 'core/base/base_inherited_widgets.dart';
 import 'core/utils/di/di.dart';
 import 'core/utils/shared_prefs/prefs.dart';
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   configureDependencies();
   await ScreenUtil.ensureScreenSize();
   await SharedPrefsHelper.init();

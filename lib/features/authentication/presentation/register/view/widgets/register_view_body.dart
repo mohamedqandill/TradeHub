@@ -32,17 +32,6 @@ class RegisterViewBody extends StatefulWidget {
 }
 
 class _RegisterViewBodyState extends State<RegisterViewBody> {
-  bool isRememberMe = false;
-  bool isObscureText = false;
-  double spaceHeight = 16.h;
-  double? waveHeight;
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     var base = BaseInheritedWidget.of(context);
@@ -65,25 +54,27 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
             }
           },
         ),
-        // BlocListener<RegisterBloc, RegisterState>(
-        //   listenWhen: (prev, curr) => prev.sendOTPState != curr.sendOTPState,
-        //   listener: (context, state) {
-        //     if (state.sendOTPState == RequestStates.success) {
-        //       showSuccessSnackBar(context,
-        //           messageTitle: LocaleKeys.sendOTP.tr(),
-        //           title: LocaleKeys.otpSent.tr());
-        //     } else if (state.sendOTPState == RequestStates.error) {
-        //       showFailureSnackBar(context,
-        //           messageTitle: state.errorMessage.toString());
-        //     }
-        //   },
-        // ),
+        BlocListener<RegisterBloc, RegisterState>(
+          listenWhen: (prev, curr) =>
+              prev.signWithGoogleState != curr.signWithGoogleState,
+          listener: (context, state) {
+            if (state.signWithGoogleState == RequestStates.loading) {
+              showLoading(context);
+            } else if (state.signWithGoogleState == RequestStates.success) {
+              hideDialog(context);
+            } else if (state.signWithGoogleState == RequestStates.error) {
+              hideDialog(context);
+              showFailureSnackBar(context,
+                  messageTitle: state.errorMessage.toString());
+            }
+          },
+        ),
       ],
       child:
           BlocBuilder<RegisterBloc, RegisterState>(builder: (context, state) {
         var bloc = BlocProvider.of<RegisterBloc>(context);
         return Form(
-          key: formKey,
+          key: bloc.formKey,
           child: AutofillGroup(
             child: SingleChildScrollView(
               child: Column(
@@ -125,7 +116,7 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                           autoFillHints: AutofillHints.name,
                         ),
                         SizedBox(
-                          height: spaceHeight,
+                          height: bloc.spaceHeight,
                         ),
                         CustomTextField(
                           labelText: LocaleKeys.lastName.tr(),
@@ -138,7 +129,7 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                           autoFillHints: AutofillHints.familyName,
                         ),
                         SizedBox(
-                          height: spaceHeight,
+                          height: bloc.spaceHeight,
                         ),
                         CustomTextField(
                           labelText: LocaleKeys.phoneNumber.tr(),
@@ -150,7 +141,7 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                           autoFillHints: AutofillHints.telephoneNumber,
                         ),
                         SizedBox(
-                          height: spaceHeight,
+                          height: bloc.spaceHeight,
                         ),
                         CustomTextField(
                           autoFillHints: AutofillHints.email,
@@ -168,10 +159,10 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                               )),
                         ),
                         SizedBox(
-                          height: spaceHeight,
+                          height: bloc.spaceHeight,
                         ),
                         CustomTextField(
-                          obscureText: !isObscureText,
+                          obscureText: !bloc.isObscureText,
                           labelText: LocaleKeys.password.tr(),
                           autoFillHints: AutofillHints.password,
                           validator: (input) {
@@ -181,10 +172,10 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                           controller: bloc.password,
                           suffixIcon: IconButton(
                               onPressed: () {
-                                isObscureText = !isObscureText;
+                                bloc.isObscureText = !bloc.isObscureText;
                                 setState(() {});
                               },
-                              icon: isObscureText
+                              icon: bloc.isObscureText
                                   ? Icon(
                                       Icons.visibility,
                                       size: 22.sp,
@@ -207,12 +198,12 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                                 side: const BorderSide(color: AppColors.grey),
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(3.r)),
-                                value: isRememberMe,
+                                value: bloc.isRememberMe,
                                 checkColor: AppColors.white,
                                 activeColor: context.mainColor,
                                 onChanged: (value) {
                                   setState(() {
-                                    isRememberMe = value!;
+                                    bloc.isRememberMe = value!;
                                   });
                                 },
                               ),
@@ -227,21 +218,21 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                           ],
                         ),
                         SizedBox(
-                          height: spaceHeight,
+                          height: bloc.spaceHeight,
                         ),
                         CustomLargeMainButton(
                           onPressed: () {
-                            if (!formKey.currentState!.validate()) {
-                              waveHeight = 140.h;
+                            if (!bloc.formKey.currentState!.validate()) {
+                              bloc.waveHeight = 140.h;
                               setState(() {});
                             }
-                            if (!isRememberMe) {
+                            if (!bloc.isRememberMe) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                       content: Text(
                                           LocaleKeys.pleaseAgreeTerms.tr())));
-                            } else if (formKey.currentState!.validate() &&
-                                isRememberMe) {
+                            } else if (bloc.formKey.currentState!.validate() &&
+                                bloc.isRememberMe) {
                               bloc.add(const Register());
                               Future.delayed(
                                 const Duration(seconds: 2),
@@ -274,7 +265,7 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                           ],
                         ),
                         SizedBox(
-                          height: spaceHeight,
+                          height: bloc.spaceHeight,
                         ),
                         Center(
                           child: SizedBox(
@@ -284,10 +275,17 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                               children: List.generate(
                                 socialIcons.length,
                                 (index) {
-                                  return Padding(
-                                    padding: EdgeInsets.only(right: 10.sp),
-                                    child: CustomSocialContainer(
-                                      icon: socialIcons[index],
+                                  return InkWell(
+                                    onTap: () {
+                                      if (index == 1) {
+                                        bloc.add(const SignWithGoogle());
+                                      }
+                                    },
+                                    child: Padding(
+                                      padding: EdgeInsets.only(right: 10.sp),
+                                      child: CustomSocialContainer(
+                                        icon: socialIcons[index],
+                                      ),
                                     ),
                                   );
                                 },

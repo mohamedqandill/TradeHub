@@ -8,4 +8,6 @@ class RegisterEvent with _$RegisterEvent {
 
   const factory RegisterEvent.sendOTP() = SendOTP;
   const factory RegisterEvent.verifyAccount() = VerifyAccount;
+  const factory RegisterEvent.signWithGoogle() = SignWithGoogle;
+  const factory RegisterEvent.signWithFacebook() = SignWithFacebook;
 }

@@ -56,6 +56,10 @@ dependencies:
   flutter_bloc:
   freezed_annotation:
   awesome_snackbar_content:
+  firebase_core:
+  google_sign_in:
+  firebase_auth:
+  flutter_facebook_auth:
 
 dev_dependencies:
   build_runner: ^2.4.13

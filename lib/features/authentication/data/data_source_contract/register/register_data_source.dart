@@ -11,4 +11,6 @@ abstract class RegisterDataSource {
 
   Future<ApiResult<String>> verifyAccount(
       {required String email, required String phone});
+  Future<ApiResult<void>> signWithGoogle();
+  Future<ApiResult<void>> signWithFacebook();
 }

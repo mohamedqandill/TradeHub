@@ -9,4 +9,6 @@ abstract class RegisterRepo {
   Future<ApiResult<String>> sendOTP({required String email});
   Future<ApiResult<String>> verifyAccount(
       {required String email, required String phone});
+  Future<ApiResult<void>> signWithGoogle();
+  Future<ApiResult<void>> signWithFacebook();
 }

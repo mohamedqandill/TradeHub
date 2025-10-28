@@ -25,4 +25,14 @@ class RegisterRepoImpl implements RegisterRepo {
       {required String email, required String phone}) async {
     return await _registerDataSource.verifyAccount(email: email, phone: phone);
   }
+
+  @override
+  Future<ApiResult<void>> signWithGoogle() async {
+    return await _registerDataSource.signWithGoogle();
+  }
+
+  @override
+  Future<ApiResult<void>> signWithFacebook() async {
+    return await _registerDataSource.signWithFacebook();
+  }
 }
