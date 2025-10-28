@@ -28,6 +28,10 @@ import '../../../features/authentication/domain/use_cases/register/send_otp_use_
     as _i501;
 import '../../../features/authentication/domain/use_cases/register/verify_account_use_case.dart'
     as _i461;
+import '../../../features/authentication/domain/use_cases/sign_with_facebook_use_case.dart'
+    as _i261;
+import '../../../features/authentication/domain/use_cases/sign_with_google_use_case.dart'
+    as _i1003;
 import '../../../features/authentication/presentation/register/bloc/register_bloc.dart'
     as _i395;
 import '../../../features/onBoarding/view_model/language_view_model.dart'
@@ -72,10 +76,15 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i501.SendOTPUseCase(gh<_i366.RegisterRepo>()));
     gh.factory<_i461.VerifyAccountUseCase>(
         () => _i461.VerifyAccountUseCase(gh<_i366.RegisterRepo>()));
+    gh.factory<_i261.SignWithFacebookUseCase>(
+        () => _i261.SignWithFacebookUseCase(gh<_i366.RegisterRepo>()));
+    gh.factory<_i1003.SignWithGoogleUseCase>(
+        () => _i1003.SignWithGoogleUseCase(gh<_i366.RegisterRepo>()));
     gh.factory<_i395.RegisterBloc>(() => _i395.RegisterBloc(
           gh<_i490.RegisterUseCase>(),
           gh<_i501.SendOTPUseCase>(),
           gh<_i461.VerifyAccountUseCase>(),
+          gh<_i1003.SignWithGoogleUseCase>(),
         ));
     return this;
   }

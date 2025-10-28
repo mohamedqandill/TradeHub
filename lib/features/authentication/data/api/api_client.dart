@@ -4,6 +4,7 @@ import 'package:retrofit/retrofit.dart';
 import 'package:tradehub/features/authentication/data/models/register/register_response.dart';
 
 import '../../../../../core/api/api_endpoints/api_endpoints.dart';
+import '../../../../core/api/api_constant/api_constant.dart';
 import '../models/register/register_request_body.dart';
 
 part 'api_client.g.dart';
@@ -26,4 +27,11 @@ abstract class AuthApiClient {
   @POST(ApiEndPoints.verifyAccount)
   Future<String> verifyAccount(
       {@Body() required Map<String, dynamic> verifyAccountBody});
+
+  @GET(ApiEndPoints.signWithGoogle)
+  Future<void> signWithGoogle(
+      {@Query(ApiConstants.accessToken) required String accessToken});
+  @GET(ApiEndPoints.signWithFacebook)
+  Future<void> signWithFacebook(
+      {@Query(ApiConstants.accessToken) required String accessToken});
 }

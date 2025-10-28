@@ -4,4 +4,6 @@ abstract class ApiEndPoints {
   static const String login = "api/account/login";
   static const String sendOTP = "api/account/send-otp";
   static const String verifyAccount = "api/account/verify-account";
+  static const String signWithGoogle = "api/account/google";
+  static const String signWithFacebook = "api/account/facebook";
 }

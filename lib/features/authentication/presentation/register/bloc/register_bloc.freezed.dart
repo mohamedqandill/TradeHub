@@ -22,6 +22,8 @@ mixin _$RegisterEvent {
     required TResult Function() register,
     required TResult Function() sendOTP,
     required TResult Function() verifyAccount,
+    required TResult Function() signWithGoogle,
+    required TResult Function() signWithFacebook,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -30,6 +32,8 @@ mixin _$RegisterEvent {
     TResult? Function()? register,
     TResult? Function()? sendOTP,
     TResult? Function()? verifyAccount,
+    TResult? Function()? signWithGoogle,
+    TResult? Function()? signWithFacebook,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -38,6 +42,8 @@ mixin _$RegisterEvent {
     TResult Function()? register,
     TResult Function()? sendOTP,
     TResult Function()? verifyAccount,
+    TResult Function()? signWithGoogle,
+    TResult Function()? signWithFacebook,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -47,6 +53,8 @@ mixin _$RegisterEvent {
     required TResult Function(Register value) register,
     required TResult Function(SendOTP value) sendOTP,
     required TResult Function(VerifyAccount value) verifyAccount,
+    required TResult Function(SignWithGoogle value) signWithGoogle,
+    required TResult Function(SignWithFacebook value) signWithFacebook,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -55,6 +63,8 @@ mixin _$RegisterEvent {
     TResult? Function(Register value)? register,
     TResult? Function(SendOTP value)? sendOTP,
     TResult? Function(VerifyAccount value)? verifyAccount,
+    TResult? Function(SignWithGoogle value)? signWithGoogle,
+    TResult? Function(SignWithFacebook value)? signWithFacebook,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -63,6 +73,8 @@ mixin _$RegisterEvent {
     TResult Function(Register value)? register,
     TResult Function(SendOTP value)? sendOTP,
     TResult Function(VerifyAccount value)? verifyAccount,
+    TResult Function(SignWithGoogle value)? signWithGoogle,
+    TResult Function(SignWithFacebook value)? signWithFacebook,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -134,6 +146,8 @@ class _$StartedImpl implements _Started {
     required TResult Function() register,
     required TResult Function() sendOTP,
     required TResult Function() verifyAccount,
+    required TResult Function() signWithGoogle,
+    required TResult Function() signWithFacebook,
   }) {
     return started();
   }
@@ -145,6 +159,8 @@ class _$StartedImpl implements _Started {
     TResult? Function()? register,
     TResult? Function()? sendOTP,
     TResult? Function()? verifyAccount,
+    TResult? Function()? signWithGoogle,
+    TResult? Function()? signWithFacebook,
   }) {
     return started?.call();
   }
@@ -156,6 +172,8 @@ class _$StartedImpl implements _Started {
     TResult Function()? register,
     TResult Function()? sendOTP,
     TResult Function()? verifyAccount,
+    TResult Function()? signWithGoogle,
+    TResult Function()? signWithFacebook,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -171,6 +189,8 @@ class _$StartedImpl implements _Started {
     required TResult Function(Register value) register,
     required TResult Function(SendOTP value) sendOTP,
     required TResult Function(VerifyAccount value) verifyAccount,
+    required TResult Function(SignWithGoogle value) signWithGoogle,
+    required TResult Function(SignWithFacebook value) signWithFacebook,
   }) {
     return started(this);
   }
@@ -182,6 +202,8 @@ class _$StartedImpl implements _Started {
     TResult? Function(Register value)? register,
     TResult? Function(SendOTP value)? sendOTP,
     TResult? Function(VerifyAccount value)? verifyAccount,
+    TResult? Function(SignWithGoogle value)? signWithGoogle,
+    TResult? Function(SignWithFacebook value)? signWithFacebook,
   }) {
     return started?.call(this);
   }
@@ -193,6 +215,8 @@ class _$StartedImpl implements _Started {
     TResult Function(Register value)? register,
     TResult Function(SendOTP value)? sendOTP,
     TResult Function(VerifyAccount value)? verifyAccount,
+    TResult Function(SignWithGoogle value)? signWithGoogle,
+    TResult Function(SignWithFacebook value)? signWithFacebook,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -251,6 +275,8 @@ class _$RegisterImpl implements Register {
     required TResult Function() register,
     required TResult Function() sendOTP,
     required TResult Function() verifyAccount,
+    required TResult Function() signWithGoogle,
+    required TResult Function() signWithFacebook,
   }) {
     return register();
   }
@@ -262,6 +288,8 @@ class _$RegisterImpl implements Register {
     TResult? Function()? register,
     TResult? Function()? sendOTP,
     TResult? Function()? verifyAccount,
+    TResult? Function()? signWithGoogle,
+    TResult? Function()? signWithFacebook,
   }) {
     return register?.call();
   }
@@ -273,6 +301,8 @@ class _$RegisterImpl implements Register {
     TResult Function()? register,
     TResult Function()? sendOTP,
     TResult Function()? verifyAccount,
+    TResult Function()? signWithGoogle,
+    TResult Function()? signWithFacebook,
     required TResult orElse(),
   }) {
     if (register != null) {
@@ -288,6 +318,8 @@ class _$RegisterImpl implements Register {
     required TResult Function(Register value) register,
     required TResult Function(SendOTP value) sendOTP,
     required TResult Function(VerifyAccount value) verifyAccount,
+    required TResult Function(SignWithGoogle value) signWithGoogle,
+    required TResult Function(SignWithFacebook value) signWithFacebook,
   }) {
     return register(this);
   }
@@ -299,6 +331,8 @@ class _$RegisterImpl implements Register {
     TResult? Function(Register value)? register,
     TResult? Function(SendOTP value)? sendOTP,
     TResult? Function(VerifyAccount value)? verifyAccount,
+    TResult? Function(SignWithGoogle value)? signWithGoogle,
+    TResult? Function(SignWithFacebook value)? signWithFacebook,
   }) {
     return register?.call(this);
   }
@@ -310,6 +344,8 @@ class _$RegisterImpl implements Register {
     TResult Function(Register value)? register,
     TResult Function(SendOTP value)? sendOTP,
     TResult Function(VerifyAccount value)? verifyAccount,
+    TResult Function(SignWithGoogle value)? signWithGoogle,
+    TResult Function(SignWithFacebook value)? signWithFacebook,
     required TResult orElse(),
   }) {
     if (register != null) {
@@ -368,6 +404,8 @@ class _$SendOTPImpl implements SendOTP {
     required TResult Function() register,
     required TResult Function() sendOTP,
     required TResult Function() verifyAccount,
+    required TResult Function() signWithGoogle,
+    required TResult Function() signWithFacebook,
   }) {
     return sendOTP();
   }
@@ -379,6 +417,8 @@ class _$SendOTPImpl implements SendOTP {
     TResult? Function()? register,
     TResult? Function()? sendOTP,
     TResult? Function()? verifyAccount,
+    TResult? Function()? signWithGoogle,
+    TResult? Function()? signWithFacebook,
   }) {
     return sendOTP?.call();
   }
@@ -390,6 +430,8 @@ class _$SendOTPImpl implements SendOTP {
     TResult Function()? register,
     TResult Function()? sendOTP,
     TResult Function()? verifyAccount,
+    TResult Function()? signWithGoogle,
+    TResult Function()? signWithFacebook,
     required TResult orElse(),
   }) {
     if (sendOTP != null) {
@@ -405,6 +447,8 @@ class _$SendOTPImpl implements SendOTP {
     required TResult Function(Register value) register,
     required TResult Function(SendOTP value) sendOTP,
     required TResult Function(VerifyAccount value) verifyAccount,
+    required TResult Function(SignWithGoogle value) signWithGoogle,
+    required TResult Function(SignWithFacebook value) signWithFacebook,
   }) {
     return sendOTP(this);
   }
@@ -416,6 +460,8 @@ class _$SendOTPImpl implements SendOTP {
     TResult? Function(Register value)? register,
     TResult? Function(SendOTP value)? sendOTP,
     TResult? Function(VerifyAccount value)? verifyAccount,
+    TResult? Function(SignWithGoogle value)? signWithGoogle,
+    TResult? Function(SignWithFacebook value)? signWithFacebook,
   }) {
     return sendOTP?.call(this);
   }
@@ -427,6 +473,8 @@ class _$SendOTPImpl implements SendOTP {
     TResult Function(Register value)? register,
     TResult Function(SendOTP value)? sendOTP,
     TResult Function(VerifyAccount value)? verifyAccount,
+    TResult Function(SignWithGoogle value)? signWithGoogle,
+    TResult Function(SignWithFacebook value)? signWithFacebook,
     required TResult orElse(),
   }) {
     if (sendOTP != null) {
@@ -485,6 +533,8 @@ class _$VerifyAccountImpl implements VerifyAccount {
     required TResult Function() register,
     required TResult Function() sendOTP,
     required TResult Function() verifyAccount,
+    required TResult Function() signWithGoogle,
+    required TResult Function() signWithFacebook,
   }) {
     return verifyAccount();
   }
@@ -496,6 +546,8 @@ class _$VerifyAccountImpl implements VerifyAccount {
     TResult? Function()? register,
     TResult? Function()? sendOTP,
     TResult? Function()? verifyAccount,
+    TResult? Function()? signWithGoogle,
+    TResult? Function()? signWithFacebook,
   }) {
     return verifyAccount?.call();
   }
@@ -507,6 +559,8 @@ class _$VerifyAccountImpl implements VerifyAccount {
     TResult Function()? register,
     TResult Function()? sendOTP,
     TResult Function()? verifyAccount,
+    TResult Function()? signWithGoogle,
+    TResult Function()? signWithFacebook,
     required TResult orElse(),
   }) {
     if (verifyAccount != null) {
@@ -522,6 +576,8 @@ class _$VerifyAccountImpl implements VerifyAccount {
     required TResult Function(Register value) register,
     required TResult Function(SendOTP value) sendOTP,
     required TResult Function(VerifyAccount value) verifyAccount,
+    required TResult Function(SignWithGoogle value) signWithGoogle,
+    required TResult Function(SignWithFacebook value) signWithFacebook,
   }) {
     return verifyAccount(this);
   }
@@ -533,6 +589,8 @@ class _$VerifyAccountImpl implements VerifyAccount {
     TResult? Function(Register value)? register,
     TResult? Function(SendOTP value)? sendOTP,
     TResult? Function(VerifyAccount value)? verifyAccount,
+    TResult? Function(SignWithGoogle value)? signWithGoogle,
+    TResult? Function(SignWithFacebook value)? signWithFacebook,
   }) {
     return verifyAccount?.call(this);
   }
@@ -544,6 +602,8 @@ class _$VerifyAccountImpl implements VerifyAccount {
     TResult Function(Register value)? register,
     TResult Function(SendOTP value)? sendOTP,
     TResult Function(VerifyAccount value)? verifyAccount,
+    TResult Function(SignWithGoogle value)? signWithGoogle,
+    TResult Function(SignWithFacebook value)? signWithFacebook,
     required TResult orElse(),
   }) {
     if (verifyAccount != null) {
@@ -558,27 +618,299 @@ abstract class VerifyAccount implements RegisterEvent {
 }
 
 /// @nodoc
+abstract class _$$SignWithGoogleImplCopyWith<$Res> {
+  factory _$$SignWithGoogleImplCopyWith(_$SignWithGoogleImpl value,
+          $Res Function(_$SignWithGoogleImpl) then) =
+      __$$SignWithGoogleImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$SignWithGoogleImplCopyWithImpl<$Res>
+    extends _$RegisterEventCopyWithImpl<$Res, _$SignWithGoogleImpl>
+    implements _$$SignWithGoogleImplCopyWith<$Res> {
+  __$$SignWithGoogleImplCopyWithImpl(
+      _$SignWithGoogleImpl _value, $Res Function(_$SignWithGoogleImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of RegisterEvent
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$SignWithGoogleImpl implements SignWithGoogle {
+  const _$SignWithGoogleImpl();
+
+  @override
+  String toString() {
+    return 'RegisterEvent.signWithGoogle()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$SignWithGoogleImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function() register,
+    required TResult Function() sendOTP,
+    required TResult Function() verifyAccount,
+    required TResult Function() signWithGoogle,
+    required TResult Function() signWithFacebook,
+  }) {
+    return signWithGoogle();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? started,
+    TResult? Function()? register,
+    TResult? Function()? sendOTP,
+    TResult? Function()? verifyAccount,
+    TResult? Function()? signWithGoogle,
+    TResult? Function()? signWithFacebook,
+  }) {
+    return signWithGoogle?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function()? register,
+    TResult Function()? sendOTP,
+    TResult Function()? verifyAccount,
+    TResult Function()? signWithGoogle,
+    TResult Function()? signWithFacebook,
+    required TResult orElse(),
+  }) {
+    if (signWithGoogle != null) {
+      return signWithGoogle();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
+    required TResult Function(Register value) register,
+    required TResult Function(SendOTP value) sendOTP,
+    required TResult Function(VerifyAccount value) verifyAccount,
+    required TResult Function(SignWithGoogle value) signWithGoogle,
+    required TResult Function(SignWithFacebook value) signWithFacebook,
+  }) {
+    return signWithGoogle(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Started value)? started,
+    TResult? Function(Register value)? register,
+    TResult? Function(SendOTP value)? sendOTP,
+    TResult? Function(VerifyAccount value)? verifyAccount,
+    TResult? Function(SignWithGoogle value)? signWithGoogle,
+    TResult? Function(SignWithFacebook value)? signWithFacebook,
+  }) {
+    return signWithGoogle?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(Register value)? register,
+    TResult Function(SendOTP value)? sendOTP,
+    TResult Function(VerifyAccount value)? verifyAccount,
+    TResult Function(SignWithGoogle value)? signWithGoogle,
+    TResult Function(SignWithFacebook value)? signWithFacebook,
+    required TResult orElse(),
+  }) {
+    if (signWithGoogle != null) {
+      return signWithGoogle(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class SignWithGoogle implements RegisterEvent {
+  const factory SignWithGoogle() = _$SignWithGoogleImpl;
+}
+
+/// @nodoc
+abstract class _$$SignWithFacebookImplCopyWith<$Res> {
+  factory _$$SignWithFacebookImplCopyWith(_$SignWithFacebookImpl value,
+          $Res Function(_$SignWithFacebookImpl) then) =
+      __$$SignWithFacebookImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$SignWithFacebookImplCopyWithImpl<$Res>
+    extends _$RegisterEventCopyWithImpl<$Res, _$SignWithFacebookImpl>
+    implements _$$SignWithFacebookImplCopyWith<$Res> {
+  __$$SignWithFacebookImplCopyWithImpl(_$SignWithFacebookImpl _value,
+      $Res Function(_$SignWithFacebookImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of RegisterEvent
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$SignWithFacebookImpl implements SignWithFacebook {
+  const _$SignWithFacebookImpl();
+
+  @override
+  String toString() {
+    return 'RegisterEvent.signWithFacebook()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$SignWithFacebookImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function() register,
+    required TResult Function() sendOTP,
+    required TResult Function() verifyAccount,
+    required TResult Function() signWithGoogle,
+    required TResult Function() signWithFacebook,
+  }) {
+    return signWithFacebook();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? started,
+    TResult? Function()? register,
+    TResult? Function()? sendOTP,
+    TResult? Function()? verifyAccount,
+    TResult? Function()? signWithGoogle,
+    TResult? Function()? signWithFacebook,
+  }) {
+    return signWithFacebook?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function()? register,
+    TResult Function()? sendOTP,
+    TResult Function()? verifyAccount,
+    TResult Function()? signWithGoogle,
+    TResult Function()? signWithFacebook,
+    required TResult orElse(),
+  }) {
+    if (signWithFacebook != null) {
+      return signWithFacebook();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
+    required TResult Function(Register value) register,
+    required TResult Function(SendOTP value) sendOTP,
+    required TResult Function(VerifyAccount value) verifyAccount,
+    required TResult Function(SignWithGoogle value) signWithGoogle,
+    required TResult Function(SignWithFacebook value) signWithFacebook,
+  }) {
+    return signWithFacebook(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Started value)? started,
+    TResult? Function(Register value)? register,
+    TResult? Function(SendOTP value)? sendOTP,
+    TResult? Function(VerifyAccount value)? verifyAccount,
+    TResult? Function(SignWithGoogle value)? signWithGoogle,
+    TResult? Function(SignWithFacebook value)? signWithFacebook,
+  }) {
+    return signWithFacebook?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(Register value)? register,
+    TResult Function(SendOTP value)? sendOTP,
+    TResult Function(VerifyAccount value)? verifyAccount,
+    TResult Function(SignWithGoogle value)? signWithGoogle,
+    TResult Function(SignWithFacebook value)? signWithFacebook,
+    required TResult orElse(),
+  }) {
+    if (signWithFacebook != null) {
+      return signWithFacebook(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class SignWithFacebook implements RegisterEvent {
+  const factory SignWithFacebook() = _$SignWithFacebookImpl;
+}
+
+/// @nodoc
 mixin _$RegisterState {
   RequestStates get registerState => throw _privateConstructorUsedError;
   RequestStates get sendOTPState => throw _privateConstructorUsedError;
+  RequestStates get signWithGoogleState => throw _privateConstructorUsedError;
+  RequestStates get signWithFacebookState => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(RequestStates registerState,
-            RequestStates sendOTPState, String? errorMessage)
+    required TResult Function(
+            RequestStates registerState,
+            RequestStates sendOTPState,
+            RequestStates signWithGoogleState,
+            RequestStates signWithFacebookState,
+            String? errorMessage)
         initial,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(RequestStates registerState, RequestStates sendOTPState,
+    TResult? Function(
+            RequestStates registerState,
+            RequestStates sendOTPState,
+            RequestStates signWithGoogleState,
+            RequestStates signWithFacebookState,
             String? errorMessage)?
         initial,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(RequestStates registerState, RequestStates sendOTPState,
+    TResult Function(
+            RequestStates registerState,
+            RequestStates sendOTPState,
+            RequestStates signWithGoogleState,
+            RequestStates signWithFacebookState,
             String? errorMessage)?
         initial,
     required TResult orElse(),
@@ -617,6 +949,8 @@ abstract class $RegisterStateCopyWith<$Res> {
   $Res call(
       {RequestStates registerState,
       RequestStates sendOTPState,
+      RequestStates signWithGoogleState,
+      RequestStates signWithFacebookState,
       String? errorMessage});
 }
 
@@ -637,6 +971,8 @@ class _$RegisterStateCopyWithImpl<$Res, $Val extends RegisterState>
   $Res call({
     Object? registerState = null,
     Object? sendOTPState = null,
+    Object? signWithGoogleState = null,
+    Object? signWithFacebookState = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_value.copyWith(
@@ -647,6 +983,14 @@ class _$RegisterStateCopyWithImpl<$Res, $Val extends RegisterState>
       sendOTPState: null == sendOTPState
           ? _value.sendOTPState
           : sendOTPState // ignore: cast_nullable_to_non_nullable
+              as RequestStates,
+      signWithGoogleState: null == signWithGoogleState
+          ? _value.signWithGoogleState
+          : signWithGoogleState // ignore: cast_nullable_to_non_nullable
+              as RequestStates,
+      signWithFacebookState: null == signWithFacebookState
+          ? _value.signWithFacebookState
+          : signWithFacebookState // ignore: cast_nullable_to_non_nullable
               as RequestStates,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
@@ -667,6 +1011,8 @@ abstract class _$$InitialImplCopyWith<$Res>
   $Res call(
       {RequestStates registerState,
       RequestStates sendOTPState,
+      RequestStates signWithGoogleState,
+      RequestStates signWithFacebookState,
       String? errorMessage});
 }
 
@@ -685,6 +1031,8 @@ class __$$InitialImplCopyWithImpl<$Res>
   $Res call({
     Object? registerState = null,
     Object? sendOTPState = null,
+    Object? signWithGoogleState = null,
+    Object? signWithFacebookState = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_$InitialImpl(
@@ -695,6 +1043,14 @@ class __$$InitialImplCopyWithImpl<$Res>
       sendOTPState: null == sendOTPState
           ? _value.sendOTPState
           : sendOTPState // ignore: cast_nullable_to_non_nullable
+              as RequestStates,
+      signWithGoogleState: null == signWithGoogleState
+          ? _value.signWithGoogleState
+          : signWithGoogleState // ignore: cast_nullable_to_non_nullable
+              as RequestStates,
+      signWithFacebookState: null == signWithFacebookState
+          ? _value.signWithFacebookState
+          : signWithFacebookState // ignore: cast_nullable_to_non_nullable
               as RequestStates,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
@@ -710,6 +1066,8 @@ class _$InitialImpl implements _Initial {
   const _$InitialImpl(
       {this.registerState = RequestStates.initial,
       this.sendOTPState = RequestStates.initial,
+      this.signWithGoogleState = RequestStates.initial,
+      this.signWithFacebookState = RequestStates.initial,
       this.errorMessage});
 
   @override
@@ -719,11 +1077,17 @@ class _$InitialImpl implements _Initial {
   @JsonKey()
   final RequestStates sendOTPState;
   @override
+  @JsonKey()
+  final RequestStates signWithGoogleState;
+  @override
+  @JsonKey()
+  final RequestStates signWithFacebookState;
+  @override
   final String? errorMessage;
 
   @override
   String toString() {
-    return 'RegisterState.initial(registerState: $registerState, sendOTPState: $sendOTPState, errorMessage: $errorMessage)';
+    return 'RegisterState.initial(registerState: $registerState, sendOTPState: $sendOTPState, signWithGoogleState: $signWithGoogleState, signWithFacebookState: $signWithFacebookState, errorMessage: $errorMessage)';
   }
 
   @override
@@ -735,13 +1099,17 @@ class _$InitialImpl implements _Initial {
                 other.registerState == registerState) &&
             (identical(other.sendOTPState, sendOTPState) ||
                 other.sendOTPState == sendOTPState) &&
+            (identical(other.signWithGoogleState, signWithGoogleState) ||
+                other.signWithGoogleState == signWithGoogleState) &&
+            (identical(other.signWithFacebookState, signWithFacebookState) ||
+                other.signWithFacebookState == signWithFacebookState) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, registerState, sendOTPState, errorMessage);
+  int get hashCode => Object.hash(runtimeType, registerState, sendOTPState,
+      signWithGoogleState, signWithFacebookState, errorMessage);
 
   /// Create a copy of RegisterState
   /// with the given fields replaced by the non-null parameter values.
@@ -754,33 +1122,48 @@ class _$InitialImpl implements _Initial {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(RequestStates registerState,
-            RequestStates sendOTPState, String? errorMessage)
+    required TResult Function(
+            RequestStates registerState,
+            RequestStates sendOTPState,
+            RequestStates signWithGoogleState,
+            RequestStates signWithFacebookState,
+            String? errorMessage)
         initial,
   }) {
-    return initial(registerState, sendOTPState, errorMessage);
+    return initial(registerState, sendOTPState, signWithGoogleState,
+        signWithFacebookState, errorMessage);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(RequestStates registerState, RequestStates sendOTPState,
+    TResult? Function(
+            RequestStates registerState,
+            RequestStates sendOTPState,
+            RequestStates signWithGoogleState,
+            RequestStates signWithFacebookState,
             String? errorMessage)?
         initial,
   }) {
-    return initial?.call(registerState, sendOTPState, errorMessage);
+    return initial?.call(registerState, sendOTPState, signWithGoogleState,
+        signWithFacebookState, errorMessage);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(RequestStates registerState, RequestStates sendOTPState,
+    TResult Function(
+            RequestStates registerState,
+            RequestStates sendOTPState,
+            RequestStates signWithGoogleState,
+            RequestStates signWithFacebookState,
             String? errorMessage)?
         initial,
     required TResult orElse(),
   }) {
     if (initial != null) {
-      return initial(registerState, sendOTPState, errorMessage);
+      return initial(registerState, sendOTPState, signWithGoogleState,
+          signWithFacebookState, errorMessage);
     }
     return orElse();
   }
@@ -818,12 +1201,18 @@ abstract class _Initial implements RegisterState {
   const factory _Initial(
       {final RequestStates registerState,
       final RequestStates sendOTPState,
+      final RequestStates signWithGoogleState,
+      final RequestStates signWithFacebookState,
       final String? errorMessage}) = _$InitialImpl;
 
   @override
   RequestStates get registerState;
   @override
   RequestStates get sendOTPState;
+  @override
+  RequestStates get signWithGoogleState;
+  @override
+  RequestStates get signWithFacebookState;
   @override
   String? get errorMessage;
 
