@@ -18,10 +18,10 @@
   "orLoginWith": "Or login with",
   "dontHaveAccount": "Don’t have an account? ",
   "create": "Create",
-  "register":"Register",
-  "firstName":"First Name",
-  "lastName":"Last Name",
-  "alreadyHaveAccount":"Already have an account? ",
+  "register": "Register",
+  "firstName": "First Name",
+  "lastName": "Last Name",
+  "alreadyHaveAccount": "Already have an account? ",
   "agreeTerms": "I agree to terms & conditions",
   "orContinueWith": "Or continue with",
   "forgetPass": "Forget Password",
@@ -36,7 +36,6 @@
   "passwordMustBeDiff": "Your New Password Must Be Different \nFrom Previously Used Password.",
   "save": "Save",
   "newPassword": "New Password",
-
   "errorConnectionTimeout": "Connection timeout, please check your internet.",
   "errorSendTimeout": "Request timeout, please try again.",
   "errorReceiveTimeout": "Receiving timeout, please check your network.",
@@ -50,5 +49,6 @@
   "accountCreatedSuccessfully": "Account Created Successfully",
   "congrats": "Congratulations!",
   "error": "Error!",
-  "sendOTP": "We’ve sent an OTP to your Gmail."
+  "sendOTP": "We’ve sent an OTP to your Gmail.",
+  "loggedSuccessfully": "Logged in successfully, welcome back"
 }

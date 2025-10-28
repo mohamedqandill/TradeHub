@@ -75,6 +75,7 @@
   "congrats": "Congratulations!",
   "error": "Error!",
   "sendOTP": "We’ve sent an OTP to your Gmail.",
-  "otpSent": "OTP Sent"
+  "otpSent": "OTP Sent",
+  "loggedSuccessfully": "Logged in successfully, welcome back"
 
 }

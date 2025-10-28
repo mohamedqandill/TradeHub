@@ -1,10 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
 import 'package:tradehub/core/api/api_constant/api_constant.dart';
 import 'package:tradehub/core/api/api_executor/api_executor.dart';
 import 'package:tradehub/core/api/api_result/api_result.dart';
+import 'package:tradehub/core/utils/firebase_service/social_auth.dart';
 import 'package:tradehub/features/authentication/data/api/api_client.dart';
 import 'package:tradehub/features/authentication/data/data_source_contract/register/register_data_source.dart';
 import 'package:tradehub/features/authentication/data/models/register/register_body.dart';
@@ -73,7 +71,7 @@ class RegisterDataSourceImpl implements RegisterDataSource {
 
   @override
   Future<ApiResult<void>> signWithGoogle() async {
-    var user = await signInWithGoogle();
+    var user = await SocialAuthFirebase.signInWithGoogle();
     var result = await ApiExecutor.executeApi(
       apiCall: () => _authApiClient.signWithGoogle(
           accessToken: user.credential!.accessToken!),
@@ -88,7 +86,7 @@ class RegisterDataSourceImpl implements RegisterDataSource {
 
   @override
   Future<ApiResult<void>> signWithFacebook() async {
-    var user = await signInWithFacebook();
+    var user = await SocialAuthFirebase.signInWithFacebook();
     var result = await ApiExecutor.executeApi(
       apiCall: () => _authApiClient.signWithFacebook(
           accessToken: user.credential!.accessToken!),
@@ -99,35 +97,5 @@ class RegisterDataSourceImpl implements RegisterDataSource {
       case Success():
         return Success(data: null);
     }
-  }
-
-  Future<UserCredential> signInWithGoogle() async {
-    // Trigger the authentication flow
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-
-    // Obtain the auth details from the request
-    final GoogleSignInAuthentication? googleAuth =
-        await googleUser?.authentication;
-
-    // Create a new credential
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
-    );
-
-    // Once signed in, return the UserCredential
-    return await FirebaseAuth.instance.signInWithCredential(credential);
-  }
-
-  Future<UserCredential> signInWithFacebook() async {
-    // Trigger the sign-in flow
-    final LoginResult loginResult = await FacebookAuth.instance.login();
-
-    // Create a credential from the access token
-    final OAuthCredential facebookAuthCredential =
-        FacebookAuthProvider.credential(loginResult.accessToken!.token);
-
-    // Once signed in, return the UserCredential
-    return FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
   }
 }

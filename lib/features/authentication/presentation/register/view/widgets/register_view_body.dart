@@ -41,9 +41,7 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
         BlocListener<RegisterBloc, RegisterState>(
           listenWhen: (prev, curr) => prev.registerState != curr.registerState,
           listener: (context, state) {
-            if (state.registerState == RequestStates.loading) {
-              showLoading(context);
-            } else if (state.registerState == RequestStates.success) {
+            if (state.registerState == RequestStates.success) {
               hideDialog(context);
               showSuccessSnackBar(context,
                   messageTitle: tr(LocaleKeys.accountCreatedSuccessfully));
@@ -225,6 +223,8 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                           height: bloc.spaceHeight,
                         ),
                         CustomLargeMainButton(
+                          isLoading:
+                              state.registerState == RequestStates.loading,
                           onPressed: () {
                             if (!bloc.formKey.currentState!.validate()) {
                               bloc.waveHeight = 140.h;

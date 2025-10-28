@@ -78,5 +78,6 @@ abstract class  LocaleKeys {
   static const error = 'error';
   static const sendOTP = 'sendOTP';
   static const otpSent = 'otpSent';
+  static const loggedSuccessfully = 'loggedSuccessfully';
 
 }
