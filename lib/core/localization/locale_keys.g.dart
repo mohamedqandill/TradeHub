@@ -79,5 +79,7 @@ abstract class  LocaleKeys {
   static const sendOTP = 'sendOTP';
   static const otpSent = 'otpSent';
   static const loggedSuccessfully = 'loggedSuccessfully';
+  static const signWithGoogle = 'signWithGoogle';
+  static const signWithFacebook = 'signWithFacebook';
 
 }

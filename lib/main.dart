@@ -15,6 +15,8 @@ import 'core/utils/di/di.dart';
 import 'core/utils/shared_prefs/prefs.dart';
 import 'firebase_options.dart';
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
@@ -60,17 +62,22 @@ class MyApp extends StatelessWidget {
 
         return BaseInheritedWidget(
           theme: provider.mode == ThemeMode.dark
-              ? AppTheme.darkTheme
-              : AppTheme.lightTheme,
+              ? AppTheme.getDarkTheme(
+                  isArabic: context.locale.languageCode == AppConstants.ar)
+              : AppTheme.getLightTheme(
+                  isArabic: context.locale.languageCode == AppConstants.ar),
           screenHeight: MediaQuery.of(context).size.height,
           screenWidth: MediaQuery.of(context).size.width,
           child: MaterialApp(
+            navigatorKey: navigatorKey,
             localizationsDelegates: context.localizationDelegates,
             supportedLocales: context.supportedLocales,
             locale: context.locale,
-            title: 'Flutter Demo',
-            theme: AppTheme.lightTheme,
-            darkTheme: AppTheme.darkTheme,
+            title: 'TradeHub',
+            theme: AppTheme.getLightTheme(
+                isArabic: context.locale.languageCode == AppConstants.ar),
+            darkTheme: AppTheme.getDarkTheme(
+                isArabic: context.locale.languageCode == AppConstants.ar),
             themeMode: provider.mode,
             debugShowCheckedModeBanner: false,
             onGenerateRoute: AppRoutes.getRoutes,

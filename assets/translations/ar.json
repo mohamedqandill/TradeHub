@@ -74,6 +74,7 @@
   "error": "خطأ!",
   "sendOTP": "تم إرسال كود التفعيل إلى Gmail الخاص بك.",
   "otpSent": "تم إرسال رمز التحقق",
-  "loggedSuccessfully": "تم تسجيل الدخول بنجاح، أهلًا بك من جديد"
-
+  "loggedSuccessfully": "تم تسجيل الدخول بنجاح، أهلًا بك من جديد",
+  "signWithGoogle": "تسجيل الدخول بواسطه ",
+  "signWithFacebook": "تسجيل الدخول بواسطه"
 }

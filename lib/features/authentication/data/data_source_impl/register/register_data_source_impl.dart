@@ -73,9 +73,12 @@ class RegisterDataSourceImpl implements RegisterDataSource {
   Future<ApiResult<void>> signWithGoogle() async {
     var user = await SocialAuthFirebase.signInWithGoogle();
     var result = await ApiExecutor.executeApi(
-      apiCall: () => _authApiClient.signWithGoogle(
-          accessToken: user.credential!.accessToken!),
+      apiCall: () => _authApiClient.signWithGoogle(accessToken: {
+        ApiConstants.capAccessToken: user.credential!.accessToken!
+      }),
     );
+    print(" token ${user.credential!.accessToken!}");
+
     switch (result) {
       case Error():
         return Error(error: result.error);
@@ -88,8 +91,9 @@ class RegisterDataSourceImpl implements RegisterDataSource {
   Future<ApiResult<void>> signWithFacebook() async {
     var user = await SocialAuthFirebase.signInWithFacebook();
     var result = await ApiExecutor.executeApi(
-      apiCall: () => _authApiClient.signWithFacebook(
-          accessToken: user.credential!.accessToken!),
+      apiCall: () => _authApiClient.signWithFacebook(accessToken: {
+        ApiConstants.capAccessToken: user.credential!.accessToken!
+      }),
     );
     switch (result) {
       case Error():

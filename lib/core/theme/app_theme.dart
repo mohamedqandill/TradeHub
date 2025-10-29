@@ -4,133 +4,167 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:tradehub/core/colors/app_colors.dart';
 
 abstract class AppTheme {
-  static ThemeData lightTheme = ThemeData(
+  static ThemeData getLightTheme({required bool isArabic}) {
+    final font = isArabic ? GoogleFonts.cairo : GoogleFonts.poppins;
+
+    return ThemeData(
       scaffoldBackgroundColor: AppColors.white,
       appBarTheme: AppBarTheme(
         backgroundColor: Colors.transparent,
         centerTitle: true,
-        titleTextStyle: GoogleFonts.poppins(
-            fontSize: 24.sp,
-            fontWeight: FontWeight.w600,
-            color: AppColors.mainColor),
+        titleTextStyle: font(
+          fontSize: 24.sp,
+          fontWeight: FontWeight.w600,
+          color: AppColors.mainColor,
+        ),
         elevation: 0,
         scrolledUnderElevation: 0,
       ),
       elevatedButtonTheme: const ElevatedButtonThemeData(
-          style: ButtonStyle(
-              backgroundColor: WidgetStatePropertyAll(AppColors.mainColor))),
+        style: ButtonStyle(
+          backgroundColor: WidgetStatePropertyAll(AppColors.mainColor),
+        ),
+      ),
       inputDecorationTheme: InputDecorationTheme(
         suffixIconColor: AppColors.mainColor,
-        labelStyle: GoogleFonts.inter(
-            fontSize: 16.sp,
-            fontWeight: FontWeight.w600,
-            color: AppColors.grey),
+        labelStyle: font(
+          fontSize: 16.sp,
+          fontWeight: FontWeight.w700,
+          color: AppColors.grey,
+        ),
         focusedErrorBorder: OutlineInputBorder(
-            borderSide: const BorderSide(width: 1, color: AppColors.red),
-            borderRadius: BorderRadius.all(Radius.circular(8.r))),
+          borderSide: const BorderSide(width: 1, color: AppColors.red),
+          borderRadius: BorderRadius.all(Radius.circular(8.r)),
+        ),
         errorBorder: OutlineInputBorder(
-            borderSide: const BorderSide(width: 1, color: AppColors.red),
-            borderRadius: BorderRadius.all(Radius.circular(8.r))),
+          borderSide: const BorderSide(width: 1, color: AppColors.red),
+          borderRadius: BorderRadius.all(Radius.circular(8.r)),
+        ),
         enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(8.r))),
+          borderRadius: BorderRadius.all(Radius.circular(8.r)),
+        ),
         disabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(8.r))),
+          borderRadius: BorderRadius.all(Radius.circular(8.r)),
+        ),
         focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(8.r))),
+          borderRadius: BorderRadius.all(Radius.circular(8.r)),
+        ),
       ),
       textTheme: TextTheme(
-        headlineLarge: GoogleFonts.poppins(
-            fontSize: 36.sp,
-            fontWeight: FontWeight.w600,
-            color: AppColors.mainColor),
-        headlineMedium: GoogleFonts.poppins(
-            fontSize: 20.sp,
-            fontWeight: FontWeight.w400,
-            color: AppColors.grey),
-        bodyMedium: GoogleFonts.inter(
-            fontSize: 16.sp,
-            fontWeight: FontWeight.w600,
-            color: AppColors.grey),
-        bodySmall: GoogleFonts.poppins(
-          fontSize: 12.sp,
-          fontWeight: FontWeight.w500,
+        headlineLarge: font(
+          fontSize: 36.sp,
+          fontWeight: FontWeight.w600,
+          color: AppColors.mainColor,
         ),
-        labelSmall: GoogleFonts.poppins(
+        headlineMedium: font(
+          fontSize: 20.sp,
+          fontWeight: FontWeight.w400,
+          color: AppColors.grey,
+        ),
+        bodyMedium: font(
+          fontSize: 16.sp,
+          fontWeight: FontWeight.w600,
+          color: AppColors.grey,
+        ),
+        bodySmall: font(
+          fontSize: 12.sp,
+          fontWeight: FontWeight.w600,
+        ),
+        labelSmall: font(
           fontSize: 16.sp,
           fontWeight: FontWeight.w700,
         ),
-        bodyLarge: GoogleFonts.poppins(
+        bodyLarge: font(
           fontSize: 36.sp,
           fontWeight: FontWeight.w700,
         ),
-        titleLarge: GoogleFonts.poppins(
-            fontSize: 24.sp,
-            fontWeight: FontWeight.w600,
-            color: AppColors.black),
-      ));
-  static ThemeData darkTheme = ThemeData(
+        titleLarge: font(
+          fontSize: 24.sp,
+          fontWeight: FontWeight.w600,
+          color: AppColors.black,
+        ),
+      ),
+    );
+  }
+
+  static ThemeData getDarkTheme({required bool isArabic}) {
+    final font = isArabic ? GoogleFonts.cairo : GoogleFonts.poppins;
+
+    return ThemeData(
       scaffoldBackgroundColor: AppColors.black,
       appBarTheme: AppBarTheme(
         backgroundColor: Colors.transparent,
         centerTitle: true,
-        titleTextStyle: GoogleFonts.poppins(
-            fontSize: 24.sp,
-            fontWeight: FontWeight.w600,
-            color: AppColors.mainDarkColor),
+        titleTextStyle: font(
+          fontSize: 24.sp,
+          fontWeight: FontWeight.w600,
+          color: AppColors.mainDarkColor,
+        ),
         elevation: 0,
         scrolledUnderElevation: 0,
       ),
-      elevatedButtonTheme:
-          ElevatedButtonThemeData(style: ElevatedButton.styleFrom()),
       inputDecorationTheme: InputDecorationTheme(
-        labelStyle: GoogleFonts.inter(
-            fontSize: 16.sp,
-            fontWeight: FontWeight.w600,
-            color: AppColors.white),
+        labelStyle: font(
+          fontSize: 16.sp,
+          fontWeight: FontWeight.w700,
+          color: AppColors.white,
+        ),
         focusedErrorBorder: OutlineInputBorder(
-            borderSide: const BorderSide(width: 1, color: AppColors.red),
-            borderRadius: BorderRadius.all(Radius.circular(8.r))),
+          borderSide: const BorderSide(width: 1, color: AppColors.red),
+          borderRadius: BorderRadius.all(Radius.circular(8.r)),
+        ),
         errorBorder: OutlineInputBorder(
-            borderSide: const BorderSide(width: 1, color: AppColors.red),
-            borderRadius: BorderRadius.all(Radius.circular(8.r))),
+          borderSide: const BorderSide(width: 1, color: AppColors.red),
+          borderRadius: BorderRadius.all(Radius.circular(8.r)),
+        ),
         enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(width: 1, color: AppColors.white),
-            borderRadius: BorderRadius.all(Radius.circular(8.r))),
+          borderSide: const BorderSide(width: 1, color: AppColors.white),
+          borderRadius: BorderRadius.all(Radius.circular(8.r)),
+        ),
         disabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(width: 1, color: AppColors.white),
-            borderRadius: BorderRadius.all(Radius.circular(8.r))),
+          borderSide: const BorderSide(width: 1, color: AppColors.white),
+          borderRadius: BorderRadius.all(Radius.circular(8.r)),
+        ),
         focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(width: 1, color: AppColors.white),
-            borderRadius: BorderRadius.all(Radius.circular(8.r))),
+          borderSide: const BorderSide(width: 1, color: AppColors.white),
+          borderRadius: BorderRadius.all(Radius.circular(8.r)),
+        ),
       ),
       textTheme: TextTheme(
-        headlineLarge: GoogleFonts.poppins(
-            fontSize: 36.sp,
-            fontWeight: FontWeight.w600,
-            color: AppColors.white),
-        headlineMedium: GoogleFonts.poppins(
-            fontSize: 20.sp,
-            fontWeight: FontWeight.w400,
-            color: AppColors.grey),
-        bodyMedium: GoogleFonts.inter(
-            fontSize: 16.sp,
-            fontWeight: FontWeight.w600,
-            color: AppColors.mainDarkColor),
-        bodySmall: GoogleFonts.poppins(
-          fontSize: 12.sp,
-          fontWeight: FontWeight.w500,
+        headlineLarge: font(
+          fontSize: 36.sp,
+          fontWeight: FontWeight.w600,
+          color: AppColors.white,
         ),
-        labelSmall: GoogleFonts.poppins(
-            fontSize: 16.sp,
-            fontWeight: FontWeight.w700,
-            color: AppColors.white),
-        bodyLarge: GoogleFonts.poppins(
-            fontSize: 36.sp,
-            fontWeight: FontWeight.w700,
-            color: AppColors.mainDarkColor),
-        titleLarge: GoogleFonts.poppins(
+        headlineMedium: font(
+          fontSize: 20.sp,
+          fontWeight: FontWeight.w400,
+          color: AppColors.grey,
+        ),
+        bodyMedium: font(
+          fontSize: 16.sp,
+          fontWeight: FontWeight.w600,
+          color: AppColors.mainDarkColor,
+        ),
+        bodySmall: font(
+          fontSize: 12.sp,
+          fontWeight: FontWeight.w600,
+        ),
+        labelSmall: font(
+          fontSize: 16.sp,
+          fontWeight: FontWeight.w700,
+          color: AppColors.white,
+        ),
+        bodyLarge: font(
+          fontSize: 36.sp,
+          fontWeight: FontWeight.w700,
+          color: AppColors.mainDarkColor,
+        ),
+        titleLarge: font(
           fontSize: 24.sp,
           fontWeight: FontWeight.w600,
         ),
-      ));
+      ),
+    );
+  }
 }

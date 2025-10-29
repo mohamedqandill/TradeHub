@@ -4,4 +4,6 @@ part of 'login_bloc.dart';
 class LoginEvent with _$LoginEvent {
   const factory LoginEvent.started() = _Started;
   const factory LoginEvent.login() = Login;
+  const factory LoginEvent.signWithGoogle() = SignWithGoogle;
+  const factory LoginEvent.signWithFacebook() = SignWithFacebook;
 }

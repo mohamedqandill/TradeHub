@@ -101,8 +101,11 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i261.SignWithFacebookUseCase(gh<_i366.RegisterRepo>()));
     gh.factory<_i1003.SignWithGoogleUseCase>(
         () => _i1003.SignWithGoogleUseCase(gh<_i366.RegisterRepo>()));
-    gh.factory<_i941.LoginBloc>(
-        () => _i941.LoginBloc(gh<_i776.LoginUseCase>()));
+    gh.factory<_i941.LoginBloc>(() => _i941.LoginBloc(
+          gh<_i776.LoginUseCase>(),
+          gh<_i1003.SignWithGoogleUseCase>(),
+          gh<_i261.SignWithFacebookUseCase>(),
+        ));
     gh.factory<_i395.RegisterBloc>(() => _i395.RegisterBloc(
           gh<_i490.RegisterUseCase>(),
           gh<_i501.SendOTPUseCase>(),

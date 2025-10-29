@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "25154560706",
+    "project_id": "tradehup-3bb85",
+    "storage_bucket": "tradehup-3bb85.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:25154560706:android:f41287085314e653e7915b",
+        "android_client_info": {
+          "package_name": "com.example.tradehub"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBzY2gb45DOVYd59MuVrEuujDCXK6E1BE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
