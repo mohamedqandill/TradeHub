@@ -7,23 +7,25 @@ import '../../../../../../Core/shared_widgets/svg_widget.dart';
 
 class CustomSocialContainer extends StatelessWidget {
   const CustomSocialContainer({super.key, required this.icon});
+
   final String icon;
+
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 70.w,
       decoration: BoxDecoration(
-          color: context.isDarkMode ? AppColors.grey : Colors.transparent,
+          color: context.isDarkMode ? AppColors.grey : AppColors.white,
           border: Border.all(
-              width: 2,
+              width: 1,
               color: context.isDarkMode
                   ? AppColors.mainDarkColor
-                  : AppColors.lightGrey),
+                  : AppColors.mainColor),
           borderRadius: BorderRadius.circular(10.r)),
       child: Center(
         child: SvgWidget(
           assetName: icon,
-          height: 22.h,
+          height: 30.h,
         ),
       ),
     );

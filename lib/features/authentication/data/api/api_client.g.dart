@@ -163,13 +163,15 @@ class _AuthApiClient implements AuthApiClient {
   }
 
   @override
-  Future<void> signWithGoogle({required String accessToken}) async {
+  Future<void> signWithGoogle(
+      {required Map<String, dynamic> accessToken}) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'accessToken': accessToken};
+    final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    const Map<String, dynamic>? _data = null;
+    final _data = <String, dynamic>{};
+    _data.addAll(accessToken);
     final _options = _setStreamType<void>(Options(
-      method: 'GET',
+      method: 'POST',
       headers: _headers,
       extra: _extra,
     )
@@ -188,13 +190,15 @@ class _AuthApiClient implements AuthApiClient {
   }
 
   @override
-  Future<void> signWithFacebook({required String accessToken}) async {
+  Future<void> signWithFacebook(
+      {required Map<String, dynamic> accessToken}) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'accessToken': accessToken};
+    final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    const Map<String, dynamic>? _data = null;
+    final _data = <String, dynamic>{};
+    _data.addAll(accessToken);
     final _options = _setStreamType<void>(Options(
-      method: 'GET',
+      method: 'POST',
       headers: _headers,
       extra: _extra,
     )

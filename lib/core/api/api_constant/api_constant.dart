@@ -3,6 +3,7 @@ abstract class ApiConstants {
   static const String emailCap = "Email";
   static const String phone = "phone";
   static const String accessToken = "accessToken";
+  static const String capAccessToken = "AccessToken";
   static const String phoneOrEmail = "PhoneOrEmail";
   static const String message = "message";
   static const String password = "password";

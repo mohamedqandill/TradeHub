@@ -50,5 +50,7 @@
   "congrats": "Congratulations!",
   "error": "Error!",
   "sendOTP": "We’ve sent an OTP to your Gmail.",
-  "loggedSuccessfully": "Logged in successfully, welcome back"
+  "loggedSuccessfully": "Logged in successfully, welcome back",
+  "signWithGoogle": "Sign Up With Google",
+  "signWithFacebook": "Sign Up With Facebook"
 }

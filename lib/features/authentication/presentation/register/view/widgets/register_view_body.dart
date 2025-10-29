@@ -63,6 +63,8 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
             } else if (state.signWithGoogleState == RequestStates.success ||
                 state.signWithFacebookState == RequestStates.success) {
               hideDialog(context);
+              showSuccessSnackBar(context,
+                  messageTitle: LocaleKeys.loggedSuccessfully.tr());
             } else if (state.signWithGoogleState == RequestStates.error ||
                 state.signWithFacebookState == RequestStates.error) {
               hideDialog(context);
