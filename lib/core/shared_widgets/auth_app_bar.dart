@@ -17,7 +17,9 @@ class buildAuthAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text(title),
+      title: Text(
+        title,
+      ),
       leadingWidth: 55.w,
       leading: InkWell(
         onTap: () => Navigator.pop(context),

@@ -42,6 +42,8 @@ import '../../../features/authentication/domain/use_cases/sign_with_facebook_use
     as _i261;
 import '../../../features/authentication/domain/use_cases/sign_with_google_use_case.dart'
     as _i1003;
+import '../../../features/authentication/presentation/forget%20password/bloc/forget_password_bloc.dart'
+    as _i459;
 import '../../../features/authentication/presentation/login/bloc/login_bloc.dart'
     as _i941;
 import '../../../features/authentication/presentation/register/bloc/register_bloc.dart'
@@ -113,6 +115,8 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i1003.SignWithGoogleUseCase>(),
           gh<_i261.SignWithFacebookUseCase>(),
         ));
+    gh.factory<_i459.ForgetPasswordBloc>(
+        () => _i459.ForgetPasswordBloc(gh<_i501.SendOTPUseCase>()));
     return this;
   }
 }

@@ -48,7 +48,7 @@ class RegisterDataSourceImpl implements RegisterDataSource {
       case Error():
         return Error(error: result.error);
       case Success():
-        return Success(data: result.data);
+        return Success(data: result.data.toString());
     }
   }
 
