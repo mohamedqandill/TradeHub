@@ -14,7 +14,7 @@ abstract class AppTheme {
         centerTitle: true,
         titleTextStyle: font(
           fontSize: 24.sp,
-          fontWeight: FontWeight.w600,
+          fontWeight: FontWeight.w700,
           color: AppColors.mainColor,
         ),
         elevation: 0,
@@ -63,7 +63,7 @@ abstract class AppTheme {
         ),
         bodyMedium: font(
           fontSize: 16.sp,
-          fontWeight: FontWeight.w600,
+          fontWeight: FontWeight.w700,
           color: AppColors.grey,
         ),
         bodySmall: font(
