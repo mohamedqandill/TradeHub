@@ -30,7 +30,9 @@ class ForgetPassViewBody extends StatelessWidget {
           Future.delayed(
             const Duration(seconds: 1),
             () {
-              Navigator.pushNamed(context, Routes.verifyEmail);
+              Navigator.pushNamed(context, Routes.verifyEmail,
+                  arguments:
+                      BlocProvider.of<ForgetPasswordBloc>(context).email?.text);
             },
           );
         }
