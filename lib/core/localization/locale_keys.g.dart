@@ -81,5 +81,6 @@ abstract class  LocaleKeys {
   static const loggedSuccessfully = 'loggedSuccessfully';
   static const signWithGoogle = 'signWithGoogle';
   static const signWithFacebook = 'signWithFacebook';
+  static const otp_invalid = 'otp_invalid';
 
 }

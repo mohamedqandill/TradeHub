@@ -7,6 +7,7 @@ import 'package:tradehub/features/authentication/data/models/register/register_r
 
 import '../../../../../core/api/api_endpoints/api_endpoints.dart';
 import '../models/register/register_request_body.dart';
+import '../models/verify_o_t_p_body.dart';
 
 part 'api_client.g.dart';
 
@@ -27,7 +28,8 @@ abstract class AuthApiClient {
 
   @POST(ApiEndPoints.sendOTP)
   Future<String> sendOTP({@Body() required Map<String, dynamic> email});
-
+  @POST(ApiEndPoints.verifyOTP)
+  Future<void> verifyOTP({@Body() required VerifyOTPBody verifyOTPBody});
   @POST(ApiEndPoints.verifyAccount)
   Future<String> verifyAccount(
       {@Body() required Map<String, dynamic> verifyAccountBody});

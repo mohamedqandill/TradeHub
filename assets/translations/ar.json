@@ -76,5 +76,8 @@
   "otpSent": "تم إرسال رمز التحقق",
   "loggedSuccessfully": "تم تسجيل الدخول بنجاح، أهلًا بك من جديد",
   "signWithGoogle": "تسجيل الدخول بواسطه ",
-  "signWithFacebook": "تسجيل الدخول بواسطه"
+  "signWithFacebook": "تسجيل الدخول بواسطه",
+  "otp_invalid": "كود التحقق غير صحيح، حاول مرة أخرى."
+
+
 }

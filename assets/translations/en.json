@@ -78,6 +78,8 @@
   "otpSent": "OTP Sent",
   "loggedSuccessfully": "Logged in successfully, welcome back",
   "signWithGoogle": "Sign Up With Google",
-  "signWithFacebook": "Sign Up With Facebook"
+  "signWithFacebook": "Sign Up With Facebook",
+  "otp_invalid": "Invalid verification code. Please try again."
+
 
 }

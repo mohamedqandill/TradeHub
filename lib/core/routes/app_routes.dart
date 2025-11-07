@@ -34,6 +34,7 @@ abstract class AppRoutes {
         );
       case Routes.verifyEmail:
         return MaterialPageRoute(
+          settings: settings,
           builder: (context) => const VerifyEmailScreen(),
         );
       case Routes.newPassword:
