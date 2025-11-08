@@ -17,10 +17,10 @@
   "orLoginWith": "Or login with",
   "dontHaveAccount": "Don’t have an account? ",
   "create": "Create",
-  "register":"Register",
-  "firstName":"First Name",
-  "lastName":"Last Name",
-  "alreadyHaveAccount":"Already have an account? ",
+  "register": "Register",
+  "firstName": "First Name",
+  "lastName": "Last Name",
+  "alreadyHaveAccount": "Already have an account? ",
   "agreeTerms": "I agree to terms & conditions",
   "orContinueWith": "Or continue with",
   "forgetPass": "Forget Password",
@@ -59,7 +59,6 @@
   "specialCharactersRulePassword": "Password must contain at least one special character.",
   "pleaseConfirmPassword": "Please confirm your password.",
   "noMatch": "Passwords do not match.",
-
   "errorConnectionTimeout": "Connection timeout, please check your internet.",
   "errorSendTimeout": "Request timeout, please try again.",
   "errorReceiveTimeout": "Receiving timeout, please check your network.",
@@ -69,7 +68,6 @@
   "errorNotFound": "Requested resource not found.",
   "errorServer": "Internal server error.",
   "errorUnexpected": "Unexpected error occurred.",
-
   "pleaseAgreeTerms": "You must agree to the terms and conditions.",
   "accountCreatedSuccessfully": "Account Created Successfully",
   "congrats": "Congratulations!",
@@ -79,7 +77,6 @@
   "loggedSuccessfully": "Logged in successfully, welcome back",
   "signWithGoogle": "Sign Up With Google",
   "signWithFacebook": "Sign Up With Facebook",
-  "otp_invalid": "Invalid verification code. Please try again."
-
-
+  "otp_invalid": "Invalid verification code. Please try again.",
+  "passwordChangeSuccess": "Password changed successfully."
 }

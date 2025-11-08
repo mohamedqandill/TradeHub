@@ -39,6 +39,7 @@ abstract class AppRoutes {
         );
       case Routes.newPassword:
         return MaterialPageRoute(
+          settings: settings,
           builder: (context) => const NewPasswordScreen(),
         );
       default:

@@ -16,30 +16,40 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart' as _i528;
 import '../../../features/authentication/data/api/api_client.dart' as _i891;
 import '../../../features/authentication/data/data_source_contract/login/login_data_source_contract.dart'
     as _i942;
+import '../../../features/authentication/data/data_source_contract/new_password/new_password_data_source_contract.dart'
+    as _i276;
 import '../../../features/authentication/data/data_source_contract/register/register_data_source.dart'
     as _i91;
 import '../../../features/authentication/data/data_source_contract/verify_otp/verify_otp_data_source_contract.dart'
     as _i994;
 import '../../../features/authentication/data/data_source_impl/login/login_data_source_impl.dart'
     as _i573;
+import '../../../features/authentication/data/data_source_impl/new_password/new_password_data_source_impl.dart'
+    as _i336;
 import '../../../features/authentication/data/data_source_impl/register/register_data_source_impl.dart'
     as _i788;
 import '../../../features/authentication/data/data_source_impl/verify_otp/verify_otp_data_source_impl.dart'
     as _i232;
 import '../../../features/authentication/data/repo_impl/login/login_repo_impl.dart'
     as _i199;
+import '../../../features/authentication/data/repo_impl/new_password/new_password_repo_impl.dart'
+    as _i972;
 import '../../../features/authentication/data/repo_impl/register/register_repo_impl.dart'
     as _i651;
 import '../../../features/authentication/data/repo_impl/verify_otp/verify_otp_repo_impl.dart'
     as _i364;
 import '../../../features/authentication/domain/repo_contract/login/login_repo_contract.dart'
     as _i581;
+import '../../../features/authentication/domain/repo_contract/new_password/new_password_repo_contract.dart'
+    as _i917;
 import '../../../features/authentication/domain/repo_contract/register/register_repo.dart'
     as _i366;
 import '../../../features/authentication/domain/repo_contract/verify_otp/verify_otp_repo_contract.dart'
     as _i95;
 import '../../../features/authentication/domain/use_cases/login/login_use_case.dart'
     as _i776;
+import '../../../features/authentication/domain/use_cases/new_password/new_password_use_case.dart'
+    as _i747;
 import '../../../features/authentication/domain/use_cases/register/register_use_case.dart'
     as _i490;
 import '../../../features/authentication/domain/use_cases/register/send_otp_use_case.dart'
@@ -56,6 +66,8 @@ import '../../../features/authentication/presentation/forget%20password/bloc/for
     as _i459;
 import '../../../features/authentication/presentation/login/bloc/login_bloc.dart'
     as _i941;
+import '../../../features/authentication/presentation/new%20password/bloc/new_password_bloc.dart'
+    as _i689;
 import '../../../features/authentication/presentation/register/bloc/register_bloc.dart'
     as _i395;
 import '../../../features/authentication/presentation/verify%20email/bloc/verify_otp_bloc.dart'
@@ -95,6 +107,8 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i361.Dio>(),
           baseUrl: gh<String>(instanceName: 'baseUrl'),
         ));
+    gh.factory<_i276.NewPasswordDataSourceContract>(
+        () => _i336.NewPasswordDataSourceImpl(gh<_i891.AuthApiClient>()));
     gh.factory<_i942.LoginDataSourceContract>(
         () => _i573.LoginDataSourceImpl(gh<_i891.AuthApiClient>()));
     gh.factory<_i91.RegisterDataSource>(
@@ -105,6 +119,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i651.RegisterRepoImpl(gh<_i91.RegisterDataSource>()));
     gh.factory<_i95.VerifyOTPRepoContract>(
         () => _i364.VerifyOTPRepoImpl(gh<_i994.VerifyOTPDataSourceContract>()));
+    gh.factory<_i917.NewPasswordRepoContract>(() =>
+        _i972.NewPasswordRepoImpl(gh<_i276.NewPasswordDataSourceContract>()));
     gh.factory<_i581.LoginRepoContract>(
         () => _i199.LoginRepoImpl(gh<_i942.LoginDataSourceContract>()));
     gh.factory<_i776.LoginUseCase>(
@@ -121,6 +137,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i1003.SignWithGoogleUseCase(gh<_i366.RegisterRepo>()));
     gh.factory<_i550.VerifyOTPUseCase>(
         () => _i550.VerifyOTPUseCase(gh<_i95.VerifyOTPRepoContract>()));
+    gh.factory<_i747.NewPasswordUseCase>(
+        () => _i747.NewPasswordUseCase(gh<_i917.NewPasswordRepoContract>()));
     gh.factory<_i941.LoginBloc>(() => _i941.LoginBloc(
           gh<_i776.LoginUseCase>(),
           gh<_i1003.SignWithGoogleUseCase>(),
@@ -135,6 +153,8 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.factory<_i459.ForgetPasswordBloc>(
         () => _i459.ForgetPasswordBloc(gh<_i501.SendOTPUseCase>()));
+    gh.factory<_i689.NewPasswordBloc>(
+        () => _i689.NewPasswordBloc(gh<_i747.NewPasswordUseCase>()));
     gh.factory<_i429.VerifyOtpBloc>(
         () => _i429.VerifyOtpBloc(gh<_i550.VerifyOTPUseCase>()));
     return this;
