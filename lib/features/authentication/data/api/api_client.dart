@@ -6,8 +6,9 @@ import 'package:tradehub/features/authentication/data/models/login/login_respons
 import 'package:tradehub/features/authentication/data/models/register/register_response.dart';
 
 import '../../../../../core/api/api_endpoints/api_endpoints.dart';
+import '../models/new_password/new_password_request_body.dart';
 import '../models/register/register_request_body.dart';
-import '../models/verify_o_t_p_body.dart';
+import '../models/verify_otp/verify_o_t_p_body.dart';
 
 part 'api_client.g.dart';
 
@@ -33,6 +34,8 @@ abstract class AuthApiClient {
   @POST(ApiEndPoints.verifyAccount)
   Future<String> verifyAccount(
       {@Body() required Map<String, dynamic> verifyAccountBody});
+  @POST(ApiEndPoints.resetPassword)
+  Future<void> newPassword({@Body() required NewPasswordRequestBody body});
 
   @POST(ApiEndPoints.signWithGoogle)
   Future<void> signWithGoogle(
