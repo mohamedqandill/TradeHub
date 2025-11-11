@@ -42,11 +42,15 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
           listenWhen: (prev, curr) => prev.registerState != curr.registerState,
           listener: (context, state) {
             if (state.registerState == RequestStates.success) {
-              hideDialog(context);
               showSuccessSnackBar(context,
                   messageTitle: tr(LocaleKeys.accountCreatedSuccessfully));
+              Future.delayed(
+                const Duration(seconds: 2),
+                () {
+                  Navigator.pop(context);
+                },
+              );
             } else if (state.registerState == RequestStates.error) {
-              hideDialog(context);
               showFailureSnackBar(context,
                   messageTitle: state.errorMessage.toString());
             }

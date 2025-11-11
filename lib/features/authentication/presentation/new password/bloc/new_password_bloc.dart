@@ -18,6 +18,7 @@ class NewPasswordBloc extends Bloc<NewPasswordEvent, NewPasswordState> {
   final NewPasswordUseCase _newPasswordUseCase;
   late String userEmail;
   late String code;
+  bool isVisible = false;
   final newPassword = TextEditingController();
   final formKey = GlobalKey<FormState>();
 

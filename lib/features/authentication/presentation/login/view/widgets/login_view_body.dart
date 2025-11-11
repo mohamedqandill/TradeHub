@@ -79,191 +79,199 @@ class _LoginViewBodyState extends State<LoginViewBody> {
         child: BlocBuilder<LoginBloc, LoginState>(
           builder: (context, state) {
             var bloc = BlocProvider.of<LoginBloc>(context);
-            return Form(
-              key: bloc.formKey,
-              child: AutofillGroup(
-                child: Column(
-                  children: [
-                    MainTopWave(
-                        height: MediaQuery.of(context).size.height < 750
-                            ? 100
-                            : null),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    const MainLogo(),
-                    Text(
-                      LocaleKeys.login.tr(),
-                      style: base.theme.textTheme.bodyLarge,
-                    ),
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20.w),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          CustomTextField(
-                            labelText: LocaleKeys.emailAddress.tr(),
-                            suffixIcon: Icon(
-                              Icons.email,
-                              size: 22.sp,
+            return SingleChildScrollView(
+              child: Form(
+                key: bloc.formKey,
+                child: AutofillGroup(
+                  child: Column(
+                    children: [
+                      MainTopWave(
+                          height: MediaQuery.of(context).size.height < 750
+                              ? 100
+                              : null),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      const MainLogo(),
+                      Text(
+                        LocaleKeys.login.tr(),
+                        style: base.theme.textTheme.bodyLarge,
+                      ),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20.w),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            CustomTextField(
+                              labelText: LocaleKeys.emailAddress.tr(),
+                              suffixIcon: Icon(
+                                Icons.email,
+                                size: 22.sp,
+                              ),
+                              validator: ValidateFunctions.getInstance()
+                                  .validationOfEmail,
+                              controller: bloc.email,
                             ),
-                            validator: ValidateFunctions.getInstance()
-                                .validationOfEmail,
-                            controller: bloc.email,
-                          ),
-                          SizedBox(
-                            height: 16.h,
-                          ),
-                          CustomTextField(
-                            controller: bloc.password,
-                            validator: ValidateFunctions.getInstance()
-                                .validationOfPassword,
-                            obscureText: !bloc.isObscureText,
-                            labelText: LocaleKeys.password.tr(),
-                            suffixIcon: IconButton(
-                                onPressed: () {
-                                  bloc.isObscureText = !bloc.isObscureText;
-                                  setState(() {});
-                                },
-                                icon: bloc.isObscureText
-                                    ? Icon(
-                                        Icons.visibility,
-                                        size: 22.sp,
-                                      )
-                                    : Icon(
-                                        Icons.visibility_off,
-                                        size: 22.sp,
-                                      )),
-                          ),
-                          Row(
-                            children: [
-                              Transform.translate(
-                                offset: context.locale.languageCode ==
-                                        AppConstants.ar
-                                    ? const Offset(5, 0)
-                                    : const Offset(-5, 0),
-                                child: Checkbox(
-                                  visualDensity:
-                                      const VisualDensity(horizontal: -4),
-                                  side: const BorderSide(color: AppColors.grey),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(3.r)),
-                                  value: bloc.isRememberMe,
-                                  checkColor: AppColors.white,
-                                  activeColor: context.mainColor,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      bloc.isRememberMe = value!;
-                                    });
+                            SizedBox(
+                              height: 16.h,
+                            ),
+                            CustomTextField(
+                              controller: bloc.password,
+                              validator: ValidateFunctions.getInstance()
+                                  .validationOfPassword,
+                              obscureText: !bloc.isObscureText,
+                              labelText: LocaleKeys.password.tr(),
+                              suffixIcon: IconButton(
+                                  onPressed: () {
+                                    bloc.isObscureText = !bloc.isObscureText;
+                                    setState(() {});
                                   },
+                                  icon: bloc.isObscureText
+                                      ? Icon(
+                                          Icons.visibility,
+                                          size: 22.sp,
+                                        )
+                                      : Icon(
+                                          Icons.visibility_off,
+                                          size: 22.sp,
+                                        )),
+                            ),
+                            Row(
+                              children: [
+                                Transform.translate(
+                                  offset: context.locale.languageCode ==
+                                          AppConstants.ar
+                                      ? const Offset(5, 0)
+                                      : const Offset(-5, 0),
+                                  child: Checkbox(
+                                    visualDensity:
+                                        const VisualDensity(horizontal: -4),
+                                    side:
+                                        const BorderSide(color: AppColors.grey),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(3.r)),
+                                    value: bloc.isRememberMe,
+                                    checkColor: AppColors.white,
+                                    activeColor: context.mainColor,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        bloc.isRememberMe = value!;
+                                      });
+                                    },
+                                  ),
                                 ),
-                              ),
-                              Text(
-                                LocaleKeys.rememberMe.tr(),
-                                style: base.theme.textTheme.bodyMedium!
-                                    .copyWith(
-                                        color: context.isDarkMode
-                                            ? AppColors.white
-                                            : AppColors.grey),
-                              ),
-                              const Spacer(),
-                              InkWell(
-                                onTap: () => Navigator.pushNamed(
-                                    context, Routes.forgetPassword),
-                                child: Text(
-                                  LocaleKeys.forgetPassword.tr(),
-                                  style:
-                                      base.theme.textTheme.bodyMedium!.copyWith(
-                                    color: context.mainColor,
+                                Text(
+                                  LocaleKeys.rememberMe.tr(),
+                                  style: base.theme.textTheme.bodyMedium!
+                                      .copyWith(
+                                          color: context.isDarkMode
+                                              ? AppColors.white
+                                              : AppColors.grey),
+                                ),
+                                const Spacer(),
+                                InkWell(
+                                  onTap: () => Navigator.pushNamed(
+                                      context, Routes.forgetPassword),
+                                  child: Text(
+                                    LocaleKeys.forgetPassword.tr(),
+                                    style: base.theme.textTheme.bodyMedium!
+                                        .copyWith(
+                                      color: context.mainColor,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 30.h,
+                            ),
+                            CustomLargeMainButton(
+                              isLoading:
+                                  state.loginState == RequestStates.loading,
+                              onPressed: () {
+                                if (bloc.formKey.currentState!.validate()) {
+                                  bloc.add(const Login());
+                                }
+                              },
+                              text: LocaleKeys.login.tr(),
+                            ),
+                            SizedBox(
+                              height: 24.h,
+                            ),
+                            Row(
+                              children: [
+                                const CustomHorizontalDivider(
+                                  enIndent: 10,
+                                ),
+                                Text(
+                                  LocaleKeys.orLoginWith.tr(),
+                                  style: base.theme.textTheme.bodyMedium!
+                                      .copyWith(
+                                          color: context.isDarkMode
+                                              ? AppColors.white
+                                              : AppColors.grey
+                                                  .withOpacity(0.8)),
+                                ),
+                                const CustomHorizontalDivider(
+                                  indent: 10,
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 16.h,
+                            ),
+                            Center(
+                              child: SizedBox(
+                                height: 48.h,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: List.generate(
+                                    socialIcons.length,
+                                    (index) {
+                                      return InkWell(
+                                        onTap: () {
+                                          switch (index) {
+                                            // case 0:
+                                            //   // bloc.add(const SignWithFacebook());
+                                            case 1:
+                                              bloc.add(const SignWithGoogle());
+                                          }
+                                        },
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsets.only(right: 10.sp),
+                                          child: CustomSocialContainer(
+                                            icon: socialIcons[index],
+                                          ),
+                                        ),
+                                      );
+                                    },
                                   ),
                                 ),
                               ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 30.h,
-                          ),
-                          CustomLargeMainButton(
-                            isLoading:
-                                state.loginState == RequestStates.loading,
-                            onPressed: () {
-                              if (bloc.formKey.currentState!.validate()) {
-                                bloc.add(const Login());
-                              }
-                            },
-                            text: LocaleKeys.login.tr(),
-                          ),
-                          SizedBox(
-                            height: 24.h,
-                          ),
-                          Row(
-                            children: [
-                              const CustomHorizontalDivider(
-                                enIndent: 10,
-                              ),
-                              Text(
-                                LocaleKeys.orLoginWith.tr(),
-                                style: base.theme.textTheme.bodyMedium!
-                                    .copyWith(
-                                        color: context.isDarkMode
-                                            ? AppColors.white
-                                            : AppColors.grey.withOpacity(0.8)),
-                              ),
-                              const CustomHorizontalDivider(
-                                indent: 10,
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 16.h,
-                          ),
-                          Center(
-                            child: SizedBox(
-                              height: 48.h,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: List.generate(
-                                  socialIcons.length,
-                                  (index) {
-                                    return InkWell(
-                                      onTap: () {
-                                        switch (index) {
-                                          // case 0:
-                                          //   // bloc.add(const SignWithFacebook());
-                                          case 1:
-                                            bloc.add(const SignWithGoogle());
-                                        }
-                                      },
-                                      child: Padding(
-                                        padding: EdgeInsets.only(right: 10.sp),
-                                        child: CustomSocialContainer(
-                                          icon: socialIcons[index],
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    const Spacer(),
-                    Center(
-                        child: CustomRichText(
-                      onTap: () {
-                        Navigator.pushNamed(context, Routes.signUp);
-                      },
-                      firstText: LocaleKeys.dontHaveAccount.tr(),
-                      secondText: LocaleKeys.create.tr(),
-                    )),
-                    const Spacer()
-                  ],
+                      //
+                      SizedBox(
+                        height: 40.h,
+                      ),
+                      Center(
+                          child: CustomRichText(
+                        onTap: () {
+                          Navigator.pushNamed(context, Routes.signUp);
+                        },
+                        firstText: LocaleKeys.dontHaveAccount.tr(),
+                        secondText: LocaleKeys.create.tr(),
+                      )),
+                    ],
+                  ),
                 ),
               ),
             );

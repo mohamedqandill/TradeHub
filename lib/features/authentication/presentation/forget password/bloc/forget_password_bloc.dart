@@ -15,15 +15,14 @@ part 'forget_password_state.dart';
 class ForgetPasswordBloc
     extends Bloc<ForgetPasswordEvent, ForgetPasswordState> {
   final SendOTPUseCase _sendOTPUseCase;
-  final TextEditingController? email = TextEditingController();
+  final TextEditingController email = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
   ForgetPasswordBloc(this._sendOTPUseCase)
       : super(const ForgetPasswordState.initial()) {
     on<SendOTP>((event, emit) async {
       emit(state.copyWith(forgetPasswordState: RequestStates.loading));
-      var result =
-          await _sendOTPUseCase.call(email: email?.text ?? event.email!);
+      var result = await _sendOTPUseCase.call(email: event.email ?? email.text);
       switch (result) {
         case Success():
           emit(state.copyWith(

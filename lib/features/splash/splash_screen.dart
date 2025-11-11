@@ -41,10 +41,10 @@ class _SplashScreenState extends State<SplashScreen>
           const Spacer(),
           AnimatedScale(
             scale: _opacity,
-            duration: const Duration(seconds: 1),
+            duration: const Duration(milliseconds: 500),
             curve: Curves.easeOutBack,
             child: AnimatedOpacity(
-              duration: const Duration(seconds: 1),
+              duration: const Duration(milliseconds: 500),
               opacity: _opacity,
               child: SvgPicture.asset(context.isDarkMode
                   ? AppAssets.darkSplash
