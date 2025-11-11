@@ -64,6 +64,7 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                 state.signWithFacebookState == RequestStates.success) {
               hideDialog(context);
               showSuccessSnackBar(context,
+                  title: LocaleKeys.welcome.tr(),
                   messageTitle: LocaleKeys.loggedSuccessfully.tr());
             } else if (state.signWithGoogleState == RequestStates.error ||
                 state.signWithFacebookState == RequestStates.error) {
@@ -286,8 +287,8 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                                       switch (index) {
                                         case 1:
                                           bloc.add(const SignWithGoogle());
-                                        case 0:
-                                          bloc.add(const SignWithFacebook());
+                                        // case 0:
+                                        //   bloc.add(const SignWithFacebook());
                                       }
                                     },
                                     child: Padding(

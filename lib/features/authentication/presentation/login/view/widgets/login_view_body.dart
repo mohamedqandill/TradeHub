@@ -45,6 +45,7 @@ class _LoginViewBodyState extends State<LoginViewBody> {
             listener: (context, state) {
               if (state.loginState == RequestStates.success) {
                 showSuccessSnackBar(context,
+                    title: LocaleKeys.welcome.tr(),
                     messageTitle: LocaleKeys.loggedSuccessfully.tr());
               }
               if (state.loginState == RequestStates.error) {
@@ -231,8 +232,8 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                                     return InkWell(
                                       onTap: () {
                                         switch (index) {
-                                          case 0:
-                                            bloc.add(const SignWithFacebook());
+                                          // case 0:
+                                          //   // bloc.add(const SignWithFacebook());
                                           case 1:
                                             bloc.add(const SignWithGoogle());
                                         }
