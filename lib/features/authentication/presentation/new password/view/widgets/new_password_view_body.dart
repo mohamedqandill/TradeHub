@@ -16,9 +16,14 @@ import '../../../../../../core/localization/locale_keys.g.dart';
 import '../../../../../../core/shared_widgets/custom_text_field.dart';
 import '../../bloc/new_password_bloc.dart';
 
-class NewPasswordViewBody extends StatelessWidget {
+class NewPasswordViewBody extends StatefulWidget {
   const NewPasswordViewBody({super.key});
 
+  @override
+  State<NewPasswordViewBody> createState() => _NewPasswordViewBodyState();
+}
+
+class _NewPasswordViewBodyState extends State<NewPasswordViewBody> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<NewPasswordBloc, NewPasswordState>(
@@ -65,8 +70,22 @@ class NewPasswordViewBody extends StatelessWidget {
                   return ValidateFunctions.getInstance()
                       .validationOfPassword(string);
                 },
+                obscureText: !bloc.isVisible,
                 labelText: LocaleKeys.newPassword.tr(),
-                suffixIcon: const Icon(Icons.remove_red_eye),
+                suffixIcon: InkWell(
+                    onTap: () {
+                      bloc.isVisible = !bloc.isVisible;
+                      setState(() {});
+                    },
+                    child: bloc.isVisible
+                        ? Icon(
+                            Icons.visibility,
+                            size: 22.sp,
+                          )
+                        : Icon(
+                            Icons.visibility_off,
+                            size: 22.sp,
+                          )),
               ),
               SizedBox(
                 height: 34.h,
