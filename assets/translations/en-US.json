@@ -54,6 +54,7 @@
   "signWithGoogle": "Sign Up With Google",
   "signWithFacebook": "Sign Up With Facebook",
   "otp_invalid": "Invalid verification code. Please try again.",
+  "welcome": "Welcome!",
 
   "passwordChangeSuccess": "Password changed successfully."
 

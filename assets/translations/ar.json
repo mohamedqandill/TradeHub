@@ -78,7 +78,6 @@
   "signWithGoogle": "تسجيل الدخول بواسطه ",
   "signWithFacebook": "تسجيل الدخول بواسطه",
   "otp_invalid": "كود التحقق غير صحيح، حاول مرة أخرى.",
-  "passwordChangeSuccess": "تم تغيير كلمة المرور بنجاح."
-
-
+  "passwordChangeSuccess": "تم تغيير كلمة المرور بنجاح.",
+  "welcome": "مرحبا!"
 }

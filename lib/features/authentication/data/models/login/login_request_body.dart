@@ -6,7 +6,7 @@ part 'login_request_body.g.dart';
 
 @JsonSerializable()
 class LoginRequestBody {
-  @JsonKey(name: ApiConstants.email)
+  @JsonKey(name: ApiConstants.emailCap)
   final String? email;
   @JsonKey(name: ApiConstants.password)
   final String? password;
