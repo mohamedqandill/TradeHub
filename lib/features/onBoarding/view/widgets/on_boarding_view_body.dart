@@ -44,7 +44,7 @@ class _OnBoardingViewBodyState extends State<OnBoardingViewBody> {
   }
 
   saveOnBoardingState() async {
-    await prefs.saveBool(AppConstants.firstTime, false);
+    await prefs.saveBool(AppConstants.firstTime, true);
     Navigator.pushReplacementNamed(context, Routes.login);
   }
 

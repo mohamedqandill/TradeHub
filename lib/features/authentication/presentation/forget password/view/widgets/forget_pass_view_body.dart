@@ -24,7 +24,7 @@ class ForgetPassViewBody extends StatelessWidget {
     return BlocConsumer<ForgetPasswordBloc, ForgetPasswordState>(
       listener: (context, state) {
         if (state.forgetPasswordState == RequestStates.success) {
-          showSuccessSnackBar(context,
+          showSuccessSnackBar(
               messageTitle: LocaleKeys.sendOTP.tr(),
               title: LocaleKeys.otpSent.tr());
           Future.delayed(
@@ -32,7 +32,7 @@ class ForgetPassViewBody extends StatelessWidget {
             () {
               Navigator.pushNamed(context, Routes.verifyEmail,
                   arguments:
-                      BlocProvider.of<ForgetPasswordBloc>(context).email?.text);
+                      BlocProvider.of<ForgetPasswordBloc>(context).email.text);
             },
           );
         }

@@ -75,9 +75,14 @@
   "error": "Error!",
   "sendOTP": "We’ve sent an OTP to your Gmail.",
   "otpSent": "OTP Sent",
+  "invalidEmailOrPassword": "Email or password is incorrect",
   "loggedSuccessfully": "Logged in successfully, welcome back",
   "signWithGoogle": "Sign Up With Google",
   "signWithFacebook": "Sign Up With Facebook",
   "otp_invalid": "Invalid verification code. Please try again.",
-  "passwordChangeSuccess": "Password changed successfully."
+  "passwordChangeSuccess": "Password changed successfully.",
+  "Home": "Home",
+  "Favourite": "Favourite",
+  "Cart": "Cart",
+  "Profile": "Profile"
 }

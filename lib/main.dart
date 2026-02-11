@@ -1,8 +1,12 @@
+import 'dart:async';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:tradehub/core/api/api_constant/api_constant.dart';
 import 'package:tradehub/core/constants/app_constants.dart';
 import 'package:tradehub/core/routes/app_routes.dart';
 import 'package:tradehub/core/routes/routes.dart';
@@ -12,44 +16,63 @@ import 'package:tradehub/features/onBoarding/view_model/theme_view_model.dart';
 
 import 'core/base/base_inherited_widgets.dart';
 import 'core/utils/di/di.dart';
+import 'core/utils/secure_storage/secure_storage_service.dart';
 import 'core/utils/shared_prefs/prefs.dart';
 import 'firebase_options.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await EasyLocalization.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  configureDependencies();
-  await ScreenUtil.ensureScreenSize();
-  await SharedPrefsHelper.init();
-  SharedPrefsHelper prefs = getIt<SharedPrefsHelper>();
-  final languageViewModel = getIt<LanguageViewModel>();
-  await languageViewModel.loadLanguage();
-  bool? isFirstTime = prefs.getBool(AppConstants.firstTime);
-  runApp(EasyLocalization(
-    saveLocale: true,
-    startLocale: const Locale(AppConstants.en),
-    supportedLocales: const [Locale(AppConstants.en), Locale(AppConstants.ar)],
-    path: 'assets/translations', // <-- change the path of the translation files
-    fallbackLocale: const Locale(AppConstants.en, AppConstants.us),
-    child: ChangeNotifierProvider(
-      create: (context) => ThemeViewModel()..getSavedTheme(),
-      child: MyApp(
-        isTrue: isFirstTime ?? true,
+Future<void> main() async {
+  await runZonedGuarded<Future<void>>(() async {
+    WidgetsFlutterBinding.ensureInitialized();
+
+    await EasyLocalization.ensureInitialized();
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
+
+    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+    configureDependencies();
+
+    await ScreenUtil.ensureScreenSize();
+    await SharedPrefsHelper.init();
+    SharedPrefsHelper prefs = getIt<SharedPrefsHelper>();
+    final languageViewModel = getIt<LanguageViewModel>();
+    await languageViewModel.loadLanguage();
+    bool? isFirstTime = prefs.getBool(AppConstants.firstTime);
+    String? token = await getIt<SecureStorageHelper>().read(ApiConstants.token);
+
+    runApp(
+      EasyLocalization(
+        saveLocale: true,
+        startLocale: const Locale(AppConstants.en),
+        supportedLocales: const [
+          Locale(AppConstants.en),
+          Locale(AppConstants.ar)
+        ],
+        path: 'assets/translations',
+        fallbackLocale: const Locale(AppConstants.en),
+        child: ChangeNotifierProvider(
+          create: (context) => ThemeViewModel()..getSavedTheme(),
+          child: MyApp(
+            isTrue: isFirstTime ?? false,
+            token: token,
+          ),
+        ),
       ),
-    ),
-  ));
+    );
+  }, (error, stack) {
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+  });
 }
 
 //
 class MyApp extends StatelessWidget {
-  const MyApp({super.key, required this.isTrue});
+  const MyApp({super.key, required this.isTrue, required this.token});
 
   final bool isTrue;
+  final String? token;
 
   // This widget is the root of your application.
   @override
@@ -81,7 +104,11 @@ class MyApp extends StatelessWidget {
             themeMode: provider.mode,
             debugShowCheckedModeBanner: false,
             onGenerateRoute: AppRoutes.getRoutes,
-            initialRoute: isTrue ? Routes.splash : Routes.splash,
+            initialRoute: isTrue
+                ? Routes.splash
+                : token != null
+                    ? Routes.mainLayout
+                    : Routes.login,
           ),
         );
       },

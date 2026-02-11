@@ -67,6 +67,7 @@
   "errorUnauthorized": "غير مصرح لك بالوصول.",
   "errorNotFound": "العنصر المطلوب غير موجود.",
   "errorServer": "خطأ في الخادم.",
+  "invalidEmailOrPassword": "البريد الإلكتروني أو كلمة المرور غير صحيحة",
   "errorUnexpected": "حدث خطأ غير متوقع.",
   "pleaseAgreeTerms": "يجب أن توافق على الشروط والأحكام.",
   "accountCreatedSuccessfully": "تم إنشاء الحساب بنجاح",
@@ -79,5 +80,9 @@
   "signWithFacebook": "تسجيل الدخول بواسطه",
   "otp_invalid": "كود التحقق غير صحيح، حاول مرة أخرى.",
   "passwordChangeSuccess": "تم تغيير كلمة المرور بنجاح.",
-  "welcome": "مرحبا!"
+  "welcome": "مرحبا!",
+  "Home": "الرئيسية",
+  "Favourite": "المفضلة",
+  "Cart": "السلة",
+  "Profile": "حسابي"
 }
