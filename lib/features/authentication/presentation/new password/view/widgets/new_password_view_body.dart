@@ -29,7 +29,7 @@ class _NewPasswordViewBodyState extends State<NewPasswordViewBody> {
     return BlocConsumer<NewPasswordBloc, NewPasswordState>(
       listener: (context, state) {
         if (state.newPasswordState == RequestStates.success) {
-          showSuccessSnackBar(context,
+          showSuccessSnackBar(
               messageTitle: LocaleKeys.passwordChangeSuccess.tr());
           Future.delayed(
             const Duration(seconds: 1),

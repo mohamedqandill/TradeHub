@@ -42,14 +42,12 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
           listenWhen: (prev, curr) => prev.registerState != curr.registerState,
           listener: (context, state) {
             if (state.registerState == RequestStates.success) {
-              showSuccessSnackBar(context,
-                  messageTitle: tr(LocaleKeys.accountCreatedSuccessfully));
               Future.delayed(
-                const Duration(seconds: 2),
-                () {
-                  Navigator.pop(context);
-                },
+                const Duration(seconds: 1),
+                () => Navigator.pop(context),
               );
+              showSuccessSnackBar(
+                  messageTitle: tr(LocaleKeys.accountCreatedSuccessfully));
             } else if (state.registerState == RequestStates.error) {
               showFailureSnackBar(context,
                   messageTitle: state.errorMessage.toString());
@@ -67,7 +65,7 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
             } else if (state.signWithGoogleState == RequestStates.success ||
                 state.signWithFacebookState == RequestStates.success) {
               hideDialog(context);
-              showSuccessSnackBar(context,
+              showSuccessSnackBar(
                   title: LocaleKeys.welcome.tr(),
                   messageTitle: LocaleKeys.loggedSuccessfully.tr());
             } else if (state.signWithGoogleState == RequestStates.error ||
@@ -246,7 +244,7 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                                 bloc.isRememberMe) {
                               bloc.add(const Register());
                               Future.delayed(
-                                const Duration(seconds: 2),
+                                const Duration(milliseconds: 500),
                                 () {
                                   bloc.add(const VerifyAccount());
                                 },

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tradehub/core/extensions/screen_route_transition.dart';
 import 'package:tradehub/core/routes/routes.dart';
+import 'package:tradehub/features/main_layout/presentation/main_layout.dart';
 
 import '../../features/authentication/presentation/forget password/view/forget_password_screen.dart';
 import '../../features/authentication/presentation/login/view/login_screen.dart';
@@ -46,6 +47,11 @@ abstract class AppRoutes {
         return const ForgetPasswordScreen().customRoute(
           settings: settings,
           type: TransitionType.fade,
+        );
+      case Routes.mainLayout:
+        return const MainLayout().customRoute(
+          settings: settings,
+          type: TransitionType.size,
         );
 
       // Verify Email → SlideUp

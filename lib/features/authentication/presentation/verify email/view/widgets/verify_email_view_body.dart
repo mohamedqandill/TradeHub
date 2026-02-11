@@ -91,7 +91,7 @@ class VerifyEmailViewBody extends StatelessWidget {
                 }
                 if (state.forgetPasswordState == RequestStates.success) {
                   hideDialog(context);
-                  showSuccessSnackBar(context,
+                  showSuccessSnackBar(
                       messageTitle: LocaleKeys.sendOTP.tr(),
                       title: LocaleKeys.otpSent.tr());
                 }

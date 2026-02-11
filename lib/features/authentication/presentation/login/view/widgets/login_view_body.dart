@@ -44,9 +44,14 @@ class _LoginViewBodyState extends State<LoginViewBody> {
             },
             listener: (context, state) {
               if (state.loginState == RequestStates.success) {
-                showSuccessSnackBar(context,
+                showSuccessSnackBar(
                     title: LocaleKeys.welcome.tr(),
                     messageTitle: LocaleKeys.loggedSuccessfully.tr());
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  Routes.home,
+                  (route) => false,
+                );
               }
               if (state.loginState == RequestStates.error) {
                 showFailureSnackBar(context,
@@ -65,7 +70,7 @@ class _LoginViewBodyState extends State<LoginViewBody> {
               } else if (state.signWithGoogleState == RequestStates.success ||
                   state.signWithFacebookState == RequestStates.success) {
                 hideDialog(context);
-                showSuccessSnackBar(context,
+                showSuccessSnackBar(
                     messageTitle: LocaleKeys.loggedSuccessfully.tr());
               } else if (state.signWithGoogleState == RequestStates.error ||
                   state.signWithFacebookState == RequestStates.error) {

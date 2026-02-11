@@ -71,6 +71,7 @@ abstract class  LocaleKeys {
   static const errorUnauthorized = 'errorUnauthorized';
   static const errorNotFound = 'errorNotFound';
   static const errorServer = 'errorServer';
+  static const invalidEmailOrPassword = 'invalidEmailOrPassword';
   static const errorUnexpected = 'errorUnexpected';
   static const pleaseAgreeTerms = 'pleaseAgreeTerms';
   static const accountCreatedSuccessfully = 'accountCreatedSuccessfully';
@@ -84,5 +85,9 @@ abstract class  LocaleKeys {
   static const otp_invalid = 'otp_invalid';
   static const passwordChangeSuccess = 'passwordChangeSuccess';
   static const welcome = 'welcome';
+  static const Home = 'Home';
+  static const Favourite = 'Favourite';
+  static const Cart = 'Cart';
+  static const Profile = 'Profile';
 
 }
