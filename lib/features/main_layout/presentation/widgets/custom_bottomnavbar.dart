@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tradehub/Core/extensions/base_inherited_context.dart';
 import 'package:tradehub/Core/extensions/is_dark_mode.dart';
+import 'package:tradehub/core/assets/assets.gen.dart';
 import 'package:tradehub/core/extensions/main_color.dart';
 import 'package:tradehub/core/localization/locale_keys.g.dart';
 
-import '../../../../Core/assets/app_assets.dart';
 import '../../../../Core/colors/app_colors.dart';
 
 class CustomBottomNavbar extends StatefulWidget {
@@ -20,12 +20,18 @@ class CustomBottomNavbar extends StatefulWidget {
 
 class _CustomBottomNavbarState extends State<CustomBottomNavbar> {
   int selectedIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-          border: Border(top: BorderSide(width: 1, color: context.mainColor))),
+          border: Border(
+              top: BorderSide(
+                  width: 1,
+                  color: context.isDarkMode
+                      ? Colors.white.withOpacity(0.5)
+                      : Colors.grey.withOpacity(0.5)))),
       child: BottomNavigationBar(
         showUnselectedLabels: true,
         onTap: (value) {
@@ -45,31 +51,41 @@ class _CustomBottomNavbarState extends State<CustomBottomNavbar> {
         items: [
           BottomNavigationBarItem(
               activeIcon: Image.asset(
-                AppAssets.homeIconFilled,
+                Assets.icons.homeFilled.path,
                 color: context.mainColor,
               ),
               icon: Image.asset(
-                AppAssets.homeIcon,
+                Assets.icons.homeIcon.path,
+                color: context.greyOrWhite,
               ),
               label: LocaleKeys.Home.tr()),
           BottomNavigationBarItem(
               activeIcon: Image.asset(
-                AppAssets.favIcon,
+                Assets.icons.heartFilled.path,
                 color: context.mainColor,
               ),
               icon: Image.asset(
-                AppAssets.favIcon,
+                Assets.icons.heart.path,
+                color: context.greyOrWhite,
               ),
               label: LocaleKeys.Favourite.tr()),
           BottomNavigationBarItem(
-              activeIcon:
-                  Image.asset(color: context.mainColor, AppAssets.cartFilled),
-              icon: Image.asset(AppAssets.cart),
+              activeIcon: Image.asset(
+                  color: context.mainColor, Assets.icons.cartFilled.path),
+              icon: Image.asset(
+                Assets.icons.cart.path,
+                color: context.greyOrWhite,
+              ),
               label: LocaleKeys.Cart.tr()),
           BottomNavigationBarItem(
               activeIcon: Image.asset(
-                  color: context.mainColor, AppAssets.profileIconFilled),
-              icon: Image.asset(AppAssets.profileIcon),
+                color: context.mainColor,
+                Assets.icons.profileFilled.path,
+              ),
+              icon: Image.asset(
+                Assets.icons.profile.path,
+                color: context.greyOrWhite,
+              ),
               label: LocaleKeys.Profile.tr()),
         ],
       ),

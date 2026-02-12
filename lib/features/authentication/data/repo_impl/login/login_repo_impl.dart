@@ -25,6 +25,7 @@ class LoginRepoImpl implements LoginRepoContract {
           await getIt<SecureStorageHelper>()
               .write(ApiConstants.token, result.data!.token!);
           DioServiceExtension.updateDioWithToken(result.data!.token!);
+          print("Token on app start: ${result.data!.token!}");
           print("perm update");
         } else {
           final session = getIt<SessionManager>();

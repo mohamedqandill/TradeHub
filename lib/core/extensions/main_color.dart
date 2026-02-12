@@ -5,4 +5,5 @@ import 'package:tradehub/core/extensions/is_dark_mode.dart';
 extension ThemeExtensionX on BuildContext {
   Color get mainColor =>
       isDarkMode ? AppColors.mainDarkColor : AppColors.mainColor;
+  Color get greyOrWhite => isDarkMode ? AppColors.white : AppColors.grey;
 }

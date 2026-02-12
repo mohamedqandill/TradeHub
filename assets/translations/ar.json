@@ -84,5 +84,8 @@
   "Home": "الرئيسية",
   "Favourite": "المفضلة",
   "Cart": "السلة",
-  "Profile": "حسابي"
+  "Profile": "حسابي",
+  "startShopping": "ابدأ التسوق",
+  "noFavoriteYet": "لا توجد عناصر مفضلة بعد",
+  "favoriteDescription": "ابدأ بحفظ منتجاتك المفضلة وستظهر هنا للوصول السريع"
 }

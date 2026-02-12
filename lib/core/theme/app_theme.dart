@@ -8,6 +8,8 @@ abstract class AppTheme {
     final font = isArabic ? GoogleFonts.cairo : GoogleFonts.poppins;
 
     return ThemeData(
+      splashColor: Colors.transparent,
+      highlightColor: Colors.transparent,
       scaffoldBackgroundColor: AppColors.white,
       appBarTheme: AppBarTheme(
         backgroundColor: Colors.transparent,
@@ -91,6 +93,8 @@ abstract class AppTheme {
     final font = isArabic ? GoogleFonts.cairo : GoogleFonts.poppins;
 
     return ThemeData(
+      splashColor: Colors.transparent,
+      highlightColor: Colors.transparent,
       scaffoldBackgroundColor: AppColors.black,
       appBarTheme: AppBarTheme(
         backgroundColor: Colors.transparent,

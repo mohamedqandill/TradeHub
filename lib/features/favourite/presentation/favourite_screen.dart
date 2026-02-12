@@ -1,10 +1,19 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:tradehub/core/localization/locale_keys.g.dart';
+import 'package:tradehub/core/shared_widgets/main_layout_app_bar.dart';
+import 'package:tradehub/features/favourite/presentation/widgets/empty_favorite_screen_body.dart';
 
 class FavouriteScreen extends StatelessWidget {
   const FavouriteScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+    return SafeArea(
+      child: Scaffold(
+        appBar: MainLayoutAppBar(title: LocaleKeys.Favourite.tr()),
+        body: const EmptyFavoriteScreenBody(),
+      ),
+    );
   }
 }
