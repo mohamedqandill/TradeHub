@@ -87,5 +87,8 @@
   "Profile": "حسابي",
   "startShopping": "ابدأ التسوق",
   "noFavoriteYet": "لا توجد عناصر مفضلة بعد",
-  "favoriteDescription": "ابدأ بحفظ منتجاتك المفضلة وستظهر هنا للوصول السريع"
+  "favoriteDescription": "ابدأ بحفظ منتجاتك المفضلة وستظهر هنا للوصول السريع",
+  "yourCartIsEmpty": "سلتك فارغة",
+  "timeToFillItUpAndExplore": "حان وقت ملئها! استكشف مجموعاتنا واعثر على مفضلاتك الجديدة.",
+  "myCart": "سلتي"
 }

@@ -6,10 +6,9 @@ import 'package:tradehub/Core/shared_widgets/custom_large_main_button.dart';
 import 'package:tradehub/core/assets/assets.gen.dart';
 import 'package:tradehub/core/extensions/main_color.dart';
 import 'package:tradehub/core/localization/locale_keys.g.dart';
-import 'package:tradehub/core/shared_widgets/light_dark_image.dart';
 
-class EmptyFavoriteScreenBody extends StatelessWidget {
-  const EmptyFavoriteScreenBody({super.key});
+class EmptyCartScreenBody extends StatelessWidget {
+  const EmptyCartScreenBody({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,15 +19,13 @@ class EmptyFavoriteScreenBody extends StatelessWidget {
           height: 43.h,
         ),
         Center(
-          child: BuildLightDarkImage(
-              lightPath: Assets.images.emptyHeartLight.path,
-              darkPath: Assets.images.emptyHeartDark.path),
+          child: Image.asset(Assets.images.emptyCart.path),
         ),
         SizedBox(
           height: 18.h,
         ),
         Text(
-          LocaleKeys.noFavoriteYet.tr(),
+          LocaleKeys.yourCartIsEmpty.tr(),
           style: context.base.theme.textTheme.titleLarge
               ?.copyWith(color: context.mainColor, fontWeight: FontWeight.bold),
         ),
@@ -39,7 +36,7 @@ class EmptyFavoriteScreenBody extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: Text(
             textAlign: TextAlign.center,
-            LocaleKeys.favoriteDescription.tr(),
+            LocaleKeys.timeToFillItUpAndExplore.tr(),
             style: context.base.theme.textTheme.bodyMedium?.copyWith(
                 fontWeight: FontWeight.w400, color: context.greyOrWhite),
           ),

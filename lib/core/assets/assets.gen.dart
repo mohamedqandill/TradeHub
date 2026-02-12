@@ -145,6 +145,10 @@ class $AssetsImagesGen {
   AssetGenImage get dataSecurity =>
       const AssetGenImage('assets/images/data security.png');
 
+  /// File path: assets/images/emptyCart.png
+  AssetGenImage get emptyCart =>
+      const AssetGenImage('assets/images/emptyCart.png');
+
   /// File path: assets/images/emptyHeartDark.png
   AssetGenImage get emptyHeartDark =>
       const AssetGenImage('assets/images/emptyHeartDark.png');
@@ -180,6 +184,7 @@ class $AssetsImagesGen {
         darkbottomsplash,
         darksplash,
         dataSecurity,
+        emptyCart,
         emptyHeartDark,
         emptyHeartLight,
         mainDarkLogo,
