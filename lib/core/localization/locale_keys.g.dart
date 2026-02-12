@@ -95,5 +95,6 @@ abstract class  LocaleKeys {
   static const yourCartIsEmpty = 'yourCartIsEmpty';
   static const timeToFillItUpAndExplore = 'timeToFillItUpAndExplore';
   static const myCart = 'myCart';
+  static const searchYourFavorites = 'searchYourFavorites';
 
 }
