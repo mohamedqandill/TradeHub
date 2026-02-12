@@ -73,6 +73,7 @@ dev_dependencies:
   flutter_gen_runner: ^5.3.1
 
 
+
   freezed:
   flutter_test:
     sdk: flutter

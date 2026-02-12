@@ -50,7 +50,7 @@ Future<void> main() async {
     runApp(
       EasyLocalization(
         saveLocale: true,
-        startLocale: const Locale(AppConstants.ar),
+        startLocale: const Locale(AppConstants.en),
         supportedLocales: const [
           Locale(AppConstants.en),
           Locale(AppConstants.ar)
