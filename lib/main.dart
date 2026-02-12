@@ -16,6 +16,7 @@ import 'package:tradehub/features/onBoarding/view_model/theme_view_model.dart';
 
 import 'core/base/base_inherited_widgets.dart';
 import 'core/utils/di/di.dart';
+import 'core/utils/dio/dio_services.dart';
 import 'core/utils/secure_storage/secure_storage_service.dart';
 import 'core/utils/shared_prefs/prefs.dart';
 import 'firebase_options.dart';
@@ -43,6 +44,9 @@ Future<void> main() async {
     bool? isFirstTime = prefs.getBool(AppConstants.firstTime);
     String? token = await getIt<SecureStorageHelper>().read(ApiConstants.token);
 
+    if (token != null) {
+      DioServiceExtension.updateDioWithToken(token);
+    }
     runApp(
       EasyLocalization(
         saveLocale: true,

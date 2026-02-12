@@ -70,6 +70,9 @@ dev_dependencies:
   json_serializable: ^6.9.0
   retrofit_generator:
   injectable_generator:
+  flutter_gen_runner: ^5.3.1
+
+
   freezed:
   flutter_test:
     sdk: flutter
@@ -80,7 +83,9 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^4.0.0
-
+flutter_gen:
+    output: lib/core/assets/
+    line_length: 80
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

@@ -82,7 +82,13 @@
   "otp_invalid": "Invalid verification code. Please try again.",
   "passwordChangeSuccess": "Password changed successfully.",
   "Home": "Home",
-  "Favourite": "Favourite",
+  "Favourite": "Favorites",
   "Cart": "Cart",
-  "Profile": "Profile"
+  "Profile": "Profile",
+
+  "startShopping": "Start Shopping",
+  "noFavoriteYet": "No favorite yet",
+  "favoriteDescription": "Start saving your favorite items and they will appear here for quick access"
+
+
 }

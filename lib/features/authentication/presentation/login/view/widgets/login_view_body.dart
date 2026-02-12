@@ -49,7 +49,7 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                     messageTitle: LocaleKeys.loggedSuccessfully.tr());
                 Navigator.pushNamedAndRemoveUntil(
                   context,
-                  Routes.home,
+                  Routes.mainLayout,
                   (route) => false,
                 );
               }
