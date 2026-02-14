@@ -91,6 +91,11 @@
   "yourCartIsEmpty": "سلتك فارغة",
   "timeToFillItUpAndExplore": "حان وقت ملئها! استكشف مجموعاتنا واعثر على مفضلاتك الجديدة.",
   "myCart": "سلتي",
-  "searchYourFavorites": "ابحث عن مفضلاتك..."
+  "searchYourFavorites": "ابحث عن مفضلاتك...",
+  "subtotal": "المجموع الفرعي",
+  "shipping": "الشحن",
+  "tax": "الضريبة",
+  "proceedToCheckout": "المتابعة للدفع",
+  "totalAmount": "إجمالي المبلغ"
 
 }

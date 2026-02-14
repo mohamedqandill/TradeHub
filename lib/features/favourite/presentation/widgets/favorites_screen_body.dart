@@ -50,10 +50,10 @@ class _FavoritesScreenBodyState extends State<FavoritesScreenBody> {
                   itemCount: 5,
                   itemBuilder: (context, index) {
                     return CustomFavoriteCard(
-                        image: Assets.images.blackGirlWithCart.path,
-                        title: "Classic Runner",
+                        image: Assets.images.tshirt.path,
+                        title: "Classic T-Shirt Sport",
                         storeName: "Nike Store",
-                        price: "#1200");
+                        price: "1200");
                   },
                 )
               ],
