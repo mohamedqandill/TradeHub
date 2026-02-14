@@ -5,16 +5,15 @@ import 'package:tradehub/core/colors/app_colors.dart';
 
 abstract class AppTheme {
   static ThemeData getLightTheme({required bool isArabic}) {
-    final font = isArabic ? GoogleFonts.cairo : GoogleFonts.poppins;
-
     return ThemeData(
+      fontFamily: isArabic ? "Cairo" : "Poppins",
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
       scaffoldBackgroundColor: AppColors.white,
       appBarTheme: AppBarTheme(
         backgroundColor: Colors.transparent,
         centerTitle: true,
-        titleTextStyle: font(
+        titleTextStyle: TextStyle(
           fontSize: 24.sp,
           fontWeight: FontWeight.w700,
           color: AppColors.mainColor,
@@ -29,7 +28,7 @@ abstract class AppTheme {
       ),
       inputDecorationTheme: InputDecorationTheme(
         suffixIconColor: AppColors.mainColor,
-        labelStyle: font(
+        labelStyle: TextStyle(
           fontSize: 16.sp,
           fontWeight: FontWeight.w700,
           color: AppColors.grey,
@@ -53,34 +52,34 @@ abstract class AppTheme {
         ),
       ),
       textTheme: TextTheme(
-        headlineLarge: font(
+        headlineLarge: TextStyle(
           fontSize: 36.sp,
           fontWeight: FontWeight.w600,
           color: AppColors.mainColor,
         ),
-        headlineMedium: font(
+        headlineMedium: TextStyle(
           fontSize: 20.sp,
           fontWeight: FontWeight.w400,
           color: AppColors.grey,
         ),
-        bodyMedium: font(
+        bodyMedium: TextStyle(
           fontSize: 16.sp,
           fontWeight: FontWeight.w700,
           color: AppColors.grey,
         ),
-        bodySmall: font(
+        bodySmall: TextStyle(
           fontSize: 12.sp,
           fontWeight: FontWeight.w600,
         ),
-        labelSmall: font(
+        labelSmall: TextStyle(
           fontSize: 16.sp,
           fontWeight: FontWeight.w700,
         ),
-        bodyLarge: font(
+        bodyLarge: TextStyle(
           fontSize: 36.sp,
           fontWeight: FontWeight.w700,
         ),
-        titleLarge: font(
+        titleLarge: TextStyle(
           fontSize: 24.sp,
           fontWeight: FontWeight.w600,
           color: AppColors.black,
@@ -99,7 +98,7 @@ abstract class AppTheme {
       appBarTheme: AppBarTheme(
         backgroundColor: Colors.transparent,
         centerTitle: true,
-        titleTextStyle: font(
+        titleTextStyle: TextStyle(
           fontSize: 24.sp,
           fontWeight: FontWeight.w600,
           color: AppColors.mainDarkColor,
@@ -108,7 +107,7 @@ abstract class AppTheme {
         scrolledUnderElevation: 0,
       ),
       inputDecorationTheme: InputDecorationTheme(
-        labelStyle: font(
+        labelStyle: TextStyle(
           fontSize: 16.sp,
           fontWeight: FontWeight.w700,
           color: AppColors.white,
@@ -135,36 +134,36 @@ abstract class AppTheme {
         ),
       ),
       textTheme: TextTheme(
-        headlineLarge: font(
+        headlineLarge: TextStyle(
           fontSize: 36.sp,
           fontWeight: FontWeight.w600,
           color: AppColors.white,
         ),
-        headlineMedium: font(
+        headlineMedium: TextStyle(
           fontSize: 20.sp,
           fontWeight: FontWeight.w400,
           color: AppColors.grey,
         ),
-        bodyMedium: font(
+        bodyMedium: TextStyle(
           fontSize: 16.sp,
           fontWeight: FontWeight.w600,
           color: AppColors.mainDarkColor,
         ),
-        bodySmall: font(
+        bodySmall: TextStyle(
           fontSize: 12.sp,
           fontWeight: FontWeight.w600,
         ),
-        labelSmall: font(
+        labelSmall: TextStyle(
           fontSize: 16.sp,
           fontWeight: FontWeight.w700,
           color: AppColors.white,
         ),
-        bodyLarge: font(
+        bodyLarge: TextStyle(
           fontSize: 36.sp,
           fontWeight: FontWeight.w700,
           color: AppColors.mainDarkColor,
         ),
-        titleLarge: font(
+        titleLarge: TextStyle(
           fontSize: 24.sp,
           fontWeight: FontWeight.w600,
         ),

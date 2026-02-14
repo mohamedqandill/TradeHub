@@ -10,7 +10,7 @@ class MainLayoutAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      centerTitle: false,
+      centerTitle: true,
       title: Text(
         title,
         style: context.base.theme.textTheme.headlineMedium?.copyWith(

@@ -69,8 +69,9 @@ class CustomLargeMainButton extends StatelessWidget {
                   )
                 : Text(
                     text,
-                    style: context.base.theme.textTheme.titleLarge!
-                        .copyWith(color: AppColors.white),
+                    style: textStyle ??
+                        context.base.theme.textTheme.titleLarge!
+                            .copyWith(color: AppColors.white),
                   ));
   }
 }

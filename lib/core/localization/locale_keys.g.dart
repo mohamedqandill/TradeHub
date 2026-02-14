@@ -96,5 +96,10 @@ abstract class  LocaleKeys {
   static const timeToFillItUpAndExplore = 'timeToFillItUpAndExplore';
   static const myCart = 'myCart';
   static const searchYourFavorites = 'searchYourFavorites';
+  static const subtotal = 'subtotal';
+  static const shipping = 'shipping';
+  static const tax = 'tax';
+  static const proceedToCheckout = 'proceedToCheckout';
+  static const totalAmount = 'totalAmount';
 
 }

@@ -157,6 +157,9 @@ class $AssetsImagesGen {
   AssetGenImage get emptyHeartLight =>
       const AssetGenImage('assets/images/emptyHeartLight.png');
 
+  /// File path: assets/images/jeans.png
+  AssetGenImage get jeans => const AssetGenImage('assets/images/jeans.png');
+
   /// File path: assets/images/mainDarkLogo.svg
   String get mainDarkLogo => 'assets/images/mainDarkLogo.svg';
 
@@ -168,6 +171,9 @@ class $AssetsImagesGen {
 
   /// File path: assets/images/topWave.png
   AssetGenImage get topWave => const AssetGenImage('assets/images/topWave.png');
+
+  /// File path: assets/images/tshirt.png
+  AssetGenImage get tshirt => const AssetGenImage('assets/images/tshirt.png');
 
   /// File path: assets/images/wave (1) 1.svg
   String get wave11 => 'assets/images/wave (1) 1.svg';
@@ -187,10 +193,12 @@ class $AssetsImagesGen {
         emptyCart,
         emptyHeartDark,
         emptyHeartLight,
+        jeans,
         mainDarkLogo,
         mainLogo,
         splashLogo,
         topWave,
+        tshirt,
         wave11
       ];
 }

@@ -45,6 +45,8 @@ class EmptyCartScreenBody extends StatelessWidget {
           height: 46.h,
         ),
         CustomLargeMainButton(
+            textStyle: context.base.theme.textTheme.titleLarge!
+                .copyWith(fontSize: 18.sp),
             onPressed: () {},
             radius: 50.r,
             height: 56.h,

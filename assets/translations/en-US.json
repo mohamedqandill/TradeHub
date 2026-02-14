@@ -93,6 +93,10 @@
   "yourCartIsEmpty": "Your Cart is Empty",
   "timeToFillItUpAndExplore": "Time to fill it up! Explore our collections and find your new favorites.",
   "myCart": "My Cart",
-  "searchYourFavorites": "Search Your Favorites..."
-
+  "searchYourFavorites": "Search Your Favorites...",
+  "subtotal": "Subtotal",
+  "shipping": "Shipping",
+  "tax": "Tax",
+  "proceedToCheckout": "Proceed To Checkout",
+  "totalAmount": "Total Amount"
 }

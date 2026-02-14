@@ -42,14 +42,17 @@ class _CustomFavoriteCardState extends State<CustomFavoriteCard> {
           borderRadius: BorderRadius.circular(15.r)),
       child: Row(
         children: [
-          SizedBox(
-            width: 10.w,
-          ),
+          // SizedBox(
+          //   width: 10.w,
+          // ),
           Image.asset(
             widget.image,
-            width: 110,
-            height: 110,
-            fit: BoxFit.fill,
+            width: 100.w,
+            height: 100.h,
+            fit: BoxFit.cover,
+          ),
+          SizedBox(
+            width: 10.w,
           ),
           Expanded(
             child: Column(
@@ -65,14 +68,17 @@ class _CustomFavoriteCardState extends State<CustomFavoriteCard> {
                 Text(
                   widget.storeName,
                   style: context.base.theme.textTheme.bodyMedium?.copyWith(
-                    color: context.mainColor,
-                    fontWeight: FontWeight.bold,
+                    color: context.mainColor.withOpacity(0.8),
+                    fontWeight: FontWeight.w400,
                   ),
                 ),
+                SizedBox(
+                  height: 7.h,
+                ),
                 Text(
-                  widget.price,
+                  "${widget.price}EG",
                   style: context.base.theme.textTheme.bodyMedium
-                      ?.copyWith(color: context.greyOrWhite, fontSize: 14.sp),
+                      ?.copyWith(color: AppColors.black, fontSize: 15.sp),
                 )
               ],
             ),
