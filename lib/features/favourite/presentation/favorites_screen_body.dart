@@ -2,11 +2,12 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tradehub/Core/colors/app_colors.dart';
+import 'package:tradehub/Core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/localization/locale_keys.g.dart';
 import 'package:tradehub/features/favourite/presentation/widgets/custom_favorite_card.dart';
 
-import '../../../../core/assets/assets.gen.dart';
-import '../../../../core/shared_widgets/custom_search_field.dart';
+import '../../../core/assets/assets.gen.dart';
+import '../../../core/shared_widgets/custom_search_field.dart';
 
 class FavoritesScreenBody extends StatefulWidget {
   const FavoritesScreenBody({super.key});
@@ -31,7 +32,9 @@ class _FavoritesScreenBodyState extends State<FavoritesScreenBody> {
             prefixIcon: Image.asset(
               scale: 0.8,
               Assets.icons.search.path,
-              color: AppColors.grey.withOpacity(0.8),
+              color: context.isDarkMode
+                  ? AppColors.white
+                  : AppColors.grey.withOpacity(0.8),
             ),
             hintText: LocaleKeys.searchYourFavorites.tr(),
           ),

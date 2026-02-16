@@ -38,29 +38,44 @@ class CustomSearchField extends StatelessWidget {
         obscureText: obscureText,
         decoration: InputDecoration(
             focusedBorder: OutlineInputBorder(
-                borderSide:
-                    BorderSide(color: Colors.black.withOpacity(0.3), width: 1),
+                borderSide: BorderSide(
+                    color: context.isDarkMode
+                        ? Colors.white.withOpacity(0.3)
+                        : Colors.black.withOpacity(0.3),
+                    width: 1),
                 borderRadius: BorderRadius.circular(50.r)),
             border: OutlineInputBorder(
-                borderSide:
-                    BorderSide(color: Colors.black.withOpacity(0.3), width: 1),
+                borderSide: BorderSide(
+                    color: context.isDarkMode
+                        ? Colors.white.withOpacity(0.3)
+                        : Colors.black.withOpacity(0.3),
+                    width: 1),
                 borderRadius: BorderRadius.circular(50.r)),
             enabledBorder: OutlineInputBorder(
-                borderSide:
-                    BorderSide(color: Colors.black.withOpacity(0.3), width: 1),
+                borderSide: BorderSide(
+                    color: context.isDarkMode
+                        ? Colors.white.withOpacity(0.3)
+                        : Colors.black.withOpacity(0.3),
+                    width: 1),
                 borderRadius: BorderRadius.circular(50.r)),
             disabledBorder: OutlineInputBorder(
-                borderSide:
-                    BorderSide(color: Colors.black.withOpacity(0.3), width: 1),
+                borderSide: BorderSide(
+                    color: context.isDarkMode
+                        ? Colors.white.withOpacity(0.3)
+                        : Colors.black.withOpacity(0.3),
+                    width: 1),
                 borderRadius: BorderRadius.circular(50.r)),
-            hintStyle: context.base.theme.textTheme.labelSmall
-                ?.copyWith(color: AppColors.grey.withOpacity(0.4)),
+            hintStyle: context.base.theme.textTheme.labelSmall?.copyWith(
+                color: context.isDarkMode
+                    ? Colors.white.withOpacity(0.7)
+                    : AppColors.grey.withOpacity(0.4)),
             isDense: true,
             labelText: labelText,
             prefixIcon: prefixIcon,
             errorStyle: context.base.theme.textTheme.bodySmall!
                 .copyWith(color: Colors.red),
             hintText: hintText,
+            prefixIconColor: Colors.white,
             suffixIconColor:
                 context.isDarkMode ? AppColors.white : AppColors.grey,
             suffixIcon: suffixIcon),

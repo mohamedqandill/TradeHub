@@ -10,6 +10,9 @@ abstract class AppColors {
   static const Color black = Color(0xff000000);
   static const Color white = Color(0xffffffff);
   static const Color lightGrey = Color(0xffEFF0F6);
+  static const Color whiteGrey = Color(0xffE2E2E2);
   static const LinearGradient linearDarkColor =
       LinearGradient(colors: [Color(0xff00FF88), Color(0xff009952)]);
+  static const LinearGradient linearLight =
+      LinearGradient(colors: [Color(0xff0F2A1D), Color(0xff339063)]);
 }
