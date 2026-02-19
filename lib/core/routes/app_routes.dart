@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tradehub/core/extensions/screen_route_transition.dart';
 import 'package:tradehub/core/routes/routes.dart';
 import 'package:tradehub/features/main_layout/presentation/main_layout.dart';
+import 'package:tradehub/features/settings/presentation/settings_screen.dart';
 
 import '../../features/authentication/presentation/forget password/view/forget_password_screen.dart';
 import '../../features/authentication/presentation/login/view/login_screen.dart';
@@ -26,6 +27,11 @@ abstract class AppRoutes {
         return const SplashScreen().customRoute(
           settings: settings,
           type: TransitionType.fade,
+        );
+      case Routes.settings:
+        return const SettingsScreen().customRoute(
+          settings: settings,
+          type: TransitionType.size,
         );
 
       // Login → Fade

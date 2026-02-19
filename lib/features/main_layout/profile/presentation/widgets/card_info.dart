@@ -5,7 +5,7 @@ import 'package:tradehub/Core/extensions/base_inherited_context.dart';
 import 'package:tradehub/Core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/localization/locale_keys.g.dart';
 
-import '../../../../Core/colors/app_colors.dart';
+import '../../../../../Core/colors/app_colors.dart';
 
 class CardInfo extends StatelessWidget {
   const CardInfo(

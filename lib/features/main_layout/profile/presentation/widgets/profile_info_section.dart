@@ -5,7 +5,7 @@ import 'package:tradehub/Core/extensions/base_inherited_context.dart';
 import 'package:tradehub/Core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/extensions/main_color.dart';
 
-import '../../../../core/assets/assets.gen.dart';
+import '../../../../../core/assets/assets.gen.dart';
 
 class ProfileInfoSection extends StatelessWidget {
   const ProfileInfoSection(

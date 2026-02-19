@@ -103,8 +103,12 @@
   "aboutApp": "عن التطبيق",
   "getHelp": "المساعدة",
   "logOut": "تسجيل الخروج",
-  "edit": "تعديل"
-
-
+  "edit": "تعديل",
+  "accountInfo": "معلومات الحساب",
+  "savedAddresses": "العناوين المحفوظة",
+  "changeEmail": "تغيير البريد الإلكتروني",
+  "changePassword": "تغيير كلمة المرور",
+  "notification": "الإشعارات",
+  "language": "اللغة",  "settings": "الاعدادات"
 
 }

@@ -50,7 +50,7 @@ Future<void> main() async {
     runApp(
       EasyLocalization(
         saveLocale: true,
-        startLocale: const Locale(AppConstants.ar),
+        startLocale: const Locale(AppConstants.en),
         supportedLocales: const [
           Locale(AppConstants.en),
           Locale(AppConstants.ar)
@@ -81,6 +81,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    EasyLocalization.of(context);
     return ScreenUtilInit(
       designSize: const Size(375, 812),
       minTextAdapt: true,
