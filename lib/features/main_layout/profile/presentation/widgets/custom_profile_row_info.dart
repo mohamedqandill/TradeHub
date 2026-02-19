@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -7,15 +8,19 @@ import 'package:tradehub/Core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/assets/assets.gen.dart';
 import 'package:tradehub/features/onBoarding/view_model/theme_view_model.dart';
 
+import '../../../../../core/localization/locale_keys.g.dart';
+
 class CustomProfileRowInfo extends StatefulWidget {
   const CustomProfileRowInfo(
       {super.key,
-      required this.image,
+      this.image,
       required this.title,
       required this.onTapped,
-      required this.index});
+      required this.index,
+      this.titleBeforeIcon});
 
-  final String image;
+  final String? image;
+  final String? titleBeforeIcon;
   final String title;
   final void Function() onTapped;
   final int index;
@@ -33,17 +38,19 @@ class _CustomProfileRowInfoState extends State<CustomProfileRowInfo> {
       onTap: widget.onTapped,
       child: Row(
         children: [
-          Image.asset(
-            widget.image,
-            width: 22.w,
-            height: 22.h,
-            fit: BoxFit.cover,
-            color: context.isDarkMode
-                ? widget.index == 4
-                    ? AppColors.red
-                    : AppColors.white
-                : null,
-          ),
+          widget.image != null
+              ? Image.asset(
+                  widget.image!,
+                  width: 22.w,
+                  height: 22.h,
+                  fit: BoxFit.cover,
+                  color: context.isDarkMode
+                      ? widget.index == 4
+                          ? AppColors.red
+                          : AppColors.white
+                      : null,
+                )
+              : const SizedBox(),
           SizedBox(
             width: 15.w,
           ),
@@ -105,10 +112,26 @@ class _CustomProfileRowInfoState extends State<CustomProfileRowInfo> {
                     ],
                   ),
                 )
-              : Icon(
-                  Icons.arrow_forward_ios,
-                  size: 25.sp,
-                  color: context.isDarkMode ? AppColors.white : null,
+              : Row(
+                  children: [
+                    widget.titleBeforeIcon != null
+                        ? Text(
+                            LocaleKeys.edit.tr(),
+                            style: context.base.theme.textTheme.titleLarge!
+                                .copyWith(
+                                    fontSize: 15.sp,
+                                    color: AppColors.white,
+                                    decorationColor: Colors.white,
+                                    decorationThickness: 2,
+                                    decoration: TextDecoration.underline),
+                          )
+                        : const SizedBox(),
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      size: 25.sp,
+                      color: context.isDarkMode ? AppColors.white : null,
+                    ),
+                  ],
                 )
         ],
       ),

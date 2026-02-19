@@ -2,7 +2,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:tradehub/core/localization/locale_keys.g.dart';
 import 'package:tradehub/core/shared_widgets/main_layout_app_bar.dart';
-import 'package:tradehub/features/favourite/presentation/favorites_screen_body.dart';
+
+import 'favorites_screen_body.dart';
 
 class FavouriteScreen extends StatelessWidget {
   const FavouriteScreen({super.key});

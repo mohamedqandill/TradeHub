@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tradehub/core/assets/assets.gen.dart';
-import 'package:tradehub/features/cart/presentation/widgets/custom_checkout_card.dart';
-import 'package:tradehub/features/cart/presentation/widgets/tab_bar.dart';
+import 'package:tradehub/features/main_layout/cart/presentation/widgets/custom_checkout_card.dart';
+import 'package:tradehub/features/main_layout/cart/presentation/widgets/tab_bar.dart';
 
 import 'widgets/custom_cart_card.dart';
 

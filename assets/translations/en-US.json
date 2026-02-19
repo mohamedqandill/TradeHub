@@ -104,6 +104,12 @@
   "aboutApp": "About App",
   "getHelp": "Get Help",
   "logOut": "Log Out",
-  "edit": "Edit"
+  "edit": "Edit",
+  "accountInfo": "Account Info",
+  "savedAddresses": "Saved Addresses",
+  "changeEmail": "Change Email",
+  "changePassword": "Change Password",
+  "notification": "Notification",
+  "language": "Language",  "settings": "Settings"
 
 }

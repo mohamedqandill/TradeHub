@@ -19,7 +19,8 @@ import '../../../../core/localization/locale_keys.g.dart';
 import 'custom_body_widget.dart';
 
 class OnBoardingViewBody extends StatefulWidget {
-  const OnBoardingViewBody({super.key});
+  const OnBoardingViewBody({super.key, required this.isArabic});
+  final bool isArabic;
 
   @override
   State<OnBoardingViewBody> createState() => _OnBoardingViewBodyState();
@@ -29,11 +30,13 @@ class _OnBoardingViewBodyState extends State<OnBoardingViewBody> {
   late final PageController pageController;
   late SharedPrefsHelper prefs;
   int currentPage = 0;
+  late ValueNotifier<bool> controller;
 
   @override
   void initState() {
     prefs = SharedPrefsHelper();
     pageController = PageController();
+    ValueNotifier<bool>(widget.isArabic);
     super.initState();
   }
 
@@ -47,8 +50,6 @@ class _OnBoardingViewBodyState extends State<OnBoardingViewBody> {
     await prefs.saveBool(AppConstants.firstTime, true);
     Navigator.pushReplacementNamed(context, Routes.login);
   }
-
-  var controller = ValueNotifier<bool>(false);
 
   @override
   Widget build(BuildContext context) {
@@ -120,9 +121,7 @@ class _OnBoardingViewBodyState extends State<OnBoardingViewBody> {
                 borderRadius: BorderRadius.all(Radius.circular(35.r)),
                 width: 64.0,
                 height: 30.0,
-                enabled: true,
                 disabledOpacity: 0.5,
-                initialValue: controller.value,
                 onChanged: (value) {
                   controller.value = value;
                   print(controller.value);

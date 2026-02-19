@@ -107,5 +107,12 @@ abstract class  LocaleKeys {
   static const getHelp = 'getHelp';
   static const logOut = 'logOut';
   static const edit = 'edit';
+  static const accountInfo = 'accountInfo';
+  static const savedAddresses = 'savedAddresses';
+  static const changeEmail = 'changeEmail';
+  static const changePassword = 'changePassword';
+  static const notification = 'notification';
+  static const language = 'language';
+  static const settings = 'settings';
 
 }

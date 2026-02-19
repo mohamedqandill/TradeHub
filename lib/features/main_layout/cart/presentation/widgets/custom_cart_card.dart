@@ -6,7 +6,7 @@ import 'package:tradehub/Core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/constants/app_constants.dart';
 import 'package:tradehub/core/extensions/main_color.dart';
 
-import '../../../../Core/colors/app_colors.dart';
+import '../../../../../Core/colors/app_colors.dart';
 
 class CustomCartCard extends StatefulWidget {
   const CustomCartCard(

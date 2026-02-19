@@ -4,15 +4,19 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tradehub/core/assets/assets.gen.dart';
 import 'package:tradehub/core/localization/locale_keys.g.dart';
 import 'package:tradehub/features/authentication/presentation/login/view/widgets/custom_horizontal_divider.dart';
-import 'package:tradehub/features/profile/presentation/widgets/card_info.dart';
-import 'package:tradehub/features/profile/presentation/widgets/custom_profile_row_info.dart';
-import 'package:tradehub/features/profile/presentation/widgets/profile_info_section.dart';
+import 'package:tradehub/features/main_layout/profile/presentation/widgets/card_info.dart';
+import 'package:tradehub/features/main_layout/profile/presentation/widgets/custom_profile_row_info.dart';
+import 'package:tradehub/features/main_layout/profile/presentation/widgets/profile_info_section.dart';
+
+import '../../../../core/routes/routes.dart';
 
 class ProfileScreenBody extends StatelessWidget {
   const ProfileScreenBody({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // EasyLocalization.of(context);
+
     List<Map<String, dynamic>> data = [
       {"image": Assets.icons.orders.path, "title": LocaleKeys.yourOrders.tr()},
       {"image": Assets.icons.moon.path, "title": LocaleKeys.darkMode.tr()},
@@ -25,7 +29,9 @@ class ProfileScreenBody extends StatelessWidget {
         Padding(
             padding: EdgeInsets.symmetric(horizontal: 12.0.sp),
             child: ProfileInfoSection(
-                onSettingTap: () {},
+                onSettingTap: () {
+                  Navigator.pushNamed(context, Routes.settings);
+                },
                 image: Assets.images.person.path,
                 name: "Mohamed Qandil")),
         SizedBox(
