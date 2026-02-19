@@ -28,6 +28,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/Jewelry.png
   AssetGenImage get jewelry => const AssetGenImage('assets/icons/Jewelry.png');
 
+  /// File path: assets/icons/about.png
+  AssetGenImage get about => const AssetGenImage('assets/icons/about.png');
+
   /// File path: assets/icons/address.png
   AssetGenImage get address => const AssetGenImage('assets/icons/address.png');
 
@@ -54,6 +57,9 @@ class $AssetsIconsGen {
   AssetGenImage get heartFilled =>
       const AssetGenImage('assets/icons/heartFilled.png');
 
+  /// File path: assets/icons/help.png
+  AssetGenImage get help => const AssetGenImage('assets/icons/help.png');
+
   /// File path: assets/icons/homeFilled.png
   AssetGenImage get homeFilled =>
       const AssetGenImage('assets/icons/homeFilled.png');
@@ -62,9 +68,18 @@ class $AssetsIconsGen {
   AssetGenImage get homeIcon =>
       const AssetGenImage('assets/icons/homeIcon.png');
 
+  /// File path: assets/icons/logout.png
+  AssetGenImage get logout => const AssetGenImage('assets/icons/logout.png');
+
+  /// File path: assets/icons/moon.png
+  AssetGenImage get moon => const AssetGenImage('assets/icons/moon.png');
+
   /// File path: assets/icons/notification.png
   AssetGenImage get notification =>
       const AssetGenImage('assets/icons/notification.png');
+
+  /// File path: assets/icons/orders.png
+  AssetGenImage get orders => const AssetGenImage('assets/icons/orders.png');
 
   /// File path: assets/icons/phone.svg
   String get phone => 'assets/icons/phone.svg';
@@ -79,6 +94,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/search.png
   AssetGenImage get search => const AssetGenImage('assets/icons/search.png');
 
+  /// File path: assets/icons/setting.png
+  AssetGenImage get setting => const AssetGenImage('assets/icons/setting.png');
+
   /// List of all assets
   List<dynamic> get values => [
         a2021FacebookIcon1,
@@ -86,6 +104,7 @@ class $AssetsIconsGen {
         favIC,
         home,
         jewelry,
+        about,
         address,
         cart,
         cartFilled,
@@ -94,13 +113,18 @@ class $AssetsIconsGen {
         google,
         heart,
         heartFilled,
+        help,
         homeFilled,
         homeIcon,
+        logout,
+        moon,
         notification,
+        orders,
         phone,
         profile,
         profileFilled,
-        search
+        search,
+        setting
       ];
 }
 
@@ -123,6 +147,9 @@ class $AssetsImagesGen {
   /// File path: assets/images/Quick Shop.svg
   String get quickShop => 'assets/images/Quick Shop.svg';
 
+  /// File path: assets/images/Sun.png
+  AssetGenImage get sun => const AssetGenImage('assets/images/Sun.png');
+
   /// File path: assets/images/Tracking online delivery of goods.png
   AssetGenImage get trackingOnlineDeliveryOfGoods => const AssetGenImage(
       'assets/images/Tracking online delivery of goods.png');
@@ -130,6 +157,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/black girl with cart.png
   AssetGenImage get blackGirlWithCart =>
       const AssetGenImage('assets/images/black girl with cart.png');
+
+  /// File path: assets/images/darkToggle.png
+  AssetGenImage get darkToggle =>
+      const AssetGenImage('assets/images/darkToggle.png');
 
   /// File path: assets/images/darkTopWave.png
   AssetGenImage get darkTopWave =>
@@ -160,11 +191,21 @@ class $AssetsImagesGen {
   /// File path: assets/images/jeans.png
   AssetGenImage get jeans => const AssetGenImage('assets/images/jeans.png');
 
+  /// File path: assets/images/lightToggle.png
+  AssetGenImage get lightToggle =>
+      const AssetGenImage('assets/images/lightToggle.png');
+
   /// File path: assets/images/mainDarkLogo.svg
   String get mainDarkLogo => 'assets/images/mainDarkLogo.svg';
 
   /// File path: assets/images/mainLogo.svg
   String get mainLogo => 'assets/images/mainLogo.svg';
+
+  /// File path: assets/images/moon.png
+  AssetGenImage get moon => const AssetGenImage('assets/images/moon.png');
+
+  /// File path: assets/images/person.webp
+  AssetGenImage get person => const AssetGenImage('assets/images/person.webp');
 
   /// File path: assets/images/splashLogo.svg
   String get splashLogo => 'assets/images/splashLogo.svg';
@@ -184,8 +225,10 @@ class $AssetsImagesGen {
         cybersecurityWithPasswordProtection,
         digitalShoppingAndOnlinePayment,
         quickShop,
+        sun,
         trackingOnlineDeliveryOfGoods,
         blackGirlWithCart,
+        darkToggle,
         darkTopWave,
         darkbottomsplash,
         darksplash,
@@ -194,8 +237,11 @@ class $AssetsImagesGen {
         emptyHeartDark,
         emptyHeartLight,
         jeans,
+        lightToggle,
         mainDarkLogo,
         mainLogo,
+        moon,
+        person,
         splashLogo,
         topWave,
         tshirt,

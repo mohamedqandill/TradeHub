@@ -98,5 +98,12 @@
   "shipping": "Shipping",
   "tax": "Tax",
   "proceedToCheckout": "Proceed To Checkout",
-  "totalAmount": "Total Amount"
+  "totalAmount": "Total Amount",
+  "yourOrders": "Your Orders",
+  "darkMode": "Dark Mode",
+  "aboutApp": "About App",
+  "getHelp": "Get Help",
+  "logOut": "Log Out",
+  "edit": "Edit"
+
 }

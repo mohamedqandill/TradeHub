@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tradehub/Core/extensions/base_inherited_context.dart';
+import 'package:tradehub/Core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/constants/app_constants.dart';
 import 'package:tradehub/core/extensions/main_color.dart';
 
@@ -64,7 +65,7 @@ class _CustomCartCardState extends State<CustomCartCard> {
                             style: context.base.theme.textTheme.bodyMedium
                                 ?.copyWith(
                               fontSize: 13.sp,
-                              color: context.mainColor.withOpacity(0.5),
+                              color: context.greyOrWhite,
                               fontWeight: FontWeight.w400,
                             ),
                           )
@@ -78,7 +79,7 @@ class _CustomCartCardState extends State<CustomCartCard> {
                             style: context.base.theme.textTheme.bodyMedium
                                 ?.copyWith(
                               fontSize: 13.sp,
-                              color: context.mainColor.withOpacity(0.5),
+                              color: context.greyOrWhite,
                               fontWeight: FontWeight.w400,
                             ),
                           )
@@ -128,7 +129,10 @@ class _CustomCartCardState extends State<CustomCartCard> {
                           count.toString(),
                           style: context.base.theme.textTheme.bodyMedium
                               ?.copyWith(
-                                  color: AppColors.black, fontSize: 15.sp),
+                                  color: context.isDarkMode
+                                      ? AppColors.white
+                                      : AppColors.black,
+                                  fontSize: 15.sp),
                         ),
                       ),
                       InkWell(
@@ -145,7 +149,9 @@ class _CustomCartCardState extends State<CustomCartCard> {
                           child: Icon(
                             Icons.add,
                             size: 17.sp,
-                            color: AppColors.white,
+                            color: context.isDarkMode
+                                ? AppColors.black
+                                : AppColors.white,
                           ),
                         ),
                       ),

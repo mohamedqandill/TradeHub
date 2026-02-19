@@ -164,9 +164,7 @@ abstract class AppTheme {
           color: AppColors.mainDarkColor,
         ),
         titleLarge: TextStyle(
-          fontSize: 24.sp,
-          fontWeight: FontWeight.w600,
-        ),
+            fontSize: 24.sp, fontWeight: FontWeight.w600, color: Colors.white),
       ),
     );
   }

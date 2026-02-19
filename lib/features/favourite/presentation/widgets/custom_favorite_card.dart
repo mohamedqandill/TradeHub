@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tradehub/Core/colors/app_colors.dart';
 import 'package:tradehub/Core/extensions/base_inherited_context.dart';
+import 'package:tradehub/Core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/extensions/main_color.dart';
 
 import '../../../../core/assets/assets.gen.dart';
@@ -29,10 +30,12 @@ class _CustomFavoriteCardState extends State<CustomFavoriteCard> {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-          color: AppColors.white,
+          color: context.isDarkMode ? AppColors.black : AppColors.white,
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
+              color: context.isDarkMode
+                  ? Colors.white.withOpacity(0.1)
+                  : Colors.black.withOpacity(0.1),
               blurRadius: 8,
               spreadRadius: 2,
               offset: const Offset(0, 2),
@@ -77,8 +80,11 @@ class _CustomFavoriteCardState extends State<CustomFavoriteCard> {
                 ),
                 Text(
                   "${widget.price}EG",
-                  style: context.base.theme.textTheme.bodyMedium
-                      ?.copyWith(color: AppColors.black, fontSize: 15.sp),
+                  style: context.base.theme.textTheme.bodyMedium?.copyWith(
+                      color: context.isDarkMode
+                          ? AppColors.white
+                          : AppColors.black,
+                      fontSize: 15.sp),
                 )
               ],
             ),

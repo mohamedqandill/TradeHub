@@ -101,5 +101,11 @@ abstract class  LocaleKeys {
   static const tax = 'tax';
   static const proceedToCheckout = 'proceedToCheckout';
   static const totalAmount = 'totalAmount';
+  static const yourOrders = 'yourOrders';
+  static const darkMode = 'darkMode';
+  static const aboutApp = 'aboutApp';
+  static const getHelp = 'getHelp';
+  static const logOut = 'logOut';
+  static const edit = 'edit';
 
 }

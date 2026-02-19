@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tradehub/Core/extensions/base_inherited_context.dart';
+import 'package:tradehub/Core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/extensions/main_color.dart';
 import 'package:tradehub/core/localization/locale_keys.g.dart';
 
@@ -16,13 +17,17 @@ class CustomCheckoutCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      decoration: BoxDecoration(color: AppColors.white, boxShadow: [
-        BoxShadow(
-            color: AppColors.black.withOpacity(0.1),
-            blurRadius: 8,
-            spreadRadius: 1,
-            offset: const Offset(0, -4))
-      ]),
+      decoration: BoxDecoration(
+          color: context.isDarkMode ? AppColors.black : AppColors.white,
+          boxShadow: [
+            BoxShadow(
+                color: context.isDarkMode
+                    ? AppColors.white.withOpacity(0.1)
+                    : AppColors.black.withOpacity(0.1),
+                blurRadius: 8,
+                spreadRadius: 1,
+                offset: const Offset(0, -4))
+          ]),
       child: Padding(
         padding: EdgeInsets.all(8.0.sp),
         child: Column(
@@ -61,7 +66,7 @@ class CustomCheckoutCard extends StatelessWidget {
                 Text(
                   LocaleKeys.totalAmount.tr(),
                   style: context.base.theme.textTheme.bodyMedium!.copyWith(
-                      fontWeight: FontWeight.w700, color: Colors.black),
+                      fontWeight: FontWeight.w700, color: context.mainColor),
                 ),
                 Text(
                   "114.0 EG",

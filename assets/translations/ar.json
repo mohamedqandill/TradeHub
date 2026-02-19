@@ -96,6 +96,15 @@
   "shipping": "الشحن",
   "tax": "الضريبة",
   "proceedToCheckout": "المتابعة للدفع",
-  "totalAmount": "إجمالي المبلغ"
+  "totalAmount": "إجمالي المبلغ",
+
+  "yourOrders": "طلباتي",
+  "darkMode": "الوضع الليلي",
+  "aboutApp": "عن التطبيق",
+  "getHelp": "المساعدة",
+  "logOut": "تسجيل الخروج",
+  "edit": "تعديل"
+
+
 
 }
