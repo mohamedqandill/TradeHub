@@ -15,7 +15,7 @@ class ProfileScreenBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // EasyLocalization.of(context);
+    EasyLocalization.of(context);
 
     List<Map<String, dynamic>> data = [
       {"image": Assets.icons.orders.path, "title": LocaleKeys.yourOrders.tr()},

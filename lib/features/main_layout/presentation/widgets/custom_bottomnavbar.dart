@@ -46,6 +46,8 @@ class _CustomBottomNavbarState extends State<CustomBottomNavbar> {
             context.isDarkMode ? AppColors.white : AppColors.grey,
         backgroundColor: Colors.transparent,
         elevation: 0,
+        unselectedLabelStyle: context.base.theme.textTheme.bodyMedium
+            ?.copyWith(fontSize: 11.sp, color: context.greyOrWhite),
         selectedLabelStyle:
             context.base.theme.textTheme.bodyMedium?.copyWith(fontSize: 13.sp),
         items: [

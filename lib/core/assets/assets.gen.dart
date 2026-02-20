@@ -15,6 +15,14 @@ class $AssetsIconsGen {
   /// File path: assets/icons/2021_Facebook_icon 1.svg
   String get a2021FacebookIcon1 => 'assets/icons/2021_Facebook_icon 1.svg';
 
+  /// File path: assets/icons/Container.png
+  AssetGenImage get container =>
+      const AssetGenImage('assets/icons/Container.png');
+
+  /// File path: assets/icons/ContainerFilled.png
+  AssetGenImage get containerFilled =>
+      const AssetGenImage('assets/icons/ContainerFilled.png');
+
   /// File path: assets/icons/Electronics.png
   AssetGenImage get electronics =>
       const AssetGenImage('assets/icons/Electronics.png');
@@ -33,6 +41,10 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/address.png
   AssetGenImage get address => const AssetGenImage('assets/icons/address.png');
+
+  /// File path: assets/icons/addressDark.png
+  AssetGenImage get addressDark =>
+      const AssetGenImage('assets/icons/addressDark.png');
 
   /// File path: assets/icons/cart.png
   AssetGenImage get cart => const AssetGenImage('assets/icons/cart.png');
@@ -78,6 +90,10 @@ class $AssetsIconsGen {
   AssetGenImage get notification =>
       const AssetGenImage('assets/icons/notification.png');
 
+  /// File path: assets/icons/notificationDark.png
+  AssetGenImage get notificationDark =>
+      const AssetGenImage('assets/icons/notificationDark.png');
+
   /// File path: assets/icons/orders.png
   AssetGenImage get orders => const AssetGenImage('assets/icons/orders.png');
 
@@ -91,6 +107,9 @@ class $AssetsIconsGen {
   AssetGenImage get profileFilled =>
       const AssetGenImage('assets/icons/profileFilled.png');
 
+  /// File path: assets/icons/rating.png
+  AssetGenImage get rating => const AssetGenImage('assets/icons/rating.png');
+
   /// File path: assets/icons/search.png
   AssetGenImage get search => const AssetGenImage('assets/icons/search.png');
 
@@ -100,12 +119,15 @@ class $AssetsIconsGen {
   /// List of all assets
   List<dynamic> get values => [
         a2021FacebookIcon1,
+        container,
+        containerFilled,
         electronics,
         favIC,
         home,
         jewelry,
         about,
         address,
+        addressDark,
         cart,
         cartFilled,
         eg,
@@ -119,10 +141,12 @@ class $AssetsIconsGen {
         logout,
         moon,
         notification,
+        notificationDark,
         orders,
         phone,
         profile,
         profileFilled,
+        rating,
         search,
         setting
       ];
@@ -144,6 +168,15 @@ class $AssetsImagesGen {
   AssetGenImage get digitalShoppingAndOnlinePayment => const AssetGenImage(
       'assets/images/Digital shopping and online payment.png');
 
+  /// File path: assets/images/Flowers.png
+  AssetGenImage get flowers => const AssetGenImage('assets/images/Flowers.png');
+
+  /// File path: assets/images/Grocery.png
+  AssetGenImage get grocery => const AssetGenImage('assets/images/Grocery.png');
+
+  /// File path: assets/images/Image.png
+  AssetGenImage get image => const AssetGenImage('assets/images/Image.png');
+
   /// File path: assets/images/Quick Shop.svg
   String get quickShop => 'assets/images/Quick Shop.svg';
 
@@ -154,9 +187,16 @@ class $AssetsImagesGen {
   AssetGenImage get trackingOnlineDeliveryOfGoods => const AssetGenImage(
       'assets/images/Tracking online delivery of goods.png');
 
+  /// File path: assets/images/accessories.png
+  AssetGenImage get accessories =>
+      const AssetGenImage('assets/images/accessories.png');
+
   /// File path: assets/images/black girl with cart.png
   AssetGenImage get blackGirlWithCart =>
       const AssetGenImage('assets/images/black girl with cart.png');
+
+  /// File path: assets/images/clothes.png
+  AssetGenImage get clothes => const AssetGenImage('assets/images/clothes.png');
 
   /// File path: assets/images/darkToggle.png
   AssetGenImage get darkToggle =>
@@ -176,6 +216,10 @@ class $AssetsImagesGen {
   AssetGenImage get dataSecurity =>
       const AssetGenImage('assets/images/data security.png');
 
+  /// File path: assets/images/electronics.png
+  AssetGenImage get electronics =>
+      const AssetGenImage('assets/images/electronics.png');
+
   /// File path: assets/images/emptyCart.png
   AssetGenImage get emptyCart =>
       const AssetGenImage('assets/images/emptyCart.png');
@@ -187,6 +231,17 @@ class $AssetsImagesGen {
   /// File path: assets/images/emptyHeartLight.png
   AssetGenImage get emptyHeartLight =>
       const AssetGenImage('assets/images/emptyHeartLight.png');
+
+  /// File path: assets/images/furniture.png
+  AssetGenImage get furniture =>
+      const AssetGenImage('assets/images/furniture.png');
+
+  /// File path: assets/images/healthAndBeauty.png
+  AssetGenImage get healthAndBeauty =>
+      const AssetGenImage('assets/images/healthAndBeauty.png');
+
+  /// File path: assets/images/image_t.png
+  AssetGenImage get imageT => const AssetGenImage('assets/images/image_t.png');
 
   /// File path: assets/images/jeans.png
   AssetGenImage get jeans => const AssetGenImage('assets/images/jeans.png');
@@ -201,11 +256,18 @@ class $AssetsImagesGen {
   /// File path: assets/images/mainLogo.svg
   String get mainLogo => 'assets/images/mainLogo.svg';
 
+  /// File path: assets/images/markets.png
+  AssetGenImage get markets => const AssetGenImage('assets/images/markets.png');
+
   /// File path: assets/images/moon.png
   AssetGenImage get moon => const AssetGenImage('assets/images/moon.png');
 
   /// File path: assets/images/person.webp
   AssetGenImage get person => const AssetGenImage('assets/images/person.webp');
+
+  /// File path: assets/images/resturants.png
+  AssetGenImage get resturants =>
+      const AssetGenImage('assets/images/resturants.png');
 
   /// File path: assets/images/splashLogo.svg
   String get splashLogo => 'assets/images/splashLogo.svg';
@@ -216,6 +278,9 @@ class $AssetsImagesGen {
   /// File path: assets/images/tshirt.png
   AssetGenImage get tshirt => const AssetGenImage('assets/images/tshirt.png');
 
+  /// File path: assets/images/vendor.png
+  AssetGenImage get vendor => const AssetGenImage('assets/images/vendor.png');
+
   /// File path: assets/images/wave (1) 1.svg
   String get wave11 => 'assets/images/wave (1) 1.svg';
 
@@ -224,27 +289,39 @@ class $AssetsImagesGen {
         cyberShieldProtectingDigitalDataWithStrongPassword,
         cybersecurityWithPasswordProtection,
         digitalShoppingAndOnlinePayment,
+        flowers,
+        grocery,
+        image,
         quickShop,
         sun,
         trackingOnlineDeliveryOfGoods,
+        accessories,
         blackGirlWithCart,
+        clothes,
         darkToggle,
         darkTopWave,
         darkbottomsplash,
         darksplash,
         dataSecurity,
+        electronics,
         emptyCart,
         emptyHeartDark,
         emptyHeartLight,
+        furniture,
+        healthAndBeauty,
+        imageT,
         jeans,
         lightToggle,
         mainDarkLogo,
         mainLogo,
+        markets,
         moon,
         person,
+        resturants,
         splashLogo,
         topWave,
         tshirt,
+        vendor,
         wave11
       ];
 }

@@ -111,5 +111,16 @@
   "changePassword": "Change Password",
   "notification": "Notification",
   "language": "Language",
-  "settings": "Settings"
+  "settings": "Settings", "healthAndBeauty": "Health & Beauty",
+  "groceryMarkets": "Markets",
+  "electronics": "Electronics",
+  "furniture": "Furniture",
+  "clothes": "Clothes",
+  "restaurants": "Restaurants",
+  "flowers": "Flowers","accessories": "Accessories",  "deliverTo": "Deliver To",
+  "searchForProducts": "Search for products...",
+  "categories": "Categories",
+  "featuredVendors": "Featured Vendors",
+  "popularProducts": "Popular Products",
+  "seeAll": "See All"
 }

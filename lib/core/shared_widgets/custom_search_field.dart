@@ -30,7 +30,7 @@ class CustomSearchField extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       child: TextFormField(
-        autofillHints: [autoFillHints!],
+        autofillHints: [autoFillHints],
         autovalidateMode: AutovalidateMode.onUserInteraction,
         style: Theme.of(context).textTheme.labelSmall,
         controller: controller,
@@ -39,33 +39,35 @@ class CustomSearchField extends StatelessWidget {
         decoration: InputDecoration(
             focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(
-                    color: context.isDarkMode
-                        ? Colors.white.withOpacity(0.3)
-                        : Colors.black.withOpacity(0.3),
+                    color: context.isDarkMode ? Colors.white : Colors.black,
                     width: 1),
                 borderRadius: BorderRadius.circular(50.r)),
+            fillColor: AppColors.grey.withOpacity(0.05),
+            filled: true,
             border: OutlineInputBorder(
                 borderSide: BorderSide(
                     color: context.isDarkMode
-                        ? Colors.white.withOpacity(0.3)
-                        : Colors.black.withOpacity(0.3),
+                        ? AppColors.mainDarkColor
+                        : Colors.white,
                     width: 1),
                 borderRadius: BorderRadius.circular(50.r)),
             enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(
                     color: context.isDarkMode
-                        ? Colors.white.withOpacity(0.3)
-                        : Colors.black.withOpacity(0.3),
+                        ? AppColors.mainDarkColor
+                        : Colors.white,
                     width: 1),
                 borderRadius: BorderRadius.circular(50.r)),
             disabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(
                     color: context.isDarkMode
-                        ? Colors.white.withOpacity(0.3)
-                        : Colors.black.withOpacity(0.3),
+                        ? AppColors.mainDarkColor
+                        : Colors.white,
                     width: 1),
                 borderRadius: BorderRadius.circular(50.r)),
             hintStyle: context.base.theme.textTheme.labelSmall?.copyWith(
+                fontWeight: FontWeight.w600,
+                fontSize: 14.sp,
                 color: context.isDarkMode
                     ? Colors.white.withOpacity(0.7)
                     : AppColors.grey.withOpacity(0.4)),
