@@ -116,11 +116,23 @@
   "furniture": "Furniture",
   "clothes": "Clothes",
   "restaurants": "Restaurants",
-  "flowers": "Flowers","accessories": "Accessories",  "deliverTo": "Deliver To",
+  "flowers": "Flowers","accessories": "Accessories",
+  "deliverTo": "DELIVER TO",
   "searchForProducts": "Search for products...",
   "categories": "Categories",
   "featuredVendors": "Featured Vendors",
   "popularProducts": "Popular Products",
-  "seeAll": "See All"
+  "seeAll": "See All",
+  "products": "Products",
+  "about": "About",
+  "reviews": "Reviews",
+
+  "storeLocation": "STORE LOCATION",
+  "contactPhone": "CONTACT PHONE",
+  "gmail": "EMAIL ADDRESS",
+  "overallRating": "OVERALL RATING",
+
+  "brandStory": "Brand Story"
+
 
 }

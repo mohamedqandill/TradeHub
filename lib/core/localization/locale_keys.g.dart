@@ -128,5 +128,13 @@ abstract class  LocaleKeys {
   static const featuredVendors = 'featuredVendors';
   static const popularProducts = 'popularProducts';
   static const seeAll = 'seeAll';
+  static const products = 'products';
+  static const about = 'about';
+  static const reviews = 'reviews';
+  static const storeLocation = 'storeLocation';
+  static const contactPhone = 'contactPhone';
+  static const gmail = 'gmail';
+  static const overallRating = 'overallRating';
+  static const brandStory = 'brandStory';
 
 }
