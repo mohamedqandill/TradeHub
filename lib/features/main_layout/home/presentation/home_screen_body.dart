@@ -68,7 +68,7 @@ class HomeScreenBody extends StatelessWidget {
               SizedBox(
                 height: 8.h,
               ),
-              const ProductsSection()
+              const Center(child: ProductsSection())
             ],
           ),
         ),

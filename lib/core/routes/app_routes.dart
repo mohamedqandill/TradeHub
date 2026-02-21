@@ -11,6 +11,7 @@ import '../../features/authentication/presentation/register/view/register_screen
 import '../../features/authentication/presentation/verify email/view/verify_email_screen.dart';
 import '../../features/onBoarding/view/on_boarding_view.dart';
 import '../../features/splash/splash_screen.dart';
+import '../../features/vendor_profile/presentation/vendor_profile_screen.dart';
 
 abstract class AppRoutes {
   static Route<dynamic> getRoutes(RouteSettings settings) {
@@ -46,6 +47,11 @@ abstract class AppRoutes {
         return const RegisterScreen().customRoute(
           settings: settings,
           type: TransitionType.slideLeft,
+        );
+      case Routes.vendorProfile:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (context) => const VendorProfileScreen(),
         );
 
       // Forget Password → Fade

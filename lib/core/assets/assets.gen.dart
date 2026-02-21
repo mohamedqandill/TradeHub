@@ -53,11 +53,17 @@ class $AssetsIconsGen {
   AssetGenImage get cartFilled =>
       const AssetGenImage('assets/icons/cartFilled.png');
 
+  /// File path: assets/icons/contact.png
+  AssetGenImage get contact => const AssetGenImage('assets/icons/contact.png');
+
   /// File path: assets/icons/eg.png
   AssetGenImage get eg => const AssetGenImage('assets/icons/eg.png');
 
   /// File path: assets/icons/en.png
   AssetGenImage get en => const AssetGenImage('assets/icons/en.png');
+
+  /// File path: assets/icons/gmail.png
+  AssetGenImage get gmail => const AssetGenImage('assets/icons/gmail.png');
 
   /// File path: assets/icons/google.svg
   String get google => 'assets/icons/google.svg';
@@ -107,6 +113,9 @@ class $AssetsIconsGen {
   AssetGenImage get profileFilled =>
       const AssetGenImage('assets/icons/profileFilled.png');
 
+  /// File path: assets/icons/rate.png
+  AssetGenImage get rate => const AssetGenImage('assets/icons/rate.png');
+
   /// File path: assets/icons/rating.png
   AssetGenImage get rating => const AssetGenImage('assets/icons/rating.png');
 
@@ -130,8 +139,10 @@ class $AssetsIconsGen {
         addressDark,
         cart,
         cartFilled,
+        contact,
         eg,
         en,
+        gmail,
         google,
         heart,
         heartFilled,
@@ -146,6 +157,7 @@ class $AssetsIconsGen {
         phone,
         profile,
         profileFilled,
+        rate,
         rating,
         search,
         setting

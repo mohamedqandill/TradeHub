@@ -120,6 +120,15 @@
   "categories": "التصنيفات",
   "featuredVendors": "المتاجر المميزة",
   "popularProducts": "المنتجات الأكثر طلباً",
-  "seeAll": "عرض الكل"
+  "seeAll": "عرض الكل","products": "المنتجات",
+  "about": "عن المتجر",
+  "reviews": "التقييمات",
+
+  "storeLocation": "عنوان المتجر",
+  "contactPhone": "رقم الهاتف",
+  "gmail": "البريد الإلكتروني",
+  "overallRating": "التقييم العام",
+
+  "brandStory": "قصة العلامة التجارية"
 
 }
