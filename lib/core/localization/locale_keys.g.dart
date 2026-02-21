@@ -114,5 +114,19 @@ abstract class  LocaleKeys {
   static const notification = 'notification';
   static const language = 'language';
   static const settings = 'settings';
+  static const healthAndBeauty = 'healthAndBeauty';
+  static const groceryMarkets = 'groceryMarkets';
+  static const electronics = 'electronics';
+  static const furniture = 'furniture';
+  static const clothes = 'clothes';
+  static const restaurants = 'restaurants';
+  static const flowers = 'flowers';
+  static const accessories = 'accessories';
+  static const deliverTo = 'deliverTo';
+  static const searchForProducts = 'searchForProducts';
+  static const categories = 'categories';
+  static const featuredVendors = 'featuredVendors';
+  static const popularProducts = 'popularProducts';
+  static const seeAll = 'seeAll';
 
 }
