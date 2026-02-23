@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tradehub/Core/extensions/base_inherited_context.dart';
 import 'package:tradehub/Core/extensions/is_dark_mode.dart';
+import 'package:tradehub/Core/shared_widgets/svg_widget.dart';
 import 'package:tradehub/core/constants/app_constants.dart';
 import 'package:tradehub/core/extensions/main_color.dart';
 import 'package:tradehub/core/localization/locale_keys.g.dart';
@@ -21,13 +22,13 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Row(
         children: [
           Center(
-            child: Image.asset(
-              context.isDarkMode
-                  ? Assets.icons.addressDark.path
-                  : Assets.icons.address.path,
+            child: SvgWidget(
               height: 25.h,
               width: 20.w,
               fit: BoxFit.cover,
+              assetName: context.isDarkMode
+                  ? Assets.icons.addressDark
+                  : Assets.icons.address,
             ),
           ),
           SizedBox(
@@ -79,9 +80,15 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                   : AppColors.grey.withOpacity(0.1),
               shape: BoxShape.circle,
             ),
-            child: Image.asset(context.isDarkMode
-                ? Assets.icons.notificationDark.path
-                : Assets.icons.notification.path),
+            child: Center(
+              child: SvgWidget(
+                  width: 20.w,
+                  height: 20.h,
+                  fit: BoxFit.cover,
+                  assetName: context.isDarkMode
+                      ? Assets.icons.notificationDark
+                      : Assets.icons.notification),
+            ),
           ),
         )
       ],

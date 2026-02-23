@@ -45,7 +45,10 @@ class CategorySection extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         itemCount: categoriesData.length,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            mainAxisSpacing: 10.w, mainAxisExtent: 95.w, crossAxisCount: 2),
+            mainAxisSpacing: 10.w,
+            crossAxisSpacing: 10.h,
+            mainAxisExtent: 99.w,
+            crossAxisCount: 2),
         itemBuilder: (context, index) {
           return HomeCategoryWidget(
             image: categoriesData[index]["image"],

@@ -44,11 +44,13 @@ class CardInfo extends StatelessWidget {
             ),
             Row(
               children: [
-                Text(
-                  email,
-                  style: context.base.theme.textTheme.titleLarge!.copyWith(
-                      fontSize: 16.sp,
-                      color: AppColors.lightGrey.withOpacity(0.5)),
+                FittedBox(
+                  child: Text(
+                    email,
+                    style: context.base.theme.textTheme.titleLarge!.copyWith(
+                        fontSize: 14.sp,
+                        color: AppColors.lightGrey.withOpacity(0.5)),
+                  ),
                 ),
                 const Spacer(),
                 InkWell(

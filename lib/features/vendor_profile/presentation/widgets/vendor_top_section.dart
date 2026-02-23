@@ -6,7 +6,6 @@ import 'package:tradehub/Core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/extensions/main_color.dart';
 
 import '../../../../Core/colors/app_colors.dart';
-import '../../../../core/assets/assets.gen.dart';
 import '../../../../core/constants/app_constants.dart';
 import '../../../../core/shared_widgets/arrow_back_widget.dart';
 
@@ -84,11 +83,10 @@ class VendorTopSection extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 children: [
-                  Image.asset(
-                    Assets.icons.rating.path,
-                    width: 20.w,
-                    height: 20.h,
-                    fit: BoxFit.cover,
+                  Icon(
+                    Icons.star,
+                    size: 20.sp,
+                    color: Colors.yellow,
                   ),
                   SizedBox(
                     width: 5.w,

@@ -47,11 +47,10 @@ class VendorsSection extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          Image.asset(
-                            Assets.icons.rating.path,
-                            width: 10.w,
-                            height: 10.h,
-                            fit: BoxFit.cover,
+                          Icon(
+                            Icons.star,
+                            color: Colors.yellow,
+                            size: 14.sp,
                           ),
                           Text(
                             "4.5 Rating",

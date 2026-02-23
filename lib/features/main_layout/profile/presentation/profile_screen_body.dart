@@ -18,11 +18,11 @@ class ProfileScreenBody extends StatelessWidget {
     EasyLocalization.of(context);
 
     List<Map<String, dynamic>> data = [
-      {"image": Assets.icons.orders.path, "title": LocaleKeys.yourOrders.tr()},
-      {"image": Assets.icons.moon.path, "title": LocaleKeys.darkMode.tr()},
-      {"image": Assets.icons.about.path, "title": LocaleKeys.aboutApp.tr()},
-      {"image": Assets.icons.help.path, "title": LocaleKeys.getHelp.tr()},
-      {"image": Assets.icons.logout.path, "title": LocaleKeys.logOut.tr()}
+      {"image": Assets.icons.myOrders, "title": LocaleKeys.yourOrders.tr()},
+      {"image": Assets.icons.moon, "title": LocaleKeys.darkMode.tr()},
+      {"image": Assets.icons.about, "title": LocaleKeys.aboutApp.tr()},
+      {"image": Assets.icons.help, "title": LocaleKeys.getHelp.tr()},
+      {"image": Assets.icons.logout, "title": LocaleKeys.logOut.tr()}
     ];
     return Column(
       children: [

@@ -6,6 +6,7 @@ import 'package:tradehub/Core/extensions/base_inherited_context.dart';
 import 'package:tradehub/Core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/assets/assets.gen.dart';
 import 'package:tradehub/core/extensions/main_color.dart';
+import 'package:tradehub/core/shared_widgets/svg_widget.dart';
 
 import '../../../../core/localization/locale_keys.g.dart';
 
@@ -19,23 +20,23 @@ class AboutSectionWidget extends StatelessWidget {
         "title": LocaleKeys.storeLocation.tr(),
         "subTitle": """123 Design Avenue, Suite 400
 Metropolis, NY 10001""",
-        "icon": Assets.icons.address.path,
+        "icon": Assets.icons.address,
       },
       {
         "title": LocaleKeys.contactPhone.tr(),
         "subTitle": "01552191457",
-        "icon": Assets.icons.contact.path,
+        "icon": Assets.icons.phone,
       },
       {
         "title": LocaleKeys.emailAddress.tr(),
         "subTitle": "mohamedqandill912@gmail.com",
-        "icon": Assets.icons.gmail.path,
+        "icon": Assets.icons.gmail,
       },
       {
         "title": LocaleKeys.overallRating.tr(),
         "subTitle": """4.9 Star Rating based on 1,234
 verified reviews""",
-        "icon": Assets.icons.rating.path,
+        "icon": Assets.icons.star,
       }
     ];
     return SingleChildScrollView(
@@ -70,10 +71,11 @@ verified reviews""",
                               decoration: BoxDecoration(
                                   color: context.greyOrWhite.withOpacity(0.2),
                                   borderRadius: BorderRadius.circular(12.r)),
-                              child: Image.asset(
-                                info["icon"],
-                                width: 18.w,
-                                height: 18.h,
+                              child: SvgWidget(
+                                assetName: info["icon"],
+                                width: 20.w,
+                                height: 20.h,
+                                fit: BoxFit.scaleDown,
                                 color: context.mainColor,
                               ),
                             ),
