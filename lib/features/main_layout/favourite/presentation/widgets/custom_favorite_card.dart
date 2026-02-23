@@ -4,6 +4,7 @@ import 'package:tradehub/Core/colors/app_colors.dart';
 import 'package:tradehub/Core/extensions/base_inherited_context.dart';
 import 'package:tradehub/Core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/extensions/main_color.dart';
+import 'package:tradehub/core/shared_widgets/svg_widget.dart';
 
 import '../../../../../core/assets/assets.gen.dart';
 
@@ -107,10 +108,10 @@ class _CustomFavoriteCardState extends State<CustomFavoriteCard> {
             },
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: Image.asset(
-                isHeartTapped
-                    ? Assets.icons.heartFilled.path
-                    : Assets.icons.heart.path,
+              child: SvgWidget(
+                assetName: isHeartTapped
+                    ? Assets.icons.favouriteFilled
+                    : Assets.icons.favourite,
                 width: 38,
                 height: 38,
                 fit: BoxFit.fill,

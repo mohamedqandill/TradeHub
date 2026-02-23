@@ -6,6 +6,7 @@ import 'package:tradehub/Core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/assets/assets.gen.dart';
 import 'package:tradehub/core/extensions/main_color.dart';
 import 'package:tradehub/core/localization/locale_keys.g.dart';
+import 'package:tradehub/core/shared_widgets/svg_widget.dart';
 
 import '../../../../Core/colors/app_colors.dart';
 
@@ -52,41 +53,67 @@ class _CustomBottomNavbarState extends State<CustomBottomNavbar> {
             context.base.theme.textTheme.bodyMedium?.copyWith(fontSize: 13.sp),
         items: [
           BottomNavigationBarItem(
-              activeIcon: Image.asset(
-                Assets.icons.homeFilled.path,
+              activeIcon: SvgWidget(
                 color: context.mainColor,
+                width: 22.w,
+                height: 22.h,
+                fit: BoxFit.cover,
+                assetName: Assets.icons.homeFilled,
               ),
-              icon: Image.asset(
-                Assets.icons.homeIcon.path,
+              icon: SvgWidget(
                 color: context.greyOrWhite,
+                width: 22.w,
+                height: 22.h,
+                fit: BoxFit.cover,
+                assetName: Assets.icons.home,
               ),
               label: LocaleKeys.Home.tr()),
           BottomNavigationBarItem(
-              activeIcon: Image.asset(
-                Assets.icons.heartFilled.path,
+              activeIcon: SvgWidget(
                 color: context.mainColor,
+                width: 22.w,
+                height: 22.h,
+                fit: BoxFit.cover,
+                assetName: Assets.icons.favouriteFilled,
               ),
-              icon: Image.asset(
-                Assets.icons.heart.path,
+              icon: SvgWidget(
                 color: context.greyOrWhite,
+                width: 22.w,
+                height: 22.h,
+                fit: BoxFit.cover,
+                assetName: Assets.icons.favourite,
               ),
               label: LocaleKeys.Favourite.tr()),
           BottomNavigationBarItem(
-              activeIcon: Image.asset(
-                  color: context.mainColor, Assets.icons.cartFilled.path),
-              icon: Image.asset(
-                Assets.icons.cart.path,
+              activeIcon: SvgWidget(
+                color: context.mainColor,
+                width: 22.w,
+                fit: BoxFit.cover,
+                height: 22.h,
+                assetName: Assets.icons.cartFilled,
+              ),
+              icon: SvgWidget(
                 color: context.greyOrWhite,
+                width: 22.w,
+                fit: BoxFit.cover,
+                height: 22.h,
+                assetName: Assets.icons.cart,
               ),
               label: LocaleKeys.Cart.tr()),
           BottomNavigationBarItem(
-              activeIcon: Image.asset(
+              activeIcon: SvgWidget(
                 color: context.mainColor,
-                Assets.icons.profileFilled.path,
+                width: 22.w,
+                fit: BoxFit.cover,
+                height: 22.h,
+                assetName: Assets.icons.userFill,
               ),
-              icon: Image.asset(
-                Assets.icons.profile.path,
+              icon: SvgWidget(
                 color: context.greyOrWhite,
+                width: 22.w,
+                fit: BoxFit.cover,
+                height: 22.h,
+                assetName: Assets.icons.user,
               ),
               label: LocaleKeys.Profile.tr()),
         ],

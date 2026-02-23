@@ -11,7 +11,6 @@ import 'package:tradehub/features/main_layout/home/presentation/widgets/products
 import 'package:tradehub/features/main_layout/home/presentation/widgets/vendors_section.dart';
 
 import '../../../../Core/colors/app_colors.dart';
-import '../../../../core/assets/assets.gen.dart';
 
 class HomeScreenBody extends StatelessWidget {
   const HomeScreenBody({super.key});
@@ -26,11 +25,11 @@ class HomeScreenBody extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CustomSearchField(
-                  prefixIcon: Image.asset(
-                    scale: 0.8,
-                    Assets.icons.search.path,
+                  prefixIcon: Icon(
+                    Icons.search,
+                    size: 24.sp,
                     color: context.isDarkMode
-                        ? AppColors.white
+                        ? AppColors.white.withOpacity(0.8)
                         : AppColors.grey.withOpacity(0.8),
                   ),
                   hintText: LocaleKeys.searchForProducts.tr()),

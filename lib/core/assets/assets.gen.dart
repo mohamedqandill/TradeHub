@@ -15,46 +15,20 @@ class $AssetsIconsGen {
   /// File path: assets/icons/2021_Facebook_icon 1.svg
   String get a2021FacebookIcon1 => 'assets/icons/2021_Facebook_icon 1.svg';
 
-  /// File path: assets/icons/Container.png
-  AssetGenImage get container =>
-      const AssetGenImage('assets/icons/Container.png');
+  /// File path: assets/icons/about.svg
+  String get about => 'assets/icons/about.svg';
 
-  /// File path: assets/icons/ContainerFilled.png
-  AssetGenImage get containerFilled =>
-      const AssetGenImage('assets/icons/ContainerFilled.png');
+  /// File path: assets/icons/address.svg
+  String get address => 'assets/icons/address.svg';
 
-  /// File path: assets/icons/Electronics.png
-  AssetGenImage get electronics =>
-      const AssetGenImage('assets/icons/Electronics.png');
+  /// File path: assets/icons/addressDark.svg
+  String get addressDark => 'assets/icons/addressDark.svg';
 
-  /// File path: assets/icons/FavIC.png
-  AssetGenImage get favIC => const AssetGenImage('assets/icons/FavIC.png');
+  /// File path: assets/icons/cart.svg
+  String get cart => 'assets/icons/cart.svg';
 
-  /// File path: assets/icons/Home.png
-  AssetGenImage get home => const AssetGenImage('assets/icons/Home.png');
-
-  /// File path: assets/icons/Jewelry.png
-  AssetGenImage get jewelry => const AssetGenImage('assets/icons/Jewelry.png');
-
-  /// File path: assets/icons/about.png
-  AssetGenImage get about => const AssetGenImage('assets/icons/about.png');
-
-  /// File path: assets/icons/address.png
-  AssetGenImage get address => const AssetGenImage('assets/icons/address.png');
-
-  /// File path: assets/icons/addressDark.png
-  AssetGenImage get addressDark =>
-      const AssetGenImage('assets/icons/addressDark.png');
-
-  /// File path: assets/icons/cart.png
-  AssetGenImage get cart => const AssetGenImage('assets/icons/cart.png');
-
-  /// File path: assets/icons/cartFilled.png
-  AssetGenImage get cartFilled =>
-      const AssetGenImage('assets/icons/cartFilled.png');
-
-  /// File path: assets/icons/contact.png
-  AssetGenImage get contact => const AssetGenImage('assets/icons/contact.png');
+  /// File path: assets/icons/cartFilled.svg
+  String get cartFilled => 'assets/icons/cartFilled.svg';
 
   /// File path: assets/icons/eg.png
   AssetGenImage get eg => const AssetGenImage('assets/icons/eg.png');
@@ -62,105 +36,84 @@ class $AssetsIconsGen {
   /// File path: assets/icons/en.png
   AssetGenImage get en => const AssetGenImage('assets/icons/en.png');
 
-  /// File path: assets/icons/gmail.png
-  AssetGenImage get gmail => const AssetGenImage('assets/icons/gmail.png');
+  /// File path: assets/icons/favourite.svg
+  String get favourite => 'assets/icons/favourite.svg';
+
+  /// File path: assets/icons/favouriteFilled.svg
+  String get favouriteFilled => 'assets/icons/favouriteFilled.svg';
+
+  /// File path: assets/icons/gmail.svg
+  String get gmail => 'assets/icons/gmail.svg';
 
   /// File path: assets/icons/google.svg
   String get google => 'assets/icons/google.svg';
 
-  /// File path: assets/icons/heart.png
-  AssetGenImage get heart => const AssetGenImage('assets/icons/heart.png');
+  /// File path: assets/icons/help.svg
+  String get help => 'assets/icons/help.svg';
 
-  /// File path: assets/icons/heartFilled.png
-  AssetGenImage get heartFilled =>
-      const AssetGenImage('assets/icons/heartFilled.png');
+  /// File path: assets/icons/home.svg
+  String get home => 'assets/icons/home.svg';
 
-  /// File path: assets/icons/help.png
-  AssetGenImage get help => const AssetGenImage('assets/icons/help.png');
+  /// File path: assets/icons/homeFilled.svg
+  String get homeFilled => 'assets/icons/homeFilled.svg';
 
-  /// File path: assets/icons/homeFilled.png
-  AssetGenImage get homeFilled =>
-      const AssetGenImage('assets/icons/homeFilled.png');
+  /// File path: assets/icons/logout.svg
+  String get logout => 'assets/icons/logout.svg';
 
-  /// File path: assets/icons/homeIcon.png
-  AssetGenImage get homeIcon =>
-      const AssetGenImage('assets/icons/homeIcon.png');
+  /// File path: assets/icons/moon.svg
+  String get moon => 'assets/icons/moon.svg';
 
-  /// File path: assets/icons/logout.png
-  AssetGenImage get logout => const AssetGenImage('assets/icons/logout.png');
+  /// File path: assets/icons/myOrders.svg
+  String get myOrders => 'assets/icons/myOrders.svg';
 
-  /// File path: assets/icons/moon.png
-  AssetGenImage get moon => const AssetGenImage('assets/icons/moon.png');
+  /// File path: assets/icons/notification.svg
+  String get notification => 'assets/icons/notification.svg';
 
-  /// File path: assets/icons/notification.png
-  AssetGenImage get notification =>
-      const AssetGenImage('assets/icons/notification.png');
-
-  /// File path: assets/icons/notificationDark.png
-  AssetGenImage get notificationDark =>
-      const AssetGenImage('assets/icons/notificationDark.png');
-
-  /// File path: assets/icons/orders.png
-  AssetGenImage get orders => const AssetGenImage('assets/icons/orders.png');
+  /// File path: assets/icons/notificationDark.svg
+  String get notificationDark => 'assets/icons/notificationDark.svg';
 
   /// File path: assets/icons/phone.svg
   String get phone => 'assets/icons/phone.svg';
 
-  /// File path: assets/icons/profile.png
-  AssetGenImage get profile => const AssetGenImage('assets/icons/profile.png');
+  /// File path: assets/icons/settings.svg
+  String get settings => 'assets/icons/settings.svg';
 
-  /// File path: assets/icons/profileFilled.png
-  AssetGenImage get profileFilled =>
-      const AssetGenImage('assets/icons/profileFilled.png');
+  /// File path: assets/icons/star.svg
+  String get star => 'assets/icons/star.svg';
 
-  /// File path: assets/icons/rate.png
-  AssetGenImage get rate => const AssetGenImage('assets/icons/rate.png');
+  /// File path: assets/icons/user.svg
+  String get user => 'assets/icons/user.svg';
 
-  /// File path: assets/icons/rating.png
-  AssetGenImage get rating => const AssetGenImage('assets/icons/rating.png');
-
-  /// File path: assets/icons/search.png
-  AssetGenImage get search => const AssetGenImage('assets/icons/search.png');
-
-  /// File path: assets/icons/setting.png
-  AssetGenImage get setting => const AssetGenImage('assets/icons/setting.png');
+  /// File path: assets/icons/userFill.svg
+  String get userFill => 'assets/icons/userFill.svg';
 
   /// List of all assets
   List<dynamic> get values => [
         a2021FacebookIcon1,
-        container,
-        containerFilled,
-        electronics,
-        favIC,
-        home,
-        jewelry,
         about,
         address,
         addressDark,
         cart,
         cartFilled,
-        contact,
         eg,
         en,
+        favourite,
+        favouriteFilled,
         gmail,
         google,
-        heart,
-        heartFilled,
         help,
+        home,
         homeFilled,
-        homeIcon,
         logout,
         moon,
+        myOrders,
         notification,
         notificationDark,
-        orders,
         phone,
-        profile,
-        profileFilled,
-        rate,
-        rating,
-        search,
-        setting
+        settings,
+        star,
+        user,
+        userFill
       ];
 }
 

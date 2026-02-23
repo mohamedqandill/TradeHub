@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:tradehub/features/main_layout/presentation/widgets/custom_bottomnavbar.dart';
 
@@ -24,6 +25,7 @@ class _MainLayoutState extends State<MainLayout> {
   ];
   @override
   Widget build(BuildContext context) {
+    EasyLocalization.of(context);
     return Scaffold(
       bottomNavigationBar: CustomBottomNavbar(
         getSelectedIndex: (index) {

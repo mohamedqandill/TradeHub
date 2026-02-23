@@ -29,9 +29,9 @@ class _FavoritesScreenBodyState extends State<FavoritesScreenBody> {
             height: 5.h,
           ),
           CustomSearchField(
-            prefixIcon: Image.asset(
-              scale: 0.8,
-              Assets.icons.search.path,
+            prefixIcon: Icon(
+              Icons.search_sharp,
+              size: 24.sp,
               color: context.isDarkMode
                   ? AppColors.white
                   : AppColors.grey.withOpacity(0.8),

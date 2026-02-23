@@ -10,26 +10,30 @@ class HomeCategoryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ClipOval(
-          child: Image.asset(
-            image,
-            width: 58.w,
-            height: 58.h,
-            fit: BoxFit.cover,
+    return Center(
+      child: Column(
+        children: [
+          ClipOval(
+            child: Image.asset(
+              image,
+              width: 58.w,
+              height: 58.h,
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
-        SizedBox(
-          height: 8.h,
-        ),
-        Text(
-          textAlign: TextAlign.center,
-          title,
-          style: context.base.theme.textTheme.labelSmall
-              ?.copyWith(fontSize: 14.sp),
-        )
-      ],
+          SizedBox(
+            height: 8.h,
+          ),
+          Expanded(
+            child: Text(
+              textAlign: TextAlign.center,
+              title,
+              style: context.base.theme.textTheme.labelSmall
+                  ?.copyWith(fontSize: 14.sp),
+            ),
+          )
+        ],
+      ),
     );
   }
 }

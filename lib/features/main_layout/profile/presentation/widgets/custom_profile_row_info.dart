@@ -6,6 +6,7 @@ import 'package:tradehub/Core/colors/app_colors.dart';
 import 'package:tradehub/Core/extensions/base_inherited_context.dart';
 import 'package:tradehub/Core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/assets/assets.gen.dart';
+import 'package:tradehub/core/shared_widgets/svg_widget.dart';
 import 'package:tradehub/features/onBoarding/view_model/theme_view_model.dart';
 
 import '../../../../../core/localization/locale_keys.g.dart';
@@ -39,16 +40,16 @@ class _CustomProfileRowInfoState extends State<CustomProfileRowInfo> {
       child: Row(
         children: [
           widget.image != null
-              ? Image.asset(
-                  widget.image!,
-                  width: 22.w,
-                  height: 22.h,
+              ? SvgWidget(
+                  width: 24.w,
+                  height: 24.h,
                   fit: BoxFit.cover,
                   color: context.isDarkMode
                       ? widget.index == 4
                           ? AppColors.red
                           : AppColors.white
                       : null,
+                  assetName: widget.image!,
                 )
               : const SizedBox(),
           SizedBox(

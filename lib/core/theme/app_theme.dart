@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:tradehub/core/colors/app_colors.dart';
 
 abstract class AppTheme {
@@ -89,9 +88,8 @@ abstract class AppTheme {
   }
 
   static ThemeData getDarkTheme({required bool isArabic}) {
-    final font = isArabic ? GoogleFonts.cairo : GoogleFonts.poppins;
-
     return ThemeData(
+      fontFamily: isArabic ? "Cairo" : "Poppins",
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
       scaffoldBackgroundColor: AppColors.black,
