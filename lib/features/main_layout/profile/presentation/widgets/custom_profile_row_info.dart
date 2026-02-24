@@ -6,7 +6,7 @@ import 'package:tradehub/Core/colors/app_colors.dart';
 import 'package:tradehub/Core/extensions/base_inherited_context.dart';
 import 'package:tradehub/Core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/assets/assets.gen.dart';
-import 'package:tradehub/core/shared_widgets/svg_widget.dart';
+import 'package:tradehub/core/shared_widgets/widgets/svg_widget.dart';
 import 'package:tradehub/features/onBoarding/view_model/theme_view_model.dart';
 
 import '../../../../../core/localization/locale_keys.g.dart';

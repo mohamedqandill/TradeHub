@@ -6,14 +6,14 @@ import 'package:tradehub/Core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/extensions/base_inherited_context.dart';
 import 'package:tradehub/core/functions/show_snakbar.dart';
 import 'package:tradehub/core/routes/routes.dart';
+import 'package:tradehub/core/shared_widgets/buttons/custom_large_main_button.dart';
 import 'package:tradehub/core/validations/validation.dart';
 import 'package:tradehub/main.dart';
 
 import '../../../../../../Core/assets/app_assets.dart';
 import '../../../../../../Core/colors/app_colors.dart';
-import '../../../../../../Core/shared_widgets/custom_large_main_button.dart';
 import '../../../../../../core/localization/locale_keys.g.dart';
-import '../../../../../../core/shared_widgets/custom_text_field.dart';
+import '../../../../../../core/shared_widgets/fields/custom_text_field.dart';
 import '../../bloc/new_password_bloc.dart';
 
 class NewPasswordViewBody extends StatefulWidget {

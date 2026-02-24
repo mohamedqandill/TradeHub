@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tradehub/Core/extensions/base_inherited_context.dart';
 import 'package:tradehub/Core/extensions/is_dark_mode.dart';
-import 'package:tradehub/Core/shared_widgets/svg_widget.dart';
 import 'package:tradehub/core/constants/app_constants.dart';
 import 'package:tradehub/core/extensions/main_color.dart';
 import 'package:tradehub/core/localization/locale_keys.g.dart';
+import 'package:tradehub/core/shared_widgets/widgets/svg_widget.dart';
 
 import '../../../../../Core/colors/app_colors.dart';
 import '../../../../../core/assets/assets.gen.dart';

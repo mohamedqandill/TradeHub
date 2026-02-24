@@ -4,7 +4,7 @@ import 'package:tradehub/Core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/base/base_inherited_widgets.dart';
 import 'package:tradehub/core/extensions/main_color.dart';
 
-import '../colors/app_colors.dart';
+import '../../colors/app_colors.dart';
 
 class CustomRichText extends StatelessWidget {
   const CustomRichText(

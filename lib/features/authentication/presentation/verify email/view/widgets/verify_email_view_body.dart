@@ -6,7 +6,7 @@ import 'package:tradehub/Core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/extensions/base_inherited_context.dart';
 import 'package:tradehub/core/functions/show_loading.dart';
 import 'package:tradehub/core/localization/locale_keys.g.dart';
-import 'package:tradehub/core/shared_widgets/custom_rich_text.dart';
+import 'package:tradehub/core/shared_widgets/texts/custom_rich_text.dart';
 import 'package:tradehub/features/authentication/presentation/forget%20password/bloc/forget_password_bloc.dart';
 import 'package:tradehub/features/authentication/presentation/verify%20email/bloc/verify_otp_bloc.dart';
 import 'package:tradehub/features/authentication/presentation/verify%20email/view/widgets/pin_put.dart';

@@ -4,8 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tradehub/Core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/extensions/main_color.dart';
 
-import '../colors/app_colors.dart';
-import '../constants/app_constants.dart';
+import '../../colors/app_colors.dart';
+import '../../constants/app_constants.dart';
 
 class ArrowBackWidget extends StatelessWidget {
   const ArrowBackWidget({super.key});

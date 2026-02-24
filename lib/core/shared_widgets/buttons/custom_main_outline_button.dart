@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../base/base_inherited_widgets.dart';
-import '../colors/app_colors.dart';
+import '../../base/base_inherited_widgets.dart';
+import '../../colors/app_colors.dart';
 
 class CustomMainOutlineButton extends StatelessWidget {
   const CustomMainOutlineButton(

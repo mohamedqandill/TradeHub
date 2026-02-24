@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tradehub/Core/extensions/base_inherited_context.dart';
 import 'package:tradehub/Core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/localization/locale_keys.g.dart';
-import 'package:tradehub/core/shared_widgets/custom_search_field.dart';
+import 'package:tradehub/core/shared_widgets/fields/custom_search_field.dart';
 import 'package:tradehub/features/main_layout/home/presentation/widgets/category_section.dart';
 import 'package:tradehub/features/main_layout/home/presentation/widgets/custom_row_headline.dart';
 import 'package:tradehub/features/main_layout/home/presentation/widgets/products_section.dart';

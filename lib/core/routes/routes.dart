@@ -11,4 +11,5 @@ abstract class Routes {
   static const String mainLayout = "mainLayout";
   static const String settings = "settings";
   static const String vendorProfile = "vendorProfile";
+  static const String productDetails = "productDetails";
 }

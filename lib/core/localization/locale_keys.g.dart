@@ -136,5 +136,7 @@ abstract class  LocaleKeys {
   static const gmail = 'gmail';
   static const overallRating = 'overallRating';
   static const brandStory = 'brandStory';
+  static const addToCart = 'addToCart';
+  static const description = 'description';
 
 }

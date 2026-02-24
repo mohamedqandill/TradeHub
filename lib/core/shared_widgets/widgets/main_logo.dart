@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tradehub/Core/extensions/is_dark_mode.dart';
-import 'package:tradehub/Core/shared_widgets/svg_widget.dart';
 import 'package:tradehub/core/assets/app_assets.dart';
+import 'package:tradehub/core/shared_widgets/widgets/svg_widget.dart';
 
 class MainLogo extends StatelessWidget {
   const MainLogo({super.key});
