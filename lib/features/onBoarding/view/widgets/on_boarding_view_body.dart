@@ -10,12 +10,12 @@ import 'package:tradehub/core/assets/app_assets.dart';
 import 'package:tradehub/core/colors/app_colors.dart';
 import 'package:tradehub/core/constants/app_constants.dart';
 import 'package:tradehub/core/routes/routes.dart';
-import 'package:tradehub/core/shared_widgets/custom_main_button.dart';
-import 'package:tradehub/core/shared_widgets/custom_main_outline_button.dart';
-import 'package:tradehub/core/shared_widgets/main_logo.dart';
+import 'package:tradehub/core/shared_widgets/buttons/custom_main_button.dart';
+import 'package:tradehub/core/shared_widgets/buttons/custom_main_outline_button.dart';
 import 'package:tradehub/core/utils/shared_prefs/prefs.dart';
 
 import '../../../../core/localization/locale_keys.g.dart';
+import '../../../../core/shared_widgets/widgets/main_logo.dart';
 import 'custom_body_widget.dart';
 
 class OnBoardingViewBody extends StatefulWidget {

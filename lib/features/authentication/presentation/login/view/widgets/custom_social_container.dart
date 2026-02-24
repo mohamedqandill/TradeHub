@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tradehub/Core/extensions/is_dark_mode.dart';
+import 'package:tradehub/core/shared_widgets/widgets/svg_widget.dart';
 
 import '../../../../../../Core/colors/app_colors.dart';
-import '../../../../../../Core/shared_widgets/svg_widget.dart';
 
 class CustomSocialContainer extends StatelessWidget {
   const CustomSocialContainer({super.key, required this.icon});

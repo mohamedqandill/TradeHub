@@ -5,7 +5,7 @@ import 'package:tradehub/Core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/constants/app_constants.dart';
 import 'package:tradehub/core/extensions/main_color.dart';
 
-import '../colors/app_colors.dart';
+import '../../colors/app_colors.dart';
 
 class buildAuthAppBar extends StatelessWidget implements PreferredSizeWidget {
   const buildAuthAppBar({

@@ -7,7 +7,7 @@ import 'package:tradehub/core/extensions/main_color.dart';
 
 import '../../../../Core/colors/app_colors.dart';
 import '../../../../core/constants/app_constants.dart';
-import '../../../../core/shared_widgets/arrow_back_widget.dart';
+import '../../../../core/shared_widgets/widgets/arrow_back_widget.dart';
 
 class VendorTopSection extends StatelessWidget {
   const VendorTopSection(

@@ -5,9 +5,9 @@ import 'package:tradehub/Core/extensions/base_inherited_context.dart';
 import 'package:tradehub/Core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/extensions/main_color.dart';
 import 'package:tradehub/core/localization/locale_keys.g.dart';
+import 'package:tradehub/core/shared_widgets/buttons/custom_large_main_button.dart';
 
 import '../../../../../Core/colors/app_colors.dart';
-import '../../../../../Core/shared_widgets/custom_large_main_button.dart';
 import 'custom_row_card.dart';
 
 class CustomCheckoutCard extends StatelessWidget {
