@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tradehub/core/extensions/screen_route_transition.dart';
 import 'package:tradehub/core/routes/routes.dart';
+import 'package:tradehub/features/category_details/presentation/category_details_screen.dart';
 import 'package:tradehub/features/main_layout/presentation/main_layout.dart';
 import 'package:tradehub/features/product_details/presentation/product_details_screen.dart';
 import 'package:tradehub/features/settings/presentation/settings_screen.dart';
@@ -58,6 +59,11 @@ abstract class AppRoutes {
         return MaterialPageRoute(
           settings: settings,
           builder: (context) => const ProductDetailsScreen(),
+        );
+      case Routes.categoryDetails:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (context) => const CategoryDetailsScreen(),
         );
 
       // Forget Password → Fade

@@ -27,78 +27,113 @@ class _CustomFavoriteCardState extends State<CustomFavoriteCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: double.infinity,
       decoration: BoxDecoration(
-          color: context.isDarkMode ? AppColors.black : AppColors.white,
-          boxShadow: [
-            BoxShadow(
-              color: context.isDarkMode
-                  ? Colors.white.withOpacity(0.1)
-                  : Colors.black.withOpacity(0.1),
-              blurRadius: 8,
-              spreadRadius: 2,
-              offset: const Offset(0, 2),
-            )
-          ],
-          // border: Border.all(width: 1, color: AppColors.white.withOpacity(0.8)),
-          borderRadius: BorderRadius.circular(15.r)),
-      child: Row(
+        color: context.isDarkMode
+            ? AppColors.black.withOpacity(0.3)
+            : AppColors.white,
+        borderRadius: BorderRadius.circular(20.r),
+        border: Border.all(
+          color: context.greyOrWhite.withOpacity(0.1),
+          width: 1,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.04),
+            blurRadius: 12,
+            offset: const Offset(0, 6),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // SizedBox(
-          //   width: 10.w,
-          // ),
-          Image.asset(
-            widget.image,
-            width: 100.w,
-            height: 100.h,
-            fit: BoxFit.cover,
+          Stack(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
+                child: Image.asset(
+                  widget.image,
+                  width: double.infinity,
+                  height: 140.h,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              Positioned(
+                top: 8.h,
+                right: 2.w,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.8),
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 4,
+                      )
+                    ],
+                  ),
+                  child: HeartButton(
+                    height: 30.h,
+                    width: 30.w,
+                  ),
+                ),
+              ),
+            ],
           ),
-          SizedBox(
-            width: 10.w,
-          ),
-          Expanded(
+          Padding(
+            padding: EdgeInsets.all(12.sp),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   widget.title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: context.base.theme.textTheme.bodyMedium?.copyWith(
-                    color: context.mainColor,
-                    fontWeight: FontWeight.bold,
+                    color:
+                        context.isDarkMode ? AppColors.white : AppColors.black,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 14.sp,
                   ),
                 ),
+                SizedBox(height: 2.h),
                 Text(
                   widget.storeName,
-                  style: context.base.theme.textTheme.bodyMedium?.copyWith(
-                    color: context.mainColor.withOpacity(0.8),
-                    fontWeight: FontWeight.w400,
+                  style: TextStyle(
+                    color: AppColors.grey.withOpacity(0.7),
+                    fontSize: 11.sp,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
-                SizedBox(
-                  height: 7.h,
+                SizedBox(height: 8.h),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "${widget.price} EGP",
+                      style: TextStyle(
+                        color: context.mainColor,
+                        fontWeight: FontWeight.w800,
+                        fontSize: 16.sp,
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(6.sp),
+                      decoration: BoxDecoration(
+                        color: context.mainColor.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(8.r),
+                      ),
+                      child: Icon(
+                        Icons.add_shopping_cart_rounded,
+                        size: 18.sp,
+                        color: context.mainColor,
+                      ),
+                    ),
+                  ],
                 ),
-                Text(
-                  "${widget.price}EG",
-                  style: context.base.theme.textTheme.bodyMedium?.copyWith(
-                      color: context.isDarkMode
-                          ? AppColors.white
-                          : AppColors.black,
-                      fontSize: 15.sp),
-                )
               ],
             ),
           ),
-          const HeartButton()
-          // Container(
-          //   width: 50,
-          //   height: 50,
-          //   decoration:
-          //       BoxDecoration(shape: BoxShape.circle, color: context.mainColor),
-          //   child: const Icon(
-          //     Icons.shopping_cart,
-          //     color: AppColors.white,
-          //   ),
-          // ),
         ],
       ),
     );

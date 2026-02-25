@@ -30,7 +30,7 @@ class CustomTextField extends StatelessWidget {
     return SizedBox(
       width: 335.w,
       child: TextFormField(
-        autofillHints: [autoFillHints!],
+        autofillHints: [autoFillHints],
         autovalidateMode: AutovalidateMode.onUserInteraction,
         style: Theme.of(context).textTheme.labelSmall,
         controller: controller,

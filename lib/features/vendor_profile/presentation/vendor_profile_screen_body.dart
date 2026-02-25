@@ -45,7 +45,6 @@ class _VendorProfileScreenBodyState extends State<VendorProfileScreenBody>
   Widget build(BuildContext context) {
     return NestedScrollView(
       headerSliverBuilder: (context, innerBoxIsScrolled) => [
-        // الهيدر اللي هيتسكرول لفوق
         SliverToBoxAdapter(
           child: VendorTopSection(
             title: "Modern Living",
@@ -55,7 +54,6 @@ class _VendorProfileScreenBodyState extends State<VendorProfileScreenBody>
             subTitle: "Premium Home Furnishings",
           ),
         ),
-        // TabBar ثابت فوق
         SliverPersistentHeader(
           pinned: true,
           delegate: _StickyTabBarDelegate(
@@ -76,7 +74,6 @@ class _VendorProfileScreenBodyState extends State<VendorProfileScreenBody>
           ),
         ),
       ],
-      // المحتوى
       body: TabBarView(
         controller: _tabController,
         children: const [

@@ -8,13 +8,12 @@ class ProductSectionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-        child: SingleChildScrollView(
+    return SingleChildScrollView(
       physics: const NeverScrollableScrollPhysics(),
       child: Padding(
-        padding: EdgeInsets.only(top: 10.h),
+        padding: EdgeInsets.all(12.sp),
         child: const ProductsSection(),
       ),
-    ));
+    );
   }
 }

@@ -18,56 +18,51 @@ class HomeScreenBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
+      physics: const BouncingScrollPhysics(),
       children: [
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 8.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(height: 10.h),
               CustomSearchField(
-                  prefixIcon: Icon(
-                    Icons.search,
-                    size: 24.sp,
-                    color: context.isDarkMode
-                        ? AppColors.white.withOpacity(0.8)
-                        : AppColors.grey.withOpacity(0.8),
-                  ),
-                  hintText: LocaleKeys.searchForProducts.tr()),
-              SizedBox(
-                height: 20.h,
+                prefixIcon: Icon(
+                  Icons.search_rounded,
+                  size: 24.sp,
+                  color: context.isDarkMode
+                      ? AppColors.white.withOpacity(0.6)
+                      : AppColors.grey.withOpacity(0.6),
+                ),
+                hintText: LocaleKeys.searchForProducts.tr(),
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8.0.w),
-                child: Text(
-                  LocaleKeys.categories.tr(),
-                  style: context.base.theme.textTheme.titleLarge
-                      ?.copyWith(fontSize: 20.sp, fontWeight: FontWeight.w700),
+              SizedBox(height: 24.h),
+              Text(
+                LocaleKeys.categories.tr(),
+                style: context.base.theme.textTheme.titleLarge?.copyWith(
+                  fontSize: 22.sp,
+                  fontWeight: FontWeight.w800,
+                  color: context.isDarkMode ? AppColors.white : AppColors.black,
+                  letterSpacing: -0.5,
                 ),
               ),
-              SizedBox(
-                height: 12.h,
-              ),
+              SizedBox(height: 16.h),
               const CategorySection(),
-              SizedBox(
-                height: 15.h,
-              ),
+              SizedBox(height: 24.h),
               CustomRowHeadline(
-                  title: LocaleKeys.featuredVendors.tr(),
-                  subTitle: LocaleKeys.seeAll.tr()),
-              SizedBox(
-                height: 8.h,
+                title: LocaleKeys.featuredVendors.tr(),
+                subTitle: LocaleKeys.seeAll.tr(),
               ),
+              SizedBox(height: 12.h),
               const VendorsSection(),
-              SizedBox(
-                height: 8.h,
-              ),
+              SizedBox(height: 24.h),
               CustomRowHeadline(
-                  title: LocaleKeys.popularProducts.tr(),
-                  subTitle: LocaleKeys.seeAll.tr()),
-              SizedBox(
-                height: 8.h,
+                title: LocaleKeys.popularProducts.tr(),
+                subTitle: LocaleKeys.seeAll.tr(),
               ),
-              const Center(child: ProductsSection())
+              SizedBox(height: 12.h),
+              const ProductsSection(),
+              SizedBox(height: 30.h),
             ],
           ),
         ),

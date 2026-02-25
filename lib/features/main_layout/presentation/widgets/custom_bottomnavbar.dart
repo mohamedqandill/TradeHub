@@ -24,6 +24,29 @@ class _CustomBottomNavbarState extends State<CustomBottomNavbar> {
 
   @override
   Widget build(BuildContext context) {
+    final List<Map<String, dynamic>> navItems = [
+      {
+        'activeIcon': Assets.icons.homeFilled,
+        'icon': Assets.icons.home,
+        'label': LocaleKeys.Home.tr(),
+      },
+      {
+        'activeIcon': Assets.icons.favouriteFilled,
+        'icon': Assets.icons.favourite,
+        'label': LocaleKeys.Favourite.tr(),
+      },
+      {
+        'activeIcon': Assets.icons.cartFilled,
+        'icon': Assets.icons.cart,
+        'label': LocaleKeys.Cart.tr(),
+      },
+      {
+        'activeIcon': Assets.icons.userFill,
+        'icon': Assets.icons.user,
+        'label': LocaleKeys.Profile.tr(),
+      },
+    ];
+
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -51,72 +74,25 @@ class _CustomBottomNavbarState extends State<CustomBottomNavbar> {
             ?.copyWith(fontSize: 11.sp, color: context.greyOrWhite),
         selectedLabelStyle:
             context.base.theme.textTheme.bodyMedium?.copyWith(fontSize: 13.sp),
-        items: [
-          BottomNavigationBarItem(
-              activeIcon: SvgWidget(
-                color: context.mainColor,
-                width: 22.w,
-                height: 22.h,
-                fit: BoxFit.cover,
-                assetName: Assets.icons.homeFilled,
-              ),
-              icon: SvgWidget(
-                color: context.greyOrWhite,
-                width: 22.w,
-                height: 22.h,
-                fit: BoxFit.cover,
-                assetName: Assets.icons.home,
-              ),
-              label: LocaleKeys.Home.tr()),
-          BottomNavigationBarItem(
-              activeIcon: SvgWidget(
-                color: context.mainColor,
-                width: 22.w,
-                height: 22.h,
-                fit: BoxFit.cover,
-                assetName: Assets.icons.favouriteFilled,
-              ),
-              icon: SvgWidget(
-                color: context.greyOrWhite,
-                width: 22.w,
-                height: 22.h,
-                fit: BoxFit.cover,
-                assetName: Assets.icons.favourite,
-              ),
-              label: LocaleKeys.Favourite.tr()),
-          BottomNavigationBarItem(
-              activeIcon: SvgWidget(
-                color: context.mainColor,
-                width: 22.w,
-                fit: BoxFit.cover,
-                height: 22.h,
-                assetName: Assets.icons.cartFilled,
-              ),
-              icon: SvgWidget(
-                color: context.greyOrWhite,
-                width: 22.w,
-                fit: BoxFit.cover,
-                height: 22.h,
-                assetName: Assets.icons.cart,
-              ),
-              label: LocaleKeys.Cart.tr()),
-          BottomNavigationBarItem(
-              activeIcon: SvgWidget(
-                color: context.mainColor,
-                width: 22.w,
-                fit: BoxFit.cover,
-                height: 22.h,
-                assetName: Assets.icons.userFill,
-              ),
-              icon: SvgWidget(
-                color: context.greyOrWhite,
-                width: 22.w,
-                fit: BoxFit.cover,
-                height: 22.h,
-                assetName: Assets.icons.user,
-              ),
-              label: LocaleKeys.Profile.tr()),
-        ],
+        items: navItems.map((item) {
+          return BottomNavigationBarItem(
+            activeIcon: SvgWidget(
+              color: context.mainColor,
+              width: 24.w,
+              height: 24.h,
+              fit: BoxFit.cover,
+              assetName: item['activeIcon'],
+            ),
+            icon: SvgWidget(
+              color: context.greyOrWhite,
+              width: 24.w,
+              height: 24.h,
+              fit: BoxFit.cover,
+              assetName: item['icon'],
+            ),
+            label: item['label'],
+          );
+        }).toList(),
       ),
     );
   }

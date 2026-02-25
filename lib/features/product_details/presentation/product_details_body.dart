@@ -23,6 +23,7 @@ class _ProductDetailsBodyState extends State<ProductDetailsBody> {
     Assets.images.imageT.path,
     Assets.images.imageT.path,
   ];
+  int _currentImageIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -103,35 +104,79 @@ class _ProductDetailsBodyState extends State<ProductDetailsBody> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            height: 10.h,
-          ),
-          CarouselSlider(
-              items: List.generate(
-                items.length,
-                (index) {
-                  return Image.asset(
-                    items[index],
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                  );
-                },
+          Stack(
+            alignment: Alignment.bottomCenter,
+            children: [
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 16.w),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(24.r),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.08),
+                      blurRadius: 20,
+                      offset: const Offset(0, 10),
+                    ),
+                  ],
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(24.r),
+                  child: CarouselSlider(
+                    items: List.generate(
+                      items.length,
+                      (index) {
+                        return Hero(
+                          tag: "product_image_$index",
+                          child: Image.asset(
+                            items[index],
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                          ),
+                        );
+                      },
+                    ),
+                    options: CarouselOptions(
+                      height: 300.h,
+                      viewportFraction: 1.0,
+                      initialPage: 0,
+                      enableInfiniteScroll: true,
+                      autoPlay: true,
+                      autoPlayInterval: const Duration(seconds: 8),
+                      autoPlayAnimationDuration:
+                          const Duration(milliseconds: 1000),
+                      autoPlayCurve: Curves.easeInOutQuart,
+                      enlargeCenterPage: false,
+                      onPageChanged: (index, reason) {
+                        setState(() {
+                          _currentImageIndex = index;
+                        });
+                      },
+                    ),
+                  ),
+                ),
               ),
-              options: CarouselOptions(
-                height: 250.h,
-                aspectRatio: 1 / 1,
-                initialPage: 0,
-                enableInfiniteScroll: true,
-                reverse: false,
-                autoPlay: true,
-                autoPlayInterval: const Duration(seconds: 15),
-                autoPlayAnimationDuration: const Duration(milliseconds: 1200),
-                autoPlayCurve: Curves.fastOutSlowIn,
-                enlargeCenterPage: true,
-                enlargeFactor: 0.3,
-                onPageChanged: (index, reason) {},
-                scrollDirection: Axis.horizontal,
-              )),
+              Positioned(
+                bottom: 20.h,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: items.asMap().entries.map((entry) {
+                    return AnimatedContainer(
+                      duration: const Duration(milliseconds: 300),
+                      width: _currentImageIndex == entry.key ? 24.w : 8.w,
+                      height: 8.w,
+                      margin: EdgeInsets.symmetric(horizontal: 4.w),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.r),
+                        color: _currentImageIndex == entry.key
+                            ? context.mainColor
+                            : AppColors.white.withOpacity(0.5),
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ),
+            ],
+          ),
           SizedBox(
             height: 20.h,
           ),
@@ -141,109 +186,131 @@ class _ProductDetailsBodyState extends State<ProductDetailsBody> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Wireless Headphone ",
+                  "Wireless Headphone",
                   style: context.base.theme.textTheme.headlineMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: context.mainColor,
-                      fontSize: 22.sp),
+                    fontWeight: FontWeight.w800,
+                    color:
+                        context.isDarkMode ? AppColors.white : AppColors.black,
+                    fontSize: 26.sp,
+                    letterSpacing: -0.5,
+                  ),
                 ),
-                SizedBox(
-                  height: 12.h,
-                ),
+                SizedBox(height: 8.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(
-                      "550.0 EGP",
-                      style: GoogleFonts.manrope(
-                          fontSize: 30.sp,
-                          fontWeight: FontWeight.bold,
-                          color: context.mainColor),
-                    ),
-                    Row(
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          width: 58.w,
-                          height: 35.h,
-                          decoration: BoxDecoration(
-                            color: Colors.blueAccent.withOpacity(0.2),
-                            borderRadius: BorderRadius.circular(8.r),
+                        Text(
+                          "550.0 EGP",
+                          style: GoogleFonts.manrope(
+                            fontSize: 28.sp,
+                            fontWeight: FontWeight.w800,
+                            color: context.mainColor,
                           ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.star,
-                                color: Colors.black,
-                                size: 17.sp,
-                              ),
-                              SizedBox(
-                                width: 5.w,
-                              ),
-                              Text(
-                                textAlign: TextAlign.center,
-                                "4.8",
-                                style: context
-                                    .base.theme.textTheme.headlineMedium
-                                    ?.copyWith(
-                                        fontWeight: FontWeight.bold,
-                                        color: context.mainColor,
-                                        fontSize: 14.sp),
-                              )
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          width: 5.w,
                         ),
                         Text(
-                          "120 Verified\n Reviwes",
-                          style: context.base.theme.textTheme.bodyMedium
-                              ?.copyWith(
-                                  fontSize: 13.sp, fontWeight: FontWeight.w500),
-                        )
+                          "Tax included",
+                          style: TextStyle(
+                            fontSize: 12.sp,
+                            color: AppColors.grey.withOpacity(0.8),
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
                       ],
-                    )
+                    ),
+                    Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+                      decoration: BoxDecoration(
+                        color: context.mainColor.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(12.r),
+                        border: Border.all(
+                          color: context.mainColor.withOpacity(0.2),
+                          width: 1,
+                        ),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.star_rounded,
+                                color: Colors.amber,
+                                size: 20.sp,
+                              ),
+                              SizedBox(width: 4.w),
+                              Text(
+                                "4.8",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w800,
+                                  color: context.mainColor,
+                                  fontSize: 16.sp,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Text(
+                            "120 Reviews",
+                            style: TextStyle(
+                              fontSize: 10.sp,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.grey,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
                 SizedBox(
                   height: 12.h,
                 ),
                 Theme(
-                  data: Theme.of(context)
-                      .copyWith(dividerColor: Colors.transparent),
+                  data: Theme.of(context).copyWith(
+                    dividerColor: Colors.transparent,
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                  ),
                   child: ExpansionTile(
                     tilePadding: EdgeInsets.zero,
-                    childrenPadding: EdgeInsets.zero,
+                    childrenPadding: EdgeInsets.only(bottom: 10.h),
                     backgroundColor: Colors.transparent,
                     collapsedBackgroundColor: Colors.transparent,
                     title: Text(
                       "DESCRIPTION",
-                      style: context.base.theme.textTheme.headlineMedium
-                          ?.copyWith(
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.bold,
-                              color: context.mainColor),
+                      style:
+                          context.base.theme.textTheme.headlineMedium?.copyWith(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w800,
+                        color: context.mainColor,
+                        letterSpacing: 1.2,
+                      ),
                     ),
                     iconColor:
                         context.isDarkMode ? AppColors.white : Colors.black,
-                    collapsedIconColor: Colors.grey,
+                    collapsedIconColor: AppColors.grey,
                     children: [
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 15.sp),
+                        padding: EdgeInsets.symmetric(horizontal: 4.w),
                         child: Text(
-                            "This is a detailed product description. "
-                            "It explains materials, size, quality, and other important details "
-                            "that the customer needs to know before purchasing.",
-                            style: context.base.theme.textTheme.bodyMedium
-                                ?.copyWith(
-                              fontSize: 13.sp,
-                              color: context.greyOrWhite.withOpacity(0.8),
-                            )),
+                          "This is a detailed product description. "
+                          "It explains materials, size, quality, and other important details "
+                          "that the customer needs to know before purchasing.",
+                          style:
+                              context.base.theme.textTheme.bodyMedium?.copyWith(
+                            fontSize: 14.sp,
+                            color: context.greyOrWhite.withOpacity(0.7),
+                            height: 1.6,
+                          ),
+                        ),
                       ),
                     ],
                   ),
-                )
+                ),
               ],
             ),
           ),
