@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tradehub/core/routes/routes.dart';
 
 import '../../../../../core/assets/assets.gen.dart';
 import '../../../../../core/localization/locale_keys.g.dart';
@@ -50,9 +51,12 @@ class CategorySection extends StatelessWidget {
             mainAxisExtent: 99.w,
             crossAxisCount: 2),
         itemBuilder: (context, index) {
-          return HomeCategoryWidget(
-            image: categoriesData[index]["image"],
-            title: categoriesData[index]["title"],
+          return InkWell(
+            onTap: () => Navigator.pushNamed(context, Routes.categoryDetails),
+            child: HomeCategoryWidget(
+              image: categoriesData[index]["image"],
+              title: categoriesData[index]["title"],
+            ),
           );
         },
       ),

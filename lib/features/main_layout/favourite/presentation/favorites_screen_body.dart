@@ -40,25 +40,40 @@ class _FavoritesScreenBodyState extends State<FavoritesScreenBody> {
           ),
           Expanded(
             child: CustomScrollView(
+              physics: const BouncingScrollPhysics(),
               slivers: [
                 SliverToBoxAdapter(
                   child: SizedBox(
-                    height: 10.h,
+                    height: 16.h,
                   ),
                 ),
-                SliverList.separated(
-                  separatorBuilder: (context, index) => SizedBox(
-                    height: 8.h,
+                SliverPadding(
+                  padding: EdgeInsets.symmetric(horizontal: 8.w),
+                  sliver: SliverGrid(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 16.w,
+                      mainAxisSpacing: 16.h,
+                      childAspectRatio: 0.65,
+                    ),
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        return CustomFavoriteCard(
+                          image: Assets.images.tshirt.path,
+                          title: "Classic T-Shirt Sport",
+                          storeName: "Nike Store",
+                          price: "1200",
+                        );
+                      },
+                      childCount: 6, // Changed to 6 for a balanced grid
+                    ),
                   ),
-                  itemCount: 5,
-                  itemBuilder: (context, index) {
-                    return CustomFavoriteCard(
-                        image: Assets.images.tshirt.path,
-                        title: "Classic T-Shirt Sport",
-                        storeName: "Nike Store",
-                        price: "1200");
-                  },
-                )
+                ),
+                SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: 20.h,
+                  ),
+                ),
               ],
             ),
           ),

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tradehub/Core/extensions/base_inherited_context.dart';
 import 'package:tradehub/core/routes/routes.dart';
 
-import '../../../../../Core/colors/app_colors.dart';
 import '../../../../../core/assets/assets.gen.dart';
 
 class VendorsSection extends StatelessWidget {
@@ -12,58 +10,117 @@ class VendorsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 160.h,
-      child: GridView.builder(
+      height: 180.h,
+      child: ListView.builder(
         scrollDirection: Axis.horizontal,
+        physics: const BouncingScrollPhysics(),
         itemCount: 4,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            childAspectRatio: 1 / 2,
-            crossAxisCount: 1,
-            mainAxisSpacing: 15.sp,
-            mainAxisExtent: 256.sp),
         itemBuilder: (context, index) {
-          return InkWell(
-            onTap: () {
-              Navigator.pushNamed(context, Routes.vendorProfile);
-            },
-            child: Stack(
-              alignment: Alignment.bottomLeft,
-              children: [
-                Image.asset(
-                  Assets.images.vendor.path,
-                  height: 165.h,
-                  fit: BoxFit.fill,
+          return Padding(
+            padding: EdgeInsets.only(right: 16.w, bottom: 8.h),
+            child: InkWell(
+              onTap: () {
+                Navigator.pushNamed(context, Routes.vendorProfile);
+              },
+              borderRadius: BorderRadius.circular(20.r),
+              child: Container(
+                width: 280.w,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20.r),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.08),
+                      blurRadius: 12,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
                 ),
-                Positioned(
-                  left: 10.w,
-                  bottom: 20.h,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Vendor One",
-                        style: context.base.theme.textTheme.bodyMedium
-                            ?.copyWith(color: AppColors.white, fontSize: 18.sp),
+                child: Stack(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20.r),
+                      child: Image.asset(
+                        Assets.images.vendor.path,
+                        width: 280.w,
+                        height: 180.h,
+                        fit: BoxFit.cover,
                       ),
-                      Row(
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20.r),
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Colors.black.withOpacity(0.0),
+                            Colors.black.withOpacity(0.8),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      left: 16.w,
+                      right: 16.w,
+                      bottom: 16.h,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Icon(
-                            Icons.star,
-                            color: Colors.yellow,
-                            size: 14.sp,
-                          ),
                           Text(
-                            "4.5 Rating",
-                            style: context.base.theme.textTheme.bodyMedium
-                                ?.copyWith(
-                                    color: AppColors.white, fontSize: 12.sp),
+                            "Vendor One",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.w800,
+                              letterSpacing: 0.5,
+                            ),
+                          ),
+                          SizedBox(height: 4.h),
+                          Row(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 8.w, vertical: 4.h),
+                                decoration: BoxDecoration(
+                                  color: Colors.white.withOpacity(0.2),
+                                  borderRadius: BorderRadius.circular(8.r),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.star_rounded,
+                                      color: Colors.amber,
+                                      size: 16.sp,
+                                    ),
+                                    SizedBox(width: 4.w),
+                                    Text(
+                                      "4.5",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 12.sp,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(width: 8.w),
+                              Text(
+                                "Premium Vendor",
+                                style: TextStyle(
+                                  color: Colors.white.withOpacity(0.8),
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                    ],
-                  ),
-                )
-              ],
+                    )
+                  ],
+                ),
+              ),
             ),
           );
         },

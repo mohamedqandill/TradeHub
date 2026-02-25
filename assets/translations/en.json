@@ -88,7 +88,6 @@
   "startShopping": "Start Shopping",
   "noFavoriteYet": "No favorite yet",
   "favoriteDescription": "Start saving your favorite items and they will appear here for quick access",
-
   "yourCartIsEmpty": "Your Cart is Empty",
   "timeToFillItUpAndExplore": "Time to fill it up! Explore our collections and find your new favorites.",
   "myCart": "My Cart",
@@ -98,7 +97,6 @@
   "tax": "Tax",
   "proceedToCheckout": "Proceed To Checkout",
   "totalAmount": "Total Amount",
-
   "yourOrders": "Your Orders",
   "darkMode": "Dark Mode",
   "aboutApp": "About App",
@@ -111,13 +109,15 @@
   "changePassword": "Change Password",
   "notification": "Notification",
   "language": "Language",
-  "settings": "Settings", "healthAndBeauty": "Health & Beauty",
+  "settings": "Settings",
+  "healthAndBeauty": "Health & Beauty",
   "groceryMarkets": "Markets",
   "electronics": "Electronics",
   "furniture": "Furniture",
   "clothes": "Clothes",
   "restaurants": "Restaurants",
-  "flowers": "Flowers","accessories": "Accessories",
+  "flowers": "Flowers",
+  "accessories": "Accessories",
   "deliverTo": "DELIVER TO",
   "searchForProducts": "Search for products...",
   "categories": "Categories",
@@ -127,13 +127,19 @@
   "products": "Products",
   "about": "About",
   "reviews": "Reviews",
-
   "storeLocation": "STORE LOCATION",
   "contactPhone": "CONTACT PHONE",
   "gmail": "EMAIL ADDRESS",
   "overallRating": "OVERALL RATING",
-
   "brandStory": "Brand Story",
   "addToCart": "ADD TO CART",
-  "description": "Description"
+  "description": "Description",
+  "categoryVendors": "Category Vendors",
+  "all": "All",
+  "topRated": "Top Rated",
+  "nearest": "Nearest",
+  "openNow": "Open Now",
+  "new": "New",
+  "viewDetails": "View Details",
+  "open": "OPEN"
 }

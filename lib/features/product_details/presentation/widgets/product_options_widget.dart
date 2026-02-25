@@ -1,12 +1,9 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tradehub/Core/colors/app_colors.dart';
 import 'package:tradehub/Core/extensions/base_inherited_context.dart';
 import 'package:tradehub/core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/extensions/main_color.dart';
-
-import '../../../../core/constants/app_constants.dart';
 
 class ProductOptionWidget extends StatefulWidget {
   final OptionModel option;
@@ -30,23 +27,53 @@ class _ProductOptionWidgetState extends State<ProductOptionWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 0,
-      color: context.isDarkMode ? AppColors.black : AppColors.white,
-      margin: EdgeInsets.symmetric(vertical: 8.h),
+    return Container(
+      decoration: BoxDecoration(
+        color: context.isDarkMode
+            ? AppColors.black.withOpacity(0.3)
+            : AppColors.white,
+        borderRadius: BorderRadius.circular(16.r),
+        border: Border.all(
+          color: context.greyOrWhite.withOpacity(0.1),
+          width: 1,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.03),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      margin: EdgeInsets.symmetric(vertical: 10.h, horizontal: 2.w),
       child: Padding(
-        padding: EdgeInsets.all(12.sp),
+        padding: EdgeInsets.all(16.sp),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "${widget.option.name}${widget.option.required ? " *" : ""}",
-              style: TextStyle(
-                  fontSize: 15.sp,
-                  fontWeight: FontWeight.bold,
-                  color: context.greyOrWhite),
+            Row(
+              children: [
+                Text(
+                  widget.option.name,
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w700,
+                    color:
+                        context.isDarkMode ? AppColors.white : AppColors.black,
+                  ),
+                ),
+                if (widget.option.required)
+                  Text(
+                    " *",
+                    style: TextStyle(
+                      color: Colors.redAccent,
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+              ],
             ),
-            SizedBox(height: 10.h),
+            SizedBox(height: 14.h),
             _buildByType(),
           ],
         ),
@@ -74,29 +101,47 @@ class _ProductOptionWidgetState extends State<ProductOptionWidget> {
   // ================= SINGLE =================
   Widget _buildSingle() {
     return Wrap(
-      spacing: 8,
+      spacing: 10.w,
+      runSpacing: 10.h,
       children: widget.option.values.map((value) {
-        return ChoiceChip(
-          selectedColor: context.mainColor,
-          checkmarkColor:
-              context.isDarkMode ? AppColors.black : AppColors.white,
-          label: Text(
-            "${value.label} (+${value.price} EGP)",
-            style: context.base.theme.textTheme.bodyMedium?.copyWith(
-                fontSize: 13.sp,
-                color: selectedSingleId == value.id
-                    ? context.isDarkMode
-                        ? AppColors.black
-                        : AppColors.white
-                    : AppColors.grey),
-          ),
-          selected: selectedSingleId == value.id,
-          onSelected: (_) {
+        final isSelected = selectedSingleId == value.id;
+        return GestureDetector(
+          onTap: () {
             setState(() {
               selectedSingleId = value.id;
             });
             widget.onChanged(value.id, value.price);
           },
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 200),
+            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
+            decoration: BoxDecoration(
+              color: isSelected
+                  ? context.mainColor
+                  : context.isDarkMode
+                      ? AppColors.white.withOpacity(0.05)
+                      : AppColors.grey.withOpacity(0.05),
+              borderRadius: BorderRadius.circular(12.r),
+              border: Border.all(
+                color: isSelected
+                    ? context.mainColor
+                    : context.greyOrWhite.withOpacity(0.1),
+                width: 1.5,
+              ),
+            ),
+            child: Text(
+              value.price > 0
+                  ? "${value.label} (+${value.price} EGP)"
+                  : value.label,
+              style: context.base.theme.textTheme.bodyMedium?.copyWith(
+                fontSize: 14.sp,
+                fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+                color: isSelected
+                    ? (context.isDarkMode ? AppColors.black : AppColors.white)
+                    : context.greyOrWhite.withOpacity(0.7),
+              ),
+            ),
+          ),
         );
       }).toList(),
     );
@@ -105,31 +150,18 @@ class _ProductOptionWidgetState extends State<ProductOptionWidget> {
   // ================= MULTI =================
   Widget _buildMulti() {
     return Wrap(
-      spacing: 8,
+      spacing: 10.w,
+      runSpacing: 10.h,
       children: widget.option.values.map((value) {
         final isSelected = selectedMultiIds.contains(value.id);
 
-        return FilterChip(
-          selectedColor: context.mainColor,
-          checkmarkColor:
-              context.isDarkMode ? AppColors.black : AppColors.white,
-          label: Text(
-            "${value.label} (+${value.price} EGP)",
-            style: context.base.theme.textTheme.bodyMedium?.copyWith(
-                fontSize: 13.sp,
-                color: selectedSingleId == value.id
-                    ? context.isDarkMode
-                        ? AppColors.black
-                        : AppColors.white
-                    : AppColors.grey),
-          ),
-          selected: isSelected,
-          onSelected: (selected) {
+        return GestureDetector(
+          onTap: () {
             setState(() {
-              if (selected) {
-                selectedMultiIds.add(value.id);
-              } else {
+              if (isSelected) {
                 selectedMultiIds.remove(value.id);
+              } else {
+                selectedMultiIds.add(value.id);
               }
             });
 
@@ -140,6 +172,52 @@ class _ProductOptionWidgetState extends State<ProductOptionWidget> {
 
             widget.onChanged(selectedMultiIds, total);
           },
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 200),
+            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
+            decoration: BoxDecoration(
+              color: isSelected
+                  ? context.mainColor
+                  : context.isDarkMode
+                      ? AppColors.white.withOpacity(0.05)
+                      : AppColors.grey.withOpacity(0.05),
+              borderRadius: BorderRadius.circular(12.r),
+              border: Border.all(
+                color: isSelected
+                    ? context.mainColor
+                    : context.greyOrWhite.withOpacity(0.1),
+                width: 1.5,
+              ),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (isSelected) ...[
+                  Icon(
+                    Icons.check_circle,
+                    size: 16.sp,
+                    color:
+                        context.isDarkMode ? AppColors.black : AppColors.white,
+                  ),
+                  SizedBox(width: 8.w),
+                ],
+                Text(
+                  value.price > 0
+                      ? "${value.label} (+${value.price} EGP)"
+                      : value.label,
+                  style: context.base.theme.textTheme.bodyMedium?.copyWith(
+                    fontSize: 14.sp,
+                    fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+                    color: isSelected
+                        ? (context.isDarkMode
+                            ? AppColors.black
+                            : AppColors.white)
+                        : context.greyOrWhite.withOpacity(0.7),
+                  ),
+                ),
+              ],
+            ),
+          ),
         );
       }).toList(),
     );
@@ -147,60 +225,83 @@ class _ProductOptionWidgetState extends State<ProductOptionWidget> {
 
   // ================= COUNTER =================
   Widget _buildCounter() {
-    return Padding(
-      padding: context.locale.languageCode == AppConstants.ar
-          ? EdgeInsets.only(left: 10.w)
-          : EdgeInsets.only(right: 10.w),
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+      decoration: BoxDecoration(
+        color: context.isDarkMode
+            ? AppColors.white.withOpacity(0.05)
+            : AppColors.grey.withOpacity(0.05),
+        borderRadius: BorderRadius.circular(30.r),
+      ),
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          InkWell(
+          _buildCounterButton(
+            icon: Icons.remove,
             onTap: () {
               if (counterValue > 1) {
                 setState(() => counterValue--);
                 widget.onChanged(counterValue, 0);
               }
             },
-            child: Container(
-              width: 30.w,
-              height: 30.h,
-              decoration: BoxDecoration(
-                  color: AppColors.white,
-                  border: Border.all(
-                      color: AppColors.grey.withOpacity(0.5), width: 1),
-                  shape: BoxShape.circle),
-              child: Icon(
-                Icons.remove,
-                size: 17.sp,
-              ),
-            ),
+            color: context.isDarkMode
+                ? AppColors.white.withOpacity(0.1)
+                : AppColors.white,
+            iconColor: context.isDarkMode ? AppColors.white : AppColors.black,
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.w),
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
             child: Text(
               counterValue.toString(),
               style: context.base.theme.textTheme.bodyMedium?.copyWith(
-                  color: context.isDarkMode ? AppColors.white : AppColors.black,
-                  fontSize: 15.sp),
+                color: context.isDarkMode ? AppColors.white : AppColors.black,
+                fontSize: 18.sp,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
-          InkWell(
+          _buildCounterButton(
+            icon: Icons.add,
             onTap: () {
               setState(() => counterValue++);
               widget.onChanged(counterValue, 0);
             },
-            child: Container(
-              width: 30.w,
-              height: 30.h,
-              decoration: BoxDecoration(
-                  color: context.mainColor, shape: BoxShape.circle),
-              child: Icon(
-                Icons.add,
-                size: 17.sp,
-                color: context.isDarkMode ? AppColors.black : AppColors.white,
-              ),
-            ),
+            color: context.mainColor,
+            iconColor: context.isDarkMode ? AppColors.black : AppColors.white,
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildCounterButton({
+    required IconData icon,
+    required VoidCallback onTap,
+    required Color color,
+    required Color iconColor,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(20.r),
+      child: Container(
+        width: 36.w,
+        height: 36.w,
+        decoration: BoxDecoration(
+          color: color,
+          shape: BoxShape.circle,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 4,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Icon(
+          icon,
+          size: 20.sp,
+          color: iconColor,
+        ),
       ),
     );
   }
@@ -209,10 +310,42 @@ class _ProductOptionWidgetState extends State<ProductOptionWidget> {
   Widget _buildText() {
     return TextField(
       controller: textController,
+      maxLines: 2,
+      style: TextStyle(
+          fontSize: 14.sp,
+          color: context.isDarkMode ? AppColors.white : AppColors.black),
       decoration: InputDecoration(
-          hintText: "Enter note...",
-          hintStyle: context.base.theme.textTheme.bodyMedium
-              ?.copyWith(color: AppColors.grey)),
+        hintText: "Enter note...",
+        hintStyle: context.base.theme.textTheme.bodyMedium
+            ?.copyWith(color: AppColors.grey.withOpacity(0.6), fontSize: 13.sp),
+        filled: true,
+        fillColor: context.isDarkMode
+            ? AppColors.white.withOpacity(0.05)
+            : AppColors.grey.withOpacity(0.05),
+        contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12.r),
+          borderSide: BorderSide.none,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12.r),
+          borderSide: BorderSide(
+            color: context.greyOrWhite.withOpacity(0.1),
+            width: 1,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12.r),
+          borderSide: BorderSide(
+            color: context.mainColor.withOpacity(0.5),
+            width: 1.5,
+          ),
+        ),
+        prefixIcon: Icon(
+          Icons.edit_note,
+          color: context.mainColor,
+        ),
+      ),
       onChanged: (value) {
         widget.onChanged(value, 0);
       },
@@ -222,9 +355,11 @@ class _ProductOptionWidgetState extends State<ProductOptionWidget> {
   // ================= COLOR =================
   Widget _buildColor() {
     return Wrap(
-      spacing: 10,
+      spacing: 12.w,
+      runSpacing: 12.h,
       children: widget.option.values.map((value) {
         final isSelected = selectedSingleId == value.id;
+        final color = _hexToColor(value.hexColor ?? "#FFFFFF");
 
         return GestureDetector(
           onTap: () {
@@ -233,17 +368,43 @@ class _ProductOptionWidgetState extends State<ProductOptionWidget> {
             });
             widget.onChanged(value.id, value.price);
           },
-          child: Container(
-            width: 40,
-            height: 40,
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 200),
+            width: 44.w,
+            height: 44.w,
             decoration: BoxDecoration(
-              color: _hexToColor(value.hexColor ?? "#FFFFFF"),
+              color: color,
               shape: BoxShape.circle,
               border: Border.all(
-                color: isSelected ? Colors.black : Colors.grey,
-                width: 2,
+                color: isSelected ? context.mainColor : Colors.transparent,
+                width: 3.w,
               ),
+              boxShadow: [
+                BoxShadow(
+                  color: color.withOpacity(0.3),
+                  blurRadius: 8,
+                  offset: const Offset(0, 4),
+                ),
+              ],
             ),
+            child: isSelected
+                ? Center(
+                    child: Container(
+                      width: 12.w,
+                      height: 12.w,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.2),
+                            blurRadius: 2,
+                          )
+                        ],
+                      ),
+                    ),
+                  )
+                : null,
           ),
         );
       }).toList(),
