@@ -111,7 +111,7 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20.w),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         CustomTextField(
                           labelText: LocaleKeys.firstName.tr(),
@@ -260,6 +260,7 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                           children: [
                             const CustomHorizontalDivider(
                               enIndent: 10,
+                              isExpanded: true,
                             ),
                             Text(
                               LocaleKeys.orContinueWith.tr(),
@@ -270,6 +271,7 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                             ),
                             const CustomHorizontalDivider(
                               indent: 10,
+                              isExpanded: true,
                             ),
                           ],
                         ),

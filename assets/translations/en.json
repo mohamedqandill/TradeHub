@@ -141,5 +141,22 @@
   "openNow": "Open Now",
   "new": "New",
   "viewDetails": "View Details",
-  "open": "OPEN"
+  "open": "OPEN",
+  "empoweringLocalCommerce": "Empowering Local Commerce",
+  "ourVision": "Our Vision",
+  "appVisionDescription": "TradeHub is an encompassing e-commerce ecosystem built to elevate businesses.\n\nWe provide merchants with a powerful web-based Admin Dashboard where they can effortlessly create, customize, and manage their own digital storefronts.\n\nOnce set up, these bespoke stores are seamlessly integrated and displayed directly within this customer app, offering users a centralized hub to explore and shop from a diverse array of premium local vendors.",
+  "version1": "Version 1.0.0",
+  "howCanWeHelpYou": "How can we help you?",
+  "getHelpDescription": "It looks like you are experiencing problems with our process. We are here to help so please get in touch with us",
+  "chatToUs": "Chat to us",
+  "chatToUsSubtitle": "Our friendly team is here to help.",
+  "office": "Office",
+  "officeSubtitle": "Come say hello at our office HQ.",
+  "phone": "Phone",
+  "phoneSubtitle": "Mon-Fri from 8am to 5pm.",
+  "issue": "Issue",
+  "describeIssueHere": "Describe your issue here...",
+  "message": "Message",
+  "addExtraDetails": "Add any extra details...",
+  "reachOutOnSocials": "Or reach out on our socials"
 }

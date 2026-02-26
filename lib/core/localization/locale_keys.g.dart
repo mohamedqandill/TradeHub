@@ -146,4 +146,21 @@ abstract class LocaleKeys {
   static const new_filter = 'new';
   static const viewDetails = 'viewDetails';
   static const open = 'open';
+  static const empoweringLocalCommerce = 'empoweringLocalCommerce';
+  static const ourVision = 'ourVision';
+  static const appVisionDescription = 'appVisionDescription';
+  static const version1 = 'version1';
+  static const howCanWeHelpYou = 'howCanWeHelpYou';
+  static const getHelpDescription = 'getHelpDescription';
+  static const chatToUs = 'chatToUs';
+  static const chatToUsSubtitle = 'chatToUsSubtitle';
+  static const office = 'office';
+  static const officeSubtitle = 'officeSubtitle';
+  static const phone = 'phone';
+  static const phoneSubtitle = 'phoneSubtitle';
+  static const issue = 'issue';
+  static const describeIssueHere = 'describeIssueHere';
+  static const message = 'message';
+  static const addExtraDetails = 'addExtraDetails';
+  static const reachOutOnSocials = 'reachOutOnSocials';
 }

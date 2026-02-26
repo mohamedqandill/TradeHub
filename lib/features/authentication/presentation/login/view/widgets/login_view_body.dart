@@ -108,7 +108,7 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20.w),
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             CustomTextField(
                               labelText: LocaleKeys.emailAddress.tr(),
@@ -211,6 +211,7 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                               children: [
                                 const CustomHorizontalDivider(
                                   enIndent: 10,
+                                  isExpanded: true,
                                 ),
                                 Text(
                                   LocaleKeys.orLoginWith.tr(),
@@ -223,6 +224,7 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                                 ),
                                 const CustomHorizontalDivider(
                                   indent: 10,
+                                  isExpanded: true,
                                 ),
                               ],
                             ),

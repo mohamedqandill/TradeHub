@@ -3,6 +3,8 @@ import 'package:tradehub/core/extensions/screen_route_transition.dart';
 import 'package:tradehub/core/routes/routes.dart';
 import 'package:tradehub/features/category_details/presentation/category_details_screen.dart';
 import 'package:tradehub/features/main_layout/presentation/main_layout.dart';
+import 'package:tradehub/features/about_app/presentation/about_app_screen.dart';
+import 'package:tradehub/features/get_help/presentation/get_help_screen.dart';
 import 'package:tradehub/features/product_details/presentation/product_details_screen.dart';
 import 'package:tradehub/features/settings/presentation/settings_screen.dart';
 
@@ -76,6 +78,18 @@ abstract class AppRoutes {
         return const MainLayout().customRoute(
           settings: settings,
           type: TransitionType.size,
+        );
+
+      case Routes.aboutApp:
+        return const AboutAppScreen().customRoute(
+          settings: settings,
+          type: TransitionType.slideRight,
+        );
+
+      case Routes.getHelp:
+        return const GetHelpScreen().customRoute(
+          settings: settings,
+          type: TransitionType.slideRight,
         );
 
       // Verify Email → SlideUp
