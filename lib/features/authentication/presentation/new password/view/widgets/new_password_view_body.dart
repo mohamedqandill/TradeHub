@@ -64,41 +64,45 @@ class _NewPasswordViewBodyState extends State<NewPasswordViewBody> {
               SizedBox(
                 height: 34.h,
               ),
-              CustomTextField(
-                controller: bloc.newPassword,
-                validator: (string) {
-                  return ValidateFunctions.getInstance()
-                      .validationOfPassword(string);
-                },
-                obscureText: !bloc.isVisible,
-                labelText: LocaleKeys.newPassword.tr(),
-                suffixIcon: InkWell(
-                    onTap: () {
-                      bloc.isVisible = !bloc.isVisible;
-                      setState(() {});
+              Column(
+                children: [
+                  CustomTextField(
+                    controller: bloc.newPassword,
+                    validator: (string) {
+                      return ValidateFunctions.getInstance()
+                          .validationOfPassword(string);
                     },
-                    child: bloc.isVisible
-                        ? Icon(
-                            Icons.visibility,
-                            size: 22.sp,
-                          )
-                        : Icon(
-                            Icons.visibility_off,
-                            size: 22.sp,
-                          )),
+                    obscureText: !bloc.isVisible,
+                    labelText: LocaleKeys.newPassword.tr(),
+                    suffixIcon: InkWell(
+                        onTap: () {
+                          bloc.isVisible = !bloc.isVisible;
+                          setState(() {});
+                        },
+                        child: bloc.isVisible
+                            ? Icon(
+                                Icons.visibility,
+                                size: 22.sp,
+                              )
+                            : Icon(
+                                Icons.visibility_off,
+                                size: 22.sp,
+                              )),
+                  ),
+                  SizedBox(
+                    height: 34.h,
+                  ),
+                  CustomLargeMainButton(
+                    isLoading: state.newPasswordState == RequestStates.loading,
+                    onPressed: () {
+                      if (bloc.formKey.currentState!.validate()) {
+                        bloc.add(const NewPassword());
+                      }
+                    },
+                    text: LocaleKeys.save.tr(),
+                  )
+                ],
               ),
-              SizedBox(
-                height: 34.h,
-              ),
-              CustomLargeMainButton(
-                isLoading: state.newPasswordState == RequestStates.loading,
-                onPressed: () {
-                  if (bloc.formKey.currentState!.validate()) {
-                    bloc.add(const NewPassword());
-                  }
-                },
-                text: LocaleKeys.save.tr(),
-              )
             ],
           ),
         );

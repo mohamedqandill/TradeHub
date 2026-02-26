@@ -4,11 +4,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tradehub/Core/extensions/base_inherited_context.dart';
 import 'package:tradehub/Core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/localization/locale_keys.g.dart';
-import 'package:tradehub/core/shared_widgets/fields/custom_search_field.dart';
+
 import 'package:tradehub/features/main_layout/home/presentation/widgets/category_section.dart';
 import 'package:tradehub/features/main_layout/home/presentation/widgets/custom_row_headline.dart';
 import 'package:tradehub/features/main_layout/home/presentation/widgets/products_section.dart';
 import 'package:tradehub/features/main_layout/home/presentation/widgets/vendors_section.dart';
+
+import 'package:tradehub/features/main_layout/home/presentation/widgets/home_header_widget.dart';
 
 import '../../../../Core/colors/app_colors.dart';
 
@@ -18,29 +20,21 @@ class HomeScreenBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      physics: const BouncingScrollPhysics(),
+      physics: const ScrollPhysics(),
+      padding: EdgeInsets.zero,
       children: [
+        const HomeHeaderWidget(
+          address: "Menoufia, Markaz Elbagour",
+        ),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 8.w),
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 10.h),
-              CustomSearchField(
-                prefixIcon: Icon(
-                  Icons.search_rounded,
-                  size: 24.sp,
-                  color: context.isDarkMode
-                      ? AppColors.white.withOpacity(0.6)
-                      : AppColors.grey.withOpacity(0.6),
-                ),
-                hintText: LocaleKeys.searchForProducts.tr(),
-              ),
-              SizedBox(height: 24.h),
               Text(
                 LocaleKeys.categories.tr(),
                 style: context.base.theme.textTheme.titleLarge?.copyWith(
-                  fontSize: 22.sp,
+                  fontSize: 20.sp,
                   fontWeight: FontWeight.w800,
                   color: context.isDarkMode ? AppColors.white : AppColors.black,
                   letterSpacing: -0.5,
@@ -48,21 +42,20 @@ class HomeScreenBody extends StatelessWidget {
               ),
               SizedBox(height: 16.h),
               const CategorySection(),
-              SizedBox(height: 24.h),
+              SizedBox(height: 32.h),
               CustomRowHeadline(
                 title: LocaleKeys.featuredVendors.tr(),
                 subTitle: LocaleKeys.seeAll.tr(),
               ),
-              SizedBox(height: 12.h),
+              SizedBox(height: 16.h),
               const VendorsSection(),
-              SizedBox(height: 24.h),
+              SizedBox(height: 32.h),
               CustomRowHeadline(
                 title: LocaleKeys.popularProducts.tr(),
                 subTitle: LocaleKeys.seeAll.tr(),
               ),
-              SizedBox(height: 12.h),
+              SizedBox(height: 16.h),
               const ProductsSection(),
-              SizedBox(height: 30.h),
             ],
           ),
         ),

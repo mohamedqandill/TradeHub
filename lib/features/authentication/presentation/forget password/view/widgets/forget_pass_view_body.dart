@@ -61,27 +61,36 @@ class ForgetPassViewBody extends StatelessWidget {
               SizedBox(
                 height: 34.h,
               ),
-              CustomTextField(
-                controller: bloc.email,
-                validator: (input) {
-                  return ValidateFunctions.getInstance()
-                      .validationOfEmail(input);
-                },
-                labelText: LocaleKeys.emailAddress.tr(),
-                suffixIcon: const Icon(Icons.email),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    CustomTextField(
+                      controller: bloc.email,
+                      validator: (input) {
+                        return ValidateFunctions.getInstance()
+                            .validationOfEmail(input);
+                      },
+                      labelText: LocaleKeys.emailAddress.tr(),
+                      suffixIcon: const Icon(Icons.email),
+                    ),
+                    SizedBox(
+                      height: 34.h,
+                    ),
+                    CustomLargeMainButton(
+                      isLoading:
+                          state.forgetPasswordState == RequestStates.loading,
+                      onPressed: () {
+                        if (bloc.formKey.currentState!.validate()) {
+                          bloc.add(const SendOTP());
+                        }
+                      },
+                      text: LocaleKeys.send.tr(),
+                    )
+                  ],
+                ),
               ),
-              SizedBox(
-                height: 34.h,
-              ),
-              CustomLargeMainButton(
-                isLoading: state.forgetPasswordState == RequestStates.loading,
-                onPressed: () {
-                  if (bloc.formKey.currentState!.validate()) {
-                    bloc.add(const SendOTP());
-                  }
-                },
-                text: LocaleKeys.send.tr(),
-              )
             ],
           ),
         );
