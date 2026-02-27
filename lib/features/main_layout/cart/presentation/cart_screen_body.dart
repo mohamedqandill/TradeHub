@@ -19,10 +19,22 @@ class _CartScreenBodyState extends State<CartScreenBody>
 
   final List<String> stores = [
     "Town Team",
-    "Denim House",
+    "Karam El-Sham",
   ];
 
   final List<Map<String, dynamic>> data = [
+    {
+      "image": Assets.images.foodA.path,
+      "title": "loaded rice bowl",
+      "size": "M",
+      "price": "180"
+    },
+    {
+      "image": Assets.images.foodB.path,
+      "title": "loaded rice bowl",
+      "size": "M",
+      "price": "180"
+    },
     {
       "image": Assets.images.tshirt.path,
       "title": "Classic T-Shirt Sport",
@@ -37,20 +49,6 @@ class _CartScreenBodyState extends State<CartScreenBody>
       "color": "BLUE",
       "price": "1000"
     },
-    {
-      "image": Assets.images.jeans.path,
-      "title": "Denim Jeans",
-      "size": "XL",
-      "color": "BLUE",
-      "price": "1000"
-    },
-    {
-      "image": Assets.images.jeans.path,
-      "title": "Denim Jeans",
-      "size": "XL",
-      "color": "BLUE",
-      "price": "1000"
-    }
   ];
 
   @override

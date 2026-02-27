@@ -47,11 +47,11 @@ class _VendorProfileScreenBodyState extends State<VendorProfileScreenBody>
       headerSliverBuilder: (context, innerBoxIsScrolled) => [
         SliverToBoxAdapter(
           child: VendorTopSection(
-            title: "Modern Living",
-            image: Assets.images.vendor.path,
+            title: "Karam El-Sham",
+            image: Assets.images.karamelshaam.path,
             rating: "4.5",
             reviews: "(1,200 ${LocaleKeys.reviews.tr()})",
-            subTitle: "Premium Home Furnishings",
+            subTitle: "Surian & Egyptian Food",
           ),
         ),
         SliverPersistentHeader(

@@ -14,28 +14,28 @@ class ProductsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> productsData = [
       {
-        "title": "Burger Sandwich",
-        "image": Assets.images.image.path,
-        "price": "250 EG",
+        "title": "loaded rice bowl",
+        "image": Assets.images.foodA.path,
+        "price": "220 EG",
         "priceAfterDiscount": "200 EG",
       },
       {
-        "title": "Wireless Headphone",
-        "image": Assets.images.imageT.path,
-        "price": "850 EG",
-        "priceAfterDiscount": "800 EG",
+        "title": "loaded rice bowl",
+        "image": Assets.images.foodB.path,
+        "price": "220 EG",
+        "priceAfterDiscount": "200 EG",
       },
       {
-        "title": "Wireless Headphone",
-        "image": Assets.images.imageT.path,
-        "price": "850 EG",
-        "priceAfterDiscount": "800 EG",
+        "title": "Burger Sandwich",
+        "image": Assets.images.image.path,
+        "price": "220 EG",
+        "priceAfterDiscount": "190 EG",
       },
       {
-        "title": "Wireless Headphone",
-        "image": Assets.images.imageT.path,
-        "price": "850 EG",
-        "priceAfterDiscount": "800 EG",
+        "title": "loaded rice bowl",
+        "image": Assets.images.foodA.path,
+        "price": "220 EG",
+        "priceAfterDiscount": "200 EG",
       },
     ];
     return GridView.builder(
@@ -104,7 +104,7 @@ class ProductsSection extends StatelessWidget {
                         ),
                         child: ClipOval(
                           child: Image.asset(
-                            Assets.images.vendor.path,
+                            Assets.images.karamelshaam.path,
                             width: 32.w,
                             height: 32.w,
                             fit: BoxFit.cover,

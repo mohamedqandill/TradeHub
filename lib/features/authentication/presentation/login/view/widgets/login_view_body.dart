@@ -72,6 +72,11 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                 hideDialog(context);
                 showSuccessSnackBar(
                     messageTitle: LocaleKeys.loggedSuccessfully.tr());
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  Routes.mainLayout,
+                  (route) => false,
+                );
               } else if (state.signWithGoogleState == RequestStates.error ||
                   state.signWithFacebookState == RequestStates.error) {
                 hideDialog(context);
@@ -169,15 +174,18 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                                     },
                                   ),
                                 ),
-                                Text(
-                                  LocaleKeys.rememberMe.tr(),
-                                  style: base.theme.textTheme.bodyMedium!
-                                      .copyWith(
-                                          color: context.isDarkMode
-                                              ? AppColors.white
-                                              : AppColors.grey),
+                                Expanded(
+                                  child: Text(
+                                    LocaleKeys.rememberMe.tr(),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: base.theme.textTheme.bodyMedium!
+                                        .copyWith(
+                                            color: context.isDarkMode
+                                                ? AppColors.white
+                                                : AppColors.grey),
+                                  ),
                                 ),
-                                const Spacer(),
                                 InkWell(
                                   onTap: () => Navigator.pushNamed(
                                       context, Routes.forgetPassword),

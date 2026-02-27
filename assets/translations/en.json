@@ -139,7 +139,7 @@
   "topRated": "Top Rated",
   "nearest": "Nearest",
   "openNow": "Open Now",
-  "new": "New",
+  "new_filter": "New",
   "viewDetails": "View Details",
   "open": "OPEN",
   "empoweringLocalCommerce": "Empowering Local Commerce",
@@ -158,5 +158,9 @@
   "describeIssueHere": "Describe your issue here...",
   "message": "Message",
   "addExtraDetails": "Add any extra details...",
-  "reachOutOnSocials": "Or reach out on our socials"
+  "reachOutOnSocials": "Or reach out on our socials",
+  "delivered": "Delivered",
+  "orderId": "Order ID: ",
+  "reOrder": "Re-order",
+  "rateOrder": "Rate order"
 }

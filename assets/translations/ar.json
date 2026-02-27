@@ -139,7 +139,7 @@
   "topRated": "الأعلى تقييماً",
   "nearest": "الأقرب",
   "openNow": "مفتوح الآن",
-  "new": "جديد",
+  "new_filter": "جديد",
   "viewDetails": "عرض التفاصيل",
   "open": "مفتوح",
   "empoweringLocalCommerce": "تمكين التجارة المحلية",
@@ -158,5 +158,9 @@
   "describeIssueHere": "صف مشكلتك هنا...",
   "message": "الرسالة",
   "addExtraDetails": "أضف أي تفاصيل إضافية...",
-  "reachOutOnSocials": "أو تواصل معنا عبر وسائل التواصل الاجتماعي"
+  "reachOutOnSocials": "أو تواصل معنا عبر وسائل التواصل الاجتماعي",
+  "delivered": "تم التوصيل",
+  "orderId": "رقم الطلب: ",
+  "reOrder": "إعادة الطلب",
+  "rateOrder": "تقييم الطلب"
 }
