@@ -9,12 +9,18 @@ class VendorsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<String> images = [
+      Assets.images.blbn.path,
+      Assets.images.karamelshaam.path,
+      Assets.images.etoile.path,
+    ];
+    List<String> titles = ["B-L A B A N", "Karm El-Sham", "Etoile"];
     return SizedBox(
       height: 180.h,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         physics: const BouncingScrollPhysics(),
-        itemCount: 4,
+        itemCount: images.length,
         itemBuilder: (context, index) {
           return Padding(
             padding: EdgeInsets.only(right: 16.w, bottom: 8.h),
@@ -40,7 +46,7 @@ class VendorsSection extends StatelessWidget {
                     ClipRRect(
                       borderRadius: BorderRadius.circular(20.r),
                       child: Image.asset(
-                        Assets.images.vendor.path,
+                        images[index],
                         width: 280.w,
                         height: 180.h,
                         fit: BoxFit.cover,
@@ -67,7 +73,7 @@ class VendorsSection extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Vendor One",
+                            titles[index],
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 18.sp,

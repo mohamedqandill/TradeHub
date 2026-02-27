@@ -17,7 +17,7 @@ class ProductDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const MainLayoutAppBar(
-        title: "Wireless Headphone",
+        title: "loaded rice bowl",
         enableLeading: true,
         widgets: [HeartButton()],
       ),

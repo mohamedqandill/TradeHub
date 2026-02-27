@@ -19,9 +19,9 @@ class ProductDetailsBody extends StatefulWidget {
 
 class _ProductDetailsBodyState extends State<ProductDetailsBody> {
   List<String> items = [
-    Assets.images.imageT.path,
-    Assets.images.imageT.path,
-    Assets.images.imageT.path,
+    Assets.images.foodA.path,
+    Assets.images.foodB.path,
+    Assets.images.foodA.path,
   ];
   int _currentImageIndex = 0;
 
@@ -104,6 +104,9 @@ class _ProductDetailsBodyState extends State<ProductDetailsBody> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          SizedBox(
+            height: 12.h,
+          ),
           Stack(
             alignment: Alignment.bottomCenter,
             children: [
@@ -136,7 +139,7 @@ class _ProductDetailsBodyState extends State<ProductDetailsBody> {
                       },
                     ),
                     options: CarouselOptions(
-                      height: 300.h,
+                      height: 280.h,
                       viewportFraction: 1.0,
                       initialPage: 0,
                       enableInfiniteScroll: true,
@@ -186,7 +189,7 @@ class _ProductDetailsBodyState extends State<ProductDetailsBody> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Wireless Headphone",
+                  "loaded rice bowl",
                   style: context.base.theme.textTheme.headlineMedium?.copyWith(
                     fontWeight: FontWeight.w800,
                     color:
@@ -204,7 +207,7 @@ class _ProductDetailsBodyState extends State<ProductDetailsBody> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "550.0 EGP",
+                          "180.0 EGP",
                           style: GoogleFonts.manrope(
                             fontSize: 28.sp,
                             fontWeight: FontWeight.w800,

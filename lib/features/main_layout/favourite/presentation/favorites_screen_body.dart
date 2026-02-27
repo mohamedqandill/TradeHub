@@ -18,6 +18,32 @@ class FavoritesScreenBody extends StatefulWidget {
 
 class _FavoritesScreenBodyState extends State<FavoritesScreenBody> {
   bool isHearTapped = true;
+  List<Map<String, dynamic>> data = [
+    {
+      "title": "loaded rice bowl",
+      "image": Assets.images.foodA.path,
+      "price": "220 EG",
+      "vendor": "Karam El-sham"
+    },
+    {
+      "title": "loaded rice bowl",
+      "price": "220 EG",
+      "image": Assets.images.foodA.path,
+      "vendor": "Karam El-sham"
+    },
+    {
+      "title": "loaded rice bowl",
+      "price": "220 EG",
+      "image": Assets.images.foodA.path,
+      "vendor": "Karam El-sham"
+    },
+    {
+      "title": "loaded rice bowl",
+      "price": "220 EG",
+      "image": Assets.images.foodA.path,
+      "vendor": "Karam El-sham"
+    }
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -59,13 +85,14 @@ class _FavoritesScreenBodyState extends State<FavoritesScreenBody> {
                     delegate: SliverChildBuilderDelegate(
                       (context, index) {
                         return CustomFavoriteCard(
-                          image: Assets.images.tshirt.path,
-                          title: "Classic T-Shirt Sport",
-                          storeName: "Nike Store",
-                          price: "1200",
+                          image: data[index]["image"],
+                          title: data[index]["title"],
+                          storeName: data[index]["vendor"],
+                          price: data[index]["price"],
                         );
                       },
-                      childCount: 6, // Changed to 6 for a balanced grid
+                      childCount:
+                          data.length, // Changed to 6 for a balanced grid
                     ),
                   ),
                 ),

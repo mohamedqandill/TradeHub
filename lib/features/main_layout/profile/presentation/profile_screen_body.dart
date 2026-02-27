@@ -70,7 +70,9 @@ class ProfileScreenBody extends StatelessWidget {
                     title: data[index]["title"],
                     image: data[index]["image"],
                     onTapped: () {
-                      if (index == 2) {
+                      if (index == 0) {
+                        Navigator.pushNamed(context, Routes.yourOrders);
+                      } else if (index == 2) {
                         Navigator.pushNamed(context, Routes.aboutApp);
                       } else if (index == 3) {
                         Navigator.pushNamed(context, Routes.getHelp);
@@ -86,39 +88,62 @@ class ProfileScreenBody extends StatelessWidget {
                                         color: context.mainColor,
                                         fontSize: 22.sp),
                               ),
-                              content: const Text(
-                                  "Are you sure you want to logout?"),
+                              content: Text(
+                                "Are you sure you want to logout?",
+                                style: context.base.theme.textTheme.bodyMedium
+                                    ?.copyWith(color: AppColors.grey),
+                              ),
                               actions: [
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: Text(
-                                    "Cancel",
-                                    style: context
-                                        .base.theme.textTheme.titleLarge!
-                                        .copyWith(
-                                            color: context.greyOrWhite,
-                                            fontSize: 16.sp),
-                                  ),
-                                ),
-                                TextButton(
-                                  onPressed: () async {
-                                    Navigator.pop(context);
-                                    await getIt<SecureStorageHelper>()
-                                        .delete(ApiConstants.token);
-                                    if (context.mounted) {
-                                      Navigator.pushNamedAndRemoveUntil(context,
-                                          Routes.login, (route) => false);
-                                    }
-                                  },
-                                  child: Text("OK",
-                                      style: context
-                                          .base.theme.textTheme.titleLarge!
-                                          .copyWith(
-                                              color: AppColors.red,
-                                              fontSize: 16.sp)),
-                                ),
+                                Wrap(
+                                  children: [
+                                    TextButton(
+                                      style: TextButton.styleFrom(
+                                          fixedSize: Size(130.w, 37.h),
+                                          backgroundColor: Colors.transparent,
+                                          side: BorderSide(
+                                              width: 1,
+                                              color: context.mainColor)),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text(
+                                        "Cancel",
+                                        style: context
+                                            .base.theme.textTheme.titleLarge!
+                                            .copyWith(
+                                                color: AppColors.grey,
+                                                fontSize: 16.sp),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 5.w,
+                                    ),
+                                    TextButton(
+                                      style: TextButton.styleFrom(
+                                          fixedSize: Size(130.w, 37.h),
+                                          backgroundColor: Colors.red,
+                                          side: const BorderSide(
+                                              width: 1, color: Colors.black)),
+                                      onPressed: () async {
+                                        Navigator.pop(context);
+                                        await getIt<SecureStorageHelper>()
+                                            .delete(ApiConstants.token);
+                                        if (context.mounted) {
+                                          Navigator.pushNamedAndRemoveUntil(
+                                              context,
+                                              Routes.login,
+                                              (route) => false);
+                                        }
+                                      },
+                                      child: Text("OK",
+                                          style: context
+                                              .base.theme.textTheme.titleLarge!
+                                              .copyWith(
+                                                  color: AppColors.black,
+                                                  fontSize: 16.sp)),
+                                    )
+                                  ],
+                                )
                               ],
                             );
                           },

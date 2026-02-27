@@ -13,15 +13,6 @@ class VendorCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> vendorNames = [
-      "Modern Living",
-      "Elite Furnishings",
-      "Green Garden",
-      "Tech World",
-      "Style Hub",
-      "Luxury Decor"
-    ];
-
     return Column(
       children: [
         InkWell(
@@ -31,7 +22,6 @@ class VendorCardWidget extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Vendor Left Image
               Container(
                 width: 80.w,
                 height: 80.w,
@@ -46,19 +36,18 @@ class VendorCardWidget extends StatelessWidget {
                     width: 1,
                   ),
                   image: DecorationImage(
-                    image: AssetImage(Assets.images.vendor.path),
+                    image: AssetImage(Assets.images.karamelshaam.path),
                     fit: BoxFit.cover,
                   ),
                 ),
               ),
               SizedBox(width: 16.w),
-              // Vendor Details
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      vendorNames[index % vendorNames.length],
+                      "Karam El-Sham",
                       style: TextStyle(
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w700,
@@ -71,7 +60,7 @@ class VendorCardWidget extends StatelessWidget {
                     ),
                     SizedBox(height: 4.h),
                     Text(
-                      "Thai, International, Continental",
+                      "Food, Deserts ",
                       style: TextStyle(
                         fontSize: 12.sp,
                         color: context.isDarkMode

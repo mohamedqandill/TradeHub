@@ -160,6 +160,9 @@ class $AssetsImagesGen {
   AssetGenImage get blackGirlWithCart =>
       const AssetGenImage('assets/images/black girl with cart.png');
 
+  /// File path: assets/images/blbn.png
+  AssetGenImage get blbn => const AssetGenImage('assets/images/blbn.png');
+
   /// File path: assets/images/clothes.png
   AssetGenImage get clothes => const AssetGenImage('assets/images/clothes.png');
 
@@ -197,9 +200,21 @@ class $AssetsImagesGen {
   AssetGenImage get emptyHeartLight =>
       const AssetGenImage('assets/images/emptyHeartLight.png');
 
+  /// File path: assets/images/etoile.png
+  AssetGenImage get etoile => const AssetGenImage('assets/images/etoile.png');
+
+  /// File path: assets/images/food_a.png
+  AssetGenImage get foodA => const AssetGenImage('assets/images/food_a.png');
+
+  /// File path: assets/images/food_b.png
+  AssetGenImage get foodB => const AssetGenImage('assets/images/food_b.png');
+
   /// File path: assets/images/furniture.png
   AssetGenImage get furniture =>
       const AssetGenImage('assets/images/furniture.png');
+
+  /// File path: assets/images/girl.png
+  AssetGenImage get girl => const AssetGenImage('assets/images/girl.png');
 
   /// File path: assets/images/healthAndBeauty.png
   AssetGenImage get healthAndBeauty =>
@@ -210,6 +225,10 @@ class $AssetsImagesGen {
 
   /// File path: assets/images/jeans.png
   AssetGenImage get jeans => const AssetGenImage('assets/images/jeans.png');
+
+  /// File path: assets/images/karamelshaam.png
+  AssetGenImage get karamelshaam =>
+      const AssetGenImage('assets/images/karamelshaam.png');
 
   /// File path: assets/images/lightToggle.png
   AssetGenImage get lightToggle =>
@@ -262,6 +281,7 @@ class $AssetsImagesGen {
         trackingOnlineDeliveryOfGoods,
         accessories,
         blackGirlWithCart,
+        blbn,
         clothes,
         darkToggle,
         darkTopWave,
@@ -272,10 +292,15 @@ class $AssetsImagesGen {
         emptyCart,
         emptyHeartDark,
         emptyHeartLight,
+        etoile,
+        foodA,
+        foodB,
         furniture,
+        girl,
         healthAndBeauty,
         imageT,
         jeans,
+        karamelshaam,
         lightToggle,
         mainDarkLogo,
         mainLogo,

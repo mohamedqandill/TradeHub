@@ -2,7 +2,7 @@
 
 // ignore_for_file: constant_identifier_names
 
-abstract class LocaleKeys {
+abstract class  LocaleKeys {
   static const shopSmarter = 'shopSmarter';
   static const tradeBetter = 'tradeBetter';
   static const discoverTopProduct = 'discoverTopProduct';
@@ -143,7 +143,7 @@ abstract class LocaleKeys {
   static const topRated = 'topRated';
   static const nearest = 'nearest';
   static const openNow = 'openNow';
-  static const new_filter = 'new';
+  static const new_filter = 'new_filter';
   static const viewDetails = 'viewDetails';
   static const open = 'open';
   static const empoweringLocalCommerce = 'empoweringLocalCommerce';
@@ -163,4 +163,9 @@ abstract class LocaleKeys {
   static const message = 'message';
   static const addExtraDetails = 'addExtraDetails';
   static const reachOutOnSocials = 'reachOutOnSocials';
+  static const delivered = 'delivered';
+  static const orderId = 'orderId';
+  static const reOrder = 'reOrder';
+  static const rateOrder = 'rateOrder';
+
 }
