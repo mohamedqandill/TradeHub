@@ -15,5 +15,7 @@ abstract class Routes {
   static const String categoryDetails = "categoryDetails";
   static const String aboutApp = "aboutApp";
   static const String getHelp = "getHelp";
+  static const String accountInfo = "accountInfo";
   static const String yourOrders = "yourOrders";
+  static const String checkout = "checkout";
 }

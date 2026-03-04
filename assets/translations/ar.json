@@ -162,5 +162,21 @@
   "delivered": "تم التوصيل",
   "orderId": "رقم الطلب: ",
   "reOrder": "إعادة الطلب",
-  "rateOrder": "تقييم الطلب"
+  "rateOrder": "تقييم الطلب",
+  "checkout": "الدفع",
+  "shippingAddress": "عنوان الشحن",
+  "change": "تغيير",
+  "chooseNewAddress": "اختر عنوان جديد",
+  "selectFromMapOrSavedList": "اختر من الخريطة او القائمة المحفوظة",
+  "homeAddress": "عنوان المنزل",
+  "defaultText": "الافتراضي",
+  "paymentMethod": "طريقة الدفع",
+  "payWithCard": "الدفع بالبطاقة",
+  "visaMastercardAmex": "فيزا، ماستركارد",
+  "digitalWallets": "المحافظ الرقمية",
+  "applePayGooglePay": "فودافون كاش، اتصالات كاش",
+  "free": "مجاني",
+  "total": "الإجمالي",
+  "payNow": "ادفع الآن",
+  "secureCheckout": "دفع مشفر ومحمي SSL"
 }

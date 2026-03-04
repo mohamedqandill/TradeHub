@@ -34,7 +34,7 @@ class HomeScreenBody extends StatelessWidget {
               Text(
                 LocaleKeys.categories.tr(),
                 style: context.base.theme.textTheme.titleLarge?.copyWith(
-                  fontSize: 20.sp,
+                  fontSize: 18.sp,
                   fontWeight: FontWeight.w800,
                   color: context.isDarkMode ? AppColors.white : AppColors.black,
                   letterSpacing: -0.5,

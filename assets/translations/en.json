@@ -162,5 +162,21 @@
   "delivered": "Delivered",
   "orderId": "Order ID: ",
   "reOrder": "Re-order",
-  "rateOrder": "Rate order"
+  "rateOrder": "Rate order",
+  "checkout": "Checkout",
+  "shippingAddress": "Shipping Address",
+  "change": "Change",
+  "chooseNewAddress": "Choose New Address",
+  "selectFromMapOrSavedList": "Select from map or saved list",
+  "homeAddress": "Home Address",
+  "defaultText": "DEFAULT",
+  "paymentMethod": "Payment Method",
+  "payWithCard": "Pay with Card",
+  "visaMastercardAmex": "Visa, Mastercard",
+  "digitalWallets": "Digital Wallets",
+  "applePayGooglePay": "Vodafone Cash,Etisalat Cash",
+  "free": "Free",
+  "total": "Total",
+  "payNow": "Pay Now",
+  "secureCheckout": "SECURE SSL ENCRYPTED CHECKOUT"
 }

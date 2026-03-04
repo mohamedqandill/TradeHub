@@ -7,7 +7,9 @@ import 'package:tradehub/features/about_app/presentation/about_app_screen.dart';
 import 'package:tradehub/features/get_help/presentation/get_help_screen.dart';
 import 'package:tradehub/features/product_details/presentation/product_details_screen.dart';
 import 'package:tradehub/features/settings/presentation/settings_screen.dart';
+import 'package:tradehub/features/settings/presentation/account_info/account_info_screen.dart';
 import 'package:tradehub/features/your_orders/presentation/your_orders_screen.dart';
+import 'package:tradehub/features/checkout/presentation/checkout_screen.dart';
 
 import '../../features/authentication/presentation/forget password/view/forget_password_screen.dart';
 import '../../features/authentication/presentation/login/view/login_screen.dart';
@@ -99,6 +101,12 @@ abstract class AppRoutes {
           type: TransitionType.slideRight,
         );
 
+      case Routes.accountInfo:
+        return const AccountInfoScreen().customRoute(
+          settings: settings,
+          type: TransitionType.slideRight,
+        );
+
       // Verify Email → SlideUp
       case Routes.verifyEmail:
         return const VerifyEmailScreen().customRoute(
@@ -111,6 +119,12 @@ abstract class AppRoutes {
         return const NewPasswordScreen().customRoute(
           settings: settings,
           type: TransitionType.fade,
+        );
+
+      case Routes.checkout:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (context) => const CheckoutScreen(),
         );
 
       // Default → Undefined

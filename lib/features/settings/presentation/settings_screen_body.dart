@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tradehub/core/constants/app_constants.dart';
 import 'package:tradehub/features/settings/presentation/widgets/custom_settings_row_info.dart';
+import 'package:tradehub/core/routes/routes.dart';
 
 import '../../../core/localization/locale_keys.g.dart';
 
@@ -39,7 +40,11 @@ class _SettingsScreenBodyState extends State<SettingsScreenBody> {
                   return CustomSettingsRowInfo(
                       isArabic: locale.languageCode == AppConstants.ar,
                       title: titles[index],
-                      onTapped: () {},
+                      onTapped: () {
+                        if (index == 0) {
+                          Navigator.pushNamed(context, Routes.accountInfo);
+                        }
+                      },
                       index: index);
                 },
                 separatorBuilder: (context, index) {

@@ -114,7 +114,7 @@ class _CustomFavoriteCardState extends State<CustomFavoriteCard> {
                       style: TextStyle(
                         color: context.mainColor,
                         fontWeight: FontWeight.w800,
-                        fontSize: 16.sp,
+                        fontSize: 14.sp,
                       ),
                     ),
                     Container(

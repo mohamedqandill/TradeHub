@@ -34,7 +34,8 @@ class HomeCategoryWidget extends StatelessWidget {
               padding: EdgeInsets.all(2.sp),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: context.isDarkMode ? AppColors.black : AppColors.white,
+                color:
+                    context.isDarkMode ? AppColors.lightBlack : AppColors.white,
               ),
               child: ClipOval(
                 child: Image.asset(
