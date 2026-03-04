@@ -18,6 +18,7 @@ class CustomLargeMainButton extends StatelessWidget {
     this.isLoading = false,
     this.onPressed,
     this.showArrow,
+    this.suffixIcon,
   });
 
   final String text;
@@ -26,6 +27,7 @@ class CustomLargeMainButton extends StatelessWidget {
   final bool isLoading;
   final double? width, height, radius;
   final void Function()? onPressed;
+  final Widget? suffixIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -58,19 +60,22 @@ class CustomLargeMainButton extends StatelessWidget {
                                 context.base.theme.textTheme.titleLarge!
                                     .copyWith(color: AppColors.white),
                           ),
-                          showArrow == true
-                              ? Padding(
-                                  padding: context.locale.languageCode ==
-                                          AppConstants.en
+                          if (showArrow == true && suffixIcon == null)
+                            Padding(
+                              padding:
+                                  context.locale.languageCode == AppConstants.en
                                       ? EdgeInsets.only(left: 5.w)
                                       : EdgeInsets.only(right: 5.w),
-                                  child: Icon(
-                                    Icons.arrow_forward,
-                                    size: 25.sp,
-                                    color: Colors.white,
-                                  ),
-                                )
-                              : const SizedBox()
+                              child: Icon(
+                                Icons.arrow_forward,
+                                size: 25.sp,
+                                color: Colors.white,
+                              ),
+                            )
+                          else if (suffixIcon != null)
+                            suffixIcon!
+                          else
+                            const SizedBox(),
                         ],
                       )),
           )
@@ -98,21 +103,24 @@ class CustomLargeMainButton extends StatelessWidget {
                             context.base.theme.textTheme.titleLarge!
                                 .copyWith(color: AppColors.white),
                       ),
-                      showArrow == true
-                          ? Padding(
-                              padding:
-                                  context.locale.languageCode == AppConstants.en
-                                      ? EdgeInsets.only(left: 5.w)
-                                      : EdgeInsets.only(right: 5.w),
-                              child: Icon(
-                                context.locale.languageCode == AppConstants.en
-                                    ? Icons.arrow_forward
-                                    : Icons.arrow_back,
-                                size: 25.sp,
-                                color: Colors.white,
-                              ),
-                            )
-                          : const SizedBox()
+                      if (showArrow == true && suffixIcon == null)
+                        Padding(
+                          padding:
+                              context.locale.languageCode == AppConstants.en
+                                  ? EdgeInsets.only(left: 5.w)
+                                  : EdgeInsets.only(right: 5.w),
+                          child: Icon(
+                            context.locale.languageCode == AppConstants.en
+                                ? Icons.arrow_forward
+                                : Icons.arrow_back,
+                            size: 25.sp,
+                            color: Colors.white,
+                          ),
+                        )
+                      else if (suffixIcon != null)
+                        suffixIcon!
+                      else
+                        const SizedBox(),
                     ],
                   ));
   }

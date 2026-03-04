@@ -92,7 +92,7 @@ abstract class AppTheme {
       fontFamily: isArabic ? "Cairo" : "Poppins",
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
-      scaffoldBackgroundColor: AppColors.black,
+      scaffoldBackgroundColor: AppColors.lightBlack,
       appBarTheme: AppBarTheme(
         backgroundColor: Colors.transparent,
         centerTitle: true,

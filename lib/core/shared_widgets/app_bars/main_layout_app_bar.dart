@@ -9,7 +9,8 @@ import '../../colors/app_colors.dart';
 import '../../constants/app_constants.dart';
 
 class MainLayoutAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const MainLayoutAppBar({super.key, required this.title, this.enableLeading, this.widgets});
+  const MainLayoutAppBar(
+      {super.key, required this.title, this.enableLeading, this.widgets});
   final String title;
   final bool? enableLeading;
   final List<Widget>? widgets;

@@ -98,7 +98,11 @@ class _CustomCartCardState extends State<CustomCartCard> {
                       Text(
                         "${widget.price}EG",
                         style: context.base.theme.textTheme.bodyMedium
-                            ?.copyWith(color: AppColors.black, fontSize: 15.sp),
+                            ?.copyWith(
+                                color: context.isDarkMode
+                                    ? AppColors.white
+                                    : AppColors.black,
+                                fontSize: 13.sp),
                       ),
                       const Spacer(),
                       InkWell(
@@ -129,10 +133,7 @@ class _CustomCartCardState extends State<CustomCartCard> {
                           count.toString(),
                           style: context.base.theme.textTheme.bodyMedium
                               ?.copyWith(
-                                  color: context.isDarkMode
-                                      ? AppColors.white
-                                      : AppColors.black,
-                                  fontSize: 15.sp),
+                                  color: AppColors.white, fontSize: 15.sp),
                         ),
                       ),
                       InkWell(

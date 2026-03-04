@@ -18,13 +18,13 @@ class CustomRowHeadline extends StatelessWidget {
           child: Text(
             title,
             style: context.base.theme.textTheme.titleLarge
-                ?.copyWith(fontSize: 20.sp, fontWeight: FontWeight.w700),
+                ?.copyWith(fontSize: 18.sp, fontWeight: FontWeight.w700),
           ),
         ),
         Text(
           subTitle,
           style: context.base.theme.textTheme.titleLarge
-              ?.copyWith(fontSize: 15.sp, fontWeight: FontWeight.w700),
+              ?.copyWith(fontSize: 13.sp, fontWeight: FontWeight.w700),
         )
       ],
     );

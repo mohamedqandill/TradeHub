@@ -167,5 +167,21 @@ abstract class  LocaleKeys {
   static const orderId = 'orderId';
   static const reOrder = 'reOrder';
   static const rateOrder = 'rateOrder';
+  static const checkout = 'checkout';
+  static const shippingAddress = 'shippingAddress';
+  static const change = 'change';
+  static const chooseNewAddress = 'chooseNewAddress';
+  static const selectFromMapOrSavedList = 'selectFromMapOrSavedList';
+  static const homeAddress = 'homeAddress';
+  static const defaultText = 'defaultText';
+  static const paymentMethod = 'paymentMethod';
+  static const payWithCard = 'payWithCard';
+  static const visaMastercardAmex = 'visaMastercardAmex';
+  static const digitalWallets = 'digitalWallets';
+  static const applePayGooglePay = 'applePayGooglePay';
+  static const free = 'free';
+  static const total = 'total';
+  static const payNow = 'payNow';
+  static const secureCheckout = 'secureCheckout';
 
 }

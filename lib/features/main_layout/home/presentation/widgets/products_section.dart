@@ -57,7 +57,7 @@ class ProductsSection extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
               color: context.isDarkMode
-                  ? AppColors.black.withOpacity(0.3)
+                  ? AppColors.black.withOpacity(0.2)
                   : AppColors.white,
               borderRadius: BorderRadius.circular(20.r),
               border: Border.all(
