@@ -181,7 +181,11 @@ abstract class  LocaleKeys {
   static const applePayGooglePay = 'applePayGooglePay';
   static const free = 'free';
   static const total = 'total';
-  static const payNow = 'payNow';
   static const secureCheckout = 'secureCheckout';
+  static const confirmLocation = 'confirmLocation';
+  static const dragMapAdjustPin = 'dragMapAdjustPin';
+  static const deliveryAddressText = 'deliveryAddressText';
+  static const payNow = 'payNow';
+  static const searchYourLocation = 'searchYourLocation';
 
 }

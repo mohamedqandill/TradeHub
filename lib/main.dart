@@ -10,6 +10,7 @@ import 'package:tradehub/core/api/api_constant/api_constant.dart';
 import 'package:tradehub/core/constants/app_constants.dart';
 import 'package:tradehub/core/routes/app_routes.dart';
 import 'package:tradehub/core/routes/routes.dart';
+import 'package:tradehub/core/shared_widgets/widgets/device_preview.dart';
 import 'package:tradehub/core/theme/app_theme.dart';
 import 'package:tradehub/features/onBoarding/view_model/language_view_model.dart';
 import 'package:tradehub/features/onBoarding/view_model/theme_view_model.dart';
@@ -59,9 +60,11 @@ Future<void> main() async {
         fallbackLocale: const Locale(AppConstants.en),
         child: ChangeNotifierProvider(
           create: (context) => ThemeViewModel()..getSavedTheme(),
-          child: MyApp(
-            isTrue: isFirstTime ?? false,
-            token: token,
+          child: DevicePreviewWidget(
+            child: MyApp(
+              isTrue: isFirstTime ?? false,
+              token: token,
+            ),
           ),
         ),
       ),
