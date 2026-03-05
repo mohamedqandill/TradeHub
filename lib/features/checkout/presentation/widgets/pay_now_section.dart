@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tradehub/core/colors/app_colors.dart';
 import 'package:tradehub/core/extensions/base_inherited_context.dart';
-import 'package:tradehub/core/localization/locale_keys.g.dart';
 import 'package:tradehub/core/shared_widgets/buttons/custom_large_main_button.dart';
+
+import '../../../../core/localization/locale_keys.g.dart';
 
 class PayNowSection extends StatelessWidget {
   const PayNowSection({super.key});

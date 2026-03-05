@@ -1,14 +1,20 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tradehub/core/assets/assets.gen.dart';
 import 'package:tradehub/core/colors/app_colors.dart';
 import 'package:tradehub/core/extensions/base_inherited_context.dart';
 import 'package:tradehub/core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/extensions/main_color.dart';
 import 'package:tradehub/core/localization/locale_keys.g.dart';
+import 'package:tradehub/core/routes/routes.dart';
+import 'package:tradehub/core/shared_widgets/widgets/svg_widget.dart';
 
 class ShippingAddressSection extends StatelessWidget {
-  const ShippingAddressSection({super.key});
+  const ShippingAddressSection(
+      {super.key, required this.placeName, required this.onAddressChanged});
+  final String placeName;
+  final VoidCallback onAddressChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -33,12 +39,15 @@ class ShippingAddressSection extends StatelessWidget {
               ),
             ),
             GestureDetector(
-              onTap: () {},
+              onTap: () async {
+                await Navigator.pushNamed(context, Routes.flutterMap);
+                onAddressChanged();
+              },
               child: Text(
                 LocaleKeys.change.tr(),
                 style: context.base.theme.textTheme.bodyMedium?.copyWith(
                   color: context.mainColor,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.bold,
                   fontSize: 14.sp,
                 ),
               ),
@@ -47,58 +56,69 @@ class ShippingAddressSection extends StatelessWidget {
         ),
         SizedBox(height: 16.h),
         // Choose new address card
-        Container(
-          padding: EdgeInsets.all(16.sp),
-          decoration: BoxDecoration(
-            color: cardColor,
-            borderRadius: BorderRadius.circular(20.r),
-            border: Border.all(
-              color: context.greyOrWhite.withOpacity(0.1),
-              width: 1,
+        InkWell(
+          onTap: () async {
+            await Navigator.pushNamed(context, Routes.flutterMap);
+            onAddressChanged();
+          },
+          child: Container(
+            padding: EdgeInsets.all(16.sp),
+            decoration: BoxDecoration(
+              color: cardColor,
+              borderRadius: BorderRadius.circular(20.r),
+              border: Border.all(
+                color: context.greyOrWhite.withOpacity(0.1),
+                width: 1,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.04),
+                  blurRadius: 12,
+                  offset: const Offset(0, 6),
+                ),
+              ],
             ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.04),
-                blurRadius: 12,
-                offset: const Offset(0, 6),
-              ),
-            ],
-          ),
-          child: Row(
-            children: [
-              Container(
-                height: 48.w,
-                width: 48.w,
-                decoration: BoxDecoration(
-                  color: context.mainColor.withOpacity(0.08),
-                  shape: BoxShape.circle,
-                ),
-                child: Center(
-                  child: Icon(Icons.location_on_outlined,
-                      color: context.mainColor),
-                ),
-              ),
-              SizedBox(width: 16.w),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    LocaleKeys.chooseNewAddress.tr(),
-                    style: context.base.theme.textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.w700,
-                      color: textColor,
-                    ),
+            child: Row(
+              children: [
+                Container(
+                  height: 48.w,
+                  width: 48.w,
+                  decoration: BoxDecoration(
+                    color: context.mainColor.withOpacity(0.08),
+                    shape: BoxShape.circle,
                   ),
-                  SizedBox(height: 4.h),
-                  Text(
-                    LocaleKeys.selectFromMapOrSavedList.tr(),
-                    style: context.base.theme.textTheme.bodySmall?.copyWith(
-                      color: AppColors.grey,
-                    ),
+                  child: Center(
+                    child: SvgWidget(
+                        width: 20.w,
+                        height: 20.h,
+                        fit: BoxFit.cover,
+                        assetName: context.isDarkMode
+                            ? Assets.icons.addressDark
+                            : Assets.icons.address),
                   ),
-                ],
-              ),
-            ],
+                ),
+                SizedBox(width: 16.w),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      LocaleKeys.chooseNewAddress.tr(),
+                      style: context.base.theme.textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.w700,
+                        color: textColor,
+                      ),
+                    ),
+                    SizedBox(height: 4.h),
+                    Text(
+                      LocaleKeys.selectFromMapOrSavedList.tr(),
+                      style: context.base.theme.textTheme.bodySmall?.copyWith(
+                        color: AppColors.grey,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
         SizedBox(height: 12.h),
@@ -173,9 +193,11 @@ class ShippingAddressSection extends StatelessWidget {
                     ),
                     SizedBox(height: 6.h),
                     Text(
-                      "123 Luxury Avenue, Suite 405\nNew York, NY 10001",
+                      placeName,
                       style: context.base.theme.textTheme.bodySmall?.copyWith(
                         color: AppColors.grey,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 13.sp,
                         height: 1.5,
                       ),
                     ),

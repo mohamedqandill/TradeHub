@@ -167,7 +167,7 @@
   "shippingAddress": "Shipping Address",
   "change": "Change",
   "chooseNewAddress": "Choose New Address",
-  "selectFromMapOrSavedList": "Select from map or saved list",
+  "selectFromMapOrSavedList": "Select from map ",
   "homeAddress": "Home Address",
   "defaultText": "DEFAULT",
   "paymentMethod": "Payment Method",
@@ -177,6 +177,10 @@
   "applePayGooglePay": "Vodafone Cash,Etisalat Cash",
   "free": "Free",
   "total": "Total",
+  "secureCheckout": "SECURE SSL ENCRYPTED CHECKOUT",
+  "confirmLocation": "Confirm Location",
+  "dragMapAdjustPin": "Drag the map to adjust the pin precisely to your door",
+  "deliveryAddressText": "DELIVERY ADDRESS",
   "payNow": "Pay Now",
-  "secureCheckout": "SECURE SSL ENCRYPTED CHECKOUT"
+  "searchYourLocation": "Search Your Location"
 }

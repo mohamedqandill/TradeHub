@@ -64,6 +64,10 @@ dependencies:
   animated_snack_bar:
   firebase_crashlytics:
   carousel_slider:
+  permission_handler:
+  location:
+  flutter_map:
+  latlong2:
 
 dev_dependencies:
   build_runner: ^2.4.13

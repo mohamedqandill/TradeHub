@@ -167,7 +167,7 @@
   "shippingAddress": "عنوان الشحن",
   "change": "تغيير",
   "chooseNewAddress": "اختر عنوان جديد",
-  "selectFromMapOrSavedList": "اختر من الخريطة او القائمة المحفوظة",
+  "selectFromMapOrSavedList": "اختر من الخريطة",
   "homeAddress": "عنوان المنزل",
   "defaultText": "الافتراضي",
   "paymentMethod": "طريقة الدفع",
@@ -177,6 +177,10 @@
   "applePayGooglePay": "فودافون كاش، اتصالات كاش",
   "free": "مجاني",
   "total": "الإجمالي",
+  "secureCheckout": "دفع مشفر ومحمي SSL",
+  "confirmLocation": "تأكيد الموقع",
+  "dragMapAdjustPin": "اسحب الخريطة لضبط الدبوس بدقة على باب منزلك",
+  "deliveryAddressText": "عنوان التوصيل",
   "payNow": "ادفع الآن",
-  "secureCheckout": "دفع مشفر ومحمي SSL"
+  "searchYourLocation": "ابحث عن موقعك"
 }

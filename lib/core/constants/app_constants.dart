@@ -13,6 +13,8 @@ abstract class AppConstants {
   static const String eg = "EG";
   static const String skip = "Skip";
   static const String login = "Login";
+  static const String savedPlace = "selected_place_name";
+
   static const String emailAddress = "E-mail Address";
   static const String password = "Password";
   static const String getStarted = "Get Started";
