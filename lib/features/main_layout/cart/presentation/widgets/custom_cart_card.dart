@@ -96,7 +96,7 @@ class _CustomCartCardState extends State<CustomCartCard> {
                   child: Row(
                     children: [
                       Text(
-                        "${widget.price}EG",
+                        "${widget.price} EGP",
                         style: context.base.theme.textTheme.bodyMedium
                             ?.copyWith(
                                 color: context.isDarkMode
@@ -133,7 +133,10 @@ class _CustomCartCardState extends State<CustomCartCard> {
                           count.toString(),
                           style: context.base.theme.textTheme.bodyMedium
                               ?.copyWith(
-                                  color: AppColors.white, fontSize: 15.sp),
+                                  color: context.isDarkMode
+                                      ? AppColors.white
+                                      : AppColors.black,
+                                  fontSize: 15.sp),
                         ),
                       ),
                       InkWell(

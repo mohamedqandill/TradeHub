@@ -16,7 +16,7 @@ class HeartButton extends StatefulWidget {
 }
 
 class _HeartButtonState extends State<HeartButton> {
-  bool isHeartTapped = false;
+  bool isHeartTapped = true;
   @override
   Widget build(BuildContext context) {
     return InkWell(

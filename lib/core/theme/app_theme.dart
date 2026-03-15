@@ -5,6 +5,7 @@ import 'package:tradehub/core/colors/app_colors.dart';
 abstract class AppTheme {
   static ThemeData getLightTheme({required bool isArabic}) {
     return ThemeData(
+      fontFamilyFallback: const ["Poppins"],
       fontFamily: isArabic ? "Cairo" : "Poppins",
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
@@ -89,6 +90,7 @@ abstract class AppTheme {
 
   static ThemeData getDarkTheme({required bool isArabic}) {
     return ThemeData(
+      fontFamilyFallback: const ["Poppins"],
       fontFamily: isArabic ? "Cairo" : "Poppins",
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,

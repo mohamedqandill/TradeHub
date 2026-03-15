@@ -60,11 +60,9 @@ Future<void> main() async {
         fallbackLocale: const Locale(AppConstants.en),
         child: ChangeNotifierProvider(
           create: (context) => ThemeViewModel()..getSavedTheme(),
-          child: DevicePreviewWidget(
-            child: MyApp(
-              isTrue: isFirstTime ?? false,
-              token: token,
-            ),
+          child: MyApp(
+            isTrue: isFirstTime ?? false,
+            token: token,
           ),
         ),
       ),

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_map/flutter_map.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:latlong2/latlong.dart';
 import 'package:tradehub/core/shared_widgets/buttons/custom_large_main_button.dart';
 import 'package:tradehub/core/constants/app_constants.dart';
 import 'package:tradehub/core/utils/shared_prefs/prefs.dart';
@@ -42,14 +41,13 @@ class FlutterMapScreenBody extends StatefulWidget {
 }
 
 class _FlutterMapScreenBodyState extends State<FlutterMapScreenBody> {
-  late MapController mapController;
+  GoogleMapController? mapController;
   late TextEditingController textEditingController;
   bool isFirstTime = true;
 
   @override
   void initState() {
     super.initState();
-    mapController = MapController();
     textEditingController = TextEditingController();
     textEditingController.addListener(() {
       context.read<MapsCubit>().onSearchTextChanged(textEditingController.text);
@@ -79,52 +77,49 @@ class _FlutterMapScreenBodyState extends State<FlutterMapScreenBody> {
         }
 
         if (state.currentLocation != null && isFirstTime) {
-          mapController.move(state.currentLocation!, 15);
+          mapController?.animateCamera(
+            CameraUpdate.newCameraPosition(
+              CameraPosition(target: state.currentLocation!, zoom: 15),
+            ),
+          );
           isFirstTime = false;
         }
       },
       builder: (context, state) {
-        List<Marker> markers = [];
+        Set<Marker> markers = {};
         if (state.currentLocation != null) {
           markers.add(Marker(
-            point: state.currentLocation!,
-            child:
-                Icon(Icons.my_location, size: width * 0.09, color: Colors.blue),
+            markerId: const MarkerId('currentLocation'),
+            position: state.currentLocation!,
+            icon:
+                BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
           ));
         }
         if (state.selectedLocation != null) {
           markers.add(Marker(
-            point: state.selectedLocation!,
-            child: Icon(Icons.location_on,
-                size: width * 0.09, color: context.mainColor),
+            markerId: const MarkerId('selectedLocation'),
+            position: state.selectedLocation!,
+            icon:
+                BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
           ));
         }
 
         return Scaffold(
           body: Stack(
             children: [
-              FlutterMap(
-                mapController: mapController,
-                options: MapOptions(
-                  initialCenter:
-                      const LatLng(27.892458365561065, 26.725024118954433),
-                  initialZoom: 5,
-                  onTap: (tapPosition, point) {
-                    context.read<MapsCubit>().addDestinationMarker(point);
-                  },
+              GoogleMap(
+                onMapCreated: (controller) => mapController = controller,
+                initialCameraPosition: const CameraPosition(
+                  target: LatLng(27.892458365561065, 26.725024118954433),
+                  zoom: 5,
                 ),
-                children: [
-                  TileLayer(
-                    urlTemplate:
-                        'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                    subdomains: const ['a', 'b', 'c', 'd'],
-                    userAgentPackageName: 'com.example.flutter_map',
-                  ),
-                  MarkerLayer(markers: markers),
-                  if (state.isLoading)
-                    const Center(child: CircularProgressIndicator()),
-                ],
+                onTap: (point) {
+                  context.read<MapsCubit>().addDestinationMarker(point);
+                },
+                markers: markers,
               ),
+              if (state.isLoading)
+                const Center(child: CircularProgressIndicator()),
               Positioned(
                 top: height * 0.06,
                 right: width * 0.05,
@@ -141,7 +136,7 @@ class _FlutterMapScreenBodyState extends State<FlutterMapScreenBody> {
                     ),
                     if (state.isPlacesLoading)
                       const Center(child: CircularProgressIndicator())
-                    else if (state.isFocusedState)
+                    else
                       Padding(
                         padding: EdgeInsets.only(top: height * 0.01),
                         child: CustomListView(
@@ -150,7 +145,11 @@ class _FlutterMapScreenBodyState extends State<FlutterMapScreenBody> {
                             context
                                 .read<MapsCubit>()
                                 .selectPlace(placeName, latLng);
-                            mapController.move(latLng, 15);
+                            mapController?.animateCamera(
+                              CameraUpdate.newCameraPosition(
+                                CameraPosition(target: latLng, zoom: 15),
+                              ),
+                            );
                             textEditingController.text = placeName;
                           },
                           places: state.places,
@@ -171,7 +170,11 @@ class _FlutterMapScreenBodyState extends State<FlutterMapScreenBody> {
             backgroundColor: context.mainColor, // or suitable color
             onPressed: () {
               if (state.currentLocation != null) {
-                mapController.move(state.currentLocation!, 15);
+                mapController?.animateCamera(
+                  CameraUpdate.newCameraPosition(
+                    CameraPosition(target: state.currentLocation!, zoom: 15),
+                  ),
+                );
               } else {
                 context.read<MapsCubit>().updateMyLocation();
               }

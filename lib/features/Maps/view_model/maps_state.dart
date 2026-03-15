@@ -1,4 +1,4 @@
-import 'package:latlong2/latlong.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:tradehub/features/Maps/utils/models/PlacesAutoCompleteModel.dart';
 
 class MapsState {

@@ -11,7 +11,9 @@ import 'package:tradehub/features/settings/presentation/settings_screen.dart';
 import 'package:tradehub/features/settings/presentation/account_info/account_info_screen.dart';
 import 'package:tradehub/features/your_orders/presentation/your_orders_screen.dart';
 import 'package:tradehub/features/checkout/presentation/checkout_screen.dart';
-
+import 'package:tradehub/features/order_details/presentation/order_details_screen.dart';
+import 'package:tradehub/features/settings/presentation/saved_addresses/saved_addresses_screen.dart';
+import 'package:tradehub/features/track_order/presentation/track_order_screen.dart';
 import '../../features/authentication/presentation/forget password/view/forget_password_screen.dart';
 import '../../features/authentication/presentation/login/view/login_screen.dart';
 import '../../features/authentication/presentation/new password/view/new_password_screen.dart';
@@ -131,6 +133,21 @@ abstract class AppRoutes {
         return MaterialPageRoute(
           settings: settings,
           builder: (context) => const FlutterMapScreen(),
+        );
+      case Routes.orderDetails:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (context) => const OrderDetailsScreen(),
+        );
+      case Routes.trackOrder:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (context) => const TrackOrderScreen(),
+        );
+      case Routes.savedAddresses:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (context) => const SavedAddressesScreen(),
         );
 
       // Default → Undefined
