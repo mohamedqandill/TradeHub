@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:latlong2/latlong.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:tradehub/features/Maps/utils/location_services.dart';
 import 'package:tradehub/features/Maps/utils/maps_services.dart';
 

@@ -16,26 +16,26 @@ class ProductsSection extends StatelessWidget {
       {
         "title": "loaded rice bowl",
         "image": Assets.images.foodA.path,
-        "price": "220 EG",
-        "priceAfterDiscount": "200 EG",
+        "price": "220 EGP",
+        "priceAfterDiscount": "200 EGP",
       },
       {
         "title": "loaded rice bowl",
         "image": Assets.images.foodB.path,
-        "price": "220 EG",
-        "priceAfterDiscount": "200 EG",
+        "price": "220 EGP",
+        "priceAfterDiscount": "200 EGP",
       },
       {
         "title": "Burger Sandwich",
         "image": Assets.images.image.path,
-        "price": "220 EG",
-        "priceAfterDiscount": "190 EG",
+        "price": "220 EGP",
+        "priceAfterDiscount": "190 EGP",
       },
       {
         "title": "loaded rice bowl",
         "image": Assets.images.foodA.path,
-        "price": "220 EG",
-        "priceAfterDiscount": "200 EG",
+        "price": "220 EGP",
+        "priceAfterDiscount": "200 EGP",
       },
     ];
     return GridView.builder(

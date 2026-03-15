@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tradehub/core/routes/routes.dart';
 
 import 'order_card_widget.dart';
 
@@ -13,7 +14,11 @@ class YourOrdersScreenBody extends StatelessWidget {
       itemCount: 4,
       separatorBuilder: (context, index) => SizedBox(height: 16.h),
       itemBuilder: (context, index) {
-        return const OrderCardWidget();
+        return InkWell(
+            onTap: () {
+              Navigator.pushNamed(context, Routes.orderDetails);
+            },
+            child: const OrderCardWidget());
       },
     );
   }

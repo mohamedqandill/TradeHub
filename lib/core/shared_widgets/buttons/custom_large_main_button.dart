@@ -67,9 +67,7 @@ class CustomLargeMainButton extends StatelessWidget {
                                       ? EdgeInsets.only(left: 5.w)
                                       : EdgeInsets.only(right: 5.w),
                               child: Icon(
-                                context.locale.languageCode == AppConstants.en
-                                    ? Icons.arrow_forward_ios
-                                    : Icons.arrow_back_ios,
+                                Icons.arrow_forward_ios,
                                 size: 25.sp,
                                 color: Colors.white,
                               ),
@@ -112,10 +110,8 @@ class CustomLargeMainButton extends StatelessWidget {
                                   ? EdgeInsets.only(left: 5.w)
                                   : EdgeInsets.only(right: 5.w),
                           child: Icon(
-                            context.locale.languageCode == AppConstants.en
-                                ? Icons.arrow_forward
-                                : Icons.arrow_back,
-                            size: 25.sp,
+                            Icons.arrow_forward_ios,
+                            size: 22.sp,
                             color: Colors.white,
                           ),
                         )

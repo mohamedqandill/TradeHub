@@ -8,13 +8,16 @@ import 'package:tradehub/core/assets/assets.gen.dart';
 import 'package:tradehub/core/constants/app_constants.dart';
 import 'package:tradehub/core/extensions/main_color.dart';
 import 'package:tradehub/core/localization/locale_keys.g.dart';
+import 'package:tradehub/core/routes/routes.dart';
 import 'package:tradehub/core/shared_widgets/fields/custom_search_field.dart';
 import 'package:tradehub/core/shared_widgets/widgets/svg_widget.dart';
 
 class HomeHeaderWidget extends StatelessWidget {
   final String address;
+  final VoidCallback onPlaceSelected;
 
-  const HomeHeaderWidget({super.key, required this.address});
+  const HomeHeaderWidget(
+      {super.key, required this.address, required this.onPlaceSelected});
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +69,11 @@ class HomeHeaderWidget extends StatelessWidget {
                           ),
                         ),
                         InkWell(
-                          onTap: () {},
+                          onTap: () async {
+                            await Navigator.pushNamed(
+                                context, Routes.flutterMap);
+                            onPlaceSelected();
+                          },
                           child: Icon(
                             Icons.keyboard_arrow_down,
                             size: 20.sp,

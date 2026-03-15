@@ -19,4 +19,7 @@ abstract class Routes {
   static const String yourOrders = "yourOrders";
   static const String checkout = "checkout";
   static const String flutterMap = "flutterMap";
+  static const String orderDetails = "orderDetails";
+  static const String trackOrder = "trackOrder";
+  static const String savedAddresses = "savedAddresses";
 }

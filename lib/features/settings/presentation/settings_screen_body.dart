@@ -43,6 +43,8 @@ class _SettingsScreenBodyState extends State<SettingsScreenBody> {
                       onTapped: () {
                         if (index == 0) {
                           Navigator.pushNamed(context, Routes.accountInfo);
+                        } else if (index == 1) {
+                          Navigator.pushNamed(context, Routes.savedAddresses);
                         }
                       },
                       index: index);

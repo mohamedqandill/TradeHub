@@ -49,7 +49,9 @@ class CardInfo extends StatelessWidget {
                     email,
                     style: context.base.theme.textTheme.titleLarge!.copyWith(
                         fontSize: 14.sp,
-                        color: AppColors.lightGrey.withOpacity(0.5)),
+                        color: context.isDarkMode
+                            ? AppColors.white
+                            : AppColors.lightGrey.withOpacity(0.5)),
                   ),
                 ),
                 const Spacer(),

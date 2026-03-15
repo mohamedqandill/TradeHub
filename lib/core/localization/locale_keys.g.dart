@@ -146,6 +146,7 @@ abstract class  LocaleKeys {
   static const new_filter = 'new_filter';
   static const viewDetails = 'viewDetails';
   static const open = 'open';
+  static const trackTextOrder = 'trackTextOrder';
   static const empoweringLocalCommerce = 'empoweringLocalCommerce';
   static const ourVision = 'ourVision';
   static const appVisionDescription = 'appVisionDescription';
@@ -187,5 +188,23 @@ abstract class  LocaleKeys {
   static const deliveryAddressText = 'deliveryAddressText';
   static const payNow = 'payNow';
   static const searchYourLocation = 'searchYourLocation';
+  static const orderDetails = 'orderDetails';
+  static const orderPlaced = 'orderPlaced';
+  static const orderConfirmed = 'orderConfirmed';
+  static const orderShipped = 'orderShipped';
+  static const outForDelivery = 'outForDelivery';
+  static const orderDelivered = 'orderDelivered';
+  static const items = 'items';
+  static const qty = 'qty';
+  static const orderSummary = 'orderSummary';
+  static const expectedDate = 'expectedDate';
+  static const contactCourier = 'contactCourier';
+  static const placedOn = 'placedOn';
+  static const yourCourierIsMinutesAway = 'yourCourierIsMinutesAway';
+  static const arrivedAtSortingFacility = 'arrivedAtSortingFacility';
+  static const leftWarehouse = 'leftWarehouse';
+  static const paymentSuccessfullyVerified = 'paymentSuccessfullyVerified';
+  static const packageProcessedAndDispatched = 'packageProcessedAndDispatched';
+  static const northLondonDistributionHub = 'northLondonDistributionHub';
 
 }

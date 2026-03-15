@@ -23,8 +23,8 @@ class _CheckoutScreenBodyState extends State<CheckoutScreenBody> {
   }
 
   getSavedPlaceName() {
-    placeName =
-        getIt<SharedPrefsHelper>().getString(AppConstants.savedPlace) ?? "";
+    placeName = getIt<SharedPrefsHelper>().getString(AppConstants.savedPlace) ??
+        "No Place Selected";
   }
 
   void updateAddress() {

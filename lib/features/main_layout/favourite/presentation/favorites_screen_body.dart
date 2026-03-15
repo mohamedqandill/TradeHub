@@ -22,24 +22,24 @@ class _FavoritesScreenBodyState extends State<FavoritesScreenBody> {
     {
       "title": "loaded rice bowl",
       "image": Assets.images.foodA.path,
-      "price": "220 EG",
+      "price": "220",
       "vendor": "Karam El-sham"
     },
     {
       "title": "loaded rice bowl",
-      "price": "220 EG",
+      "price": "220",
       "image": Assets.images.foodA.path,
       "vendor": "Karam El-sham"
     },
     {
       "title": "loaded rice bowl",
-      "price": "220 EG",
+      "price": "220",
       "image": Assets.images.foodA.path,
       "vendor": "Karam El-sham"
     },
     {
       "title": "loaded rice bowl",
-      "price": "220 EG",
+      "price": "220",
       "image": Assets.images.foodA.path,
       "vendor": "Karam El-sham"
     }
