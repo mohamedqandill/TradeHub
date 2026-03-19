@@ -101,6 +101,10 @@ class MapsCubit extends Cubit<MapsState> {
     ));
   }
 
+  void updatePlaceName(String newName) {
+    emit(state.copyWith(selectedPlaceName: newName));
+  }
+
   Future<void> addDestinationMarker(LatLng point) async {
     emit(state.copyWith(
       isLoading: true,

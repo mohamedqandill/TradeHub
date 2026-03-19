@@ -42,7 +42,7 @@ Future<void> main() async {
     SharedPrefsHelper prefs = getIt<SharedPrefsHelper>();
     final languageViewModel = getIt<LanguageViewModel>();
     await languageViewModel.loadLanguage();
-    bool? isFirstTime = prefs.getBool(AppConstants.firstTime);
+    bool isFirstTime = prefs.getBool(AppConstants.firstTime) ?? true;
     String? token = await getIt<SecureStorageHelper>().read(ApiConstants.token);
 
     if (token != null) {
@@ -61,7 +61,7 @@ Future<void> main() async {
         child: ChangeNotifierProvider(
           create: (context) => ThemeViewModel()..getSavedTheme(),
           child: MyApp(
-            isTrue: isFirstTime ?? false,
+            isFirstTime: isFirstTime,
             token: token,
           ),
         ),
@@ -74,9 +74,9 @@ Future<void> main() async {
 
 //
 class MyApp extends StatelessWidget {
-  const MyApp({super.key, required this.isTrue, required this.token});
+  const MyApp({super.key, required this.isFirstTime, required this.token});
 
-  final bool isTrue;
+  final bool isFirstTime;
   final String? token;
 
   // This widget is the root of your application.
@@ -110,7 +110,7 @@ class MyApp extends StatelessWidget {
             themeMode: provider.mode,
             debugShowCheckedModeBanner: false,
             onGenerateRoute: AppRoutes.getRoutes,
-            initialRoute: isTrue
+            initialRoute: isFirstTime
                 ? Routes.splash
                 : token != null
                     ? Routes.mainLayout

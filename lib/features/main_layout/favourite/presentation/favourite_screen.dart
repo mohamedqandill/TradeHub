@@ -12,7 +12,10 @@ class FavouriteScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: MainLayoutAppBar(title: LocaleKeys.Favourite.tr()),
+        appBar: MainLayoutAppBar(
+          title: LocaleKeys.Favourite.tr(),
+          enableLeading: true,
+        ),
         // body: const EmptyFavoriteScreenBody(),
         body: const FavoritesScreenBody(),
       ),

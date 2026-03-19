@@ -5,6 +5,7 @@ import 'package:tradehub/core/api/api_constant/api_constant.dart';
 import 'package:tradehub/core/assets/assets.gen.dart';
 import 'package:tradehub/core/colors/app_colors.dart';
 import 'package:tradehub/core/extensions/base_inherited_context.dart';
+import 'package:tradehub/core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/extensions/main_color.dart';
 import 'package:tradehub/core/localization/locale_keys.g.dart';
 import 'package:tradehub/core/utils/di/di.dart';
@@ -81,6 +82,9 @@ class ProfileScreenBody extends StatelessWidget {
                           context: context,
                           builder: (context) {
                             return AlertDialog(
+                              backgroundColor: context.isDarkMode
+                                  ? const Color(0xff1A1A1A)
+                                  : Colors.white,
                               title: Text(
                                 LocaleKeys.logOut.tr(),
                                 style: context.base.theme.textTheme.titleLarge!
@@ -89,7 +93,7 @@ class ProfileScreenBody extends StatelessWidget {
                                         fontSize: 22.sp),
                               ),
                               content: Text(
-                                "Are you sure you want to logout?",
+                                LocaleKeys.areYouSureLogout.tr(),
                                 style: context.base.theme.textTheme.bodyMedium
                                     ?.copyWith(color: AppColors.grey),
                               ),
@@ -107,7 +111,7 @@ class ProfileScreenBody extends StatelessWidget {
                                         Navigator.pop(context);
                                       },
                                       child: Text(
-                                        "Cancel",
+                                        LocaleKeys.cancel.tr(),
                                         style: context
                                             .base.theme.textTheme.titleLarge!
                                             .copyWith(
@@ -121,7 +125,7 @@ class ProfileScreenBody extends StatelessWidget {
                                     TextButton(
                                       style: TextButton.styleFrom(
                                           fixedSize: Size(130.w, 37.h),
-                                          backgroundColor: Colors.red,
+                                          backgroundColor: context.mainColor,
                                           side: const BorderSide(
                                               width: 1, color: Colors.black)),
                                       onPressed: () async {
@@ -135,11 +139,11 @@ class ProfileScreenBody extends StatelessWidget {
                                               (route) => false);
                                         }
                                       },
-                                      child: Text("OK",
+                                      child: Text(LocaleKeys.ok.tr(),
                                           style: context
                                               .base.theme.textTheme.titleLarge!
                                               .copyWith(
-                                                  color: AppColors.black,
+                                                  color: AppColors.white,
                                                   fontSize: 16.sp)),
                                     )
                                   ],

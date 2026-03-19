@@ -59,7 +59,7 @@ class _CustomProfileRowInfoState extends State<CustomProfileRowInfo> {
             widget.title,
             style: context.base.theme.textTheme.titleLarge!.copyWith(
                 fontSize: 17.sp,
-                fontWeight: FontWeight.w700,
+                fontWeight: FontWeight.w600,
                 color: widget.index == 4 ? AppColors.red : null),
           ),
           const Spacer(),
@@ -129,7 +129,7 @@ class _CustomProfileRowInfoState extends State<CustomProfileRowInfo> {
                         : const SizedBox(),
                     Icon(
                       Icons.arrow_forward_ios,
-                      size: 25.sp,
+                      size: 24.sp,
                       color: context.isDarkMode ? AppColors.white : null,
                     ),
                   ],

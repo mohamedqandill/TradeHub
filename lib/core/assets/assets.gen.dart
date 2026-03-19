@@ -30,6 +30,12 @@ class $AssetsIconsGen {
   /// File path: assets/icons/cartFilled.svg
   String get cartFilled => 'assets/icons/cartFilled.svg';
 
+  /// File path: assets/icons/category.svg
+  String get category => 'assets/icons/category.svg';
+
+  /// File path: assets/icons/categoryFilled.svg
+  String get categoryFilled => 'assets/icons/categoryFilled.svg';
+
   /// File path: assets/icons/eg.png
   AssetGenImage get eg => const AssetGenImage('assets/icons/eg.png');
 
@@ -95,6 +101,8 @@ class $AssetsIconsGen {
         addressDark,
         cart,
         cartFilled,
+        category,
+        categoryFilled,
         eg,
         en,
         favourite,
@@ -316,6 +324,16 @@ class $AssetsImagesGen {
       ];
 }
 
+class $AssetsLottieGen {
+  const $AssetsLottieGen();
+
+  /// File path: assets/lottie/loading.json
+  String get loading => 'assets/lottie/loading.json';
+
+  /// List of all assets
+  List<String> get values => [loading];
+}
+
 class $AssetsTranslationsGen {
   const $AssetsTranslationsGen();
 
@@ -337,6 +355,7 @@ class Assets {
 
   static const $AssetsIconsGen icons = $AssetsIconsGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
+  static const $AssetsLottieGen lottie = $AssetsLottieGen();
   static const $AssetsTranslationsGen translations = $AssetsTranslationsGen();
 }
 

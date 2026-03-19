@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tradehub/Core/colors/app_colors.dart';
 import 'package:tradehub/core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/extensions/main_color.dart';
 
@@ -13,52 +12,42 @@ class HomeCategoryWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 80.w,
-      margin: EdgeInsets.symmetric(vertical: 4.h),
+      width: 82.w,
+      margin: EdgeInsets.symmetric(vertical: 6.h, horizontal: 4.w),
+      decoration: BoxDecoration(
+        color: context.isDarkMode
+            ? Colors.white.withOpacity(0.05)
+            : context.mainColor.withOpacity(0.05),
+        borderRadius: BorderRadius.circular(20.r),
+      ),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Container(
-            padding: EdgeInsets.all(3.sp),
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              gradient: LinearGradient(
-                colors: [
-                  context.mainColor.withOpacity(0.5),
-                  context.mainColor.withOpacity(0.1),
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-            ),
-            child: Container(
-              padding: EdgeInsets.all(2.sp),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color:
-                    context.isDarkMode ? AppColors.lightBlack : AppColors.white,
-              ),
-              child: ClipOval(
-                child: Image.asset(
-                  image,
-                  width: 54.w,
-                  height: 54.w,
-                  fit: BoxFit.cover,
-                ),
-              ),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12.r),
+            child: Image.asset(
+              image,
+              width: 48.w,
+              height: 48.w,
+              fit: BoxFit.cover,
             ),
           ),
-          SizedBox(height: 10.h),
-          Text(
-            title,
-            textAlign: TextAlign.center,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              fontSize: 13.sp,
-              fontWeight: FontWeight.w600,
-              color: context.isDarkMode
-                  ? AppColors.white.withOpacity(0.9)
-                  : AppColors.black.withOpacity(0.8),
+          // SizedBox(height: 4.h),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 4.w),
+            child: Text(
+              title,
+              // textAlign: TextAlign.start,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontSize: 12.sp,
+                fontWeight: FontWeight.w700,
+                color: context.isDarkMode
+                    ? Colors.white.withOpacity(0.9)
+                    : Colors.black.withOpacity(0.8),
+                letterSpacing: -0.2,
+              ),
             ),
           ),
         ],

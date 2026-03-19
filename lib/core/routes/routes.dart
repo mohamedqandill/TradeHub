@@ -22,4 +22,5 @@ abstract class Routes {
   static const String orderDetails = "orderDetails";
   static const String trackOrder = "trackOrder";
   static const String savedAddresses = "savedAddresses";
+  static const String favourite = "favourite";
 }

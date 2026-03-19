@@ -26,9 +26,9 @@ class ProductDetailsScreen extends StatelessWidget {
         padding: EdgeInsets.all(12.sp),
         child: CustomLargeMainButton(
           text: LocaleKeys.addToCart.tr(),
-          showArrow: true,
+          // showArrow: true,
           textStyle: context.base.theme.textTheme.titleLarge!
-              .copyWith(color: AppColors.white, fontSize: 22.sp),
+              .copyWith(color: AppColors.white, fontSize: 17.sp),
         ),
       ),
     );

@@ -26,34 +26,36 @@ class CustomCheckoutCard extends StatelessWidget {
           topRight: Radius.circular(16.r),
         ),
       ),
-      child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 16.h),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: const OrderSummarySection(),
-            ),
-            SizedBox(height: 10.h),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10.w),
-              child: isProceedButton == null
-                  ? CustomLargeMainButton(
-                      showArrow: true,
-                      textStyle: context.base.theme.textTheme.bodyMedium!
-                          .copyWith(color: AppColors.white),
-                      text: LocaleKeys.proceedToCheckout.tr(),
-                      height: 56.h,
-                      width: MediaQuery.sizeOf(context).width,
-                      onPressed: () {
-                        Navigator.pushNamed(context, Routes.checkout);
-                      },
-                      radius: 15.r,
-                    )
-                  : const PayNowSection(),
-            ),
-          ],
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 16.h),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                child: const OrderSummarySection(),
+              ),
+              SizedBox(height: 10.h),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10.w),
+                child: isProceedButton == null
+                    ? CustomLargeMainButton(
+                        showArrow: true,
+                        textStyle: context.base.theme.textTheme.bodyMedium!
+                            .copyWith(color: AppColors.white, fontSize: 16.sp),
+                        text: LocaleKeys.proceedToCheckout.tr(),
+                        height: 56.h,
+                        width: MediaQuery.sizeOf(context).width,
+                        onPressed: () {
+                          Navigator.pushNamed(context, Routes.checkout);
+                        },
+                        radius: 15.r,
+                      )
+                    : const PayNowSection(),
+              ),
+            ],
+          ),
         ),
       ),
     );

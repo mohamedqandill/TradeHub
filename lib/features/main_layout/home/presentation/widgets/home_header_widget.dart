@@ -85,10 +85,37 @@ class HomeHeaderWidget extends StatelessWidget {
                   ],
                 ),
                 const Spacer(),
+                InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, Routes.favourite);
+                  },
+                  child: Padding(
+                    padding: context.locale.languageCode == AppConstants.ar
+                        ? EdgeInsets.only(left: 8.w)
+                        : EdgeInsets.only(right: 8.w),
+                    child: Container(
+                      width: 38.w,
+                      height: 38.w,
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.15),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Center(
+                        child: SvgWidget(
+                          width: 20.w,
+                          height: 20.h,
+                          fit: BoxFit.cover,
+                          assetName: Assets.icons.favouriteFilled,
+                          color: AppColors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
                 Padding(
                   padding: context.locale.languageCode == AppConstants.ar
-                      ? EdgeInsets.only(left: 8.w)
-                      : EdgeInsets.only(right: 8.w),
+                      ? EdgeInsets.only(left: 4.w)
+                      : EdgeInsets.only(right: 4.w),
                   child: Container(
                     width: 38.w,
                     height: 38.w,

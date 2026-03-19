@@ -5,7 +5,8 @@ import '../colors/app_colors.dart';
 showLoading(BuildContext context) {
   showDialog(
     context: context,
-    builder: (context) {
+    barrierDismissible: false,
+    builder: (_) {
       return const Center(
         child: CircularProgressIndicator(
           backgroundColor: AppColors.mainColor,

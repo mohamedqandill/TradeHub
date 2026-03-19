@@ -33,8 +33,26 @@ class CustomTabBar extends StatelessWidget {
         unselectedLabelColor:
             context.isDarkMode ? AppColors.white : AppColors.black,
         unselectedLabelStyle:
-            context.base.theme.textTheme.bodyMedium!.copyWith(fontSize: 13.sp),
+            context.base.theme.textTheme.bodyMedium!.copyWith(fontSize: 14.sp),
         dividerColor: Colors.transparent,
-        tabs: tabs);
+        tabs: List.generate(tabs.length, (index) {
+          return ListenableBuilder(
+            listenable: tabController,
+            builder: (context, child) {
+              final isSelected = tabController.index == index;
+              return Container(
+                decoration: BoxDecoration(
+                  color: isSelected
+                      ? Colors.transparent
+                      : (context.isDarkMode
+                          ? Colors.white.withAlpha(20)
+                          : const Color(0xFFF3F6F8)),
+                  borderRadius: BorderRadius.circular(12.r),
+                ),
+                child: tabs[index],
+              );
+            },
+          );
+        }));
   }
 }

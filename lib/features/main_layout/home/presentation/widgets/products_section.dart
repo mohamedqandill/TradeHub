@@ -53,103 +53,93 @@ class ProductsSection extends StatelessWidget {
         final product = productsData[index];
         return InkWell(
           onTap: () => Navigator.pushNamed(context, Routes.productDetails),
-          borderRadius: BorderRadius.circular(20.r),
+          borderRadius: BorderRadius.circular(24.r),
           child: Container(
             decoration: BoxDecoration(
               color: context.isDarkMode
-                  ? AppColors.black.withOpacity(0.2)
+                  ? Colors.white.withOpacity(0.05)
                   : AppColors.white,
-              borderRadius: BorderRadius.circular(20.r),
-              border: Border.all(
-                color: context.greyOrWhite.withOpacity(0.1),
-                width: 1,
-              ),
+              borderRadius: BorderRadius.circular(24.r),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.04),
-                  blurRadius: 12,
-                  offset: const Offset(0, 6),
+                  color: Colors.black.withOpacity(0.05),
+                  blurRadius: 10,
+                  offset: const Offset(0, 5),
                 ),
               ],
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // Product Image & Badge Stack
                 Stack(
                   children: [
                     ClipRRect(
                       borderRadius:
-                          BorderRadius.vertical(top: Radius.circular(20.r)),
+                          BorderRadius.vertical(top: Radius.circular(24.r)),
                       child: Image.asset(
                         product["image"],
                         width: double.infinity,
-                        height: 140.h,
+                        height: 125.h,
                         fit: BoxFit.cover,
                       ),
                     ),
+                    // Vendor Mini Logo
                     Positioned(
-                      top: 8.h,
-                      right: 8.w,
+                      top: 10.h,
+                      right: 10.w,
                       child: Container(
-                        padding: EdgeInsets.all(2.sp),
-                        decoration: BoxDecoration(
+                        padding: EdgeInsets.all(3.sp),
+                        decoration: const BoxDecoration(
                           color: Colors.white,
                           shape: BoxShape.circle,
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
-                              blurRadius: 4,
-                            )
+                                color: Colors.black12,
+                                blurRadius: 4,
+                                spreadRadius: 1)
                           ],
                         ),
                         child: ClipOval(
                           child: Image.asset(
                             Assets.images.karamelshaam.path,
-                            width: 32.w,
-                            height: 32.w,
+                            width: 28.w,
+                            height: 28.w,
                             fit: BoxFit.cover,
                           ),
                         ),
                       ),
                     ),
+                    // Add Button
                     Positioned(
                       bottom: 8.h,
-                      left: 8.w,
+                      right: 8.w,
                       child: Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 8.w, vertical: 4.h),
+                        padding: EdgeInsets.all(6.sp),
                         decoration: BoxDecoration(
                           color: context.mainColor,
-                          borderRadius: BorderRadius.circular(8.r),
-                        ),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.add_rounded,
-                              size: 16.sp,
-                              color: context.isDarkMode
-                                  ? AppColors.black
-                                  : AppColors.white,
-                            ),
-                            SizedBox(width: 2.w),
-                            Text(
-                              "ADD",
-                              style: TextStyle(
-                                color: context.isDarkMode
-                                    ? AppColors.black
-                                    : AppColors.white,
-                                fontSize: 10.sp,
-                                fontWeight: FontWeight.w800,
-                              ),
-                            ),
+                          borderRadius: BorderRadius.circular(12.r),
+                          boxShadow: [
+                            BoxShadow(
+                              color: context.mainColor.withOpacity(0.3),
+                              blurRadius: 8,
+                              offset: const Offset(0, 4),
+                            )
                           ],
+                        ),
+                        child: Icon(
+                          Icons.add_rounded,
+                          size: 20.sp,
+                          color: Colors.white,
                         ),
                       ),
                     ),
                   ],
                 ),
+                // Product Info
                 Padding(
-                  padding: EdgeInsets.all(12.sp),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -161,18 +151,20 @@ class ProductsSection extends StatelessWidget {
                           color: context.isDarkMode
                               ? AppColors.white
                               : AppColors.black,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w800,
                           fontSize: 14.sp,
+                          letterSpacing: -0.2,
                         ),
                       ),
                       SizedBox(height: 4.h),
-                      Row(
+                      Wrap(
+                        crossAxisAlignment: WrapCrossAlignment.center,
                         children: [
                           Text(
                             product["priceAfterDiscount"],
                             style: TextStyle(
                               color: context.mainColor,
-                              fontWeight: FontWeight.w800,
+                              fontWeight: FontWeight.w900,
                               fontSize: 15.sp,
                             ),
                           ),
@@ -180,10 +172,10 @@ class ProductsSection extends StatelessWidget {
                           Text(
                             product["price"],
                             style: TextStyle(
-                              color: AppColors.grey.withOpacity(0.6),
+                              color: Colors.grey.shade400,
                               fontSize: 11.sp,
                               decoration: TextDecoration.lineThrough,
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ],

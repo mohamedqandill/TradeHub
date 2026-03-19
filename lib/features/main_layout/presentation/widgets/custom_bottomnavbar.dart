@@ -31,9 +31,9 @@ class _CustomBottomNavbarState extends State<CustomBottomNavbar> {
         'label': LocaleKeys.Home.tr(),
       },
       {
-        'activeIcon': Assets.icons.favouriteFilled,
-        'icon': Assets.icons.favourite,
-        'label': LocaleKeys.Favourite.tr(),
+        'activeIcon': Assets.icons.categoryFilled,
+        'icon': Assets.icons.category,
+        'label': LocaleKeys.categories.tr(),
       },
       {
         'activeIcon': Assets.icons.cartFilled,
@@ -76,20 +76,32 @@ class _CustomBottomNavbarState extends State<CustomBottomNavbar> {
             context.base.theme.textTheme.bodyMedium?.copyWith(fontSize: 13.sp),
         items: navItems.map((item) {
           return BottomNavigationBarItem(
-            activeIcon: SvgWidget(
-              color: context.mainColor,
-              width: 24.w,
-              height: 24.h,
-              fit: BoxFit.cover,
-              assetName: item['activeIcon'],
-            ),
-            icon: SvgWidget(
-              color: context.greyOrWhite,
-              width: 24.w,
-              height: 24.h,
-              fit: BoxFit.cover,
-              assetName: item['icon'],
-            ),
+            activeIcon: item['activeIcon'] == Assets.icons.categoryFilled
+                ? Icon(
+                    Icons.category,
+                    color: context.mainColor,
+                    size: 24.sp,
+                  )
+                : SvgWidget(
+                    color: context.mainColor,
+                    width: 24.w,
+                    height: 24.h,
+                    fit: BoxFit.cover,
+                    assetName: item['activeIcon'],
+                  ),
+            icon: item['icon'] == Assets.icons.category
+                ? Icon(
+                    Icons.category_outlined,
+                    color: context.greyOrWhite,
+                    size: 24.sp,
+                  )
+                : SvgWidget(
+                    color: context.greyOrWhite,
+                    width: 24.w,
+                    height: 24.h,
+                    fit: BoxFit.cover,
+                    assetName: item['icon'],
+                  ),
             label: item['label'],
           );
         }).toList(),

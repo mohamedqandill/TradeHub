@@ -12,13 +12,11 @@ class CheckoutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: MainLayoutAppBar(
-          title: LocaleKeys.checkout.tr(),
-          enableLeading: true,
-        ),
-        body: const CheckoutScreenBody(),
-        bottomNavigationBar: const CustomCheckoutCard(
-          isProceedButton: false,
-        ));
+      appBar: MainLayoutAppBar(
+        title: LocaleKeys.checkout.tr(),
+        enableLeading: true,
+      ),
+      body: const CheckoutScreenBody(),
+    );
   }
 }

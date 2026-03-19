@@ -206,5 +206,9 @@ abstract class  LocaleKeys {
   static const paymentSuccessfullyVerified = 'paymentSuccessfullyVerified';
   static const packageProcessedAndDispatched = 'packageProcessedAndDispatched';
   static const northLondonDistributionHub = 'northLondonDistributionHub';
+  static const cancel = 'cancel';
+  static const ok = 'ok';
+  static const areYouSureLogout = 'areYouSureLogout';
+  static const fullName = 'fullName';
 
 }

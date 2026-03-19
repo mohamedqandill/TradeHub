@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tradehub/Core/extensions/base_inherited_context.dart';
 import 'package:tradehub/Core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/constants/app_constants.dart';
+import 'package:tradehub/core/extensions/main_color.dart';
 
 import '../../colors/app_colors.dart';
 
@@ -48,8 +49,11 @@ class CustomLargeMainButton extends StatelessWidget {
                 ),
                 onPressed: onPressed,
                 child: isLoading
-                    ? const Center(
-                        child: CircularProgressIndicator(),
+                    ? Center(
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
+                          backgroundColor: context.mainColor,
+                        ),
                       )
                     : Row(
                         mainAxisAlignment: MainAxisAlignment.center,

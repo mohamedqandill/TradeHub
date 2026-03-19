@@ -52,38 +52,36 @@ class _CustomCartCardState extends State<CustomCartCard> {
               children: [
                 Text(
                   widget.title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: context.base.theme.textTheme.bodyMedium?.copyWith(
                     color: context.mainColor,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
-                Row(
+                Wrap(
+                  spacing: 5.w,
                   children: [
-                    widget.size != null
-                        ? Text(
-                            "SIZE: ${widget.size}",
-                            style: context.base.theme.textTheme.bodyMedium
-                                ?.copyWith(
-                              fontSize: 13.sp,
-                              color: context.greyOrWhite,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          )
-                        : const SizedBox(),
-                    SizedBox(
-                      width: 5.w,
-                    ),
-                    widget.color != null
-                        ? Text(
-                            "COLOR: ${widget.color}",
-                            style: context.base.theme.textTheme.bodyMedium
-                                ?.copyWith(
-                              fontSize: 13.sp,
-                              color: context.greyOrWhite,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          )
-                        : const SizedBox(),
+                    if (widget.size != null)
+                      Text(
+                        "SIZE: ${widget.size}",
+                        style:
+                            context.base.theme.textTheme.bodyMedium?.copyWith(
+                          fontSize: 13.sp,
+                          color: context.greyOrWhite,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    if (widget.color != null)
+                      Text(
+                        "COLOR: ${widget.color}",
+                        style:
+                            context.base.theme.textTheme.bodyMedium?.copyWith(
+                          fontSize: 13.sp,
+                          color: context.greyOrWhite,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
                   ],
                 ),
                 SizedBox(

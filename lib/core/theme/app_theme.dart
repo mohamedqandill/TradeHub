@@ -5,8 +5,8 @@ import 'package:tradehub/core/colors/app_colors.dart';
 abstract class AppTheme {
   static ThemeData getLightTheme({required bool isArabic}) {
     return ThemeData(
-      fontFamilyFallback: const ["Poppins"],
-      fontFamily: isArabic ? "Cairo" : "Poppins",
+      fontFamily: "Poppins",
+      fontFamilyFallback: isArabic ? const ["Cairo"] : const ["Poppins"],
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
       scaffoldBackgroundColor: AppColors.white,
@@ -30,7 +30,7 @@ abstract class AppTheme {
         suffixIconColor: AppColors.mainColor,
         labelStyle: TextStyle(
           fontSize: 16.sp,
-          fontWeight: FontWeight.w700,
+          fontWeight: FontWeight.w500,
           color: AppColors.grey,
         ),
         focusedErrorBorder: OutlineInputBorder(
@@ -90,8 +90,8 @@ abstract class AppTheme {
 
   static ThemeData getDarkTheme({required bool isArabic}) {
     return ThemeData(
-      fontFamilyFallback: const ["Poppins"],
-      fontFamily: isArabic ? "Cairo" : "Poppins",
+      fontFamily: "Poppins",
+      fontFamilyFallback: isArabic ? const ["Cairo"] : const ["Poppins"],
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
       scaffoldBackgroundColor: AppColors.lightBlack,
@@ -109,7 +109,7 @@ abstract class AppTheme {
       inputDecorationTheme: InputDecorationTheme(
         labelStyle: TextStyle(
           fontSize: 16.sp,
-          fontWeight: FontWeight.w700,
+          fontWeight: FontWeight.w400,
           color: AppColors.white,
         ),
         focusedErrorBorder: OutlineInputBorder(
