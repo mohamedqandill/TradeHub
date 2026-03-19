@@ -25,8 +25,7 @@ class SavedAddressesScreen extends StatefulWidget {
 class _SavedAddressesScreenState extends State<SavedAddressesScreen> {
   String savedPlaceName = "";
   final List<String> availablePlaces = [
-    "Menoufia, Markaz Elbagour",
-    "No Place Selected"
+    "10th of Ramadan City, Industrial Zone",
   ];
 
   @override

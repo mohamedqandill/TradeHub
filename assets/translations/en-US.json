@@ -135,5 +135,9 @@
   "addToCart": "ADD TO CART",
   "description": "Description",
   "payNow": "Pay Now",
-  "searchYourLocation": "Search Your Location"
+  "searchYourLocation": "Search Your Location",
+  "cancel": "Cancel",
+  "ok": "OK",
+  "areYouSureLogout": "Are you sure you want to logout?",
+  "fullName": "Full Name"
 }

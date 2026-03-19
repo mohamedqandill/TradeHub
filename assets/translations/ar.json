@@ -201,5 +201,9 @@
   "leftWarehouse": "غادر المستودع",
   "paymentSuccessfullyVerified": "تم التحقق من الدفع بنجاح",
   "packageProcessedAndDispatched": "تم تجهيز وتوجيه الشحنة",
-  "northLondonDistributionHub": "مركز توزيع القاهره"
+  "northLondonDistributionHub": "مركز توزيع القاهره",
+  "cancel": "إلغاء",
+  "ok": "حسناً",
+  "areYouSureLogout": "هل أنت متأكد أنك تريد تسجيل الخروج؟",
+  "fullName": "الاسم بالكامل"
 }

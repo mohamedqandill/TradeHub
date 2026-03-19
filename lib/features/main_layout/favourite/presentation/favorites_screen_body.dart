@@ -80,7 +80,7 @@ class _FavoritesScreenBodyState extends State<FavoritesScreenBody> {
                       crossAxisCount: 2,
                       crossAxisSpacing: 16.w,
                       mainAxisSpacing: 16.h,
-                      childAspectRatio: 0.65,
+                      childAspectRatio: 0.68,
                     ),
                     delegate: SliverChildBuilderDelegate(
                       (context, index) {

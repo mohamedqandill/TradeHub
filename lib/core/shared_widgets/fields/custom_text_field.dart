@@ -13,6 +13,7 @@ class CustomTextField extends StatefulWidget {
       this.labelText,
       this.autoFillHints = "",
       this.hintText,
+      this.initialValue,
       this.prefixIcon,
       this.suffixIcon,
       this.isFocused});
@@ -24,6 +25,7 @@ class CustomTextField extends StatefulWidget {
   final String? hintText;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
+  final String? initialValue;
   final String autoFillHints;
   final Function(bool isFocused)? isFocused;
 
@@ -57,6 +59,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
     return SizedBox(
       width: 335.w,
       child: TextFormField(
+        initialValue: widget.controller == null ? widget.initialValue : null,
         focusNode: searchFocused,
         onTapOutside: (event) {
           searchFocused.unfocus();

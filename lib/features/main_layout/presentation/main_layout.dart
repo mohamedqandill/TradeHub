@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:tradehub/features/main_layout/presentation/widgets/custom_bottomnavbar.dart';
 
 import '../cart/presentation/cart_screen.dart';
-import '../favourite/presentation/favourite_screen.dart';
+import '../categories/presentation/categories_screen.dart';
 import '../home/presentation/home_screen.dart';
 import '../profile/presentation/profile_screen.dart';
 
@@ -19,7 +19,7 @@ class _MainLayoutState extends State<MainLayout> {
 
   List<Widget> screens = [
     const HomeScreen(),
-    const FavouriteScreen(),
+    const CategoriesScreen(),
     const CartScreen(),
     const ProfileScreen()
   ];

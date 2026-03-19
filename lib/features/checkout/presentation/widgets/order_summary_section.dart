@@ -25,11 +25,13 @@ class OrderSummarySection extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                LocaleKeys.subtotal.tr(),
-                style: context.base.theme.textTheme.bodyMedium?.copyWith(
-                  color: AppColors.grey,
-                  fontWeight: FontWeight.w500,
+              Flexible(
+                child: Text(
+                  LocaleKeys.subtotal.tr(),
+                  style: context.base.theme.textTheme.bodyMedium?.copyWith(
+                    color: AppColors.grey,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
               Text(
@@ -45,11 +47,13 @@ class OrderSummarySection extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                LocaleKeys.shipping.tr(),
-                style: context.base.theme.textTheme.bodyMedium?.copyWith(
-                  color: AppColors.grey,
-                  fontWeight: FontWeight.w500,
+              Flexible(
+                child: Text(
+                  LocaleKeys.shipping.tr(),
+                  style: context.base.theme.textTheme.bodyMedium?.copyWith(
+                    color: AppColors.grey,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
               Text(
@@ -71,12 +75,14 @@ class OrderSummarySection extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                LocaleKeys.total.tr(),
-                style: context.base.theme.textTheme.titleLarge?.copyWith(
-                  color: textColor,
-                  fontWeight: FontWeight.w800,
-                  fontSize: 18.sp,
+              Flexible(
+                child: Text(
+                  LocaleKeys.total.tr(),
+                  style: context.base.theme.textTheme.titleLarge?.copyWith(
+                    color: textColor,
+                    fontWeight: FontWeight.w800,
+                    fontSize: 18.sp,
+                  ),
                 ),
               ),
               Text(

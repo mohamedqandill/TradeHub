@@ -4,6 +4,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tradehub/core/shared_widgets/buttons/custom_large_main_button.dart';
 import 'package:tradehub/core/constants/app_constants.dart';
+import 'package:tradehub/core/shared_widgets/fields/custom_text_field.dart';
 import 'package:tradehub/core/utils/shared_prefs/prefs.dart';
 import 'package:tradehub/core/colors/app_colors.dart';
 import 'package:tradehub/core/extensions/is_dark_mode.dart';
@@ -16,6 +17,7 @@ import 'package:tradehub/features/Maps/utils/location_services.dart';
 import 'package:tradehub/features/Maps/utils/maps_services.dart';
 import 'package:tradehub/features/Maps/view_model/maps_cubit.dart';
 import 'package:tradehub/features/Maps/view_model/maps_state.dart';
+import 'package:tradehub/features/Maps/widgets/bottom_sheet.dart';
 
 import 'widgets/custom_list_view.dart';
 import 'widgets/map_search_field.dart';
@@ -43,12 +45,14 @@ class FlutterMapScreenBody extends StatefulWidget {
 class _FlutterMapScreenBodyState extends State<FlutterMapScreenBody> {
   GoogleMapController? mapController;
   late TextEditingController textEditingController;
+  late TextEditingController editController;
   bool isFirstTime = true;
 
   @override
   void initState() {
     super.initState();
     textEditingController = TextEditingController();
+    editController = TextEditingController();
     textEditingController.addListener(() {
       context.read<MapsCubit>().onSearchTextChanged(textEditingController.text);
     });
@@ -164,7 +168,8 @@ class _FlutterMapScreenBodyState extends State<FlutterMapScreenBody> {
             ],
           ),
           bottomSheet: state.selectedPlaceName != null
-              ? _buildBottomSection(context, state.selectedPlaceName!)
+              ? buildBottomSection(context, state.selectedPlaceName!,
+                  context.read<MapsCubit>(), editController)
               : null,
           floatingActionButton: FloatingActionButton(
             backgroundColor: context.mainColor, // or suitable color
@@ -184,134 +189,6 @@ class _FlutterMapScreenBodyState extends State<FlutterMapScreenBody> {
           ),
         );
       },
-    );
-  }
-
-  Widget _buildBottomSection(BuildContext context, String placeName) {
-    return Container(
-      decoration: BoxDecoration(
-        color: context.isDarkMode ? const Color(0xff1A1A1A) : Colors.white,
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(24),
-          topRight: Radius.circular(24),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, -5),
-          )
-        ],
-      ),
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Center(
-            child: Container(
-              width: 40,
-              height: 4,
-              decoration: BoxDecoration(
-                color: Colors.grey.withOpacity(0.3),
-                borderRadius: BorderRadius.circular(2),
-              ),
-            ),
-          ),
-          const SizedBox(height: 20),
-          Row(
-            children: [
-              Container(
-                height: 48,
-                width: 48,
-                decoration: BoxDecoration(
-                  color: context.isDarkMode
-                      ? context.mainColor.withOpacity(0.2)
-                      : context.mainColor.withOpacity(0.1),
-                  shape: BoxShape.circle,
-                ),
-                child: Center(
-                  child: Icon(Icons.location_on, color: context.mainColor),
-                ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      LocaleKeys.deliveryAddressText.tr(),
-                      style: context.base.theme.textTheme.bodySmall?.copyWith(
-                        color: context.isDarkMode
-                            ? Colors.grey[400]
-                            : const Color(0xff8C92A4),
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      placeName,
-                      style: context.base.theme.textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: context.isDarkMode ? Colors.white : Colors.black,
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 10),
-              Icon(Icons.edit, color: context.mainColor, size: 20),
-            ],
-          ),
-          const SizedBox(height: 16),
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: context.isDarkMode
-                  ? Colors.grey[800]
-                  : const Color(0xffF4F6F9),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Row(
-              children: [
-                Icon(Icons.info,
-                    color: context.isDarkMode
-                        ? Colors.grey[400]
-                        : const Color(0xff8C92A4),
-                    size: 20),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Text(
-                    LocaleKeys.dragMapAdjustPin.tr(),
-                    style: context.base.theme.textTheme.bodySmall?.copyWith(
-                      color: context.isDarkMode
-                          ? Colors.grey[300]
-                          : const Color(0xff575F75),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 24),
-          CustomLargeMainButton(
-            text: LocaleKeys.confirmLocation.tr(),
-            radius: 25.r,
-            textStyle: context.base.theme.textTheme.titleLarge!
-                .copyWith(color: AppColors.white, fontSize: 16.sp),
-            onPressed: () async {
-              await SharedPrefsHelper.init();
-              await SharedPrefsHelper()
-                  .saveString(AppConstants.savedPlace, placeName);
-              if (mounted) {
-                Navigator.pop(context, placeName);
-              }
-            },
-          )
-        ],
-      ),
     );
   }
 }

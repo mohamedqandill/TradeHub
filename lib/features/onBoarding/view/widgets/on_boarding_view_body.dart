@@ -36,7 +36,7 @@ class _OnBoardingViewBodyState extends State<OnBoardingViewBody> {
   void initState() {
     prefs = SharedPrefsHelper();
     pageController = PageController();
-    ValueNotifier<bool>(widget.isArabic);
+    controller = ValueNotifier<bool>(widget.isArabic);
     super.initState();
   }
 
@@ -47,7 +47,7 @@ class _OnBoardingViewBodyState extends State<OnBoardingViewBody> {
   }
 
   saveOnBoardingState() async {
-    await prefs.saveBool(AppConstants.firstTime, true);
+    await prefs.saveBool(AppConstants.firstTime, false);
     Navigator.pushReplacementNamed(context, Routes.login);
   }
 

@@ -201,5 +201,9 @@
   "leftWarehouse": "Left warehouse",
   "paymentSuccessfullyVerified": "Payment successfully verified",
   "packageProcessedAndDispatched": "Package processed and dispatched",
-  "northLondonDistributionHub": "Cairo Distribution Hub"
+  "northLondonDistributionHub": "Cairo Distribution Hub",
+  "cancel": "Cancel",
+  "ok": "OK",
+  "areYouSureLogout": "Are you sure you want to logout?",
+  "fullName": "Full Name"
 }
