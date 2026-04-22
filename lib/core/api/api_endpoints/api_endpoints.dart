@@ -8,4 +8,15 @@ abstract class ApiEndPoints {
   static const String signWithFacebook = "api/account/facebook";
   static const String verifyOTP = "api/account/verify-otp";
   static const String resetPassword = "api/account/reset-password";
+  static const String getAllCategory = "api/Category";
+  static const String getCompanies = "api/company";
+  static const String getRandomProducts = "api/Product/random";
+  static const String productDetails = "api/Product/";
+  static const String addToCart = "api/basket/items";
+  static const String toggleFavorite = "api/Favourite/toggle/";
+  static const String basket = "api/basket";
+  static const String basketItems = "api/basket/items/";
 }
+
+
+

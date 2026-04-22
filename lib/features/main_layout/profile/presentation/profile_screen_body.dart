@@ -4,12 +4,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tradehub/core/api/api_constant/api_constant.dart';
 import 'package:tradehub/core/assets/assets.gen.dart';
 import 'package:tradehub/core/colors/app_colors.dart';
+import 'package:tradehub/core/constants/app_constants.dart';
 import 'package:tradehub/core/extensions/base_inherited_context.dart';
 import 'package:tradehub/core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/extensions/main_color.dart';
 import 'package:tradehub/core/localization/locale_keys.g.dart';
 import 'package:tradehub/core/utils/di/di.dart';
 import 'package:tradehub/core/utils/secure_storage/secure_storage_service.dart';
+import 'package:tradehub/core/utils/storage/hive_storage.dart';
 import 'package:tradehub/features/authentication/presentation/login/view/widgets/custom_horizontal_divider.dart';
 import 'package:tradehub/features/main_layout/profile/presentation/widgets/card_info.dart';
 import 'package:tradehub/features/main_layout/profile/presentation/widgets/custom_profile_row_info.dart';
@@ -17,8 +19,20 @@ import 'package:tradehub/features/main_layout/profile/presentation/widgets/profi
 
 import '../../../../core/routes/routes.dart';
 
-class ProfileScreenBody extends StatelessWidget {
+class ProfileScreenBody extends StatefulWidget {
   const ProfileScreenBody({super.key});
+
+  @override
+  State<ProfileScreenBody> createState() => _ProfileScreenBodyState();
+}
+
+class _ProfileScreenBodyState extends State<ProfileScreenBody> {
+  Map<dynamic, dynamic>? userInfo;
+  @override
+  void initState() {
+    userInfo = getIt<HiveStorageHelper>().getMap(AppConstants.userInfo);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,13 +54,13 @@ class ProfileScreenBody extends StatelessWidget {
                   Navigator.pushNamed(context, Routes.settings);
                 },
                 image: Assets.images.person.path,
-                name: "Mohamed Qandil")),
+                name: userInfo!["fullName"])),
         SizedBox(
           height: 15.h,
         ),
         CardInfo(
-          name: "Mohamed Qandil",
-          email: "mohamedqandil912@gmail.com",
+          name: userInfo!["fullName"],
+          email: userInfo!["email"],
           onEditTap: () {},
         ),
         SizedBox(
@@ -80,7 +94,7 @@ class ProfileScreenBody extends StatelessWidget {
                       } else if (index == 4) {
                         showDialog(
                           context: context,
-                          builder: (context) {
+                          builder: (dialogContext) {
                             return AlertDialog(
                               backgroundColor: context.isDarkMode
                                   ? const Color(0xff1A1A1A)
@@ -108,7 +122,7 @@ class ProfileScreenBody extends StatelessWidget {
                                               width: 1,
                                               color: context.mainColor)),
                                       onPressed: () {
-                                        Navigator.pop(context);
+                                        Navigator.pop(dialogContext);
                                       },
                                       child: Text(
                                         LocaleKeys.cancel.tr(),
@@ -129,7 +143,7 @@ class ProfileScreenBody extends StatelessWidget {
                                           side: const BorderSide(
                                               width: 1, color: Colors.black)),
                                       onPressed: () async {
-                                        Navigator.pop(context);
+                                        Navigator.pop(dialogContext);
                                         await getIt<SecureStorageHelper>()
                                             .delete(ApiConstants.token);
                                         if (context.mounted) {

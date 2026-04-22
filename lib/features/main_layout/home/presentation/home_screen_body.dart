@@ -45,48 +45,48 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
+        return ListView(
       physics: const ScrollPhysics(),
-      padding: EdgeInsets.zero,
-      children: [
-        HomeHeaderWidget(
-          address: address,
-          onPlaceSelected: updateAddress,
+          padding: EdgeInsets.zero,
+          children: [
+            HomeHeaderWidget(
+              address: address,
+              onPlaceSelected: updateAddress,
         ),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.w),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                LocaleKeys.categories.tr(),
-                style: context.base.theme.textTheme.titleLarge?.copyWith(
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    LocaleKeys.categories.tr(),
+                    style: context.base.theme.textTheme.titleLarge?.copyWith(
                   fontSize: 18.sp,
                   fontWeight: FontWeight.w800,
-                  color: context.isDarkMode ? AppColors.white : AppColors.black,
-                  letterSpacing: -0.5,
-                ),
+                      color: context.isDarkMode ? AppColors.white : AppColors.black,
+                      letterSpacing: -0.5,
+                    ),
               ),
-              SizedBox(height: 16.h),
+                  SizedBox(height: 16.h),
               const CategorySection(),
-              SizedBox(height: 32.h),
-              CustomRowHeadline(
-                title: LocaleKeys.featuredVendors.tr(),
-                subTitle: LocaleKeys.seeAll.tr(),
+                  SizedBox(height: 32.h),
+                  CustomRowHeadline(
+                    title: LocaleKeys.featuredVendors.tr(),
+                    subTitle: LocaleKeys.seeAll.tr(),
               ),
-              SizedBox(height: 16.h),
+                  SizedBox(height: 16.h),
               const VendorsSection(),
-              SizedBox(height: 32.h),
-              CustomRowHeadline(
-                title: LocaleKeys.popularProducts.tr(),
-                subTitle: LocaleKeys.seeAll.tr(),
+                  SizedBox(height: 32.h),
+                  CustomRowHeadline(
+                    title: LocaleKeys.popularProducts.tr(),
+                    subTitle: LocaleKeys.seeAll.tr(),
               ),
-              SizedBox(height: 16.h),
+                  SizedBox(height: 16.h),
               const ProductsSection(),
-            ],
-          ),
-        ),
-      ],
+                ],
+              ),
+            ),
+          ],
     );
   }
 }

@@ -68,6 +68,11 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
               showSuccessSnackBar(
                   title: LocaleKeys.welcome.tr(),
                   messageTitle: LocaleKeys.loggedSuccessfully.tr());
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                Routes.mainLayout,
+                (route) => false,
+              );
             } else if (state.signWithGoogleState == RequestStates.error ||
                 state.signWithFacebookState == RequestStates.error) {
               hideDialog(context);

@@ -40,6 +40,10 @@ class _NewPasswordViewBodyState extends State<NewPasswordViewBody> {
             ),
           );
         }
+        if (state.newPasswordState == RequestStates.error) {
+          showFailureSnackBar(context,
+              messageTitle: state.errorMessage.toString());
+        }
       },
       builder: (context, state) {
         var bloc = context.read<NewPasswordBloc>();

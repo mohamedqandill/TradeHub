@@ -1,5 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:tradehub/core/extensions/is_dark_mode.dart';
+import 'package:tradehub/features/main_layout/cart/presentation/cubit/cart_cubit.dart';
 import 'package:tradehub/features/main_layout/presentation/widgets/custom_bottomnavbar.dart';
 
 import '../cart/presentation/cart_screen.dart';
@@ -31,9 +34,15 @@ class _MainLayoutState extends State<MainLayout> {
         getSelectedIndex: (index) {
           selectedIndex = index;
           setState(() {});
+          if (index == 2) {
+            context.read<CartCubit>().getBasket();
+          }
         },
       ),
-      body: screens[selectedIndex],
+      body: IndexedStack(
+        index: selectedIndex,
+        children: screens,
+      ),
     );
   }
 }

@@ -35,7 +35,7 @@ ServerExceptions handleDioErrors(DioException e) {
         case 401:
           return ServerExceptions(
               errorsModel:
-                  ErrorsModel(message: LocaleKeys.invalidEmailOrPassword.tr()));
+                  ErrorsModel(message: LocaleKeys.errorUnauthorized.tr()));
         case 400:
           return ServerExceptions(
               errorsModel:

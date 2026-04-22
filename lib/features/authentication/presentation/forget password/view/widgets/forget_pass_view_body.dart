@@ -36,6 +36,9 @@ class ForgetPassViewBody extends StatelessWidget {
             },
           );
         }
+        if (state.forgetPasswordState == RequestStates.error) {
+          showFailureSnackBar(context, messageTitle: state.message.toString());
+        }
       },
       builder: (context, state) {
         var bloc = BlocProvider.of<ForgetPasswordBloc>(context);

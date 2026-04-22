@@ -35,7 +35,6 @@ class _LoginViewBodyState extends State<LoginViewBody> {
   @override
   Widget build(BuildContext context) {
     var base = BaseInheritedWidget.of(context);
-    print(MediaQuery.of(context).size.height);
     return MultiBlocListener(
         listeners: [
           BlocListener<LoginBloc, LoginState>(

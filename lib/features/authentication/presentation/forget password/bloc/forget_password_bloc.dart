@@ -22,6 +22,8 @@ class ForgetPasswordBloc
       : super(const ForgetPasswordState.initial()) {
     on<SendOTP>((event, emit) async {
       emit(state.copyWith(forgetPasswordState: RequestStates.loading));
+      print("event ${event.email}");
+      print("email ${email.text}");
       var result = await _sendOTPUseCase.call(email: event.email ?? email.text);
       switch (result) {
         case Success():

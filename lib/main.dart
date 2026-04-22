@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:tradehub/core/api/api_constant/api_constant.dart';
@@ -12,6 +14,8 @@ import 'package:tradehub/core/routes/app_routes.dart';
 import 'package:tradehub/core/routes/routes.dart';
 import 'package:tradehub/core/shared_widgets/widgets/device_preview.dart';
 import 'package:tradehub/core/theme/app_theme.dart';
+import 'package:tradehub/core/utils/storage/hive_storage.dart';
+import 'package:tradehub/features/main_layout/cart/presentation/cubit/cart_cubit.dart';
 import 'package:tradehub/features/onBoarding/view_model/language_view_model.dart';
 import 'package:tradehub/features/onBoarding/view_model/theme_view_model.dart';
 
@@ -23,11 +27,13 @@ import 'core/utils/shared_prefs/prefs.dart';
 import 'firebase_options.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 
 Future<void> main() async {
-  await runZonedGuarded<Future<void>>(() async {
-    WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
+  BindingBase.debugZoneErrorsAreFatal = false;
 
+  await runZonedGuarded<Future<void>>(() async {
     await EasyLocalization.ensureInitialized();
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
@@ -35,19 +41,21 @@ Future<void> main() async {
     await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
 
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
-    configureDependencies();
 
     await ScreenUtil.ensureScreenSize();
     await SharedPrefsHelper.init();
+    await configureDependencies();
+
     SharedPrefsHelper prefs = getIt<SharedPrefsHelper>();
+    await HiveStorageHelper.init();
     final languageViewModel = getIt<LanguageViewModel>();
     await languageViewModel.loadLanguage();
     bool isFirstTime = prefs.getBool(AppConstants.firstTime) ?? true;
     String? token = await getIt<SecureStorageHelper>().read(ApiConstants.token);
 
-    if (token != null) {
-      DioServiceExtension.updateDioWithToken(token);
-    }
+    // if (token != null) {
+    //   DioServiceExtension.updateDioWithToken(token);
+    // }
     runApp(
       EasyLocalization(
         saveLocale: true,
@@ -60,9 +68,16 @@ Future<void> main() async {
         fallbackLocale: const Locale(AppConstants.en),
         child: ChangeNotifierProvider(
           create: (context) => ThemeViewModel()..getSavedTheme(),
-          child: MyApp(
-            isFirstTime: isFirstTime,
-            token: token,
+          child: MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => getIt<CartCubit>(),
+              ),
+            ],
+            child: MyApp(
+              isFirstTime: isFirstTime,
+              token: token,
+            ),
           ),
         ),
       ),
@@ -98,6 +113,7 @@ class MyApp extends StatelessWidget {
           screenHeight: MediaQuery.of(context).size.height,
           screenWidth: MediaQuery.of(context).size.width,
           child: MaterialApp(
+            navigatorObservers: [routeObserver],
             navigatorKey: navigatorKey,
             localizationsDelegates: context.localizationDelegates,
             supportedLocales: context.supportedLocales,

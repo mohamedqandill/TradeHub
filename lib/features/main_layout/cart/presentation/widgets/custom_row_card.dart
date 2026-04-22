@@ -4,9 +4,15 @@ import 'package:tradehub/Core/extensions/base_inherited_context.dart';
 import 'package:tradehub/Core/extensions/is_dark_mode.dart';
 
 class CustomRowText extends StatelessWidget {
-  const CustomRowText({super.key, required this.title, required this.price});
+  const CustomRowText({
+    super.key,
+    required this.title,
+    required this.price,
+     this.isLoading,
+  });
   final String title;
   final String price;
+  final bool? isLoading;
 
   @override
   Widget build(BuildContext context) {

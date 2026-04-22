@@ -8,14 +8,12 @@ part 'new_password_request_body.g.dart';
 class NewPasswordRequestBody {
   @JsonKey(name: ApiConstants.emailCap)
   final String? Email;
-  @JsonKey(name: ApiConstants.otpCode)
-  final String? otpCode;
+
   @JsonKey(name: ApiConstants.newPassword)
   final String? NewPassword;
 
   const NewPasswordRequestBody({
     this.Email,
-    this.otpCode,
     this.NewPassword,
   });
 
