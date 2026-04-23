@@ -7,6 +7,7 @@ class CartInitial extends CartState {}
 class GetBasketLoading extends CartState {}
 class GetBasketSuccess extends CartState {
 
+
 }
 class GetBasketError extends CartState {
   final String? message;

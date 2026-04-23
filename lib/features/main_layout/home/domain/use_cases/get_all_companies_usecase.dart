@@ -8,7 +8,7 @@ class GetAllCompaniesUseCase {
   final HomeRepoContract _homeRepoContract;
   GetAllCompaniesUseCase(this._homeRepoContract);
 
-  Future<ApiResult<List<GetCompanyEntity>>> call() {
-    return _homeRepoContract.getCompanies();
+  Future<ApiResult<List<GetCompanyEntity>>> call() async{
+    return await _homeRepoContract.getCompanies();
   }
 }

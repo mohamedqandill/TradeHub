@@ -9,19 +9,19 @@ part of 'get_random_products_d_t_o.dart';
 GetRandomProductsDTO _$GetRandomProductsDTOFromJson(
         Map<String, dynamic> json) =>
     GetRandomProductsDTO(
-      isFavourite: json['isFavourite'] as bool,
-      id: (json['id'] as num).toInt(),
-      name: json['name'] as String,
-      description: json['description'] as String,
-      price: (json['price'] as num).toInt(),
-      quantity: (json['quantity'] as num).toInt(),
-      categoryId: (json['categoryId'] as num).toInt(),
-      categoryName: json['categoryName'] as String,
-      companyId: json['companyId'] as String,
-      companyName: json['companyName'] as String,
-      attributes: json['attributes'] as List<dynamic>,
-      averageRating: (json['averageRating'] as num).toInt(),
-      ratingCount: (json['ratingCount'] as num).toInt(),
+      isFavourite: json['isFavourite'] as bool?,
+      id: (json['id'] as num?)?.toInt(),
+      name: json['name'] as String?,
+      description: json['description'] as String?,
+      price: (json['price'] as num?)?.toInt(),
+      quantity: (json['quantity'] as num?)?.toInt(),
+      categoryId: (json['categoryId'] as num?)?.toInt(),
+      categoryName: json['categoryName'] as String?,
+      companyId: json['companyId'] as String?,
+      companyName: json['companyName'] as String?,
+      attributes: json['attributes'] as List<dynamic>?,
+      averageRating: (json['averageRating'] as num?)?.toInt(),
+      ratingCount: (json['ratingCount'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$GetRandomProductsDTOToJson(

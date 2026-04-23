@@ -16,6 +16,7 @@ import 'package:tradehub/core/shared_widgets/widgets/device_preview.dart';
 import 'package:tradehub/core/theme/app_theme.dart';
 import 'package:tradehub/core/utils/storage/hive_storage.dart';
 import 'package:tradehub/features/main_layout/cart/presentation/cubit/cart_cubit.dart';
+import 'package:tradehub/features/main_layout/favourite/presentation/cubit/favourite_cubit.dart';
 import 'package:tradehub/features/onBoarding/view_model/language_view_model.dart';
 import 'package:tradehub/features/onBoarding/view_model/theme_view_model.dart';
 
@@ -30,10 +31,8 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  BindingBase.debugZoneErrorsAreFatal = false;
-
-  await runZonedGuarded<Future<void>>(() async {
+    WidgetsFlutterBinding.ensureInitialized();
+  configureDependencies();
     await EasyLocalization.ensureInitialized();
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
@@ -44,7 +43,7 @@ Future<void> main() async {
 
     await ScreenUtil.ensureScreenSize();
     await SharedPrefsHelper.init();
-    await configureDependencies();
+    
 
     SharedPrefsHelper prefs = getIt<SharedPrefsHelper>();
     await HiveStorageHelper.init();
@@ -73,6 +72,9 @@ Future<void> main() async {
               BlocProvider(
                 create: (context) => getIt<CartCubit>(),
               ),
+               BlocProvider(
+                create: (context) => getIt<FavouriteCubit>(),
+              ),
             ],
             child: MyApp(
               isFirstTime: isFirstTime,
@@ -82,9 +84,7 @@ Future<void> main() async {
         ),
       ),
     );
-  }, (error, stack) {
-    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
-  });
+ 
 }
 
 //
@@ -104,34 +104,37 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         var provider = Provider.of<ThemeViewModel>(context);
 
-        return BaseInheritedWidget(
-          theme: provider.mode == ThemeMode.dark
-              ? AppTheme.getDarkTheme(
-                  isArabic: context.locale.languageCode == AppConstants.ar)
-              : AppTheme.getLightTheme(
-                  isArabic: context.locale.languageCode == AppConstants.ar),
-          screenHeight: MediaQuery.of(context).size.height,
-          screenWidth: MediaQuery.of(context).size.width,
-          child: MaterialApp(
-            navigatorObservers: [routeObserver],
-            navigatorKey: navigatorKey,
-            localizationsDelegates: context.localizationDelegates,
-            supportedLocales: context.supportedLocales,
-            locale: context.locale,
-            title: 'TradeHub',
-            theme: AppTheme.getLightTheme(
-                isArabic: context.locale.languageCode == AppConstants.ar),
-            darkTheme: AppTheme.getDarkTheme(
-                isArabic: context.locale.languageCode == AppConstants.ar),
-            themeMode: provider.mode,
-            debugShowCheckedModeBanner: false,
-            onGenerateRoute: AppRoutes.getRoutes,
-            initialRoute: isFirstTime
-                ? Routes.splash
-                : token != null
-                    ? Routes.mainLayout
-                    : Routes.login,
-          ),
+        return MaterialApp(
+          navigatorObservers: [routeObserver],
+          navigatorKey: navigatorKey,
+          localizationsDelegates: context.localizationDelegates,
+          supportedLocales: context.supportedLocales,
+          locale: context.locale,
+          title: 'TradeHub',
+          theme: AppTheme.getLightTheme(
+              isArabic: context.locale.languageCode == AppConstants.ar),
+          darkTheme: AppTheme.getDarkTheme(
+              isArabic: context.locale.languageCode == AppConstants.ar),
+          themeMode: provider.mode,
+          debugShowCheckedModeBanner: false,
+          onGenerateRoute: AppRoutes.getRoutes,
+          initialRoute: isFirstTime
+              ? Routes.splash
+              : token != null
+                  ? Routes.mainLayout
+                  : Routes.login,
+          builder: (context, child) {
+            return BaseInheritedWidget(
+              theme: provider.mode == ThemeMode.dark
+                  ? AppTheme.getDarkTheme(
+                      isArabic: context.locale.languageCode == AppConstants.ar)
+                  : AppTheme.getLightTheme(
+                      isArabic: context.locale.languageCode == AppConstants.ar),
+              screenHeight: MediaQuery.sizeOf(context).height,
+              screenWidth: MediaQuery.sizeOf(context).width,
+              child: child!,
+            );
+          },
         );
       },
     );

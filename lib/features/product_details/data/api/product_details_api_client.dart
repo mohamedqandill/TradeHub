@@ -22,7 +22,4 @@ abstract class ProductDetailsApiClient {
 
   @POST(ApiEndPoints.addToCart)
   Future<CartResponseDTO> addToCart(@Body() Map<String, dynamic> body);
-
-  @POST("${ApiEndPoints.toggleFavorite}{id}")
-  Future<void> toggleFavorite(@Path("id") int id);
 }

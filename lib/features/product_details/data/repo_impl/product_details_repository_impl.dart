@@ -20,9 +20,4 @@ class ProductDetailsRepositoryImpl extends ProductDetailsRepositoryContract {
   Future<ApiResult<CartResponseDTO>> addToCart(int productId, {int quantity = 1}) {
     return _dataSource.addToCart(productId, quantity: quantity);
   }
-
-  @override
-  Future<ApiResult<void>> toggleFavorite(int productId) {
-    return _dataSource.toggleFavorite(productId);
-  }
 }

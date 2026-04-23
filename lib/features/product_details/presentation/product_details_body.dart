@@ -120,7 +120,7 @@ class _ProductDetailsBodyState extends State<ProductDetailsBody> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            product?.companyName.toUpperCase() ?? "BRAND",
+                            product?.companyName?.toUpperCase() ?? "BRAND",
                             style: TextStyle(
                               fontSize: 12.sp,
                               fontWeight: FontWeight.w800,
@@ -248,7 +248,7 @@ class _ProductDetailsBodyState extends State<ProductDetailsBody> {
         // ),
 
         // 4. Attributes Grid
-        if (product?.attributes.isNotEmpty ?? false) ...[
+        if (product?.attributes?.isNotEmpty ?? false) ...[
           SliverPadding(
             padding: EdgeInsets.symmetric(horizontal: 20.w),
             sliver: SliverToBoxAdapter(
@@ -276,13 +276,13 @@ class _ProductDetailsBodyState extends State<ProductDetailsBody> {
               ),
               delegate: SliverChildBuilderDelegate(
                 (context, index) {
-                  final attr = product.attributes[index];
+                  final attr = product.attributes![index];
                   return ProductOptionWidget(
-                    categoryAttName: attr.categoryAttributeName,
-                    value: attr.value,
+                    categoryAttName: attr.categoryAttributeName??"",
+                    value: attr.value??""   ,
                   );
                 },
-                childCount: product!.attributes.length,
+                childCount: product!.attributes?.length??0,
               ),
             ),
           ),

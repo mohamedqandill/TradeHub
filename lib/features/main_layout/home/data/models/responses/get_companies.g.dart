@@ -24,15 +24,15 @@ Map<String, dynamic> _$GetCompaniesToJson(GetCompanies instance) =>
     };
 
 CompanyData _$CompanyDataFromJson(Map<String, dynamic> json) => CompanyData(
-      id: json['id'] as String,
-      businessName: json['businessName'] as String,
-      businessTypeId: (json['businessTypeId'] as num).toInt(),
-      taxNumber: json['taxNumber'] as String,
-      logoUrl: json['logoUrl'] as String,
-      createdById: json['createdById'] as String,
-      locationId: (json['locationId'] as num).toInt(),
-      businessTypeName: json['businessTypeName'] as String,
-      locationName: json['locationName'] as String,
+      id: json['id'] as String?,
+      businessName: json['businessName'] as String?,
+      businessTypeId: (json['businessTypeId'] as num?)?.toInt(),
+      taxNumber: json['taxNumber'] as String?,
+      logoUrl: json['logoUrl'] as String?,
+      createdById: json['createdById'] as String?,
+      locationId: (json['locationId'] as num?)?.toInt(),
+      businessTypeName: json['businessTypeName'] as String?,
+      locationName: json['locationName'] as String?,
     );
 
 Map<String, dynamic> _$CompanyDataToJson(CompanyData instance) =>

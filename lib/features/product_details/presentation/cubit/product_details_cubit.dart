@@ -4,7 +4,7 @@ import 'package:tradehub/features/main_layout/cart/data/models/cart_response_d_t
 import '../../../../core/api/api_result/api_result.dart';
 import '../../domain/use_cases/add_to_cart_usecase.dart';
 import '../../domain/use_cases/get_product_details_usecase.dart';
-import '../../domain/use_cases/toggle_favorite_usecase.dart';
+import '../../../main_layout/favourite/domain/use_cases/toggle_favorite_use_case.dart';
 import '../../data/models/response/product_details_response_d_t_o.dart';
 import 'product_details_states.dart';
 

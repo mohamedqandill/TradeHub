@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tradehub/core/extensions/is_dark_mode.dart';
 import 'package:tradehub/features/main_layout/cart/presentation/cubit/cart_cubit.dart';
+import 'package:tradehub/features/main_layout/favourite/presentation/favourite_screen.dart';
 import 'package:tradehub/features/main_layout/presentation/widgets/custom_bottomnavbar.dart';
 
 import '../cart/presentation/cart_screen.dart';
@@ -28,21 +29,21 @@ class _MainLayoutState extends State<MainLayout> {
   ];
   @override
   Widget build(BuildContext context) {
-    EasyLocalization.of(context);
+    // EasyLocalization.of(context);
     return Scaffold(
-      bottomNavigationBar: CustomBottomNavbar(
-        getSelectedIndex: (index) {
-          selectedIndex = index;
-          setState(() {});
-          if (index == 2) {
-            context.read<CartCubit>().getBasket();
-          }
-        },
-      ),
-      body: IndexedStack(
-        index: selectedIndex,
-        children: screens,
-      ),
-    );
+        bottomNavigationBar: CustomBottomNavbar(
+          getSelectedIndex: (index) {
+            setState(() {
+              selectedIndex = index;
+            });
+            if (index == 2) {
+              context.read<CartCubit>().getBasket();
+            }
+          },
+        ),
+        body: IndexedStack(
+          index: selectedIndex,
+          children: screens,
+        ));
   }
 }

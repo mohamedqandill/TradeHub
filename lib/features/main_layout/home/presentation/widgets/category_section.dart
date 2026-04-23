@@ -9,7 +9,9 @@ import 'package:tradehub/core/colors/app_colors.dart';
 import 'package:tradehub/core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/extensions/main_color.dart';
 import 'package:tradehub/core/localization/locale_keys.g.dart';
+import 'package:tradehub/core/routes/routes.dart';
 import 'package:tradehub/features/main_layout/home/presentation/cubit/home_cubit.dart';
+import 'package:tradehub/features/main_layout/home/presentation/widgets/home_category_widget.dart';
 
 class CategorySection extends StatelessWidget {
   final bool? isLoading;
@@ -50,56 +52,21 @@ class CategorySection extends StatelessWidget {
     return Skeletonizer(
       enabled: isLoading ?? false,
       child: SizedBox(
-        height: 110.h,
-        child: ListView.separated(
+        height: 220.h,
+        child: GridView.builder(
           scrollDirection: Axis.horizontal,
-          padding: EdgeInsets.zero,
-          itemCount: cubit?.categories.length ?? 8,
-          separatorBuilder: (context, index) => SizedBox(width: 20.w),
+          itemCount: cubit?.categories.length ?? 0,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              mainAxisSpacing: 4.w,
+              crossAxisSpacing: 10.h,
+              mainAxisExtent: 99.w,
+              crossAxisCount: 2),
           itemBuilder: (context, index) {
-            final category = cubit?.categories[index];
-            return AnimatedContainer(
-              duration: const Duration(milliseconds: 300),
-              child: Column(
-                children: [
-                  Container(
-                    width: 65.w,
-                    height: 65.w,
-                    decoration: BoxDecoration(
-                      color: context.isDarkMode
-                          ? Colors.white.withOpacity(0.05)
-                          : context.mainColor.withOpacity(0.05),
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: context.mainColor.withOpacity(0.1),
-                        width: 1,
-                      ),
-                    ),
-                    child: Center(
-                      child: (category != null && index < categoriesData.length)
-                          ? Image.asset(
-                              categoriesData[index]["image"],
-                              width: 35.w,
-                              height: 35.h,
-                              fit: BoxFit.cover,
-                            )
-                          : Icon(Icons.category_outlined,
-                              color: context.mainColor),
-                    ),
-
-                  ),
-                  SizedBox(height: 10.h),
-                  Text(
-                    category?.name ?? "Category",
-                    style: TextStyle(
-                      color: context.isDarkMode
-                          ? AppColors.white
-                          : AppColors.black,
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
+            return InkWell(
+              onTap: () => Navigator.pushNamed(context, Routes.categoryDetails),
+              child: HomeCategoryWidget(
+                image: categoriesData[index]["image"],
+                title: cubit?.categories[index].name ?? "",
               ),
             );
           },

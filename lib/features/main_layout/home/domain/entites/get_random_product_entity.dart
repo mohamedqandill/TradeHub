@@ -29,7 +29,10 @@ class GetRandomProductEntity {
   @JsonKey(name: ApiConstants.ratingCount)
   final int? ratingCount;
 
+  final bool? isFavourite;
+
   GetRandomProductEntity({
+    required this.isFavourite,
     required this.id,
     required this.name,
     required this.description,

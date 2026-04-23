@@ -32,34 +32,34 @@ class GetCompanies {
 @JsonSerializable()
 class CompanyData {
   @JsonKey(name: ApiConstants.id)
-  final String id;
+  final String? id;
   @JsonKey(name: ApiConstants.businessName)
-  final String businessName;
+  final String? businessName;
   @JsonKey(name: ApiConstants.businessTypeId)
-  final int businessTypeId;
+  final int? businessTypeId;
   @JsonKey(name: ApiConstants.taxNumber)
-  final String taxNumber;
+  final String? taxNumber;
   @JsonKey(name: ApiConstants.logoUrl)
-  final String logoUrl;
+  final String? logoUrl;
   @JsonKey(name: ApiConstants.createdById)
-  final String createdById;
+  final String? createdById;
   @JsonKey(name: ApiConstants.locationId)
-  final int locationId;
+  final int? locationId;
   @JsonKey(name: ApiConstants.businessTypeName)
-  final String businessTypeName;
+  final String? businessTypeName;
   @JsonKey(name: ApiConstants.locationName)
-  final String locationName;
+  final String? locationName;
 
   const CompanyData({
-    required this.id,
-    required this.businessName,
-    required this.businessTypeId,
-    required this.taxNumber,
-    required this.logoUrl,
-    required this.createdById,
-    required this.locationId,
-    required this.businessTypeName,
-    required this.locationName,
+    this.id,
+    this.businessName,
+    this.businessTypeId,
+    this.taxNumber,
+    this.logoUrl,
+    this.createdById,
+    this.locationId,
+    this.businessTypeName,
+    this.locationName,
   });
 
   factory CompanyData.fromJson(Map<String, dynamic> json) =>
@@ -70,12 +70,12 @@ class CompanyData {
   toEntity() {
     return GetCompanyEntity(
       id: id,
-      businessName: businessName,
+      businessName: businessName??"",
       businessTypeId: businessTypeId,
-      taxNumber: taxNumber,
-      logoUrl: logoUrl,
-      createdById: createdById,
-      locationId: locationId,
+      taxNumber: taxNumber??"",
+      logoUrl: logoUrl??"",
+      createdById: createdById??"",
+      locationId: locationId??0,
       businessTypeName: businessTypeName,
       locationName: locationName,
     );

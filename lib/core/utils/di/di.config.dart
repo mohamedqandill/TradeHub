@@ -93,6 +93,20 @@ import '../../../features/main_layout/cart/domain/use_case/update_item_quantity_
     as _i922;
 import '../../../features/main_layout/cart/presentation/cubit/cart_cubit.dart'
     as _i720;
+import '../../../features/main_layout/favourite/data/api/favourite_api_client.dart'
+    as _i54;
+import '../../../features/main_layout/favourite/data/data_source/favourite_data_source.dart'
+    as _i768;
+import '../../../features/main_layout/favourite/data/repo_impl/favourite_repo_impl.dart'
+    as _i951;
+import '../../../features/main_layout/favourite/domain/repos_contract/favourite_repo_contract.dart'
+    as _i959;
+import '../../../features/main_layout/favourite/domain/use_cases/get_favorites_use_case.dart'
+    as _i467;
+import '../../../features/main_layout/favourite/domain/use_cases/toggle_favorite_use_case.dart'
+    as _i1057;
+import '../../../features/main_layout/favourite/presentation/cubit/favourite_cubit.dart'
+    as _i639;
 import '../../../features/main_layout/home/data/api/home_api_client.dart'
     as _i804;
 import '../../../features/main_layout/home/data/data_source/home_data_source.dart'
@@ -128,8 +142,6 @@ import '../../../features/product_details/domain/use_cases/add_to_cart_usecase.d
     as _i875;
 import '../../../features/product_details/domain/use_cases/get_product_details_usecase.dart'
     as _i631;
-import '../../../features/product_details/domain/use_cases/toggle_favorite_usecase.dart'
-    as _i41;
 import '../../../features/product_details/presentation/cubit/product_details_cubit.dart'
     as _i39;
 import '../dio/dio_services.dart' as _i825;
@@ -187,8 +199,16 @@ extension GetItInjectableX on _i174.GetIt {
               gh<_i361.Dio>(),
               baseUrl: gh<String>(instanceName: 'baseUrl'),
             ));
+    gh.singleton<_i54.FavouriteApiClient>(() => _i54.FavouriteApiClient(
+          gh<_i361.Dio>(),
+          baseUrl: gh<String>(instanceName: 'baseUrl'),
+        ));
+    gh.factory<_i768.FavouriteDataSource>(
+        () => _i768.FavouriteDataSourceImpl(gh<_i54.FavouriteApiClient>()));
     gh.factory<_i276.NewPasswordDataSourceContract>(
         () => _i336.NewPasswordDataSourceImpl(gh<_i891.AuthApiClient>()));
+    gh.factory<_i959.FavouriteRepoContract>(
+        () => _i951.FavouriteRepoImpl(gh<_i768.FavouriteDataSource>()));
     gh.factory<_i942.LoginDataSourceContract>(
         () => _i573.LoginDataSourceImpl(gh<_i891.AuthApiClient>()));
     gh.factory<_i529.HomeDataSource>(
@@ -206,6 +226,10 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i529.HomeDataSource>(),
           gh<_i595.HomeLocalDataSource>(),
         ));
+    gh.factory<_i467.GetFavoritesUseCase>(
+        () => _i467.GetFavoritesUseCase(gh<_i959.FavouriteRepoContract>()));
+    gh.factory<_i1057.ToggleFavoriteUseCase>(
+        () => _i1057.ToggleFavoriteUseCase(gh<_i959.FavouriteRepoContract>()));
     gh.factory<_i793.CartDataSourceContract>(
         () => _i155.CartDataSourceImpl(gh<_i790.CartApiClient>()));
     gh.factory<_i95.VerifyOTPRepoContract>(
@@ -245,6 +269,10 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i261.SignWithFacebookUseCase(gh<_i366.RegisterRepo>()));
     gh.factory<_i1003.SignWithGoogleUseCase>(
         () => _i1003.SignWithGoogleUseCase(gh<_i366.RegisterRepo>()));
+    gh.factory<_i639.FavouriteCubit>(() => _i639.FavouriteCubit(
+          gh<_i467.GetFavoritesUseCase>(),
+          gh<_i1057.ToggleFavoriteUseCase>(),
+        ));
     gh.factory<_i167.HomeCubit>(() => _i167.HomeCubit(
           gh<_i894.GetAllCategoryUseCase>(),
           gh<_i48.GetAllCompaniesUseCase>(),
@@ -264,8 +292,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i631.GetProductDetailsUseCase>(() =>
         _i631.GetProductDetailsUseCase(
             gh<_i1070.ProductDetailsRepositoryContract>()));
-    gh.factory<_i41.ToggleFavoriteUseCase>(() => _i41.ToggleFavoriteUseCase(
-        gh<_i1070.ProductDetailsRepositoryContract>()));
     gh.factory<_i395.RegisterBloc>(() => _i395.RegisterBloc(
           gh<_i490.RegisterUseCase>(),
           gh<_i501.SendOTPUseCase>(),
@@ -284,13 +310,13 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.factory<_i689.NewPasswordBloc>(
         () => _i689.NewPasswordBloc(gh<_i747.NewPasswordUseCase>()));
+    gh.factory<_i429.VerifyOtpBloc>(
+        () => _i429.VerifyOtpBloc(gh<_i550.VerifyOTPUseCase>()));
     gh.factory<_i39.ProductDetailsCubit>(() => _i39.ProductDetailsCubit(
           gh<_i631.GetProductDetailsUseCase>(),
           gh<_i875.AddToCartUseCase>(),
-          gh<_i41.ToggleFavoriteUseCase>(),
+          gh<_i1057.ToggleFavoriteUseCase>(),
         ));
-    gh.factory<_i429.VerifyOtpBloc>(
-        () => _i429.VerifyOtpBloc(gh<_i550.VerifyOTPUseCase>()));
     return this;
   }
 }

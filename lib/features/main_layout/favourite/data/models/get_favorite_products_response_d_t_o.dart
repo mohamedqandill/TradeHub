@@ -1,23 +1,25 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:tradehub/features/main_layout/favourite/domain/entites/favourite_product_entity.dart';
+import '../../../../../core/api/api_constant/api_constant.dart';
 
 part 'get_favorite_products_response_d_t_o.g.dart';
 
 @JsonSerializable()
 class GetFavoriteProductsResponseDTO {
-  @JsonKey(defaultValue: 0)
-  final int pageIndex;
-  @JsonKey(defaultValue: 0)
-  final int pageSize;
-  @JsonKey(defaultValue: 0)
-  final int count;
-  @JsonKey(defaultValue: [])
-  final List<Data> data;
+  @JsonKey(name: ApiConstants.pageIndex)
+  final int? pageIndex;
+  @JsonKey(name: ApiConstants.pageSize)
+  final int? pageSize;
+  @JsonKey(name: ApiConstants.count)
+  final int? count;
+  @JsonKey(name: ApiConstants.data)
+  final List<FavoriteProductDTO>? data;
 
   const GetFavoriteProductsResponseDTO({
-    required this.pageIndex,
-    required this.pageSize,
-    required this.count,
-    required this.data,
+    this.pageIndex,
+    this.pageSize,
+    this.count,
+    this.data,
   });
 
   factory GetFavoriteProductsResponseDTO.fromJson(Map<String, dynamic> json) =>
@@ -27,72 +29,99 @@ class GetFavoriteProductsResponseDTO {
 }
 
 @JsonSerializable()
-class Data {
-  @JsonKey(defaultValue: 0)
-  final int id;
-  @JsonKey(defaultValue: '')
-  final String name;
-  @JsonKey(defaultValue: '')
-  final String description;
-  @JsonKey(defaultValue: 0)
-  final int price;
-  @JsonKey(defaultValue: 0)
-  final int quantity;
-  @JsonKey(defaultValue: 0)
-  final int categoryId;
-  @JsonKey(defaultValue: '')
-  final String companyId;
-  @JsonKey(defaultValue: '')
-  final String companyName;
-  @JsonKey(defaultValue: [])
-  final List<Attributes> attributes;
-  @JsonKey(defaultValue: 0)
-  final int averageRating;
-  @JsonKey(defaultValue: 0)
-  final int ratingCount;
-  @JsonKey(defaultValue: false)
-  final bool isFavourite;
+class FavoriteProductDTO {
+  @JsonKey(name: ApiConstants.id)
+  final int? id;
+  @JsonKey(name: ApiConstants.name)
+  final String? name;
+  @JsonKey(name: ApiConstants.description)
+  final String? description;
+  @JsonKey(name: ApiConstants.price)
+  final double? price;
+  @JsonKey(name: ApiConstants.quantity)
+  final int? quantity;
+  @JsonKey(name: ApiConstants.categoryId)
+  final int? categoryId;
+  @JsonKey(name: ApiConstants.companyId)
+  final String? companyId;
+  @JsonKey(name: ApiConstants.companyName)
+  final String? companyName;
+  @JsonKey(name: ApiConstants.attributes)
+  final List<FavoriteAttributesDTO>? attributes;
+  @JsonKey(name: ApiConstants.averageRating)
+  final double? averageRating;
+  @JsonKey(name: ApiConstants.ratingCount)
+  final int? ratingCount;
+  @JsonKey(name: ApiConstants.isFavourite)
+  final bool? isFavourite;
 
-  const Data({
-    required this.id,
-    required this.name,
-    required this.description,
-    required this.price,
-    required this.quantity,
-    required this.categoryId,
-    required this.companyId,
-    required this.companyName,
-    required this.attributes,
-    required this.averageRating,
-    required this.ratingCount,
-    required this.isFavourite,
+  const FavoriteProductDTO({
+    this.id,
+    this.name,
+    this.description,
+    this.price,
+    this.quantity,
+    this.categoryId,
+    this.companyId,
+    this.companyName,
+    this.attributes,
+    this.averageRating,
+    this.ratingCount,
+    this.isFavourite,
   });
 
-  factory Data.fromJson(Map<String, dynamic> json) => _$DataFromJson(json);
+  factory FavoriteProductDTO.fromJson(Map<String, dynamic> json) =>
+      _$FavoriteProductDTOFromJson(json);
 
-  Map<String, dynamic> toJson() => _$DataToJson(this);
+  Map<String, dynamic> toJson() => _$FavoriteProductDTOToJson(this);
+
+  FavoriteProductEntity toEntity() {
+    return FavoriteProductEntity(
+      id: id ?? 0,
+      name: name ?? '',
+      description: description ?? '',
+      price: price ?? 0.0,
+      quantity: quantity ?? 0,
+      categoryId: categoryId ?? 0,
+      companyId: companyId ?? '',
+      companyName: companyName ?? '',
+      attributes: attributes?.map((e) => e.toEntity()).toList() ?? [],
+      averageRating: averageRating ?? 0.0,
+      ratingCount: ratingCount ?? 0,
+      isFavourite: isFavourite ?? false,
+    );
+  }
 }
 
 @JsonSerializable()
-class Attributes {
-  @JsonKey(defaultValue: 0)
-  final int id;
-  @JsonKey(defaultValue: 0)
-  final int categoryAttributeId;
-  @JsonKey(defaultValue: '')
-  final String categoryAttributeName;
-  @JsonKey(defaultValue: '')
-  final String value;
+class FavoriteAttributesDTO {
+  @JsonKey(name: ApiConstants.id)
+  final int? id;
+  @JsonKey(name: ApiConstants.categoryAttributeId)
+  final int? categoryAttributeId;
+  @JsonKey(name: ApiConstants.categoryAttributeName)
+  final String? categoryAttributeName;
+  @JsonKey(name: ApiConstants.value)
+  final String? value;
 
-  const Attributes({
-    required this.id,
-    required this.categoryAttributeId,
-    required this.categoryAttributeName,
-    required this.value,
+  const FavoriteAttributesDTO({
+    this.id,
+    this.categoryAttributeId,
+    this.categoryAttributeName,
+    this.value,
   });
 
-  factory Attributes.fromJson(Map<String, dynamic> json) =>
-      _$AttributesFromJson(json);
+  factory FavoriteAttributesDTO.fromJson(Map<String, dynamic> json) =>
+      _$FavoriteAttributesDTOFromJson(json);
 
-  Map<String, dynamic> toJson() => _$AttributesToJson(this);
+  Map<String, dynamic> toJson() => _$FavoriteAttributesDTOToJson(this);
+
+  FavoriteAttributesEntity toEntity() {
+    return FavoriteAttributesEntity(
+      id: id ?? 0,
+      categoryAttributeId: categoryAttributeId ?? 0,
+      categoryAttributeName: categoryAttributeName ?? '',
+      value: value ?? '',
+    );
+  }
 }

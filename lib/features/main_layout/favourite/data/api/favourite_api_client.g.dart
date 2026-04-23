@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'product_details_api_client.dart';
+part of 'favourite_api_client.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'product_details_api_client.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element,unnecessary_string_interpolations
 
-class _ProductDetailsApiClient implements ProductDetailsApiClient {
-  _ProductDetailsApiClient(
+class _FavouriteApiClient implements FavouriteApiClient {
+  _FavouriteApiClient(
     this._dio, {
     this.baseUrl,
     this.errorLogger,
@@ -24,19 +24,19 @@ class _ProductDetailsApiClient implements ProductDetailsApiClient {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<ProductDetailsResponseDTO> getProductDetails(int id) async {
+  Future<GetFavoriteProductsResponseDTO> getFavorites() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<ProductDetailsResponseDTO>(Options(
+    final _options = _setStreamType<GetFavoriteProductsResponseDTO>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
         .compose(
           _dio.options,
-          'api/Product/${id}',
+          'api/Favourite',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -46,9 +46,9 @@ class _ProductDetailsApiClient implements ProductDetailsApiClient {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late ProductDetailsResponseDTO _value;
+    late GetFavoriteProductsResponseDTO _value;
     try {
-      _value = ProductDetailsResponseDTO.fromJson(_result.data!);
+      _value = GetFavoriteProductsResponseDTO.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -57,20 +57,19 @@ class _ProductDetailsApiClient implements ProductDetailsApiClient {
   }
 
   @override
-  Future<CartResponseDTO> addToCart(Map<String, dynamic> body) async {
+  Future<void> toggleFavorite(int id) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(body);
-    final _options = _setStreamType<CartResponseDTO>(Options(
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<void>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
     )
         .compose(
           _dio.options,
-          'api/basket/items',
+          'api/Favourite/toggle/${id}',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -79,15 +78,7 @@ class _ProductDetailsApiClient implements ProductDetailsApiClient {
           _dio.options.baseUrl,
           baseUrl,
         )));
-    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late CartResponseDTO _value;
-    try {
-      _value = CartResponseDTO.fromJson(_result.data!);
-    } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options);
-      rethrow;
-    }
-    return _value;
+    await _dio.fetch<void>(_options);
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {

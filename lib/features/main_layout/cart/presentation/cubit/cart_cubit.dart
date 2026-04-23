@@ -20,6 +20,7 @@ class CartCubit extends Cubit<CartState> {
   CartResponseDTO? cart;
   int? loadingProductId;
   bool _isCartChanged = false;
+  bool isCartInitated = false;
 
   CartCubit(
     this._getBasketUseCase,
@@ -27,24 +28,27 @@ class CartCubit extends Cubit<CartState> {
     this._removeBasketUseCase,
     this._removeItemUseCase,
     this._updateItemQuantityUseCase,
-  ) : super(CartInitial());
+  ) : super(CartInitial()) {
+    getBasket();
+  }
 
   void getBasket() async {
-    if (!_isCartChanged) return;
-    _isCartChanged = false;
+    if (!_isCartChanged && isCartInitated) return;
     emit(GetBasketLoading());
-    final result = await _getBasketUseCase();
+    final result = await _getBasketUseCase.call();
     switch (result) {
       case Success():
         cart = result.data;
         emit(GetBasketSuccess());
+        _isCartChanged = false; 
+          isCartInitated=true;
       case Error():
         emit(GetBasketError(result.error?.message ?? "Falied To Get Cart"));
     }
   }
 
   Future<void> addToCart(int productId, {int quantity = 1}) async {
-    loadingProductId = productId; 
+    loadingProductId = productId;
     emit(AddToCartLoadingState());
     var result = await _addToCartUseCase(productId, quantity: quantity);
     if (result is Success<CartResponseDTO>) {
@@ -63,6 +67,7 @@ class CartCubit extends Cubit<CartState> {
     final result = await _removeBasketUseCase();
     switch (result) {
       case Success():
+        _isCartChanged = true;
         emit(RemoveBasketSuccess());
         // Refresh basket after removing
         getBasket();
@@ -77,6 +82,7 @@ class CartCubit extends Cubit<CartState> {
     final result = await _removeItemUseCase(id);
     switch (result) {
       case Success():
+        _isCartChanged = true;
         emit(RemoveItemSuccess());
         // Refresh basket after removing item
         getBasket();
@@ -90,6 +96,7 @@ class CartCubit extends Cubit<CartState> {
     final result = await _updateItemQuantityUseCase(id);
     switch (result) {
       case Success():
+        _isCartChanged = true;
         emit(UpdateItemQuantitySuccess());
         getBasket();
       case Error():
@@ -97,4 +104,6 @@ class CartCubit extends Cubit<CartState> {
             result.error?.message ?? "Failed to update quantity"));
     }
   }
+
+  bool get shouldFetchCart => cart == null && !_isCartChanged;
 }

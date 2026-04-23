@@ -58,6 +58,7 @@ class _CategoriesScreenState extends State<CategoriesScreen>
 
   @override
   Widget build(BuildContext context) {
+    print("🔥 categories build");
     return SafeArea(
       child: Scaffold(
         appBar: MainLayoutAppBar(title: LocaleKeys.categories.tr()),

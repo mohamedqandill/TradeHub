@@ -6,31 +6,31 @@ part 'product_details_response_d_t_o.g.dart';
 @JsonSerializable()
 class ProductDetailsResponseDTO {
   @JsonKey(name: ApiConstants.id)
-  final int id;
+  final int? id;
   @JsonKey(name: ApiConstants.name)
-  final String name;
+  final String? name;
   @JsonKey(name: ApiConstants.description)
-  final String description;
+  final String? description;
   @JsonKey(name: ApiConstants.price)
-  final int price;
+  final int? price;
   @JsonKey(name: ApiConstants.quantity)
-  final int quantity;
+  final int? quantity;
   @JsonKey(name: ApiConstants.categoryId)
-  final int categoryId;
+  final int? categoryId;
   @JsonKey(name: ApiConstants.categoryName)
-  final String categoryName;
+  final String? categoryName;
   @JsonKey(name: ApiConstants.companyId)
-  final String companyId;
+  final String? companyId;
   @JsonKey(name: ApiConstants.companyName)
-  final String companyName;
+  final String? companyName;
   @JsonKey(name: ApiConstants.attributes)
-  final List<Attributes> attributes;
+  final List<Attributes>? attributes;
   @JsonKey(name: ApiConstants.averageRating)
-  final int averageRating;
+  final int? averageRating;
   @JsonKey(name: ApiConstants.ratingCount)
-  final int ratingCount;
+  final int? ratingCount;
   @JsonKey(name: ApiConstants.isFavourite)
-  final bool isFavourite;
+  final bool? isFavourite;
 
   const ProductDetailsResponseDTO({
     required this.isFavourite,
@@ -57,13 +57,13 @@ class ProductDetailsResponseDTO {
 @JsonSerializable()
 class Attributes {
   @JsonKey(name: ApiConstants.id)
-  final int id;
+  final int? id;
   @JsonKey(name: ApiConstants.categoryAttributeId)
-  final int categoryAttributeId;
+  final int? categoryAttributeId;
   @JsonKey(name: ApiConstants.categoryAttributeName)
-  final String categoryAttributeName;
+  final String? categoryAttributeName;
   @JsonKey(defaultValue: '')
-  final String value;
+  final String? value;
 
   const Attributes({
     required this.id,

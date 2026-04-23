@@ -19,7 +19,6 @@ class HomeCubit extends Cubit<HomeState> {
   final GetAllCategoryUseCase _getAllCategoryUseCase;
   final GetAllCompaniesUseCase _getAllCompaniesUseCase;
   final GetRandomProductsUseCase _getRandomProductsUseCase;
-  bool isHomeLoaded = false;
   // final NetworkInfo _networkInfo;
 
   HomeCubit(
@@ -33,25 +32,22 @@ class HomeCubit extends Cubit<HomeState> {
   List<GetRandomProductEntity> randomProducts = [];
 
   Future<void> revokeHomeApis() async {
-    if (!isHomeLoaded) {
-      await Future.wait([
-        getCategories().catchError((_) {}),
-        getCompanies().catchError((_) {}),
-        getRandomProducts().catchError((_) {}),
-      ]);
-      isHomeLoaded = true;
-    }
+    await Future.wait([
+      getCategories().catchError((_) {}),
+      getCompanies().catchError((_) {}),
+      getRandomProducts().catchError((_) {}),
+    ]);
   }
 
   Future<void> getCategories() async {
     emit(state.copyWith(getCategoryState: RequestStates.loading));
 
-    var result = await _getAllCategoryUseCase.call();
+    var result = await _getAllCategoryUseCase();
 
     switch (result) {
       case Success():
-        categories = result.data ?? [];
         emit(state.copyWith(getCategoryState: RequestStates.success));
+        categories = result.data ?? [];
       case Error():
         emit(state.copyWith(
             getCategoryState: RequestStates.error,
@@ -66,8 +62,9 @@ class HomeCubit extends Cubit<HomeState> {
 
     switch (result) {
       case Success():
-        companies = result.data ?? [];
+        print(companies.length);
         emit(state.copyWith(getCompaniesState: RequestStates.success));
+        companies = result.data ?? [];
       case Error():
         emit(state.copyWith(
             getCompaniesState: RequestStates.error,
@@ -78,12 +75,12 @@ class HomeCubit extends Cubit<HomeState> {
   Future<void> getRandomProducts() async {
     emit(state.copyWith(getRandomProductsState: RequestStates.loading));
 
-    var result = await _getRandomProductsUseCase.call();
+    var result = await _getRandomProductsUseCase();
 
     switch (result) {
       case Success():
-        randomProducts = result.data ?? [];
         emit(state.copyWith(getRandomProductsState: RequestStates.success));
+        randomProducts = result.data ?? [];
       case Error():
         emit(state.copyWith(
             getRandomProductsState: RequestStates.error,

@@ -54,13 +54,13 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> {
                   Navigator.pushNamed(context, Routes.settings);
                 },
                 image: Assets.images.person.path,
-                name: userInfo!["fullName"])),
+                name: userInfo?["fullName"] ?? "")),
         SizedBox(
           height: 15.h,
         ),
         CardInfo(
-          name: userInfo!["fullName"],
-          email: userInfo!["email"],
+          name: userInfo?["fullName"] ?? "",
+          email: userInfo?["email"] ?? "",
           onEditTap: () {},
         ),
         SizedBox(

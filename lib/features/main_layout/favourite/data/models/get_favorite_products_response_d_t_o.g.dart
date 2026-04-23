@@ -1,33 +1,51 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'product_details_response_d_t_o.dart';
+part of 'get_favorite_products_response_d_t_o.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ProductDetailsResponseDTO _$ProductDetailsResponseDTOFromJson(
+GetFavoriteProductsResponseDTO _$GetFavoriteProductsResponseDTOFromJson(
         Map<String, dynamic> json) =>
-    ProductDetailsResponseDTO(
-      isFavourite: json['isFavourite'] as bool?,
+    GetFavoriteProductsResponseDTO(
+      pageIndex: (json['pageIndex'] as num?)?.toInt(),
+      pageSize: (json['pageSize'] as num?)?.toInt(),
+      count: (json['count'] as num?)?.toInt(),
+      data: (json['data'] as List<dynamic>?)
+          ?.map((e) => FavoriteProductDTO.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$GetFavoriteProductsResponseDTOToJson(
+        GetFavoriteProductsResponseDTO instance) =>
+    <String, dynamic>{
+      'pageIndex': instance.pageIndex,
+      'pageSize': instance.pageSize,
+      'count': instance.count,
+      'data': instance.data,
+    };
+
+FavoriteProductDTO _$FavoriteProductDTOFromJson(Map<String, dynamic> json) =>
+    FavoriteProductDTO(
       id: (json['id'] as num?)?.toInt(),
       name: json['name'] as String?,
       description: json['description'] as String?,
-      price: (json['price'] as num?)?.toInt(),
+      price: (json['price'] as num?)?.toDouble(),
       quantity: (json['quantity'] as num?)?.toInt(),
       categoryId: (json['categoryId'] as num?)?.toInt(),
-      categoryName: json['categoryName'] as String?,
       companyId: json['companyId'] as String?,
       companyName: json['companyName'] as String?,
       attributes: (json['attributes'] as List<dynamic>?)
-          ?.map((e) => Attributes.fromJson(e as Map<String, dynamic>))
+          ?.map(
+              (e) => FavoriteAttributesDTO.fromJson(e as Map<String, dynamic>))
           .toList(),
-      averageRating: (json['averageRating'] as num?)?.toInt(),
+      averageRating: (json['averageRating'] as num?)?.toDouble(),
       ratingCount: (json['ratingCount'] as num?)?.toInt(),
+      isFavourite: json['isFavourite'] as bool?,
     );
 
-Map<String, dynamic> _$ProductDetailsResponseDTOToJson(
-        ProductDetailsResponseDTO instance) =>
+Map<String, dynamic> _$FavoriteProductDTOToJson(FavoriteProductDTO instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
@@ -35,7 +53,6 @@ Map<String, dynamic> _$ProductDetailsResponseDTOToJson(
       'price': instance.price,
       'quantity': instance.quantity,
       'categoryId': instance.categoryId,
-      'categoryName': instance.categoryName,
       'companyId': instance.companyId,
       'companyName': instance.companyName,
       'attributes': instance.attributes,
@@ -44,14 +61,17 @@ Map<String, dynamic> _$ProductDetailsResponseDTOToJson(
       'isFavourite': instance.isFavourite,
     };
 
-Attributes _$AttributesFromJson(Map<String, dynamic> json) => Attributes(
+FavoriteAttributesDTO _$FavoriteAttributesDTOFromJson(
+        Map<String, dynamic> json) =>
+    FavoriteAttributesDTO(
       id: (json['id'] as num?)?.toInt(),
       categoryAttributeId: (json['categoryAttributeId'] as num?)?.toInt(),
       categoryAttributeName: json['categoryAttributeName'] as String?,
-      value: json['value'] as String? ?? '',
+      value: json['value'] as String?,
     );
 
-Map<String, dynamic> _$AttributesToJson(Attributes instance) =>
+Map<String, dynamic> _$FavoriteAttributesDTOToJson(
+        FavoriteAttributesDTO instance) =>
     <String, dynamic>{
       'id': instance.id,
       'categoryAttributeId': instance.categoryAttributeId,

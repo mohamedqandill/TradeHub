@@ -8,31 +8,31 @@ part 'get_random_products_d_t_o.g.dart';
 @JsonSerializable()
 class GetRandomProductsDTO {
   @JsonKey(name: ApiConstants.id)
-  final int id;
+  final int? id;
   @JsonKey(name: ApiConstants.name)
-  final String name;
+  final String? name;
   @JsonKey(name: ApiConstants.description)
-  final String description;
+  final String? description;
   @JsonKey(name: ApiConstants.price)
-  final int price;
+  final int? price;
   @JsonKey(name: ApiConstants.quantity)
-  final int quantity;
+  final int? quantity;
   @JsonKey(name: ApiConstants.categoryId)
-  final int categoryId;
+  final int? categoryId;
   @JsonKey(name: ApiConstants.categoryName)
-  final String categoryName;
+  final String? categoryName;
   @JsonKey(name: ApiConstants.companyId)
-  final String companyId;
+  final String? companyId;
   @JsonKey(name: ApiConstants.companyName)
-  final String companyName;
+  final String? companyName;
   @JsonKey(name: ApiConstants.attributes)
-  final List<dynamic> attributes;
+  final List<dynamic>? attributes;
   @JsonKey(name: ApiConstants.averageRating)
-  final int averageRating;
+  final int? averageRating;
   @JsonKey(name: ApiConstants.ratingCount)
-  final int ratingCount;
+  final int? ratingCount;
   @JsonKey(name: ApiConstants.isFavourite)
-  final bool isFavourite;
+  final bool? isFavourite;
 
   const GetRandomProductsDTO({
     required this.isFavourite,
@@ -58,17 +58,18 @@ class GetRandomProductsDTO {
   toEntity() {
     return GetRandomProductEntity(
       id: id,
-      name: name,
-      description: description,
-      price: price,
-      quantity: quantity,
-      categoryId: categoryId,
-      categoryName: categoryName,
-      companyId: companyId,
-      companyName: companyName,
-      attributes: attributes,
-      averageRating: averageRating,
-      ratingCount: ratingCount,
+      name: name??"",
+      description: description??"",
+      price: price??0,
+      quantity: quantity??0,
+      categoryId: categoryId??0,
+      categoryName: categoryName??"",
+      companyId: companyId??"",
+      companyName: companyName??"",
+      attributes: attributes??[],
+      averageRating: averageRating??0,
+      ratingCount: ratingCount??0,
+      isFavourite: isFavourite??false
     );
   }
 }

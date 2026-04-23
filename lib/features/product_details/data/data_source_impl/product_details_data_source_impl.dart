@@ -29,12 +29,4 @@ class ProductDetailsDataSourceImpl extends ProductDetailsDataSourceContract {
       }),
     );
   }
-  
-
-  @override
-  Future<ApiResult<void>> toggleFavorite(int productId) {
-    return ApiExecutor.executeApi<void>(
-      apiCall: () => _apiClient.toggleFavorite(productId),
-    );
-  }
 }
