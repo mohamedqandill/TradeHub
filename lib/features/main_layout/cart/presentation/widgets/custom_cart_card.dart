@@ -1,51 +1,101 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:tradehub/Core/extensions/base_inherited_context.dart';
 import 'package:tradehub/Core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/constants/app_constants.dart';
 import 'package:tradehub/core/extensions/main_color.dart';
-
-import '../../../../../Core/colors/app_colors.dart';
+import 'package:tradehub/core/colors/app_colors.dart';
 
 class CustomCartCard extends StatefulWidget {
-  const CustomCartCard(
-      {super.key,
-      required this.image,
-      required this.title,
-      this.size,
-      required this.price,
-      this.color});
+  const CustomCartCard({
+    super.key,
+    required this.image,
+    required this.title,
+    this.size,
+    required this.price,
+    required this.quantity,
+    required this.onUpdateQuantity,
+    this.color,
+  });
+
   final String image;
   final String title;
   final String? size;
   final String? color;
   final String price;
+  final int quantity;
+  final Function(int) onUpdateQuantity;
 
   @override
   State<CustomCartCard> createState() => _CustomCartCardState();
 }
 
 class _CustomCartCardState extends State<CustomCartCard> {
-  int count = 1;
+  late int count;
+
+  @override
+  void initState() {
+    super.initState();
+    count = widget.quantity;
+  }
+
+  @override
+  void didUpdateWidget(covariant CustomCartCard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.quantity != oldWidget.quantity) {
+      count = widget.quantity;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
+    final String displayImage = widget.image.isEmpty
+        ? "https://pngate.com/wp-content/uploads/2025/04/samsung-galaxy-s25-blue-all-angles-1.png"
+        : widget.image;
+
+    return Container(
+      padding: EdgeInsets.all(12.w),
+      decoration: BoxDecoration(
+        color: context.isDarkMode
+            ? AppColors.white.withOpacity(0.05)
+            : AppColors.white,
+        borderRadius: BorderRadius.circular(16.r),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.03),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
       child: Row(
         children: [
-          SizedBox(
-            width: 10.w,
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12.r),
+            child: displayImage.startsWith('http')
+                ? CachedNetworkImage(
+                    imageUrl: displayImage,
+                    width: 100.w,
+                    height: 90.w,
+                    fit: BoxFit.fill,
+                    placeholder: (context, url) =>
+                        const Center(child: CircularProgressIndicator()),
+                    errorWidget: (context, url, error) => Icon(
+                      Icons.image_not_supported_outlined,
+                      color: AppColors.grey,
+                      size: 30.sp,
+                    ),
+                  )
+                : Image.asset(
+                    displayImage,
+                    width: 90.w,
+                    height: 90.w,
+                    fit: BoxFit.cover,
+                  ),
           ),
-          Image.asset(
-            widget.image,
-            width: 110.w,
-            height: 110.h,
-            fit: BoxFit.fill,
-          ),
-          SizedBox(
-            width: 10.w,
-          ),
+          SizedBox(width: 16.w),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,116 +104,115 @@ class _CustomCartCardState extends State<CustomCartCard> {
                   widget.title,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: context.base.theme.textTheme.bodyMedium?.copyWith(
-                    color: context.mainColor,
-                    fontWeight: FontWeight.w600,
+                  style: TextStyle(
+                    fontSize: 15.sp,
+                    fontWeight: FontWeight.w700,
+                    color:
+                        context.isDarkMode ? AppColors.white : AppColors.black,
                   ),
                 ),
-                Wrap(
-                  spacing: 5.w,
+                SizedBox(height: 4.h),
+                Row(
                   children: [
                     if (widget.size != null)
                       Text(
                         "SIZE: ${widget.size}",
-                        style:
-                            context.base.theme.textTheme.bodyMedium?.copyWith(
-                          fontSize: 13.sp,
-                          color: context.greyOrWhite,
-                          fontWeight: FontWeight.w400,
+                        style: TextStyle(
+                          fontSize: 11.sp,
+                          color: AppColors.grey,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
+                    if (widget.size != null && widget.color != null)
+                      Text(" | ", style: TextStyle(color: AppColors.grey)),
                     if (widget.color != null)
                       Text(
                         "COLOR: ${widget.color}",
-                        style:
-                            context.base.theme.textTheme.bodyMedium?.copyWith(
-                          fontSize: 13.sp,
-                          color: context.greyOrWhite,
-                          fontWeight: FontWeight.w400,
+                        style: TextStyle(
+                          fontSize: 11.sp,
+                          color: AppColors.grey,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                   ],
                 ),
-                SizedBox(
-                  height: 7.h,
+                SizedBox(height: 12.h),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "${widget.price} EGP",
+                      style: TextStyle(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w800,
+                        color: context.mainColor,
+                      ),
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: context.isDarkMode
+                            ? AppColors.white.withOpacity(0.05)
+                            : AppColors.grey.withOpacity(0.05),
+                        borderRadius: BorderRadius.circular(20.r),
+                      ),
+                      child: Row(
+                        children: [
+                          _buildCounterBtn(
+                            icon: Icons.remove,
+                            onTap: () {
+                              if (count > 1) {
+                                widget.onUpdateQuantity(count - 1);
+                              }
+                            },
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 12.w),
+                            child: Text(
+                              count.toString(),
+                              style: TextStyle(
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          _buildCounterBtn(
+                            icon: Icons.add,
+                            isPrimary: true,
+                            onTap: () {
+                              widget.onUpdateQuantity(count + 1);
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-                Padding(
-                  padding: context.locale.languageCode == AppConstants.ar
-                      ? EdgeInsets.only(left: 10.w)
-                      : EdgeInsets.only(right: 10.w),
-                  child: Row(
-                    children: [
-                      Text(
-                        "${widget.price} EGP",
-                        style: context.base.theme.textTheme.bodyMedium
-                            ?.copyWith(
-                                color: context.isDarkMode
-                                    ? AppColors.white
-                                    : AppColors.black,
-                                fontSize: 13.sp),
-                      ),
-                      const Spacer(),
-                      InkWell(
-                        onTap: () {
-                          if (count > 1) {
-                            count--;
-                          }
-                          setState(() {});
-                        },
-                        child: Container(
-                          width: 30.w,
-                          height: 30.h,
-                          decoration: BoxDecoration(
-                              color: AppColors.white,
-                              border: Border.all(
-                                  color: AppColors.grey.withOpacity(0.5),
-                                  width: 1),
-                              shape: BoxShape.circle),
-                          child: Icon(
-                            Icons.remove,
-                            size: 17.sp,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10.w),
-                        child: Text(
-                          count.toString(),
-                          style: context.base.theme.textTheme.bodyMedium
-                              ?.copyWith(
-                                  color: context.isDarkMode
-                                      ? AppColors.white
-                                      : AppColors.black,
-                                  fontSize: 15.sp),
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          setState(() {
-                            count++;
-                          });
-                        },
-                        child: Container(
-                          width: 30.w,
-                          height: 30.h,
-                          decoration: BoxDecoration(
-                              color: context.mainColor, shape: BoxShape.circle),
-                          child: Icon(
-                            Icons.add,
-                            size: 17.sp,
-                            color: context.isDarkMode
-                                ? AppColors.black
-                                : AppColors.white,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                )
               ],
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildCounterBtn({
+    required IconData icon,
+    required VoidCallback onTap,
+    bool isPrimary = false,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: EdgeInsets.all(6.w),
+        decoration: BoxDecoration(
+          color: isPrimary ? context.mainColor : Colors.transparent,
+          borderRadius: BorderRadius.circular(10.r),
+        ),
+        child: Icon(
+          icon,
+          size: 16.sp,
+          color: isPrimary ? Colors.white : AppColors.grey,
+        ),
       ),
     );
   }

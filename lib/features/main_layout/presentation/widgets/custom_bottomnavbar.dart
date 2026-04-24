@@ -33,7 +33,7 @@ class _CustomBottomNavbarState extends State<CustomBottomNavbar> {
       {
         'activeIcon': Assets.icons.categoryFilled,
         'icon': Assets.icons.category,
-        'label': LocaleKeys.categories.tr(),
+        'label': LocaleKeys.explore.tr(),
       },
       {
         'activeIcon': Assets.icons.cartFilled,

@@ -8,7 +8,10 @@ import 'package:tradehub/core/extensions/main_color.dart';
 import 'package:tradehub/core/localization/locale_keys.g.dart';
 
 class OrderSummarySection extends StatelessWidget {
-  const OrderSummarySection({super.key});
+  const OrderSummarySection(
+      {super.key, this.subTotal = 0, });
+  final int subTotal;
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +38,7 @@ class OrderSummarySection extends StatelessWidget {
                 ),
               ),
               Text(
-                "124.00 EGP",
+                "$subTotal EGP",
                 style: context.base.theme.textTheme.bodyMedium?.copyWith(
                   color: textColor,
                   fontWeight: FontWeight.w700,
@@ -86,7 +89,7 @@ class OrderSummarySection extends StatelessWidget {
                 ),
               ),
               Text(
-                "124.00 EGP",
+                "$subTotal EGP",
                 style: context.base.theme.textTheme.titleLarge?.copyWith(
                   color: context.mainColor,
                   fontWeight: FontWeight.w800,

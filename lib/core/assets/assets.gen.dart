@@ -330,8 +330,12 @@ class $AssetsLottieGen {
   /// File path: assets/lottie/loading.json
   String get loading => 'assets/lottie/loading.json';
 
+  /// File path: assets/lottie/loadingProductAnimation.json
+  String get loadingProductAnimation =>
+      'assets/lottie/loadingProductAnimation.json';
+
   /// List of all assets
-  List<String> get values => [loading];
+  List<String> get values => [loading, loadingProductAnimation];
 }
 
 class $AssetsTranslationsGen {

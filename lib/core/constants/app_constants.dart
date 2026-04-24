@@ -14,6 +14,7 @@ abstract class AppConstants {
   static const String skip = "Skip";
   static const String login = "Login";
   static const String savedPlace = "selected_place_name";
+  static const String userInfo = "user_info";
 
   static const String emailAddress = "E-mail Address";
   static const String password = "Password";

@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:tradehub/core/api/api_constant/api_constant.dart';
@@ -12,6 +14,9 @@ import 'package:tradehub/core/routes/app_routes.dart';
 import 'package:tradehub/core/routes/routes.dart';
 import 'package:tradehub/core/shared_widgets/widgets/device_preview.dart';
 import 'package:tradehub/core/theme/app_theme.dart';
+import 'package:tradehub/core/utils/storage/hive_storage.dart';
+import 'package:tradehub/features/main_layout/cart/presentation/cubit/cart_cubit.dart';
+import 'package:tradehub/features/main_layout/favourite/presentation/cubit/favourite_cubit.dart';
 import 'package:tradehub/features/onBoarding/view_model/language_view_model.dart';
 import 'package:tradehub/features/onBoarding/view_model/theme_view_model.dart';
 
@@ -23,11 +28,11 @@ import 'core/utils/shared_prefs/prefs.dart';
 import 'firebase_options.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 
 Future<void> main() async {
-  await runZonedGuarded<Future<void>>(() async {
     WidgetsFlutterBinding.ensureInitialized();
-
+  configureDependencies();
     await EasyLocalization.ensureInitialized();
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
@@ -35,19 +40,21 @@ Future<void> main() async {
     await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
 
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
-    configureDependencies();
 
     await ScreenUtil.ensureScreenSize();
     await SharedPrefsHelper.init();
+    
+
     SharedPrefsHelper prefs = getIt<SharedPrefsHelper>();
+    await HiveStorageHelper.init();
     final languageViewModel = getIt<LanguageViewModel>();
     await languageViewModel.loadLanguage();
     bool isFirstTime = prefs.getBool(AppConstants.firstTime) ?? true;
     String? token = await getIt<SecureStorageHelper>().read(ApiConstants.token);
 
-    if (token != null) {
-      DioServiceExtension.updateDioWithToken(token);
-    }
+    // if (token != null) {
+    //   DioServiceExtension.updateDioWithToken(token);
+    // }
     runApp(
       EasyLocalization(
         saveLocale: true,
@@ -60,16 +67,24 @@ Future<void> main() async {
         fallbackLocale: const Locale(AppConstants.en),
         child: ChangeNotifierProvider(
           create: (context) => ThemeViewModel()..getSavedTheme(),
-          child: MyApp(
-            isFirstTime: isFirstTime,
-            token: token,
+          child: MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => getIt<CartCubit>(),
+              ),
+               BlocProvider(
+                create: (context) => getIt<FavouriteCubit>(),
+              ),
+            ],
+            child: MyApp(
+              isFirstTime: isFirstTime,
+              token: token,
+            ),
           ),
         ),
       ),
     );
-  }, (error, stack) {
-    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
-  });
+ 
 }
 
 //
@@ -89,33 +104,37 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         var provider = Provider.of<ThemeViewModel>(context);
 
-        return BaseInheritedWidget(
-          theme: provider.mode == ThemeMode.dark
-              ? AppTheme.getDarkTheme(
-                  isArabic: context.locale.languageCode == AppConstants.ar)
-              : AppTheme.getLightTheme(
-                  isArabic: context.locale.languageCode == AppConstants.ar),
-          screenHeight: MediaQuery.of(context).size.height,
-          screenWidth: MediaQuery.of(context).size.width,
-          child: MaterialApp(
-            navigatorKey: navigatorKey,
-            localizationsDelegates: context.localizationDelegates,
-            supportedLocales: context.supportedLocales,
-            locale: context.locale,
-            title: 'TradeHub',
-            theme: AppTheme.getLightTheme(
-                isArabic: context.locale.languageCode == AppConstants.ar),
-            darkTheme: AppTheme.getDarkTheme(
-                isArabic: context.locale.languageCode == AppConstants.ar),
-            themeMode: provider.mode,
-            debugShowCheckedModeBanner: false,
-            onGenerateRoute: AppRoutes.getRoutes,
-            initialRoute: isFirstTime
-                ? Routes.splash
-                : token != null
-                    ? Routes.mainLayout
-                    : Routes.login,
-          ),
+        return MaterialApp(
+          navigatorObservers: [routeObserver],
+          navigatorKey: navigatorKey,
+          localizationsDelegates: context.localizationDelegates,
+          supportedLocales: context.supportedLocales,
+          locale: context.locale,
+          title: 'TradeHub',
+          theme: AppTheme.getLightTheme(
+              isArabic: context.locale.languageCode == AppConstants.ar),
+          darkTheme: AppTheme.getDarkTheme(
+              isArabic: context.locale.languageCode == AppConstants.ar),
+          themeMode: provider.mode,
+          debugShowCheckedModeBanner: false,
+          onGenerateRoute: AppRoutes.getRoutes,
+          initialRoute: isFirstTime
+              ? Routes.splash
+              : token != null
+                  ? Routes.mainLayout
+                  : Routes.login,
+          builder: (context, child) {
+            return BaseInheritedWidget(
+              theme: provider.mode == ThemeMode.dark
+                  ? AppTheme.getDarkTheme(
+                      isArabic: context.locale.languageCode == AppConstants.ar)
+                  : AppTheme.getLightTheme(
+                      isArabic: context.locale.languageCode == AppConstants.ar),
+              screenHeight: MediaQuery.sizeOf(context).height,
+              screenWidth: MediaQuery.sizeOf(context).width,
+              child: child!,
+            );
+          },
         );
       },
     );

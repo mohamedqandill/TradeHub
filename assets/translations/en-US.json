@@ -139,5 +139,7 @@
   "cancel": "Cancel",
   "ok": "OK",
   "areYouSureLogout": "Are you sure you want to logout?",
-  "fullName": "Full Name"
+  "fullName": "Full Name",
+  "explore":"Explore",
+  "exploreDescription":"Discover top vendors and offers"
 }

@@ -67,6 +67,17 @@ dependencies:
   permission_handler:
   location:
   google_maps_flutter:
+  skeletonizer:
+  mockito:
+  # internet_connection_checker_plus:
+  hive:
+  hive_flutter: ^1.1.0
+  dio_cookie_manager: ^3.0.0
+  cookie_jar: ^4.0.0
+  cached_network_image:
+  path_provider: ^2.1.5
+  flutter_animate: ^4.5.2
+  lottie:
 
 dev_dependencies:
   build_runner: ^2.4.13
@@ -75,9 +86,6 @@ dev_dependencies:
   retrofit_generator:
   injectable_generator:
   flutter_gen_runner: ^5.3.1
-
-
-
   freezed:
   flutter_test:
     sdk: flutter

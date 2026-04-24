@@ -28,7 +28,9 @@ class NewPasswordBloc extends Bloc<NewPasswordEvent, NewPasswordState> {
       emit(state.copyWith(newPasswordState: RequestStates.loading));
       var result = await _newPasswordUseCase.call(
           body: NewPasswordRequestBody(
-              Email: userEmail, NewPassword: newPassword.text, otpCode: code));
+        Email: userEmail,
+        NewPassword: newPassword.text,
+      ));
       switch (result) {
         case Success():
           emit(state.copyWith(newPasswordState: RequestStates.success));

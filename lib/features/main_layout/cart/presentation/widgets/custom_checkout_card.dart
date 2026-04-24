@@ -11,8 +11,11 @@ import 'package:tradehub/features/checkout/presentation/widgets/order_summary_se
 import 'package:tradehub/features/checkout/presentation/widgets/pay_now_section.dart';
 
 class CustomCheckoutCard extends StatelessWidget {
-  const CustomCheckoutCard({super.key, this.isProceedButton});
+  const CustomCheckoutCard(
+      {super.key, this.isProceedButton, this.subTotal = 0, this.isLoading});
   final bool? isProceedButton;
+  final int subTotal;
+  final bool? isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +24,7 @@ class CustomCheckoutCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: isDarkMode ? Colors.grey[900] : const Color(0xFFF3F6F8),
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(16.r),
-          topRight: Radius.circular(16.r),
-        ),
+        borderRadius: BorderRadius.circular(16.r),
       ),
       child: SingleChildScrollView(
         child: Padding(
@@ -34,7 +34,10 @@ class CustomCheckoutCard extends StatelessWidget {
             children: [
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
-                child: const OrderSummarySection(),
+                child: OrderSummarySection(
+                  subTotal: subTotal,
+                 
+                ),
               ),
               SizedBox(height: 10.h),
               Padding(

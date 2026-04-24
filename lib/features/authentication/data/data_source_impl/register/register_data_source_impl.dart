@@ -39,10 +39,8 @@ class RegisterDataSourceImpl implements RegisterDataSource {
   @override
   Future<ApiResult<String>> sendOTP({required String email}) async {
     var result = await ApiExecutor.executeApi(
-      apiCall: () async {
-        return await _authApiClient
-            .sendOTP(email: {ApiConstants.phoneOrEmail: email});
-      },
+      apiCall: () =>
+          _authApiClient.sendOTP(email: {ApiConstants.phoneOrEmail: email}),
     );
     switch (result) {
       case Error():

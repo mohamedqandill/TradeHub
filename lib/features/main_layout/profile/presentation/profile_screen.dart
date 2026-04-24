@@ -7,6 +7,7 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("🔥 profile build");
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 15.h,

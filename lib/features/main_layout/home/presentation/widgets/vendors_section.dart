@@ -1,151 +1,153 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import 'package:tradehub/core/routes/routes.dart';
-
-import '../../../../../core/assets/assets.gen.dart';
+import 'package:tradehub/features/main_layout/home/presentation/cubit/home_cubit.dart';
 
 class VendorsSection extends StatelessWidget {
-  const VendorsSection({super.key});
+  final HomeCubit? cubit;
+  final bool? isLoading;
+
+  const VendorsSection({super.key, this.cubit, this.isLoading});
 
   @override
   Widget build(BuildContext context) {
-    List<String> images = [
-      Assets.images.karamelshaam.path,
-      Assets.images.etoile.path,
-      Assets.images.blbn.path,
-    ];
-    List<String> titles = [
-      "Karm El-Sham",
-      "Etoile",
-      "B-L A B A N",
-    ];
-    return SizedBox(
-      height: 200.h,
-      child: ListView.separated(
-        separatorBuilder: (context, index) => SizedBox(width: 16.w),
-        scrollDirection: Axis.horizontal,
-        // padding: EdgeInsets.symmetric(horizontal: 16.w),
-        physics: const BouncingScrollPhysics(),
-        itemCount: images.length,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: EdgeInsets.only(bottom: 10.h),
-            child: InkWell(
-              onTap: () {
-                Navigator.pushNamed(context, Routes.vendorProfile);
-              },
-              borderRadius: BorderRadius.circular(24.r),
+    print("Lenght ${cubit?.companies.length}");
+    return Skeletonizer(
+      enabled: isLoading ?? false,
+      child: SizedBox(
+        height: 180.h,
+        child: ListView.separated(
+          scrollDirection: Axis.horizontal,
+          padding: EdgeInsets.symmetric(horizontal: 4.w),
+          itemCount: cubit?.companies.length ?? 6,
+          separatorBuilder: (context, index) => SizedBox(width: 16.w),
+          itemBuilder: (context, index) {
+            final vendor =
+                (cubit?.companies != null && index < cubit!.companies.length)
+                    ? cubit!.companies[index]
+                    : null;
+            return InkWell(
+              onTap: () => Navigator.pushNamed(
+                context,
+                Routes.vendorProfile,
+                arguments: vendor?.id,
+              ),
               child: Container(
-                width: 260.w,
+                width: 280.w,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(24.r),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.06),
-                      blurRadius: 15,
-                      offset: const Offset(0, 8),
-                    ),
-                  ],
+                  image: DecorationImage(
+                    image: NetworkImage(vendor?.logoUrl ?? ""),
+                    fit: BoxFit.fill,
+                  ),
                 ),
                 child: Stack(
                   children: [
-                    // Background Image
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(24.r),
-                      child: Image.asset(
-                        images[index],
-                        width: 300.w,
-                        height: 200.h,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    // Glassmorphism-style Info Overlay
-                    Positioned(
-                      bottom: 0,
-                      left: 0,
-                      right: 0,
+                    Positioned.fill(
                       child: Container(
-                        height: 70.h,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.vertical(
-                              bottom: Radius.circular(24.r)),
+                          borderRadius: BorderRadius.circular(24.r),
                           gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
+                            begin: Alignment.bottomCenter,
+                            end: Alignment.topCenter,
                             colors: [
-                              Colors.black.withOpacity(0.0),
-                              Colors.black.withOpacity(0.7),
+                              Colors.black.withOpacity(0.8),
+                              Colors.transparent,
                             ],
                           ),
                         ),
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 16.w, vertical: 12.h),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Text(
-                              titles[index],
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.w900,
-                                letterSpacing: -0.2,
-                                shadows: [
-                                  Shadow(color: Colors.black45, blurRadius: 4)
-                                ],
-                              ),
-                            ),
-                            SizedBox(height: 2.h),
-                            Text(
-                              "Special Offers Available",
-                              style: TextStyle(
-                                color: Colors.white.withOpacity(0.85),
-                                fontSize: 11.sp,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ],
-                        ),
                       ),
                     ),
-                    // Floating Badge (Rating)
                     Positioned(
                       top: 12.h,
                       right: 12.w,
                       child: Container(
                         padding: EdgeInsets.symmetric(
-                            horizontal: 10.w, vertical: 6.h),
+                            horizontal: 8.w, vertical: 4.h),
                         decoration: BoxDecoration(
                           color: Colors.white,
-                          borderRadius: BorderRadius.circular(12.r),
-                          boxShadow: [
-                            BoxShadow(color: Colors.black12, blurRadius: 4)
-                          ],
+                          borderRadius: BorderRadius.circular(10.r),
                         ),
                         child: Row(
                           children: [
                             Icon(Icons.star_rounded,
-                                color: Colors.amber, size: 16.sp),
+                                color: Colors.amber, size: 14.sp),
                             SizedBox(width: 4.w),
                             Text(
                               "4.8",
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w800,
+                                fontSize: 10.sp,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ],
                         ),
                       ),
                     ),
+                    Padding(
+                      padding: EdgeInsets.all(16.w),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Container(
+                            width: 50.w,
+                            height: 50.w,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              shape: BoxShape.circle,
+                              border: Border.all(color: Colors.white, width: 2),
+                              boxShadow: const [
+                                BoxShadow(color: Colors.black12, blurRadius: 4)
+                              ],
+                            ),
+                            child: ClipOval(
+                              child: CachedNetworkImage(
+                                width: 40.w,
+                                height: 40.h,
+                                imageUrl: vendor?.logoUrl ?? "",
+                                fit: BoxFit.fill,
+                                errorWidget: (context, url, error) =>
+                                    const Icon(Icons.store),
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 12.w),
+                          Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  vendor?.businessName ?? "Vendor Name",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.w900,
+                                  ),
+                                ),
+                                Text(
+                                  "${vendor?.businessTypeName} , ${vendor?.locationName}",
+                                  style: TextStyle(
+                                    color: Colors.white70,
+                                    fontSize: 11.sp,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }
