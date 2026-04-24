@@ -9,6 +9,7 @@ import 'package:tradehub/features/main_layout/cart/presentation/cubit/cart_cubit
 import 'package:tradehub/features/main_layout/cart/presentation/cubit/cart_states.dart';
 import 'package:tradehub/features/main_layout/cart/presentation/widgets/custom_checkout_card.dart';
 import 'package:tradehub/features/main_layout/cart/presentation/widgets/empty_cart_screen_body.dart';
+import 'package:tradehub/core/shared_widgets/widgets/custom_error_widget.dart';
 
 import 'widgets/custom_cart_card.dart';
 
@@ -95,7 +96,7 @@ class _CartScreenBodyState extends State<CartScreenBody> {
                                 price: item.price.toString(),
                                 quantity: item.quantity,
                                 onUpdateQuantity: (q) {
-                                  cubit.updateItemQuantity(item.productId);
+                                  cubit.updateItemQuantity(id: item.productId,quantity: q);
                                 },
                               ),
                             );
@@ -164,17 +165,9 @@ class _CartScreenBodyState extends State<CartScreenBody> {
           );
         }
 
-        return Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text("Something went wrong"),
-              TextButton(
-                onPressed: () => cubit.getBasket(),
-                child: const Text("Retry"),
-              ),
-            ],
-          ),
+        return CustomErrorWidget(
+          message: "Something went wrong loading your cart.",
+          onRetry: () => cubit.getBasket(),
         );
       },
     );

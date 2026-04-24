@@ -27,7 +27,7 @@ class CartRepoImpl extends CartRepoContract {
   }
 
   @override
-  Future<ApiResult<void>> updateItemQuantity(int id) {
-    return _dataSource.updateItemQuantity(id);
+  Future<ApiResult<void>> updateItemQuantity({required int id, required int quantity}) {
+    return _dataSource.updateItemQuantity(id: id, quantity: quantity);
   }
 }

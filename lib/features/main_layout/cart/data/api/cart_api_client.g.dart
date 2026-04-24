@@ -107,9 +107,12 @@ class _CartApiClient implements CartApiClient {
   }
 
   @override
-  Future<void> updateItemQuantity(int id) async {
+  Future<void> updateItemQuantity(
+    int id,
+    int quantity,
+  ) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'quantity': quantity};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<void>(Options(

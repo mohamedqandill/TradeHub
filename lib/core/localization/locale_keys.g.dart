@@ -210,5 +210,7 @@ abstract class  LocaleKeys {
   static const ok = 'ok';
   static const areYouSureLogout = 'areYouSureLogout';
   static const fullName = 'fullName';
+  static const explore = 'explore';
+  static const exploreDescription = 'exploreDescription';
 
 }

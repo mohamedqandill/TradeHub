@@ -21,56 +21,29 @@ class CategorySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Map<String, dynamic>> categoriesData = [
-      {
-        "title": LocaleKeys.restaurants.tr(),
-        "image": Assets.images.resturants.path
-      },
-      {"title": LocaleKeys.flowers.tr(), "image": Assets.images.flowers.path},
-      {
-        "title": LocaleKeys.electronics.tr(),
-        "image": Assets.images.electronics.path
-      },
-      {
-        "title": LocaleKeys.groceryMarkets.tr(),
-        "image": Assets.images.grocery.path
-      },
-      {
-        "title": LocaleKeys.furniture.tr(),
-        "image": Assets.images.furniture.path
-      },
-      {
-        "title": LocaleKeys.healthAndBeauty.tr(),
-        "image": Assets.images.healthAndBeauty.path
-      },
-      {"title": LocaleKeys.clothes.tr(), "image": Assets.images.clothes.path},
-      {
-        "title": LocaleKeys.accessories.tr(),
-        "image": Assets.images.accessories.path
-      },
-    ];
-    return Skeletonizer(
-      enabled: isLoading ?? false,
-      child: SizedBox(
-        height: 220.h,
-        child: GridView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: cubit?.categories.length ?? 0,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              mainAxisSpacing: 4.w,
-              crossAxisSpacing: 10.h,
-              mainAxisExtent: 99.w,
-              crossAxisCount: 2),
-          itemBuilder: (context, index) {
-            return InkWell(
-              onTap: () => Navigator.pushNamed(context, Routes.categoryDetails),
+    
+    return SizedBox(
+      height: 220.h,
+      child: GridView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: cubit?.categories.length ?? 0,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            mainAxisSpacing: 4.w,
+            crossAxisSpacing: 10.h,
+            mainAxisExtent: 99.w,
+            crossAxisCount: 2),
+        itemBuilder: (context, index) {
+          return InkWell(
+            onTap: () => Navigator.pushNamed(context, Routes.categoryDetails),
+            child: Skeletonizer(
+              enabled: isLoading ?? false,
               child: HomeCategoryWidget(
-                image: categoriesData[index]["image"],
+                image: cubit?.categories[index].imageUrl ?? "",
                 title: cubit?.categories[index].name ?? "",
               ),
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }

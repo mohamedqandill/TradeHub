@@ -34,9 +34,9 @@ class CartDataSourceImpl extends CartDataSourceContract {
   }
 
   @override
-  Future<ApiResult<void>> updateItemQuantity(int id) {
+  Future<ApiResult<void>> updateItemQuantity({required int id, required int quantity}) {
     return ApiExecutor.executeApi<void>(
-      apiCall: () => _apiClient.updateItemQuantity(id),
+      apiCall: () => _apiClient.updateItemQuantity(id,quantity),
     );
   }
 }

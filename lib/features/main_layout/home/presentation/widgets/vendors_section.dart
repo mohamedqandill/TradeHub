@@ -29,15 +29,18 @@ class VendorsSection extends StatelessWidget {
                     ? cubit!.companies[index]
                     : null;
             return InkWell(
-              onTap: () => Navigator.pushNamed(context, Routes.vendorProfile),
+              onTap: () => Navigator.pushNamed(
+                context,
+                Routes.vendorProfile,
+                arguments: vendor?.id,
+              ),
               child: Container(
                 width: 280.w,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(24.r),
-                  image: const DecorationImage(
-                    image: NetworkImage(
-                        "https://img.freepik.com/free-photo/delicious-burger-with-fresh-ingredients_23-2148153401.jpg"),
-                    fit: BoxFit.cover,
+                  image: DecorationImage(
+                    image: NetworkImage(vendor?.logoUrl ?? ""),
+                    fit: BoxFit.fill,
                   ),
                 ),
                 child: Stack(
@@ -102,9 +105,10 @@ class VendorsSection extends StatelessWidget {
                             ),
                             child: ClipOval(
                               child: CachedNetworkImage(
-                                imageUrl:
-                                    "https://th.bing.com/th/id/R.717ac84dfc2d28c634914f26a289340b?rik=ufWdL6Ud5vyiow&pid=ImgRaw&r=0",
-                                fit: BoxFit.cover,
+                                width: 40.w,
+                                height: 40.h,
+                                imageUrl: vendor?.logoUrl ?? "",
+                                fit: BoxFit.fill,
                                 errorWidget: (context, url, error) =>
                                     const Icon(Icons.store),
                               ),
@@ -125,8 +129,7 @@ class VendorsSection extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  vendor?.businessTypeName ??
-                                      "Category • Location",
+                                  "${vendor?.businessTypeName} , ${vendor?.locationName}",
                                   style: TextStyle(
                                     color: Colors.white70,
                                     fontSize: 11.sp,

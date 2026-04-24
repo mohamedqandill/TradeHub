@@ -42,6 +42,14 @@ class FavouriteCubit extends Cubit<FavouriteState> {
   }
 
   Future<void> toggleFavorite(int id) async {
+    favorites.removeWhere((e) => e.id == id);
+
+    emit(state.copyWith(
+      toggleFavoriteState: RequestStates.loading,
+    ));
+
+    favorites = List.from(favorites);
+
     if (favoritesIds.contains(id)) {
       favoritesIds.remove(id);
       emit(state.copyWith());
@@ -62,6 +70,7 @@ class FavouriteCubit extends Cubit<FavouriteState> {
         ));
     }
   }
+  
 
   void initFavorites(List<GetRandomProductEntity> products) {
     for (var product in products) {

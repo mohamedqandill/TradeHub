@@ -19,6 +19,7 @@ import 'package:tradehub/features/main_layout/home/presentation/widgets/vendors_
 import 'package:tradehub/main.dart';
 
 import '../../../../Core/colors/app_colors.dart';
+import 'package:tradehub/core/shared_widgets/widgets/custom_error_widget.dart';
 
 class HomeScreenBody extends StatefulWidget {
   const HomeScreenBody({super.key});
@@ -60,6 +61,17 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
        
     }, builder: (context, state) {
       var cubit = context.watch<HomeCubit>();
+
+      // Full-screen error when ALL sections fail
+      if (state.getCategoryState == RequestStates.error &&
+          state.getCompaniesState == RequestStates.error &&
+          state.getRandomProductsState == RequestStates.error) {
+        return CustomErrorWidget(
+          message: state.errorMessage ?? "Failed to load home data.",
+          onRetry: () => cubit.revokeHomeApis(),
+        );
+      }
+
       return ListView(
         physics: const ScrollPhysics(),
         padding: EdgeInsets.zero,

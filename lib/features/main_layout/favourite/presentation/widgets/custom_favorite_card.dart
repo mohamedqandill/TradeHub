@@ -89,8 +89,7 @@ class _CustomFavoriteCardState extends State<CustomFavoriteCard> {
                     isTapped: true,
                     onTap: () {
                       context.read<FavouriteCubit>().toggleFavorite(widget.id);
-
-                      context.read<FavouriteCubit>().getFavorites();
+                     
                     },
                   ),
                 ),

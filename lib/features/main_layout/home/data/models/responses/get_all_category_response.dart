@@ -8,13 +8,16 @@ part 'get_all_category_response.g.dart';
 @JsonSerializable()
 class GetAllCategoryResponse {
   @JsonKey(name: ApiConstants.id)
-  final int id;
+  final int? id;
   @JsonKey(name: ApiConstants.name)
-  final String name;
+  final String? name;
+  @JsonKey(name: ApiConstants.imageUrl)
+  final String? imageUrl;
 
   const GetAllCategoryResponse({
     required this.id,
     required this.name,
+    required this.imageUrl,
   });
 
   factory GetAllCategoryResponse.fromJson(Map<String, dynamic> json) =>
@@ -23,6 +26,6 @@ class GetAllCategoryResponse {
   Map<String, dynamic> toJson() => _$GetAllCategoryResponseToJson(this);
 
   toEntity() {
-    return GetCategoryEntity(id: id, name: name);
+    return GetCategoryEntity(id: id ?? 0, name: name ?? "", imageUrl: imageUrl ?? "");
   }
 }

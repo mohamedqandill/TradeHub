@@ -11,7 +11,7 @@ class HeartButton extends StatefulWidget {
   final double? width;
   final double? height;
   final bool isTapped;
-  final void Function()?onTap;
+  final void Function( )?onTap;
 
   @override
   State<HeartButton> createState() => _HeartButtonState();

@@ -27,6 +27,7 @@ class _FavoritesScreenBodyState extends State<FavoritesScreenBody> {
     return BlocBuilder<FavouriteCubit, FavouriteState>(
         builder: (context, state) {
       var cubit = context.read<FavouriteCubit>();
+    
       if (state.getFavoritesState == RequestStates.loading) {
         return Center(
           child: CircularProgressIndicator(

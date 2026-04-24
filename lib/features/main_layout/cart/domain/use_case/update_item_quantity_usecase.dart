@@ -8,7 +8,7 @@ class UpdateItemQuantityUseCase {
 
   UpdateItemQuantityUseCase(this._repo);
 
-  Future<ApiResult<void>> call(int id) {
-    return _repo.updateItemQuantity(id);
+  Future<ApiResult<void>> call({required int id, required int quantity}) {
+    return _repo.updateItemQuantity(id: id, quantity: quantity);
   }
 }

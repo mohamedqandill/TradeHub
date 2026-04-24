@@ -17,6 +17,9 @@ abstract class ApiEndPoints {
   static const String getFavorites = "api/Favourite";
   static const String basket = "api/basket";
   static const String basketItems = "api/basket/items/";
+  static const String productsBySubcategory = "api/Product/by-subcategory/";
+  static const String companySubcategories = "api/Product/companies/";
+  static const String companyDetails = "api/company/";
 }
 
 

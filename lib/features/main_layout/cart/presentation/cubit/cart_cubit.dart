@@ -91,9 +91,9 @@ class CartCubit extends Cubit<CartState> {
     }
   }
 
-  void updateItemQuantity(int id) async {
+  void updateItemQuantity({required int id,required int quantity}) async {
     emit(UpdateItemQuantityLoading(id));
-    final result = await _updateItemQuantityUseCase(id);
+    final result = await _updateItemQuantityUseCase(id: id, quantity: quantity);
     switch (result) {
       case Success():
         _isCartChanged = true;

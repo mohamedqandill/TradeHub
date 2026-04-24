@@ -9,8 +9,9 @@ part of 'get_all_category_response.dart';
 GetAllCategoryResponse _$GetAllCategoryResponseFromJson(
         Map<String, dynamic> json) =>
     GetAllCategoryResponse(
-      id: (json['id'] as num).toInt(),
-      name: json['name'] as String,
+      id: (json['id'] as num?)?.toInt(),
+      name: json['name'] as String?,
+      imageUrl: json['imageUrl'] as String?,
     );
 
 Map<String, dynamic> _$GetAllCategoryResponseToJson(
@@ -18,4 +19,5 @@ Map<String, dynamic> _$GetAllCategoryResponseToJson(
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
+      'imageUrl': instance.imageUrl,
     };

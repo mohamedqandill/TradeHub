@@ -17,10 +17,18 @@ import 'package:tradehub/features/product_details/presentation/cubit/product_det
 import 'package:tradehub/features/product_details/presentation/product_details_body.dart';
 
 import '../../../core/shared_widgets/app_bars/main_layout_app_bar.dart';
+import '../../../core/shared_widgets/widgets/custom_error_widget.dart';
+import '../../../core/utils/animations/loading_product_animation.dart';
 
-class ProductDetailsScreen extends StatelessWidget {
+class ProductDetailsScreen extends StatefulWidget {
   const ProductDetailsScreen({super.key});
 
+  @override
+  State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
+}
+
+class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
+  bool? isFav;
   @override
   Widget build(BuildContext context) {
     final id = ModalRoute.of(context)!.settings.arguments as int;
@@ -50,11 +58,12 @@ class ProductDetailsScreen extends StatelessWidget {
         child: BlocBuilder<ProductDetailsCubit, ProductDetailsStates>(
           builder: (context, state) {
             final cubit = context.read<ProductDetailsCubit>();
+            if (isFav == null && cubit.productDetails != null) {
+              isFav = cubit.productDetails!.isFavourite;
+            }
 
             if (state is GetProductDetailsLoadingState) {
-              return const Scaffold(
-                body: Center(child: CircularProgressIndicator()),
-              );
+              return  Scaffold(body: loadingProductAnimation());
             }
 
             if (state is GetProductDetailsErrorState &&
@@ -62,7 +71,10 @@ class ProductDetailsScreen extends StatelessWidget {
               return Scaffold(
                 appBar:
                     AppBar(elevation: 0, backgroundColor: Colors.transparent),
-                body: Center(child: Text(state.message)),
+                body: CustomErrorWidget(
+                  message: state.message,
+                  onRetry: () => cubit.getProductDetails(id),
+                ),
               );
             }
 
@@ -110,8 +122,13 @@ class ProductDetailsScreen extends StatelessWidget {
                           shape: BoxShape.circle,
                         ),
                         child: HeartButton(
-                          isTapped: cubit.productDetails?.isFavourite ?? false,
-                          onTap: () => cubit.toggleFavorite(id),
+                          isTapped: isFav ?? false,
+                          onTap: () {
+                            setState(() {
+                              isFav = !(isFav ?? false);
+                            });
+                            cubit.toggleFavorite(id);
+                          },
                         ),
                       ),
                     ),

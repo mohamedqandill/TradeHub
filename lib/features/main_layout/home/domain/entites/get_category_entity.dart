@@ -8,6 +8,9 @@ class GetCategoryEntity {
   final int? id;
   @JsonKey(name: ApiConstants.name)
   final String? name;
+    @JsonKey(name: ApiConstants.imageUrl)
+  final String? imageUrl;
 
-  GetCategoryEntity({required this.id, required this.name});
+  GetCategoryEntity({required this.id, required this.name,required this.imageUrl});
 }
+  
