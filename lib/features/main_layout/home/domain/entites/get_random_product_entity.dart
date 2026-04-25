@@ -31,8 +31,12 @@ class GetRandomProductEntity {
 
   final bool? isFavourite;
 
+    @JsonKey(name: ApiConstants.imageUrl)
+  final String? imageUrl;
+
   GetRandomProductEntity({
     required this.isFavourite,
+        required this.imageUrl,
     required this.id,
     required this.name,
     required this.description,

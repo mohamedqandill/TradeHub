@@ -9,6 +9,7 @@ part of 'product_details_response_d_t_o.dart';
 ProductDetailsResponseDTO _$ProductDetailsResponseDTOFromJson(
         Map<String, dynamic> json) =>
     ProductDetailsResponseDTO(
+      imageUrl: json['imageUrl'] as String?,
       isFavourite: json['isFavourite'] as bool?,
       id: (json['id'] as num?)?.toInt(),
       name: json['name'] as String?,
@@ -42,6 +43,7 @@ Map<String, dynamic> _$ProductDetailsResponseDTOToJson(
       'averageRating': instance.averageRating,
       'ratingCount': instance.ratingCount,
       'isFavourite': instance.isFavourite,
+      'imageUrl': instance.imageUrl,
     };
 
 Attributes _$AttributesFromJson(Map<String, dynamic> json) => Attributes(

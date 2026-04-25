@@ -50,7 +50,7 @@ class ProductCardVertical extends StatelessWidget {
                       child: CachedNetworkImage(
                         alignment: Alignment.center,
                         imageUrl: image,
-                        fit: BoxFit.fill,
+                        fit: BoxFit.contain,
                         errorWidget: (context, url, error) => Icon(
                           Icons.store,
                           size: 40.sp,

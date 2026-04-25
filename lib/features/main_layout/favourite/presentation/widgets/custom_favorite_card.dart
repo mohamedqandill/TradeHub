@@ -61,7 +61,7 @@ class _CustomFavoriteCardState extends State<CustomFavoriteCard> {
                   imageUrl: widget.image,
                   width: double.infinity,
                   height: 140.h,
-                  fit: BoxFit.cover,
+                  fit: BoxFit.contain,
                   placeholder: (context, url) => const Center(
                     child: CircularProgressIndicator(),
                   ),
@@ -89,7 +89,6 @@ class _CustomFavoriteCardState extends State<CustomFavoriteCard> {
                     isTapped: true,
                     onTap: () {
                       context.read<FavouriteCubit>().toggleFavorite(widget.id);
-                     
                     },
                   ),
                 ),

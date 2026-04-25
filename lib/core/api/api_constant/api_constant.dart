@@ -52,6 +52,11 @@ abstract class ApiConstants {
   static const String value = "value";
   static const String imageUrl = "imageUrl";
   static const String isActive = "isActive";
+  static const String ratingValue = "ratingValue";
+  static const String comment = "comment";
+  static const String userId = "userId";
+  static const String userFullname = "userFullname";
+  static const String createdAt = "createdAt";
 
   static const String buyerId = "buyerId";
   static const String items = "items";

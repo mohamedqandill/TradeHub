@@ -22,6 +22,7 @@ GetRandomProductsDTO _$GetRandomProductsDTOFromJson(
       attributes: json['attributes'] as List<dynamic>?,
       averageRating: (json['averageRating'] as num?)?.toInt(),
       ratingCount: (json['ratingCount'] as num?)?.toInt(),
+      imageUrl: json['imageUrl'] as String?,
     );
 
 Map<String, dynamic> _$GetRandomProductsDTOToJson(
@@ -33,6 +34,7 @@ Map<String, dynamic> _$GetRandomProductsDTOToJson(
       'price': instance.price,
       'quantity': instance.quantity,
       'categoryId': instance.categoryId,
+      'imageUrl': instance.imageUrl,
       'categoryName': instance.categoryName,
       'companyId': instance.companyId,
       'companyName': instance.companyName,

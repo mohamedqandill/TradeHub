@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tradehub/core/colors/app_colors.dart';
-import 'package:tradehub/core/extensions/base_inherited_context.dart';
 import 'package:tradehub/core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/functions/show_snakbar.dart';
 import 'package:tradehub/core/localization/locale_keys.g.dart';
@@ -15,8 +14,9 @@ import 'package:tradehub/features/main_layout/cart/presentation/cubit/cart_state
 import 'package:tradehub/features/product_details/presentation/cubit/product_details_cubit.dart';
 import 'package:tradehub/features/product_details/presentation/cubit/product_details_states.dart';
 import 'package:tradehub/features/product_details/presentation/product_details_body.dart';
+import 'package:tradehub/features/product_ratings/presentation/cubit/product_ratings_cubit.dart';
+import 'package:tradehub/features/product_ratings/presentation/cubit/product_ratings_states.dart';
 
-import '../../../core/shared_widgets/app_bars/main_layout_app_bar.dart';
 import '../../../core/shared_widgets/widgets/custom_error_widget.dart';
 import '../../../core/utils/animations/loading_product_animation.dart';
 
@@ -29,11 +29,21 @@ class ProductDetailsScreen extends StatefulWidget {
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   bool? isFav;
+  ProductDetailsCubit? prodCubit;
   @override
   Widget build(BuildContext context) {
     final id = ModalRoute.of(context)!.settings.arguments as int;
-    return BlocProvider(
-      create: (context) => getIt<ProductDetailsCubit>()..getProductDetails(id),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) =>
+              getIt<ProductDetailsCubit>()..getProductDetails(id),
+        ),
+        BlocProvider(
+          create: (context) =>
+              getIt<ProductRatingsCubit>()..getProductRatings(id),
+        ),
+      ],
       child: MultiBlocListener(
         listeners: [
           BlocListener<CartCubit, CartState>(
@@ -54,16 +64,29 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               }
             },
           ),
+          BlocListener<ProductRatingsCubit, ProductRatingsStates>(
+            listener: (context, state) {
+              if (state is GetProductRatingsErrorState) {
+                showFailureSnackBar(context, messageTitle: state.message);
+              } else if (state is AddProductRatingErrorState) {
+                showFailureSnackBar(context, messageTitle: state.message);
+              } else if (state is AddProductRatingSuccessState) {
+                context.read<ProductDetailsCubit>().getProductDetails(id);
+                showSuccessSnackBar(messageTitle: "Review Added");
+              }
+            },
+          ),
         ],
         child: BlocBuilder<ProductDetailsCubit, ProductDetailsStates>(
           builder: (context, state) {
             final cubit = context.read<ProductDetailsCubit>();
+            prodCubit = cubit;
             if (isFav == null && cubit.productDetails != null) {
               isFav = cubit.productDetails!.isFavourite;
             }
 
             if (state is GetProductDetailsLoadingState) {
-              return  Scaffold(body: loadingProductAnimation());
+              return Scaffold(body: loadingProductAnimation());
             }
 
             if (state is GetProductDetailsErrorState &&
@@ -154,27 +177,174 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       ),
                     ],
                   ),
-                  child: BlocBuilder<CartCubit, CartState>(
-                    builder: (context, state) {
-                      return CustomLargeMainButton(
-                        isLoading: state is AddToCartLoadingState,
-                        onPressed: state is AddToCartLoadingState
-                            ? null
-                            : () => context.read<CartCubit>().addToCart(id),
-                        text: LocaleKeys.addToCart.tr(),
-                        radius: 20.r,
-                        textStyle: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w800,
+                  child: Row(
+                    children: [
+                      BlocBuilder<ProductRatingsCubit, ProductRatingsStates>(
+                        builder: (context, ratingState) {
+                          final isLoading =
+                              ratingState is AddProductRatingLoadingState;
+                          return CustomLargeMainButton(
+                            width: 120.w,
+                            height: 46.h,
+                            radius: 18.r,
+                            isLoading: isLoading,
+                            onPressed: isLoading
+                                ? null
+                                : () => _showAddRatingSheet(
+                                      isLoading: isLoading,
+                                      ratingCubit:
+                                          context.read<ProductRatingsCubit>(),
+                                      context,
+                                      productId: id,
+                                    ),
+                            text: "Add rating",
+                            textStyle: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          );
+                        },
+                      ),
+                      SizedBox(width: 12.w),
+                      Expanded(
+                        child: BlocBuilder<CartCubit, CartState>(
+                          builder: (context, cartState) {
+                            return CustomLargeMainButton(
+                              isLoading: cartState is AddToCartLoadingState,
+                              onPressed: cartState is AddToCartLoadingState
+                                  ? null
+                                  : () =>
+                                      context.read<CartCubit>().addToCart(id),
+                              text: LocaleKeys.addToCart.tr(),
+                              radius: 20.r,
+                              textStyle: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w800,
+                              ),
+                            );
+                          },
                         ),
-                      );
-                    },
+                      ),
+                    ],
                   )),
             );
           },
         ),
       ),
+    );
+  }
+
+  Future<void> _showAddRatingSheet(BuildContext context,
+      {required int productId,
+      required bool isLoading,
+      required ProductRatingsCubit ratingCubit}) async {
+    final commentController = TextEditingController();
+    int ratingValue = 5;
+
+    await showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (ctx) {
+        final bottomPadding = MediaQuery.of(ctx).viewInsets.bottom;
+        return Container(
+          padding: EdgeInsets.fromLTRB(20.w, 16.h, 20.w, 16.h + bottomPadding),
+          decoration: BoxDecoration(
+            color: ctx.isDarkMode ? AppColors.black : AppColors.white,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(24.r)),
+          ),
+          child: StatefulBuilder(
+            builder: (ctx, setModalState) {
+              return SingleChildScrollView(
+                keyboardDismissBehavior:
+                    ScrollViewKeyboardDismissBehavior.onDrag,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Center(
+                      child: Container(
+                        width: 48.w,
+                        height: 5.h,
+                        decoration: BoxDecoration(
+                          color: AppColors.grey.withOpacity(0.3),
+                          borderRadius: BorderRadius.circular(99.r),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 16.h),
+                    Text(
+                      "Add your review",
+                      style: TextStyle(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                    SizedBox(height: 16.h),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: DropdownButtonFormField<int>(
+                            value: ratingValue,
+                            items: List.generate(
+                              5,
+                              (i) => DropdownMenuItem(
+                                value: i + 1,
+                                child: Text("${i + 1}"),
+                              ),
+                            ),
+                            onChanged: (v) {
+                              setModalState(() {
+                                ratingValue = v ?? 5;
+                              });
+                            },
+                            decoration: const InputDecoration(
+                              labelText: "Rating",
+                              border: OutlineInputBorder(),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 12.h),
+                    TextFormField(
+                      controller: commentController,
+                      minLines: 3,
+                      maxLines: 5,
+                      decoration: const InputDecoration(
+                        labelText: "Comment",
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                    SizedBox(height: 16.h),
+                    CustomLargeMainButton(
+                      text: "Submit",
+                      isLoading: isLoading,
+                      onPressed: isLoading
+                          ? null
+                          : () async {
+                              final comment = commentController.text.trim();
+                              if (comment.isEmpty) return;
+                              await ratingCubit.addProductRating(
+                                productId: productId,
+                                ratingValue: ratingValue,
+                                comment: comment,
+                              );
+
+                              if (ctx.mounted) {
+                                Navigator.pop(ctx);
+                              }
+                            },
+                      radius: 16.r,
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        );
+      },
     );
   }
 }

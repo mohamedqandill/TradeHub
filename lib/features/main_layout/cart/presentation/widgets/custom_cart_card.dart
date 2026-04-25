@@ -79,7 +79,7 @@ class _CustomCartCardState extends State<CustomCartCard> {
                     imageUrl: displayImage,
                     width: 100.w,
                     height: 90.w,
-                    fit: BoxFit.fill,
+                    fit: BoxFit.contain,
                     placeholder: (context, url) =>
                         const Center(child: CircularProgressIndicator()),
                     errorWidget: (context, url, error) => Icon(

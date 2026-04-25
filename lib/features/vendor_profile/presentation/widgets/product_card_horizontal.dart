@@ -48,7 +48,7 @@ class ProductCardHorizontal extends StatelessWidget {
                         padding: EdgeInsets.all(8.sp),
                         child: CachedNetworkImage(
                           imageUrl: image,
-                          fit: BoxFit.cover,
+                          fit: BoxFit.contain,
                           errorWidget: (context, url, error) => Icon(
                             Icons.store,
                             size: 40.sp,

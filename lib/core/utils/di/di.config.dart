@@ -144,6 +144,22 @@ import '../../../features/product_details/domain/use_cases/get_product_details_u
     as _i631;
 import '../../../features/product_details/presentation/cubit/product_details_cubit.dart'
     as _i39;
+import '../../../features/product_ratings/data/api/product_ratings_api_client.dart'
+    as _i153;
+import '../../../features/product_ratings/data/data_source_contract/product_ratings_data_source_contract.dart'
+    as _i560;
+import '../../../features/product_ratings/data/data_source_impl/product_ratings_data_source_impl.dart'
+    as _i356;
+import '../../../features/product_ratings/data/repo_impl/product_ratings_repository_impl.dart'
+    as _i13;
+import '../../../features/product_ratings/domain/repo_contract/product_ratings_repository_contract.dart'
+    as _i350;
+import '../../../features/product_ratings/domain/use_cases/add_product_rating_usecase.dart'
+    as _i603;
+import '../../../features/product_ratings/domain/use_cases/get_product_ratings_usecase.dart'
+    as _i165;
+import '../../../features/product_ratings/presentation/cubit/product_ratings_cubit.dart'
+    as _i31;
 import '../../../features/vendor_profile/data/api/vendor_api_client.dart'
     as _i762;
 import '../../../features/vendor_profile/data/data_sources/vendor_data_source.dart'
@@ -206,6 +222,10 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i361.Dio>(),
           baseUrl: gh<String>(instanceName: 'baseUrl'),
         ));
+    gh.singleton<_i54.FavouriteApiClient>(() => _i54.FavouriteApiClient(
+          gh<_i361.Dio>(),
+          baseUrl: gh<String>(instanceName: 'baseUrl'),
+        ));
     gh.singleton<_i804.HomeApiClient>(() => _i804.HomeApiClient(
           gh<_i361.Dio>(),
           baseUrl: gh<String>(instanceName: 'baseUrl'),
@@ -215,10 +235,11 @@ extension GetItInjectableX on _i174.GetIt {
               gh<_i361.Dio>(),
               baseUrl: gh<String>(instanceName: 'baseUrl'),
             ));
-    gh.singleton<_i54.FavouriteApiClient>(() => _i54.FavouriteApiClient(
-          gh<_i361.Dio>(),
-          baseUrl: gh<String>(instanceName: 'baseUrl'),
-        ));
+    gh.singleton<_i153.ProductRatingsApiClient>(
+        () => _i153.ProductRatingsApiClient(
+              gh<_i361.Dio>(),
+              baseUrl: gh<String>(instanceName: 'baseUrl'),
+            ));
     gh.factory<_i768.FavouriteDataSource>(
         () => _i768.FavouriteDataSourceImpl(gh<_i54.FavouriteApiClient>()));
     gh.factory<_i276.NewPasswordDataSourceContract>(
@@ -242,6 +263,9 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i529.HomeDataSource>(),
           gh<_i595.HomeLocalDataSource>(),
         ));
+    gh.factory<_i560.ProductRatingsDataSourceContract>(() =>
+        _i356.ProductRatingsDataSourceImpl(
+            gh<_i153.ProductRatingsApiClient>()));
     gh.factory<_i181.VendorDataSource>(
         () => _i181.VendorDataSourceImpl(gh<_i762.VendorApiClient>()));
     gh.factory<_i467.GetFavoritesUseCase>(
@@ -279,6 +303,9 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i922.UpdateItemQuantityUseCase(gh<_i232.CartRepoContract>()));
     gh.factory<_i776.LoginUseCase>(
         () => _i776.LoginUseCase(gh<_i581.LoginRepoContract>()));
+    gh.factory<_i350.ProductRatingsRepositoryContract>(() =>
+        _i13.ProductRatingsRepositoryImpl(
+            gh<_i560.ProductRatingsDataSourceContract>()));
     gh.factory<_i490.RegisterUseCase>(
         () => _i490.RegisterUseCase(gh<_i366.RegisterRepo>()));
     gh.factory<_i501.SendOTPUseCase>(
@@ -293,6 +320,12 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i467.GetFavoritesUseCase>(),
           gh<_i1057.ToggleFavoriteUseCase>(),
         ));
+    gh.factory<_i165.GetProductRatingsUseCase>(() =>
+        _i165.GetProductRatingsUseCase(
+            gh<_i350.ProductRatingsRepositoryContract>()));
+    gh.factory<_i603.AddProductRatingUseCase>(() =>
+        _i603.AddProductRatingUseCase(
+            gh<_i350.ProductRatingsRepositoryContract>()));
     gh.factory<_i167.HomeCubit>(() => _i167.HomeCubit(
           gh<_i894.GetAllCategoryUseCase>(),
           gh<_i48.GetAllCompaniesUseCase>(),
@@ -313,6 +346,10 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i550.VerifyOTPUseCase(gh<_i95.VerifyOTPRepoContract>()));
     gh.factory<_i747.NewPasswordUseCase>(
         () => _i747.NewPasswordUseCase(gh<_i917.NewPasswordRepoContract>()));
+    gh.factory<_i31.ProductRatingsCubit>(() => _i31.ProductRatingsCubit(
+          gh<_i165.GetProductRatingsUseCase>(),
+          gh<_i603.AddProductRatingUseCase>(),
+        ));
     gh.factory<_i941.LoginBloc>(() => _i941.LoginBloc(
           gh<_i776.LoginUseCase>(),
           gh<_i1003.SignWithGoogleUseCase>(),

@@ -48,7 +48,7 @@ class VendorInfoCard extends StatelessWidget {
                   imageUrl: image,
                   width: 75.w,
                   height: 75.h,
-                  fit: BoxFit.fill,
+                  fit: BoxFit.contain,
                   errorWidget: (context, url, error) => Icon(
                     Icons.store,
                     size: 40.sp,
