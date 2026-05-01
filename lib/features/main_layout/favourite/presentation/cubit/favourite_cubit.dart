@@ -1,8 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:tradehub/core/shared_services/shared_product_repository.dart';
+import 'package:tradehub/core/utils/di/di.dart';
 import 'package:tradehub/features/main_layout/home/domain/entites/get_random_product_entity.dart';
 import 'package:tradehub/main.dart';
+
 import '../../../../../core/api/api_result/api_result.dart';
 import '../../domain/entites/favourite_product_entity.dart';
 import '../../domain/use_cases/get_favorites_use_case.dart';
@@ -22,7 +25,12 @@ class FavouriteCubit extends Cubit<FavouriteState> {
   ) : super(const FavouriteState.initial());
 
   List<FavoriteProductEntity> favorites = [];
-  Set<int> favoritesIds = {};
+  List<int?> favoritesIds = [];
+
+  void setFavorites(List<int?> ids) {
+    favoritesIds = List.from(ids);
+    emit(state.copyWith(favoritesUpdate: RequestStates.success));
+  }
 
   Future<void> getFavorites() async {
     emit(state.copyWith(getFavoritesState: RequestStates.loading));
@@ -42,27 +50,27 @@ class FavouriteCubit extends Cubit<FavouriteState> {
   }
 
   Future<void> toggleFavorite(int id) async {
-    favorites.removeWhere((e) => e.id == id);
+    if (favoritesIds.contains(id)) {
+      favoritesIds.remove(id);
+      favorites.removeWhere((e) => e.id == id);
+    } else {
+      favoritesIds.add(id);
+    }
+    favorites = List.from(favorites);
+
+    emit(state.copyWith(
+      favoritesUpdate: RequestStates.success,
+    ));
 
     emit(state.copyWith(
       toggleFavoriteState: RequestStates.loading,
     ));
-
-    favorites = List.from(favorites);
-
-    if (favoritesIds.contains(id)) {
-      favoritesIds.remove(id);
-      emit(state.copyWith());
-    } else {
-      favoritesIds.add(id);
-    }
-    emit(state.copyWith(toggleFavoriteState: RequestStates.loading));
-
     var result = await _toggleFavoriteUseCase(id);
 
     switch (result) {
       case Success():
         emit(state.copyWith(toggleFavoriteState: RequestStates.success));
+        getIt<SharedProductRepository>().markUpdated();
       case Error():
         emit(state.copyWith(
           toggleFavoriteState: RequestStates.error,
@@ -70,7 +78,6 @@ class FavouriteCubit extends Cubit<FavouriteState> {
         ));
     }
   }
-  
 
   void initFavorites(List<GetRandomProductEntity> products) {
     for (var product in products) {

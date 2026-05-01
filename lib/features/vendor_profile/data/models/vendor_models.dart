@@ -100,24 +100,27 @@ class VendorProductModel {
   final int? ratingCount;
   @JsonKey(name: ApiConstants.isFavourite)
   final bool? isFavourite;
+  @JsonKey(name: ApiConstants.imageUrl)
+  final String? imageUrl;
 
-  VendorProductModel({
-    this.id,
-    this.name,
-    this.description,
-    this.price,
-    this.quantity,
-    this.categoryName,
-    this.attributes,
-    this.averageRating,
-    this.ratingCount,
-    this.isFavourite,
-  });
+  VendorProductModel(
+      {this.id,
+      this.name,
+      this.description,
+      this.price,
+      this.quantity,
+      this.categoryName,
+      this.attributes,
+      this.averageRating,
+      this.ratingCount,
+      this.isFavourite,
+      this.imageUrl});
 
   factory VendorProductModel.fromJson(Map<String, dynamic> json) =>
       _$VendorProductModelFromJson(json);
 
   VendorProductEntity toEntity() => VendorProductEntity(
+        imageUrl: imageUrl ?? "",
         id: id ?? 0,
         name: name ?? "",
         description: description ?? "",

@@ -18,7 +18,12 @@ class GetRandomProductsDTO {
   @JsonKey(name: ApiConstants.quantity)
   final int? quantity;
   @JsonKey(name: ApiConstants.categoryId)
+
   final int? categoryId;
+
+  @JsonKey(name: ApiConstants.imageUrl)
+  final String? imageUrl;
+
   @JsonKey(name: ApiConstants.categoryName)
   final String? categoryName;
   @JsonKey(name: ApiConstants.companyId)
@@ -48,6 +53,7 @@ class GetRandomProductsDTO {
     required this.attributes,
     required this.averageRating,
     required this.ratingCount,
+    required this.imageUrl,
   });
 
   factory GetRandomProductsDTO.fromJson(Map<String, dynamic> json) =>
@@ -57,6 +63,7 @@ class GetRandomProductsDTO {
 
   toEntity() {
     return GetRandomProductEntity(
+      imageUrl: imageUrl??"",
       id: id,
       name: name??"",
       description: description??"",

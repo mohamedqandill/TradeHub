@@ -14,7 +14,7 @@ class ExploreSearchBar extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             color: context.isDarkMode
-                ? Colors.grey.withOpacity(0.5)
+                ? Colors.black.withOpacity(0.35)
                 : Colors.black.withOpacity(0.05),
             blurRadius: 15,
             offset: const Offset(0, 5),
@@ -25,14 +25,15 @@ class ExploreSearchBar extends StatelessWidget {
         decoration: InputDecoration(
           hintText: "Search vendors, products or categories...",
           hintStyle: TextStyle(
-            color: AppColors.grey.withOpacity(0.5),
+            color: (context.isDarkMode ? AppColors.whiteGrey : AppColors.grey)
+                .withOpacity(0.65),
             fontSize: 14.sp,
           ),
           prefixIcon:
               Icon(Icons.search_rounded, color: context.mainColor, size: 22.sp),
           filled: true,
           fillColor: context.isDarkMode
-              ? AppColors.grey.withOpacity(0.1)
+              ? AppColors.lightBlack.withOpacity(0.6)
               : Colors.white,
           contentPadding:
               EdgeInsets.symmetric(vertical: 12.h, horizontal: 20.w),
@@ -43,6 +44,13 @@ class ExploreSearchBar extends StatelessWidget {
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15.r),
             borderSide: BorderSide.none,
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15.r),
+            borderSide: BorderSide(
+              color: context.isDarkMode ? Colors.white12 : Colors.black12,
+              width: 1,
+            ),
           ),
         ),
       ),

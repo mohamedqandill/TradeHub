@@ -1,4 +1,5 @@
 import 'package:tradehub/core/api/api_result/api_result.dart';
+import 'package:tradehub/features/authentication/data/models/login/login_response_dto.dart';
 import 'package:tradehub/features/authentication/domain/entites/register/register_entity.dart';
 
 import '../../models/register/register_body.dart';
@@ -11,6 +12,6 @@ abstract class RegisterDataSource {
 
   Future<ApiResult<String>> verifyAccount(
       {required String email, required String phone});
-  Future<ApiResult<void>> signWithGoogle();
+  Future<ApiResult<LoginResponseDTO>> signWithGoogle();
   Future<ApiResult<void>> signWithFacebook();
 }

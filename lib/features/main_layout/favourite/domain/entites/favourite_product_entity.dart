@@ -11,8 +11,10 @@ class FavoriteProductEntity {
   final double averageRating;
   final int ratingCount;
   final bool isFavourite;
+  final String imageUrl;
 
   FavoriteProductEntity({
+    required this.imageUrl,
     required this.id,
     required this.name,
     required this.description,

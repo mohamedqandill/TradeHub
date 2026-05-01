@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tradehub/core/shared_services/shared_product_repository.dart';
 import 'package:tradehub/core/utils/di/di.dart';
 import 'package:tradehub/features/main_layout/home/presentation/cubit/home_cubit.dart';
+import 'package:tradehub/main.dart';
 
 import 'home_screen_body.dart';
 
@@ -12,7 +14,9 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen>  {
+  
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(

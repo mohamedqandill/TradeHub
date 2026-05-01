@@ -31,8 +31,12 @@ class GetRandomProductEntity {
 
   final bool? isFavourite;
 
+    @JsonKey(name: ApiConstants.imageUrl)
+  final String? imageUrl;
+
   GetRandomProductEntity({
     required this.isFavourite,
+        required this.imageUrl,
     required this.id,
     required this.name,
     required this.description,
@@ -46,4 +50,38 @@ class GetRandomProductEntity {
     required this.averageRating,
     required this.ratingCount,
   });
+
+  GetRandomProductEntity copyWith({
+    int? id,
+    String? name,
+    String? description,
+    int? price,
+    int? quantity,
+    int? categoryId,
+    String? categoryName,
+    String? companyId,
+    String? companyName,
+    List<dynamic>? attributes,
+    int? averageRating,
+    int? ratingCount,
+    bool? isFavourite,
+    String? imageUrl,
+  }) {
+    return GetRandomProductEntity(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      description: description ?? this.description,
+      price: price ?? this.price,
+      quantity: quantity ?? this.quantity,
+      categoryId: categoryId ?? this.categoryId,
+      categoryName: categoryName ?? this.categoryName,
+      companyId: companyId ?? this.companyId,
+      companyName: companyName ?? this.companyName,
+      attributes: attributes ?? this.attributes,
+      averageRating: averageRating ?? this.averageRating,
+      ratingCount: ratingCount ?? this.ratingCount,
+      isFavourite: isFavourite ?? this.isFavourite,
+      imageUrl: imageUrl ?? this.imageUrl,
+    );
+  }
 }

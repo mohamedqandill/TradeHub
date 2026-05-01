@@ -1,18 +1,15 @@
-import 'package:bloc/bloc.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tradehub/Core/assets/app_assets.dart';
 import 'package:tradehub/Core/colors/app_colors.dart';
 import 'package:tradehub/Core/extensions/is_dark_mode.dart';
-import 'package:tradehub/core/extensions/base_inherited_context.dart';
 import 'package:tradehub/core/extensions/main_color.dart';
 import 'package:tradehub/features/product_details/presentation/cubit/product_details_cubit.dart';
 import 'package:tradehub/features/product_details/presentation/widgets/product_options_widget.dart';
-
-import '../../../core/assets/assets.gen.dart';
+import 'package:tradehub/features/product_ratings/presentation/cubit/product_ratings_cubit.dart';
+import 'package:tradehub/features/product_ratings/presentation/cubit/product_ratings_states.dart';
 
 class ProductDetailsBody extends StatefulWidget {
   final ProductDetailsCubit cubit;
@@ -23,7 +20,7 @@ class ProductDetailsBody extends StatefulWidget {
 }
 
 class _ProductDetailsBodyState extends State<ProductDetailsBody> {
-  int _currentImageIndex = 0;
+  // int _currentImageIndex = 0;
   final List<String> _images = [
     "https://pngate.com/wp-content/uploads/2025/04/samsung-galaxy-s25-blue-all-angles-1.png",
     "https://pngate.com/wp-content/uploads/2025/04/samsung-galaxy-s25-blue-all-angles-1.png",
@@ -53,52 +50,40 @@ class _ProductDetailsBodyState extends State<ProductDetailsBody> {
             ),
             child: Stack(
               children: [
-                CarouselSlider(
-                  options: CarouselOptions(
-                    height: 300.h,
-                    viewportFraction: 1.0,
-                    enableInfiniteScroll: true,
-                    onPageChanged: (index, reason) {
-                      setState(() => _currentImageIndex = index);
-                    },
-                  ),
-                  items: _images.map((url) {
-                    return CachedNetworkImage(
-                      imageUrl: url,
-                      width: double.infinity,
-                      fit: BoxFit.contain,
-                      placeholder: (context, url) =>
-                          const Center(child: CircularProgressIndicator()),
-                      errorWidget: (context, url, error) => Icon(
-                        Icons.image_not_supported_outlined,
-                        size: 50.sp,
-                        color: AppColors.grey,
-                      ),
-                    );
-                  }).toList(),
-                ),
-                Positioned(
-                  bottom: 20.h,
-                  left: 0,
-                  right: 0,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: _images.asMap().entries.map((entry) {
-                      return AnimatedContainer(
-                        duration: const Duration(milliseconds: 300),
-                        width: _currentImageIndex == entry.key ? 24.w : 8.w,
-                        height: 8.h,
-                        margin: EdgeInsets.symmetric(horizontal: 4.w),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.r),
-                          color: _currentImageIndex == entry.key
-                              ? context.mainColor
-                              : context.mainColor.withOpacity(0.2),
-                        ),
-                      );
-                    }).toList(),
+                CachedNetworkImage(
+                  imageUrl: product?.imageUrl ?? _images[0],
+                  width: double.infinity,
+                  fit: BoxFit.contain,
+                  placeholder: (context, url) =>
+                      const Center(child: CircularProgressIndicator()),
+                  errorWidget: (context, url, error) => Icon(
+                    Icons.image_not_supported_outlined,
+                    size: 50.sp,
+                    color: AppColors.grey,
                   ),
                 ),
+                // Positioned(
+                //   bottom: 20.h,
+                //   left: 0,
+                //   right: 0,
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.center,
+                //     children: _images.asMap().entries.map((entry) {
+                //       return AnimatedContainer(
+                //         duration: const Duration(milliseconds: 300),
+                //         width: _currentImageIndex == entry.key ? 24.w : 8.w,
+                //         height: 8.h,
+                //         margin: EdgeInsets.symmetric(horizontal: 4.w),
+                //         decoration: BoxDecoration(
+                //           borderRadius: BorderRadius.circular(10.r),
+                //           color: _currentImageIndex == entry.key
+                //               ? context.mainColor
+                //               : context.mainColor.withOpacity(0.2),
+                //         ),
+                //       );
+                //     }).toList(),
+                //   ),
+                // ),
               ],
             ),
           ),
@@ -182,7 +167,7 @@ class _ProductDetailsBodyState extends State<ProductDetailsBody> {
                           color: Colors.amber, size: 20.sp),
                       SizedBox(width: 4.w),
                       Text(
-                        product?.averageRating.toString() ?? "0.0",
+                        product?.averageRating.toString() ?? "",
                         style: TextStyle(
                           fontWeight: FontWeight.w800,
                           fontSize: 14.sp,
@@ -276,17 +261,146 @@ class _ProductDetailsBodyState extends State<ProductDetailsBody> {
               ),
               delegate: SliverChildBuilderDelegate(
                 (context, index) {
-                  final attr = product.attributes![index];
+                  final attr = product?.attributes![index];
                   return ProductOptionWidget(
-                    categoryAttName: attr.categoryAttributeName??"",
-                    value: attr.value??""   ,
+                    categoryAttName: attr?.categoryAttributeName ?? "",
+                    value: attr?.value ?? "",
                   );
                 },
-                childCount: product!.attributes?.length??0,
+                childCount: product?.attributes?.length ?? 0,
               ),
             ),
           ),
         ],
+
+        // 5. Reviews Section
+        SliverPadding(
+          padding: EdgeInsets.fromLTRB(20.w, 24.h, 20.w, 12.h),
+          sliver: SliverToBoxAdapter(
+            child: Text(
+              "REVIEWS",
+              style: TextStyle(
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w900,
+                letterSpacing: 1.5,
+              ),
+            ),
+          ),
+        ),
+        BlocBuilder<ProductRatingsCubit, ProductRatingsStates>(
+          builder: (context, state) {
+            final ratingsCubit = context.read<ProductRatingsCubit>();
+            final ratings = ratingsCubit.productRatings;
+
+            if (state is GetProductRatingsLoadingState && ratings.isEmpty) {
+              return SliverToBoxAdapter(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.w),
+                  child: const Center(child: CircularProgressIndicator()),
+                ),
+              );
+            }
+
+            if (state is GetProductRatingsErrorState && ratings.isEmpty) {
+              return SliverToBoxAdapter(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.w),
+                  child: Text(
+                    state.message,
+                    style: TextStyle(
+                      color: AppColors.grey,
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              );
+            }
+
+            if (ratings.isEmpty) {
+              return SliverToBoxAdapter(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.w),
+                  child: Text(
+                    "No reviews yet.",
+                    style: TextStyle(
+                      color: AppColors.grey,
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              );
+            }
+
+            return SliverPadding(
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
+              sliver: SliverList.separated(
+                itemCount: ratings.length,
+                separatorBuilder: (_, __) => SizedBox(height: 12.h),
+                itemBuilder: (context, index) {
+                  final r = ratings[index];
+                  final name = (r.userFullname ?? "").trim();
+                  final comment = (r.comment ?? "").trim();
+                  final value = r.ratingValue ?? 0;
+
+                  return Container(
+                    padding: EdgeInsets.all(14.w),
+                    decoration: BoxDecoration(
+                      color: context.isDarkMode
+                          ? AppColors.black.withOpacity(0.3)
+                          : AppColors.grey.withOpacity(0.06),
+                      borderRadius: BorderRadius.circular(16.r),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                name.isEmpty ? "Anonymous" : name,
+                                style: TextStyle(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w900,
+                                ),
+                              ),
+                            ),
+                            Icon(
+                              Icons.star_rounded,
+                              color: Colors.amber,
+                              size: 18.sp,
+                            ),
+                            SizedBox(width: 4.w),
+                            Text(
+                              value.toString(),
+                              style: TextStyle(
+                                fontWeight: FontWeight.w800,
+                                fontSize: 13.sp,
+                              ),
+                            ),
+                          ],
+                        ),
+                        if (comment.isNotEmpty) ...[
+                          SizedBox(height: 8.h),
+                          Text(
+                            comment,
+                            style: TextStyle(
+                              fontSize: 13.sp,
+                              height: 1.4,
+                              color: AppColors.grey,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ],
+                    ),
+                  );
+                },
+              ),
+            );
+          },
+        ),
 
         // 5. Spacer for Bottom Bar
         SliverToBoxAdapter(

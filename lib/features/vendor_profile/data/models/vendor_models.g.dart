@@ -63,6 +63,7 @@ VendorProductModel _$VendorProductModelFromJson(Map<String, dynamic> json) =>
       averageRating: (json['averageRating'] as num?)?.toInt(),
       ratingCount: (json['ratingCount'] as num?)?.toInt(),
       isFavourite: json['isFavourite'] as bool?,
+      imageUrl: json['imageUrl'] as String?,
     );
 
 Map<String, dynamic> _$VendorProductModelToJson(VendorProductModel instance) =>
@@ -77,6 +78,7 @@ Map<String, dynamic> _$VendorProductModelToJson(VendorProductModel instance) =>
       'averageRating': instance.averageRating,
       'ratingCount': instance.ratingCount,
       'isFavourite': instance.isFavourite,
+      'imageUrl': instance.imageUrl,
     };
 
 VendorProductAttributeModel _$VendorProductAttributeModelFromJson(

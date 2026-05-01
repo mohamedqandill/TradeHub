@@ -1,15 +1,8 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-import 'package:tradehub/core/assets/assets.gen.dart';
-import 'package:tradehub/core/colors/app_colors.dart';
-import 'package:tradehub/core/extensions/is_dark_mode.dart';
-import 'package:tradehub/core/extensions/main_color.dart';
-import 'package:tradehub/core/localization/locale_keys.g.dart';
 import 'package:tradehub/core/routes/routes.dart';
+import 'package:tradehub/features/category_details/presentation/category_details_args.dart';
 import 'package:tradehub/features/main_layout/home/presentation/cubit/home_cubit.dart';
 import 'package:tradehub/features/main_layout/home/presentation/widgets/home_category_widget.dart';
 
@@ -33,8 +26,16 @@ class CategorySection extends StatelessWidget {
             mainAxisExtent: 99.w,
             crossAxisCount: 2),
         itemBuilder: (context, index) {
+          final category = cubit?.categories[index];
           return InkWell(
-            onTap: () => Navigator.pushNamed(context, Routes.categoryDetails),
+            onTap: () => Navigator.pushNamed(
+              context,
+              Routes.categoryDetails,
+              arguments: CategoryDetailsArgs(
+                categoryId: category?.id ?? 0,
+                categoryName: category?.name ?? "",
+              ),
+            ),
             child: Skeletonizer(
               enabled: isLoading ?? false,
               child: HomeCategoryWidget(

@@ -26,15 +26,11 @@ class LoginRepoImpl implements LoginRepoContract {
         if (isRememberMe) {
           await getIt<SecureStorageHelper>()
               .write(ApiConstants.token, result.data!.token!);
-          // DioServiceExtension.updateDioWithToken(result.data!.token!);
-          print("Token on app start: ${result.data!.token!}");
-          print("perm update");
+          
         } else {
           final session = getIt<SessionManager>();
           session.token = result.data!.token!;
-          // DioServiceExtension.updateDioWithToken(
-          //     getIt<SessionManager>().token ?? "");
-          print("temp update ${getIt<SessionManager>().token}");
+        
         }
         Map<dynamic, dynamic> userInfo = {
           "fullName": result.data?.fullName,

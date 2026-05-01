@@ -108,7 +108,7 @@ class VendorsSection extends StatelessWidget {
                                 width: 40.w,
                                 height: 40.h,
                                 imageUrl: vendor?.logoUrl ?? "",
-                                fit: BoxFit.fill,
+                                fit: BoxFit.contain,
                                 errorWidget: (context, url, error) =>
                                     const Icon(Icons.store),
                               ),

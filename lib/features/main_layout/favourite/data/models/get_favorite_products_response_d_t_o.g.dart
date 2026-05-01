@@ -28,6 +28,7 @@ Map<String, dynamic> _$GetFavoriteProductsResponseDTOToJson(
 
 FavoriteProductDTO _$FavoriteProductDTOFromJson(Map<String, dynamic> json) =>
     FavoriteProductDTO(
+      imageUrl: json['imageUrl'] as String?,
       id: (json['id'] as num?)?.toInt(),
       name: json['name'] as String?,
       description: json['description'] as String?,
@@ -59,6 +60,7 @@ Map<String, dynamic> _$FavoriteProductDTOToJson(FavoriteProductDTO instance) =>
       'averageRating': instance.averageRating,
       'ratingCount': instance.ratingCount,
       'isFavourite': instance.isFavourite,
+      'imageUrl': instance.imageUrl,
     };
 
 FavoriteAttributesDTO _$FavoriteAttributesDTOFromJson(

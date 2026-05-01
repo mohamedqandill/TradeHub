@@ -28,9 +28,7 @@ class CartCubit extends Cubit<CartState> {
     this._removeBasketUseCase,
     this._removeItemUseCase,
     this._updateItemQuantityUseCase,
-  ) : super(CartInitial()) {
-    getBasket();
-  }
+  ) : super(CartInitial());
 
   void getBasket() async {
     if (!_isCartChanged && isCartInitated) return;
@@ -40,8 +38,8 @@ class CartCubit extends Cubit<CartState> {
       case Success():
         cart = result.data;
         emit(GetBasketSuccess());
-        _isCartChanged = false; 
-          isCartInitated=true;
+        _isCartChanged = false;
+        isCartInitated = true;
       case Error():
         emit(GetBasketError(result.error?.message ?? "Falied To Get Cart"));
     }
@@ -91,7 +89,7 @@ class CartCubit extends Cubit<CartState> {
     }
   }
 
-  void updateItemQuantity({required int id,required int quantity}) async {
+  void updateItemQuantity({required int id, required int quantity}) async {
     emit(UpdateItemQuantityLoading(id));
     final result = await _updateItemQuantityUseCase(id: id, quantity: quantity);
     switch (result) {
@@ -105,5 +103,8 @@ class CartCubit extends Cubit<CartState> {
     }
   }
 
-  bool get shouldFetchCart => cart == null && !_isCartChanged;
-}
+void resetCart() {
+  cart = null;
+  _isCartChanged = true;
+  isCartInitated = false;
+}}

@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tradehub/Core/colors/app_colors.dart';
 import 'package:tradehub/Core/extensions/base_inherited_context.dart';
@@ -11,6 +12,7 @@ import 'package:tradehub/core/localization/locale_keys.g.dart';
 import 'package:tradehub/core/routes/routes.dart';
 import 'package:tradehub/core/shared_widgets/fields/custom_search_field.dart';
 import 'package:tradehub/core/shared_widgets/widgets/svg_widget.dart';
+import 'package:tradehub/features/main_layout/home/presentation/cubit/home_cubit.dart';
 
 class HomeHeaderWidget extends StatelessWidget {
   final String address;
@@ -25,16 +27,16 @@ class HomeHeaderWidget extends StatelessWidget {
       clipper: WaveClipper(),
       child: Container(
         color: context.mainColor,
-      padding: EdgeInsets.only(
-        top: MediaQuery.of(context).viewPadding.top + 16.h,
+        padding: EdgeInsets.only(
+          top: MediaQuery.of(context).viewPadding.top + 16.h,
           left: 16.w,
           right: 16.w,
           bottom: 50.h,
-      ),
-      child: Column(
-        children: [
-          Row(
-            children: [
+        ),
+        child: Column(
+          children: [
+            Row(
+              children: [
                 Center(
                   child: SvgWidget(
                     height: 25.h,
@@ -44,8 +46,8 @@ class HomeHeaderWidget extends StatelessWidget {
                         ? Assets.icons.addressDark
                         : Assets.icons.address,
                     color: Colors.white,
+                  ),
                 ),
-              ),
                 SizedBox(width: 8.w),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,28 +68,35 @@ class HomeHeaderWidget extends StatelessWidget {
                             fontSize: 14.sp,
                             color: Colors.white,
                             fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () async {
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () async {
                             await Navigator.pushNamed(
                                 context, Routes.flutterMap);
-                        onPlaceSelected();
-                      },
+                            onPlaceSelected();
+                          },
                           child: Icon(
                             Icons.keyboard_arrow_down,
                             size: 20.sp,
-                                color: Colors.white,
+                            color: Colors.white,
                           ),
                         )
-                        ],
-                      ),
+                      ],
+                    ),
                   ],
                 ),
                 const Spacer(),
                 InkWell(
                   onTap: () {
-                    Navigator.pushNamed(context, Routes.favourite);
+                    var cubit = context.read<HomeCubit>();
+                    Navigator.pushNamed(context, Routes.favourite).then(
+                      (value) {
+                        if (value == true) {
+                          cubit.getRandomProducts();
+                        }
+                      },
+                    );
                   },
                   child: Padding(
                     padding: context.locale.languageCode == AppConstants.ar
@@ -129,41 +138,41 @@ class HomeHeaderWidget extends StatelessWidget {
                         height: 20.h,
                         fit: BoxFit.cover,
                         assetName: context.isDarkMode
-                        ? Assets.icons.notificationDark
-                        : Assets.icons.notification,
+                            ? Assets.icons.notificationDark
+                            : Assets.icons.notification,
                         color: Colors.white,
                       ),
                     ),
                   ),
                 )
-            ],
-          ),
-          SizedBox(height: 24.h),
-          Container(
-            decoration: BoxDecoration(
-              color: context.isDarkMode ? AppColors.lightBlack : Colors.white,
+              ],
+            ),
+            SizedBox(height: 24.h),
+            Container(
+              decoration: BoxDecoration(
+                color: context.isDarkMode ? AppColors.lightBlack : Colors.white,
                 borderRadius: BorderRadius.circular(50.r),
-              boxShadow: [
-                BoxShadow(
+                boxShadow: [
+                  BoxShadow(
                     color: Colors.black.withOpacity(0.08),
                     blurRadius: 15,
                     offset: const Offset(0, 5),
-                )
-              ],
-            ),
-            child: CustomSearchField(
-              prefixIcon: Icon(
-                Icons.search_rounded,
+                  )
+                ],
+              ),
+              child: CustomSearchField(
+                prefixIcon: Icon(
+                  Icons.search_rounded,
                   size: 24.sp,
                   color: context.isDarkMode
                       ? AppColors.white.withOpacity(0.6)
                       : AppColors.grey.withOpacity(0.6),
+                ),
+                hintText: LocaleKeys.searchForProducts.tr(),
               ),
-              hintText: LocaleKeys.searchForProducts.tr(),
             ),
-            ),
-        ],
-      ),
+          ],
+        ),
       ),
     );
   }

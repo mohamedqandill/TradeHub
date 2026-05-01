@@ -31,8 +31,11 @@ class ProductDetailsResponseDTO {
   final int? ratingCount;
   @JsonKey(name: ApiConstants.isFavourite)
   final bool? isFavourite;
+  @JsonKey(name: ApiConstants.imageUrl)
+  final String? imageUrl;
 
   const ProductDetailsResponseDTO({
+    required this.imageUrl,
     required this.isFavourite,
     required this.id,
     required this.name,

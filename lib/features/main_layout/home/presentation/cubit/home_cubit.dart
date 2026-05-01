@@ -1,8 +1,10 @@
-import 'package:bloc/bloc.dart';
+import 'dart:async';
+
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:tradehub/core/api/api_result/api_result.dart';
-import 'package:tradehub/core/utils/network/network_info.dart';
+import 'package:tradehub/core/shared_services/shared_product_repository.dart';
 import 'package:tradehub/features/main_layout/home/domain/entites/get_category_entity.dart';
 import 'package:tradehub/features/main_layout/home/domain/entites/get_company_entity.dart';
 import 'package:tradehub/features/main_layout/home/domain/entites/get_random_product_entity.dart';
@@ -29,7 +31,7 @@ class HomeCubit extends Cubit<HomeState> {
 
   List<GetCategoryEntity> categories = [];
   List<GetCompanyEntity> companies = [];
-  List<GetRandomProductEntity> randomProducts = [];
+  // List<GetRandomProductEntity> randomProducts = [];
 
   Future<void> revokeHomeApis() async {
     await Future.wait([
@@ -62,7 +64,6 @@ class HomeCubit extends Cubit<HomeState> {
 
     switch (result) {
       case Success():
-        print(companies.length);
         emit(state.copyWith(getCompaniesState: RequestStates.success));
         companies = result.data ?? [];
       case Error():
@@ -79,8 +80,10 @@ class HomeCubit extends Cubit<HomeState> {
 
     switch (result) {
       case Success():
-        emit(state.copyWith(getRandomProductsState: RequestStates.success));
-        randomProducts = result.data ?? [];
+        emit(state.copyWith(
+            getRandomProductsState: RequestStates.success,
+            randomProducts: result.data ?? []));
+
       case Error():
         emit(state.copyWith(
             getRandomProductsState: RequestStates.error,

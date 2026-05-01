@@ -7,6 +7,7 @@ import 'package:tradehub/Core/colors/app_colors.dart';
 import 'package:tradehub/Core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/extensions/main_color.dart';
 import 'package:tradehub/core/localization/locale_keys.g.dart';
+import 'package:tradehub/core/routes/routes.dart';
 import 'package:tradehub/features/main_layout/favourite/presentation/cubit/favourite_cubit.dart';
 import 'package:tradehub/features/main_layout/favourite/presentation/widgets/custom_favorite_card.dart';
 import 'package:tradehub/features/main_layout/favourite/presentation/widgets/empty_favorite_screen_body.dart';
@@ -27,7 +28,7 @@ class _FavoritesScreenBodyState extends State<FavoritesScreenBody> {
     return BlocBuilder<FavouriteCubit, FavouriteState>(
         builder: (context, state) {
       var cubit = context.read<FavouriteCubit>();
-    
+
       if (state.getFavoritesState == RequestStates.loading) {
         return Center(
           child: CircularProgressIndicator(
@@ -80,13 +81,21 @@ class _FavoritesScreenBodyState extends State<FavoritesScreenBody> {
                           return Skeletonizer(
                             enabled: state.getFavoritesState ==
                                 RequestStates.loading,
-                            child: CustomFavoriteCard(
-                              id: product.id,
-                              image:
-                                  "https://pngate.com/wp-content/uploads/2025/04/samsung-galaxy-s25-blue-all-angles-1.png", // Adjust based on your asset logic
-                              title: product.name,
-                              storeName: product.companyName,
-                              price: product.price.toString(),
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                    context, Routes.productDetails,
+                                    arguments: product.id);
+                              },
+                              child: CustomFavoriteCard(
+                                id: product.id,
+                                image: product.imageUrl.isNotEmpty
+                                    ? product.imageUrl
+                                    : "https://pngate.com/wp-content/uploads/2025/04/samsung-galaxy-s25-blue-all-angles-1.png", // Adjust based on your asset logic
+                                title: product.name,
+                                storeName: product.companyName,
+                                price: product.price.toString(),
+                              ),
                             ),
                           );
                         },

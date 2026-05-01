@@ -1,32 +1,28 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tradehub/Core/colors/app_colors.dart';
-import 'package:tradehub/core/assets/assets.gen.dart';
 import 'package:tradehub/core/extensions/base_inherited_context.dart';
-import 'package:tradehub/core/extensions/main_color.dart';
 import 'package:tradehub/core/localization/locale_keys.g.dart';
 import 'package:tradehub/core/routes/routes.dart';
 import 'package:tradehub/core/shared_widgets/widgets/arrow_back_widget.dart';
+import 'package:tradehub/core/shared_widgets/widgets/custom_error_widget.dart';
+import 'package:tradehub/features/main_layout/cart/presentation/cubit/cart_cubit.dart';
+import 'package:tradehub/features/main_layout/cart/presentation/cubit/cart_states.dart';
 import 'package:tradehub/features/vendor_profile/presentation/cubit/vendor_profile_cubit.dart';
 import 'package:tradehub/features/vendor_profile/presentation/cubit/vendor_profile_states.dart';
-import 'package:tradehub/features/vendor_profile/presentation/widgets/vendor_info_card.dart';
-import 'package:tradehub/features/vendor_profile/presentation/widgets/vendor_search_bar.dart';
-import 'package:tradehub/features/vendor_profile/presentation/widgets/vendor_category_pills.dart';
-import 'package:tradehub/features/vendor_profile/presentation/widgets/product_card_vertical.dart';
 import 'package:tradehub/features/vendor_profile/presentation/widgets/product_card_horizontal.dart';
-import 'package:tradehub/core/shared_widgets/widgets/custom_error_widget.dart';
+import 'package:tradehub/features/vendor_profile/presentation/widgets/product_card_vertical.dart';
+import 'package:tradehub/features/vendor_profile/presentation/widgets/vendor_category_pills.dart';
+import 'package:tradehub/features/vendor_profile/presentation/widgets/vendor_info_card.dart';
 
-class VendorProfileScreenBody extends StatefulWidget {
+import '../../../core/functions/show_snakbar.dart';
+import '../../../core/utils/animations/loading_product_animation.dart';
+
+class VendorProfileScreenBody extends StatelessWidget {
   const VendorProfileScreenBody({super.key});
 
-  @override
-  State<VendorProfileScreenBody> createState() =>
-      _VendorProfileScreenBodyState();
-}
-
-class _VendorProfileScreenBodyState extends State<VendorProfileScreenBody> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<VendorProfileCubit, VendorProfileStates>(
@@ -35,25 +31,39 @@ class _VendorProfileScreenBodyState extends State<VendorProfileScreenBody> {
       final vendor = cubit.vendorDetails;
 
       if (state is GetVendorDetailsLoadingState) {
-        return const Scaffold(body: Center(child: CircularProgressIndicator()));
+        return Scaffold(
+          body: loadingProductAnimation(),
+        );
       }
 
       if (state is GetVendorDetailsErrorState) {
         final vendorId =
             ModalRoute.of(context)?.settings.arguments as String? ?? "";
-        return Scaffold(
-          body: CustomErrorWidget(
-            message: (state as GetVendorDetailsErrorState).error,
-            onRetry: () {
-              cubit.getVendorDetails(vendorId);
-              cubit.getVendorSubcategories(vendorId);
-            },
+        return BlocListener<CartCubit, CartState>(
+          listener: (context, state) {
+            if (state is AddToCartSuccessState) {
+              showSuccessSnackBar(messageTitle: "Added To Cart");
+            }
+            if (state is AddToCartErrorState) {
+              showFailureSnackBar(context, messageTitle: "Failed Add To Cart");
+            }
+          },
+          child: Scaffold(
+            body: CustomErrorWidget(
+              message: (state).error,
+              onRetry: () {
+                cubit.getVendorDetails(vendorId);
+                cubit.getVendorSubcategories(vendorId);
+              },
+            ),
           ),
         );
       }
 
       if (vendor == null) {
-        return const Scaffold(body: Center(child: CircularProgressIndicator()));
+        return Scaffold(
+          body: loadingProductAnimation(),
+        );
       }
 
       return Scaffold(
@@ -77,12 +87,12 @@ class _VendorProfileScreenBodyState extends State<VendorProfileScreenBody> {
                   clipBehavior: Clip.none,
                   fit: StackFit.expand,
                   children: [
-                    Image.network(
-                      vendor.logoUrl.isNotEmpty
+                    CachedNetworkImage(
+                   imageUrl:    vendor.logoUrl.isNotEmpty
                           ? vendor.logoUrl
                           : "https://img.freepik.com/free-photo/delicious-burger-with-fresh-ingredients_23-2148153401.jpg",
-                      fit: BoxFit.fill,
-                      errorBuilder: (_, __, ___) => Image.network(
+                      fit: BoxFit.contain,
+                      errorWidget: (_, __, ___) => Image.network(
                           "https://img.freepik.com/free-photo/delicious-burger-with-fresh-ingredients_23-2148153401.jpg",
                           fit: BoxFit.cover),
                     ),
@@ -181,10 +191,12 @@ class _VendorProfileScreenBodyState extends State<VendorProfileScreenBody> {
                                   arguments: product.id);
                             },
                             child: ProductCardVertical(
+                              productId: product.id,
                               title: product.name,
                               price: "${product.price} EGP",
-                              image:
-                                  "https://pngate.com/wp-content/uploads/2025/04/samsung-galaxy-s25-blue-all-angles-1.png",
+                              image: product.imageUrl!.isNotEmpty
+                                  ? product.imageUrl ?? ""
+                                  : "https://pngate.com/wp-content/uploads/2025/04/samsung-galaxy-s25-blue-all-angles-1.png",
                             ),
                           );
                         },
@@ -229,8 +241,9 @@ class _VendorProfileScreenBodyState extends State<VendorProfileScreenBody> {
                             ? product.description
                             : "No description available.",
                         price: "${product.price} EGP",
-                        image:
-                            "https://pngate.com/wp-content/uploads/2025/04/samsung-galaxy-s25-blue-all-angles-1.png",
+                        image: product.imageUrl!.isNotEmpty
+                            ? product.imageUrl ?? ""
+                            : "https://pngate.com/wp-content/uploads/2025/04/samsung-galaxy-s25-blue-all-angles-1.png",
                         rating: "5.0",
                         reviewSnippet: product.attributes.isNotEmpty
                             ? "${product.attributes.first.name}: ${product.attributes.first.value}"

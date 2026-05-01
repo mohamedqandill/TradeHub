@@ -38,9 +38,6 @@ class _LoginViewBodyState extends State<LoginViewBody> {
     return MultiBlocListener(
         listeners: [
           BlocListener<LoginBloc, LoginState>(
-            listenWhen: (previous, current) {
-              return previous.loginState != current.loginState;
-            },
             listener: (context, state) {
               if (state.loginState == RequestStates.success) {
                 showSuccessSnackBar(

@@ -7,7 +7,6 @@ import 'package:tradehub/Core/extensions/base_inherited_context.dart';
 import 'package:tradehub/Core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/extensions/main_color.dart';
 import 'package:tradehub/core/shared_widgets/widgets/heart_button.dart';
-import 'package:tradehub/features/main_layout/cart/presentation/cubit/cart_cubit.dart';
 import 'package:tradehub/features/main_layout/favourite/presentation/cubit/favourite_cubit.dart';
 
 class CustomFavoriteCard extends StatefulWidget {
@@ -61,7 +60,7 @@ class _CustomFavoriteCardState extends State<CustomFavoriteCard> {
                   imageUrl: widget.image,
                   width: double.infinity,
                   height: 140.h,
-                  fit: BoxFit.cover,
+                  fit: BoxFit.contain,
                   placeholder: (context, url) => const Center(
                     child: CircularProgressIndicator(),
                   ),
@@ -89,7 +88,6 @@ class _CustomFavoriteCardState extends State<CustomFavoriteCard> {
                     isTapped: true,
                     onTap: () {
                       context.read<FavouriteCubit>().toggleFavorite(widget.id);
-                     
                     },
                   ),
                 ),

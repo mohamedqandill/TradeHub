@@ -54,8 +54,11 @@ class FavoriteProductDTO {
   final int? ratingCount;
   @JsonKey(name: ApiConstants.isFavourite)
   final bool? isFavourite;
+  @JsonKey(name: ApiConstants.imageUrl)
+  final String? imageUrl;
 
   const FavoriteProductDTO({
+    this.imageUrl,
     this.id,
     this.name,
     this.description,
@@ -77,6 +80,7 @@ class FavoriteProductDTO {
 
   FavoriteProductEntity toEntity() {
     return FavoriteProductEntity(
+      imageUrl: imageUrl??"",
       id: id ?? 0,
       name: name ?? '',
       description: description ?? '',

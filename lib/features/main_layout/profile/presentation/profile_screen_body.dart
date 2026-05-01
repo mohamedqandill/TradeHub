@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'package:tradehub/core/api/api_constant/api_constant.dart';
 import 'package:tradehub/core/assets/assets.gen.dart';
 import 'package:tradehub/core/colors/app_colors.dart';
@@ -13,6 +14,8 @@ import 'package:tradehub/core/utils/di/di.dart';
 import 'package:tradehub/core/utils/secure_storage/secure_storage_service.dart';
 import 'package:tradehub/core/utils/storage/hive_storage.dart';
 import 'package:tradehub/features/authentication/presentation/login/view/widgets/custom_horizontal_divider.dart';
+import 'package:tradehub/features/main_layout/cart/presentation/cubit/cart_cubit.dart';
+import 'package:tradehub/features/main_layout/home/presentation/cubit/home_cubit.dart';
 import 'package:tradehub/features/main_layout/profile/presentation/widgets/card_info.dart';
 import 'package:tradehub/features/main_layout/profile/presentation/widgets/custom_profile_row_info.dart';
 import 'package:tradehub/features/main_layout/profile/presentation/widgets/profile_info_section.dart';
@@ -78,6 +81,8 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> {
         Expanded(
           child: ListView.separated(
               itemBuilder: (context, index) {
+                var cartCbit = context.read<CartCubit>();
+
                 return Padding(
                   padding: EdgeInsets.symmetric(horizontal: 12.0.sp),
                   child: CustomProfileRowInfo(
@@ -140,12 +145,17 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> {
                                       style: TextButton.styleFrom(
                                           fixedSize: Size(130.w, 37.h),
                                           backgroundColor: context.mainColor,
-                                          side: const BorderSide(
-                                              width: 1, color: Colors.black)),
+                                          side: BorderSide(
+                                            width: 1,
+                                            color: context.isDarkMode
+                                                ? Colors.white12
+                                                : Colors.black,
+                                          )),
                                       onPressed: () async {
                                         Navigator.pop(dialogContext);
                                         await getIt<SecureStorageHelper>()
                                             .delete(ApiConstants.token);
+                                        cartCbit.resetCart();
                                         if (context.mounted) {
                                           Navigator.pushNamedAndRemoveUntil(
                                               context,

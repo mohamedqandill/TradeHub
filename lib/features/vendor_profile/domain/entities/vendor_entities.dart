@@ -46,7 +46,10 @@ class VendorProductEntity {
   final int ratingCount;
   final bool isFavourite;
 
+  final String? imageUrl;
+
   VendorProductEntity({
+    required this.imageUrl,
     required this.id,
     required this.name,
     required this.description,

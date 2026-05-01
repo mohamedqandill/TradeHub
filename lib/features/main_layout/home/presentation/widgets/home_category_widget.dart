@@ -27,11 +27,12 @@ class HomeCategoryWidget extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(12.r),
             child: CachedNetworkImage(
+              fadeInDuration: Duration.zero,
+              fadeOutDuration: Duration.zero,
               imageUrl: image,
               width: 48.w,
               height: 48.w,
               fit: BoxFit.cover,
-             
               errorWidget: (context, url, error) => const Icon(
                 Icons.error,
                 color: Colors.red,

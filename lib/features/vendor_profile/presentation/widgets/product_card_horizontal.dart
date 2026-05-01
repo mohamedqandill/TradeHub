@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tradehub/core/colors/app_colors.dart';
+import 'package:tradehub/core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/extensions/main_color.dart';
 
 class ProductCardHorizontal extends StatelessWidget {
@@ -23,12 +25,22 @@ class ProductCardHorizontal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textColor = context.isDarkMode ? AppColors.white : AppColors.black;
+    final subTextColor = (context.isDarkMode ? AppColors.whiteGrey : AppColors.grey)
+        .withOpacity(0.8);
+
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.h),
       padding: EdgeInsets.all(12.sp),
       decoration: BoxDecoration(
-        color: context.greyOrWhite, // Matching the design's blue
+        color: context.isDarkMode
+            ? AppColors.lightBlack.withOpacity(0.55)
+            : Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(30.r),
+        border: Border.all(
+          color: context.isDarkMode ? Colors.white12 : Colors.transparent,
+          width: 1,
+        ),
       ),
       child: Column(
         children: [
@@ -48,7 +60,7 @@ class ProductCardHorizontal extends StatelessWidget {
                         padding: EdgeInsets.all(8.sp),
                         child: CachedNetworkImage(
                           imageUrl: image,
-                          fit: BoxFit.cover,
+                          fit: BoxFit.contain,
                           errorWidget: (context, url, error) => Icon(
                             Icons.store,
                             size: 40.sp,
@@ -68,11 +80,22 @@ class ProductCardHorizontal extends StatelessWidget {
                     left: 0,
                     child: Container(
                       padding: EdgeInsets.all(4.sp),
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
+                      decoration: BoxDecoration(
+                        color: context.isDarkMode
+                            ? AppColors.black.withOpacity(0.9)
+                            : Colors.white,
                         shape: BoxShape.circle,
+                        border: Border.all(
+                          color: context.isDarkMode
+                              ? Colors.white12
+                              : Colors.black12,
+                        ),
                       ),
-                      child: Icon(Icons.add, size: 20.sp, color: Colors.black),
+                      child: Icon(
+                        Icons.add,
+                        size: 20.sp,
+                        color: context.isDarkMode ? AppColors.white : Colors.black,
+                      ),
                     ),
                   ),
                 ],
@@ -87,7 +110,7 @@ class ProductCardHorizontal extends StatelessWidget {
                     Text(
                       title,
                       style: TextStyle(
-                        color: Colors.white,
+                        color: textColor,
                         fontWeight: FontWeight.w800,
                         fontSize: 20.sp,
                       ),
@@ -96,7 +119,7 @@ class ProductCardHorizontal extends StatelessWidget {
                     Text(
                       description,
                       style: TextStyle(
-                        color: Colors.white.withOpacity(0.8),
+                        color: subTextColor,
                         fontSize: 12.sp,
                       ),
                       maxLines: 2,
@@ -106,7 +129,7 @@ class ProductCardHorizontal extends StatelessWidget {
                     Text(
                       price,
                       style: TextStyle(
-                        color: Colors.white,
+                        color: context.mainColor,
                         fontWeight: FontWeight.w600,
                         fontSize: 14.sp,
                       ),
@@ -123,18 +146,22 @@ class ProductCardHorizontal extends StatelessWidget {
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.2),
+                  color: context.isDarkMode
+                      ? Colors.white.withOpacity(0.08)
+                      : Colors.black.withOpacity(0.04),
                   borderRadius: BorderRadius.circular(15.r),
-                  border: Border.all(color: Colors.white.withOpacity(0.3)),
+                  border: Border.all(
+                    color: context.isDarkMode ? Colors.white12 : Colors.black12,
+                  ),
                 ),
                 child: Row(
                   children: [
-                    Icon(Icons.star, size: 14.sp, color: Colors.white),
+                    Icon(Icons.star, size: 14.sp, color: const Color(0xffFFC107)),
                     SizedBox(width: 4.w),
                     Text(
                       rating,
                       style: TextStyle(
-                          color: Colors.white,
+                          color: textColor,
                           fontSize: 12.sp,
                           fontWeight: FontWeight.w700),
                     ),
@@ -146,7 +173,7 @@ class ProductCardHorizontal extends StatelessWidget {
                 child: Text(
                   "\"$reviewSnippet\"",
                   style: TextStyle(
-                    color: Colors.white.withOpacity(0.9),
+                    color: subTextColor,
                     fontSize: 11.sp,
                     fontStyle: FontStyle.italic,
                   ),
