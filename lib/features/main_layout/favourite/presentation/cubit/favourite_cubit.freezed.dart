@@ -18,25 +18,35 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$FavouriteState {
   RequestStates get getFavoritesState => throw _privateConstructorUsedError;
   RequestStates get toggleFavoriteState => throw _privateConstructorUsedError;
+  RequestStates get favoritesUpdate => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(RequestStates getFavoritesState,
-            RequestStates toggleFavoriteState, String? errorMessage)
+    required TResult Function(
+            RequestStates getFavoritesState,
+            RequestStates toggleFavoriteState,
+            RequestStates favoritesUpdate,
+            String? errorMessage)
         initial,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(RequestStates getFavoritesState,
-            RequestStates toggleFavoriteState, String? errorMessage)?
+    TResult? Function(
+            RequestStates getFavoritesState,
+            RequestStates toggleFavoriteState,
+            RequestStates favoritesUpdate,
+            String? errorMessage)?
         initial,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(RequestStates getFavoritesState,
-            RequestStates toggleFavoriteState, String? errorMessage)?
+    TResult Function(
+            RequestStates getFavoritesState,
+            RequestStates toggleFavoriteState,
+            RequestStates favoritesUpdate,
+            String? errorMessage)?
         initial,
     required TResult orElse(),
   }) =>
@@ -74,6 +84,7 @@ abstract class $FavouriteStateCopyWith<$Res> {
   $Res call(
       {RequestStates getFavoritesState,
       RequestStates toggleFavoriteState,
+      RequestStates favoritesUpdate,
       String? errorMessage});
 }
 
@@ -94,6 +105,7 @@ class _$FavouriteStateCopyWithImpl<$Res, $Val extends FavouriteState>
   $Res call({
     Object? getFavoritesState = null,
     Object? toggleFavoriteState = null,
+    Object? favoritesUpdate = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_value.copyWith(
@@ -104,6 +116,10 @@ class _$FavouriteStateCopyWithImpl<$Res, $Val extends FavouriteState>
       toggleFavoriteState: null == toggleFavoriteState
           ? _value.toggleFavoriteState
           : toggleFavoriteState // ignore: cast_nullable_to_non_nullable
+              as RequestStates,
+      favoritesUpdate: null == favoritesUpdate
+          ? _value.favoritesUpdate
+          : favoritesUpdate // ignore: cast_nullable_to_non_nullable
               as RequestStates,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
@@ -124,6 +140,7 @@ abstract class _$$InitialImplCopyWith<$Res>
   $Res call(
       {RequestStates getFavoritesState,
       RequestStates toggleFavoriteState,
+      RequestStates favoritesUpdate,
       String? errorMessage});
 }
 
@@ -142,6 +159,7 @@ class __$$InitialImplCopyWithImpl<$Res>
   $Res call({
     Object? getFavoritesState = null,
     Object? toggleFavoriteState = null,
+    Object? favoritesUpdate = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_$InitialImpl(
@@ -152,6 +170,10 @@ class __$$InitialImplCopyWithImpl<$Res>
       toggleFavoriteState: null == toggleFavoriteState
           ? _value.toggleFavoriteState
           : toggleFavoriteState // ignore: cast_nullable_to_non_nullable
+              as RequestStates,
+      favoritesUpdate: null == favoritesUpdate
+          ? _value.favoritesUpdate
+          : favoritesUpdate // ignore: cast_nullable_to_non_nullable
               as RequestStates,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
@@ -167,6 +189,7 @@ class _$InitialImpl implements _Initial {
   const _$InitialImpl(
       {this.getFavoritesState = RequestStates.initial,
       this.toggleFavoriteState = RequestStates.initial,
+      this.favoritesUpdate = RequestStates.initial,
       this.errorMessage});
 
   @override
@@ -176,11 +199,14 @@ class _$InitialImpl implements _Initial {
   @JsonKey()
   final RequestStates toggleFavoriteState;
   @override
+  @JsonKey()
+  final RequestStates favoritesUpdate;
+  @override
   final String? errorMessage;
 
   @override
   String toString() {
-    return 'FavouriteState.initial(getFavoritesState: $getFavoritesState, toggleFavoriteState: $toggleFavoriteState, errorMessage: $errorMessage)';
+    return 'FavouriteState.initial(getFavoritesState: $getFavoritesState, toggleFavoriteState: $toggleFavoriteState, favoritesUpdate: $favoritesUpdate, errorMessage: $errorMessage)';
   }
 
   @override
@@ -192,13 +218,15 @@ class _$InitialImpl implements _Initial {
                 other.getFavoritesState == getFavoritesState) &&
             (identical(other.toggleFavoriteState, toggleFavoriteState) ||
                 other.toggleFavoriteState == toggleFavoriteState) &&
+            (identical(other.favoritesUpdate, favoritesUpdate) ||
+                other.favoritesUpdate == favoritesUpdate) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, getFavoritesState, toggleFavoriteState, errorMessage);
+  int get hashCode => Object.hash(runtimeType, getFavoritesState,
+      toggleFavoriteState, favoritesUpdate, errorMessage);
 
   /// Create a copy of FavouriteState
   /// with the given fields replaced by the non-null parameter values.
@@ -211,33 +239,45 @@ class _$InitialImpl implements _Initial {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(RequestStates getFavoritesState,
-            RequestStates toggleFavoriteState, String? errorMessage)
+    required TResult Function(
+            RequestStates getFavoritesState,
+            RequestStates toggleFavoriteState,
+            RequestStates favoritesUpdate,
+            String? errorMessage)
         initial,
   }) {
-    return initial(getFavoritesState, toggleFavoriteState, errorMessage);
+    return initial(
+        getFavoritesState, toggleFavoriteState, favoritesUpdate, errorMessage);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(RequestStates getFavoritesState,
-            RequestStates toggleFavoriteState, String? errorMessage)?
+    TResult? Function(
+            RequestStates getFavoritesState,
+            RequestStates toggleFavoriteState,
+            RequestStates favoritesUpdate,
+            String? errorMessage)?
         initial,
   }) {
-    return initial?.call(getFavoritesState, toggleFavoriteState, errorMessage);
+    return initial?.call(
+        getFavoritesState, toggleFavoriteState, favoritesUpdate, errorMessage);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(RequestStates getFavoritesState,
-            RequestStates toggleFavoriteState, String? errorMessage)?
+    TResult Function(
+            RequestStates getFavoritesState,
+            RequestStates toggleFavoriteState,
+            RequestStates favoritesUpdate,
+            String? errorMessage)?
         initial,
     required TResult orElse(),
   }) {
     if (initial != null) {
-      return initial(getFavoritesState, toggleFavoriteState, errorMessage);
+      return initial(getFavoritesState, toggleFavoriteState, favoritesUpdate,
+          errorMessage);
     }
     return orElse();
   }
@@ -275,12 +315,15 @@ abstract class _Initial implements FavouriteState {
   const factory _Initial(
       {final RequestStates getFavoritesState,
       final RequestStates toggleFavoriteState,
+      final RequestStates favoritesUpdate,
       final String? errorMessage}) = _$InitialImpl;
 
   @override
   RequestStates get getFavoritesState;
   @override
   RequestStates get toggleFavoriteState;
+  @override
+  RequestStates get favoritesUpdate;
   @override
   String? get errorMessage;
 

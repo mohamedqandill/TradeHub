@@ -23,8 +23,14 @@ class CustomCheckoutCard extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: isDarkMode ? Colors.grey[900] : const Color(0xFFF3F6F8),
+        color: isDarkMode
+            ? AppColors.lightBlack.withOpacity(0.55)
+            : const Color(0xFFF3F6F8),
         borderRadius: BorderRadius.circular(16.r),
+        border: Border.all(
+          color: isDarkMode ? Colors.white12 : Colors.transparent,
+          width: 1,
+        ),
       ),
       child: SingleChildScrollView(
         child: Padding(

@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tradehub/core/colors/app_colors.dart';
 import 'package:tradehub/core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/functions/show_snakbar.dart';
-import 'package:tradehub/core/extensions/main_color.dart';
 import 'package:tradehub/features/main_layout/cart/presentation/cubit/cart_cubit.dart';
 import 'package:tradehub/features/main_layout/cart/presentation/cubit/cart_states.dart';
 import 'package:tradehub/features/main_layout/cart/presentation/widgets/custom_checkout_card.dart';
@@ -29,10 +28,7 @@ class _CartScreenBodyState extends State<CartScreenBody> {
           showFailureSnackBar(context, messageTitle: state.message);
         } else if (state is UpdateItemQuantityError) {
           showFailureSnackBar(context, messageTitle: state.message);
-        } else if (state is GetBasketError) {
-          showFailureSnackBar(context,
-              messageTitle: state.message ?? "An error occurred");
-        }
+        } 
       },
       buildWhen: (previous, current) {
         return current is GetBasketLoading ||
@@ -120,15 +116,21 @@ class _CartScreenBodyState extends State<CartScreenBody> {
                     return Container(
                       decoration: BoxDecoration(
                         color: context.isDarkMode
-                            ? AppColors.black.withOpacity(0.95)
+                            ? AppColors.lightBlack.withOpacity(0.8)
                             : AppColors.white,
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(32.r),
                           topRight: Radius.circular(32.r),
                         ),
+                        border: Border.all(
+                          color: context.isDarkMode ? Colors.white12 : Colors.transparent,
+                          width: 1,
+                        ),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
+                            color: context.isDarkMode
+                                ? Colors.black.withOpacity(0.3)
+                                : Colors.black.withOpacity(0.1),
                             blurRadius: 20,
                             offset: const Offset(0, -10),
                           ),
@@ -141,7 +143,9 @@ class _CartScreenBodyState extends State<CartScreenBody> {
                             width: 40.w,
                             height: 4.h,
                             decoration: BoxDecoration(
-                              color: AppColors.grey.withOpacity(0.2),
+                              color: context.isDarkMode
+                                  ? Colors.white.withOpacity(0.18)
+                                  : AppColors.grey.withOpacity(0.2),
                               borderRadius: BorderRadius.circular(2.r),
                             ),
                           ),

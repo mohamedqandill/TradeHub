@@ -8,10 +8,10 @@ import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
-
-import 'package:tradehub/core/api/api_endpoints/api_endpoints.dart';
 import 'package:tradehub/core/api/api_constant/api_constant.dart';
+import 'package:tradehub/core/api/api_endpoints/api_endpoints.dart';
 import 'package:tradehub/core/utils/secure_storage/secure_storage_service.dart';
+
 import '../di/di.dart';
 
 @module
@@ -50,6 +50,10 @@ abstract class DioServices {
         baseUrl: ApiEndPoints.baseURL,
         connectTimeout: const Duration(seconds: 20),
         receiveTimeout: const Duration(seconds: 20),
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
 
         /// 🔥 مهم جداً عشان 401 يدخل onError
         validateStatus: (status) => status != null && status < 400,
@@ -57,14 +61,14 @@ abstract class DioServices {
     );
 
     dio.interceptors.add(CookieManager(cookieJar));
-    dio.interceptors.add(logger);
+    
 
     /// 🔐 Request Interceptor (يحط التوكن دايماً)
     dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {
-          final token = await getIt<SecureStorageHelper>()
-              .read(ApiConstants.token);
+          final token =
+              await getIt<SecureStorageHelper>().read(ApiConstants.token);
 
           if (token != null) {
             options.headers['Authorization'] = "Bearer $token";
@@ -165,10 +169,16 @@ abstract class DioServices {
         },
       ),
     );
+    dio.interceptors.add(logger);
 
     return dio;
   }
 
   @Named("baseUrl")
   String get baseUrl => ApiEndPoints.baseURL;
-}
+}
+
+Future<String?> getToken() async {
+  var token = getIt<SecureStorageHelper>().read(ApiConstants.token);
+  return token;
+}

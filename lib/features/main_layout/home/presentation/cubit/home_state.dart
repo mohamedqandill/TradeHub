@@ -6,6 +6,7 @@ class HomeState with _$HomeState {
     @Default(RequestStates.initial) RequestStates getCategoryState,
     @Default(RequestStates.initial) RequestStates getCompaniesState,
     @Default(RequestStates.initial) RequestStates getRandomProductsState,
+    @Default([]) List<GetRandomProductEntity> randomProducts,
     String? errorMessage,
   }) = _Initial;
 }

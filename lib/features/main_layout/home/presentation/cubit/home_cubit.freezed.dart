@@ -20,6 +20,8 @@ mixin _$HomeState {
   RequestStates get getCompaniesState => throw _privateConstructorUsedError;
   RequestStates get getRandomProductsState =>
       throw _privateConstructorUsedError;
+  List<GetRandomProductEntity> get randomProducts =>
+      throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
@@ -27,6 +29,7 @@ mixin _$HomeState {
             RequestStates getCategoryState,
             RequestStates getCompaniesState,
             RequestStates getRandomProductsState,
+            List<GetRandomProductEntity> randomProducts,
             String? errorMessage)
         initial,
   }) =>
@@ -37,6 +40,7 @@ mixin _$HomeState {
             RequestStates getCategoryState,
             RequestStates getCompaniesState,
             RequestStates getRandomProductsState,
+            List<GetRandomProductEntity> randomProducts,
             String? errorMessage)?
         initial,
   }) =>
@@ -47,6 +51,7 @@ mixin _$HomeState {
             RequestStates getCategoryState,
             RequestStates getCompaniesState,
             RequestStates getRandomProductsState,
+            List<GetRandomProductEntity> randomProducts,
             String? errorMessage)?
         initial,
     required TResult orElse(),
@@ -85,6 +90,7 @@ abstract class $HomeStateCopyWith<$Res> {
       {RequestStates getCategoryState,
       RequestStates getCompaniesState,
       RequestStates getRandomProductsState,
+      List<GetRandomProductEntity> randomProducts,
       String? errorMessage});
 }
 
@@ -106,6 +112,7 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
     Object? getCategoryState = null,
     Object? getCompaniesState = null,
     Object? getRandomProductsState = null,
+    Object? randomProducts = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_value.copyWith(
@@ -121,6 +128,10 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
           ? _value.getRandomProductsState
           : getRandomProductsState // ignore: cast_nullable_to_non_nullable
               as RequestStates,
+      randomProducts: null == randomProducts
+          ? _value.randomProducts
+          : randomProducts // ignore: cast_nullable_to_non_nullable
+              as List<GetRandomProductEntity>,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
@@ -141,6 +152,7 @@ abstract class _$$InitialImplCopyWith<$Res>
       {RequestStates getCategoryState,
       RequestStates getCompaniesState,
       RequestStates getRandomProductsState,
+      List<GetRandomProductEntity> randomProducts,
       String? errorMessage});
 }
 
@@ -160,6 +172,7 @@ class __$$InitialImplCopyWithImpl<$Res>
     Object? getCategoryState = null,
     Object? getCompaniesState = null,
     Object? getRandomProductsState = null,
+    Object? randomProducts = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_$InitialImpl(
@@ -175,6 +188,10 @@ class __$$InitialImplCopyWithImpl<$Res>
           ? _value.getRandomProductsState
           : getRandomProductsState // ignore: cast_nullable_to_non_nullable
               as RequestStates,
+      randomProducts: null == randomProducts
+          ? _value._randomProducts
+          : randomProducts // ignore: cast_nullable_to_non_nullable
+              as List<GetRandomProductEntity>,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
@@ -190,7 +207,9 @@ class _$InitialImpl implements _Initial {
       {this.getCategoryState = RequestStates.initial,
       this.getCompaniesState = RequestStates.initial,
       this.getRandomProductsState = RequestStates.initial,
-      this.errorMessage});
+      final List<GetRandomProductEntity> randomProducts = const [],
+      this.errorMessage})
+      : _randomProducts = randomProducts;
 
   @override
   @JsonKey()
@@ -201,12 +220,21 @@ class _$InitialImpl implements _Initial {
   @override
   @JsonKey()
   final RequestStates getRandomProductsState;
+  final List<GetRandomProductEntity> _randomProducts;
+  @override
+  @JsonKey()
+  List<GetRandomProductEntity> get randomProducts {
+    if (_randomProducts is EqualUnmodifiableListView) return _randomProducts;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_randomProducts);
+  }
+
   @override
   final String? errorMessage;
 
   @override
   String toString() {
-    return 'HomeState.initial(getCategoryState: $getCategoryState, getCompaniesState: $getCompaniesState, getRandomProductsState: $getRandomProductsState, errorMessage: $errorMessage)';
+    return 'HomeState.initial(getCategoryState: $getCategoryState, getCompaniesState: $getCompaniesState, getRandomProductsState: $getRandomProductsState, randomProducts: $randomProducts, errorMessage: $errorMessage)';
   }
 
   @override
@@ -220,13 +248,20 @@ class _$InitialImpl implements _Initial {
                 other.getCompaniesState == getCompaniesState) &&
             (identical(other.getRandomProductsState, getRandomProductsState) ||
                 other.getRandomProductsState == getRandomProductsState) &&
+            const DeepCollectionEquality()
+                .equals(other._randomProducts, _randomProducts) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, getCategoryState,
-      getCompaniesState, getRandomProductsState, errorMessage);
+  int get hashCode => Object.hash(
+      runtimeType,
+      getCategoryState,
+      getCompaniesState,
+      getRandomProductsState,
+      const DeepCollectionEquality().hash(_randomProducts),
+      errorMessage);
 
   /// Create a copy of HomeState
   /// with the given fields replaced by the non-null parameter values.
@@ -243,11 +278,12 @@ class _$InitialImpl implements _Initial {
             RequestStates getCategoryState,
             RequestStates getCompaniesState,
             RequestStates getRandomProductsState,
+            List<GetRandomProductEntity> randomProducts,
             String? errorMessage)
         initial,
   }) {
     return initial(getCategoryState, getCompaniesState, getRandomProductsState,
-        errorMessage);
+        randomProducts, errorMessage);
   }
 
   @override
@@ -257,11 +293,12 @@ class _$InitialImpl implements _Initial {
             RequestStates getCategoryState,
             RequestStates getCompaniesState,
             RequestStates getRandomProductsState,
+            List<GetRandomProductEntity> randomProducts,
             String? errorMessage)?
         initial,
   }) {
     return initial?.call(getCategoryState, getCompaniesState,
-        getRandomProductsState, errorMessage);
+        getRandomProductsState, randomProducts, errorMessage);
   }
 
   @override
@@ -271,13 +308,14 @@ class _$InitialImpl implements _Initial {
             RequestStates getCategoryState,
             RequestStates getCompaniesState,
             RequestStates getRandomProductsState,
+            List<GetRandomProductEntity> randomProducts,
             String? errorMessage)?
         initial,
     required TResult orElse(),
   }) {
     if (initial != null) {
       return initial(getCategoryState, getCompaniesState,
-          getRandomProductsState, errorMessage);
+          getRandomProductsState, randomProducts, errorMessage);
     }
     return orElse();
   }
@@ -316,6 +354,7 @@ abstract class _Initial implements HomeState {
       {final RequestStates getCategoryState,
       final RequestStates getCompaniesState,
       final RequestStates getRandomProductsState,
+      final List<GetRandomProductEntity> randomProducts,
       final String? errorMessage}) = _$InitialImpl;
 
   @override
@@ -324,6 +363,8 @@ abstract class _Initial implements HomeState {
   RequestStates get getCompaniesState;
   @override
   RequestStates get getRandomProductsState;
+  @override
+  List<GetRandomProductEntity> get randomProducts;
   @override
   String? get errorMessage;
 

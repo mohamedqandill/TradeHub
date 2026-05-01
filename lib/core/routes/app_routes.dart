@@ -3,6 +3,7 @@ import 'package:tradehub/core/extensions/screen_route_transition.dart';
 import 'package:tradehub/core/routes/routes.dart';
 import 'package:tradehub/features/Maps/flutter_map_screen.dart';
 import 'package:tradehub/features/category_details/presentation/category_details_screen.dart';
+import 'package:tradehub/features/category_details/presentation/category_details_args.dart';
 import 'package:tradehub/features/main_layout/favourite/presentation/favourite_screen.dart';
 import 'package:tradehub/features/main_layout/presentation/main_layout.dart';
 import 'package:tradehub/features/about_app/presentation/about_app_screen.dart';
@@ -72,7 +73,9 @@ abstract class AppRoutes {
       case Routes.categoryDetails:
         return MaterialPageRoute(
           settings: settings,
-          builder: (context) => const CategoryDetailsScreen(),
+          builder: (context) => CategoryDetailsScreen(
+            args: settings.arguments as CategoryDetailsArgs,
+          ),
         );
 
       // Forget Password → Fade

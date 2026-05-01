@@ -7,11 +7,12 @@ import 'package:tradehub/core/shared_widgets/widgets/svg_widget.dart';
 import '../../assets/assets.gen.dart';
 
 class HeartButton extends StatefulWidget {
-  const HeartButton({super.key, this.width, this.height, this.isTapped=false, this.onTap});
+  const HeartButton(
+      {super.key, this.width, this.height, this.isTapped = false, this.onTap});
   final double? width;
   final double? height;
   final bool isTapped;
-  final void Function( )?onTap;
+  final void Function()? onTap;
 
   @override
   State<HeartButton> createState() => _HeartButtonState();
@@ -34,7 +35,7 @@ class _HeartButtonState extends State<HeartButton> {
           color: widget.isTapped
               ? Colors.red
               : context.isDarkMode
-                  ? AppColors.black
+                  ? AppColors.white
                   : Colors.grey,
         ),
       ),

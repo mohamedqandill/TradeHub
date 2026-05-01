@@ -30,6 +30,7 @@ class ProductDetailsScreen extends StatefulWidget {
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   bool? isFav;
   ProductDetailsCubit? prodCubit;
+  bool isChangeOccur = false;
   @override
   Widget build(BuildContext context) {
     final id = ModalRoute.of(context)!.settings.arguments as int;
@@ -55,9 +56,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           ),
           BlocListener<ProductDetailsCubit, ProductDetailsStates>(
             listener: (context, state) {
-              if (state is GetProductDetailsErrorState) {
-                showFailureSnackBar(context, messageTitle: state.message);
-              } else if (state is ToggleFavoriteErrorState) {
+              if (state is ToggleFavoriteErrorState) {
                 showFailureSnackBar(context, messageTitle: state.message);
               } else if (state is ToggleFavoriteSuccessState) {
                 showSuccessSnackBar(messageTitle: "Wishlist Updated");
@@ -66,9 +65,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           ),
           BlocListener<ProductRatingsCubit, ProductRatingsStates>(
             listener: (context, state) {
-              if (state is GetProductRatingsErrorState) {
-                showFailureSnackBar(context, messageTitle: state.message);
-              } else if (state is AddProductRatingErrorState) {
+              if (state is AddProductRatingErrorState) {
                 showFailureSnackBar(context, messageTitle: state.message);
               } else if (state is AddProductRatingSuccessState) {
                 context.read<ProductDetailsCubit>().getProductDetails(id);
@@ -151,6 +148,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               isFav = !(isFav ?? false);
                             });
                             cubit.toggleFavorite(id);
+                            isChangeOccur = true;
                           },
                         ),
                       ),
@@ -241,6 +239,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       required bool isLoading,
       required ProductRatingsCubit ratingCubit}) async {
     final commentController = TextEditingController();
+    final formKey = GlobalKey<FormState>();
     int ratingValue = 5;
 
     await showModalBottomSheet(
@@ -249,100 +248,273 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       backgroundColor: Colors.transparent,
       builder: (ctx) {
         final bottomPadding = MediaQuery.of(ctx).viewInsets.bottom;
-        return Container(
-          padding: EdgeInsets.fromLTRB(20.w, 16.h, 20.w, 16.h + bottomPadding),
-          decoration: BoxDecoration(
-            color: ctx.isDarkMode ? AppColors.black : AppColors.white,
-            borderRadius: BorderRadius.vertical(top: Radius.circular(24.r)),
-          ),
-          child: StatefulBuilder(
-            builder: (ctx, setModalState) {
-              return SingleChildScrollView(
-                keyboardDismissBehavior:
-                    ScrollViewKeyboardDismissBehavior.onDrag,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Center(
-                      child: Container(
-                        width: 48.w,
-                        height: 5.h,
-                        decoration: BoxDecoration(
-                          color: AppColors.grey.withOpacity(0.3),
-                          borderRadius: BorderRadius.circular(99.r),
-                        ),
+        return StatefulBuilder(
+          builder: (ctx, setModalState) {
+            final sheetColor =
+                ctx.isDarkMode ? AppColors.black : AppColors.white;
+            final textColor =
+                ctx.isDarkMode ? AppColors.white : AppColors.black;
+            final borderColor =
+                ctx.isDarkMode ? Colors.white12 : Colors.black12;
+
+            Widget buildStars() {
+              return Row(
+                children: List.generate(5, (i) {
+                  final isFilled = (i + 1) <= ratingValue;
+                  return InkWell(
+                    onTap: () => setModalState(() => ratingValue = i + 1),
+                    borderRadius: BorderRadius.circular(99.r),
+                    child: Padding(
+                      padding: EdgeInsets.all(4.sp),
+                      child: Icon(
+                        isFilled
+                            ? Icons.star_rounded
+                            : Icons.star_outline_rounded,
+                        color: isFilled
+                            ? const Color(0xffFFC107)
+                            : AppColors.grey.withOpacity(0.6),
+                        size: 28.sp,
                       ),
                     ),
-                    SizedBox(height: 16.h),
-                    Text(
-                      "Add your review",
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w900,
-                      ),
-                    ),
-                    SizedBox(height: 16.h),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: DropdownButtonFormField<int>(
-                            value: ratingValue,
-                            items: List.generate(
-                              5,
-                              (i) => DropdownMenuItem(
-                                value: i + 1,
-                                child: Text("${i + 1}"),
-                              ),
-                            ),
-                            onChanged: (v) {
-                              setModalState(() {
-                                ratingValue = v ?? 5;
-                              });
-                            },
-                            decoration: const InputDecoration(
-                              labelText: "Rating",
-                              border: OutlineInputBorder(),
-                            ),
-                          ),
+                  );
+                }),
+              );
+            }
+
+            return AnimatedPadding(
+              duration: const Duration(milliseconds: 180),
+              curve: Curves.easeOut,
+              padding: EdgeInsets.only(bottom: bottomPadding),
+              child: SafeArea(
+                top: false,
+                child: Material(
+                  color: Colors.transparent,
+                  child: Container(
+                    padding: EdgeInsets.fromLTRB(20.w, 14.h, 20.w, 16.h),
+                    decoration: BoxDecoration(
+                      color: sheetColor,
+                      borderRadius:
+                          BorderRadius.vertical(top: Radius.circular(28.r)),
+                      border: Border.all(color: borderColor),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.12),
+                          blurRadius: 30,
+                          offset: const Offset(0, -10),
                         ),
                       ],
                     ),
-                    SizedBox(height: 12.h),
-                    TextFormField(
-                      controller: commentController,
-                      minLines: 3,
-                      maxLines: 5,
-                      decoration: const InputDecoration(
-                        labelText: "Comment",
-                        border: OutlineInputBorder(),
+                    child: SingleChildScrollView(
+                      keyboardDismissBehavior:
+                          ScrollViewKeyboardDismissBehavior.onDrag,
+                      child: Form(
+                        key: formKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Center(
+                              child: Container(
+                                width: 48.w,
+                                height: 5.h,
+                                decoration: BoxDecoration(
+                                  color: AppColors.grey.withOpacity(0.28),
+                                  borderRadius: BorderRadius.circular(99.r),
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 14.h),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    "Rate this product",
+                                    style: TextStyle(
+                                      fontSize: 18.sp,
+                                      fontWeight: FontWeight.w900,
+                                      color: textColor,
+                                      letterSpacing: -0.2,
+                                    ),
+                                  ),
+                                ),
+                                IconButton(
+                                  onPressed: () => Navigator.pop(ctx),
+                                  icon: Icon(
+                                    Icons.close_rounded,
+                                    color: AppColors.grey.withOpacity(0.75),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Text(
+                              "Your feedback helps others choose better.",
+                              style: TextStyle(
+                                fontSize: 12.sp,
+                                height: 1.4,
+                                color: AppColors.grey.withOpacity(0.85),
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            SizedBox(height: 18.h),
+                            Container(
+                              padding: EdgeInsets.all(14.w),
+                              decoration: BoxDecoration(
+                                color: ctx.isDarkMode
+                                    ? Colors.white.withOpacity(0.06)
+                                    : AppColors.grey.withOpacity(0.06),
+                                borderRadius: BorderRadius.circular(18.r),
+                                border: Border.all(color: borderColor),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text(
+                                        "Rating",
+                                        style: TextStyle(
+                                          fontSize: 13.sp,
+                                          fontWeight: FontWeight.w800,
+                                          color: textColor,
+                                        ),
+                                      ),
+                                      const Spacer(),
+                                      Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 10.w, vertical: 6.h),
+                                        decoration: BoxDecoration(
+                                          color: const Color(0xffFFC107)
+                                              .withOpacity(0.12),
+                                          borderRadius:
+                                              BorderRadius.circular(99.r),
+                                        ),
+                                        child: Text(
+                                          "$ratingValue/5",
+                                          style: TextStyle(
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.w900,
+                                            color: const Color(0xffFFC107),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 10.h),
+                                  buildStars(),
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 12.h),
+                            TextFormField(
+                              controller: commentController,
+                              minLines: 3,
+                              maxLines: 3,
+                              textInputAction: TextInputAction.done,
+                              style: TextStyle(
+                                fontSize: 13.sp,
+                                height: 1.45,
+                                fontWeight: FontWeight.w600,
+                                color: textColor,
+                              ),
+                              decoration: InputDecoration(
+                                labelText: "Comment *",
+                                hintText: "Tell us what you liked (or not).",
+                                alignLabelWithHint: true,
+                                filled: true,
+                                fillColor: ctx.isDarkMode
+                                    ? Colors.white.withOpacity(0.06)
+                                    : AppColors.grey.withOpacity(0.06),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(18.r),
+                                  borderSide: BorderSide(color: borderColor),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(18.r),
+                                  borderSide: BorderSide(color: borderColor),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(18.r),
+                                  borderSide: BorderSide(
+                                    color: ctx.isDarkMode
+                                        ? Colors.white24
+                                        : Colors.black26,
+                                    width: 1.2,
+                                  ),
+                                ),
+                              ),
+                              validator: (v) {
+                                final text = (v ?? "").trim();
+                                if (text.isEmpty) return "Comment is required";
+                                return null;
+                              },
+                            ),
+                            SizedBox(height: 16.h),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: OutlinedButton(
+                                    onPressed: isLoading
+                                        ? null
+                                        : () => Navigator.pop(ctx),
+                                    style: OutlinedButton.styleFrom(
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 14.h),
+                                      side: BorderSide(color: borderColor),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(16.r),
+                                      ),
+                                    ),
+                                    child: Text(
+                                      "Cancel",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w800,
+                                        color: textColor,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: 12.w),
+                                Expanded(
+                                  child: CustomLargeMainButton(
+                                    text: "Submit",
+                                    isLoading: isLoading,
+                                    onPressed: isLoading
+                                        ? null
+                                        : () async {
+                                            if (!(formKey.currentState
+                                                    ?.validate() ??
+                                                false)) {
+                                              return;
+                                            }
+
+                                            final comment =
+                                                commentController.text.trim();
+                                            await ratingCubit.addProductRating(
+                                              productId: productId,
+                                              ratingValue: ratingValue,
+                                              comment: comment,
+                                            );
+
+                                            if (ctx.mounted) {
+                                              Navigator.pop(ctx);
+                                              isChangeOccur = true;
+                                            }
+                                          },
+                                    radius: 16.r,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 6.h),
+                          ],
+                        ),
                       ),
                     ),
-                    SizedBox(height: 16.h),
-                    CustomLargeMainButton(
-                      text: "Submit",
-                      isLoading: isLoading,
-                      onPressed: isLoading
-                          ? null
-                          : () async {
-                              final comment = commentController.text.trim();
-                              if (comment.isEmpty) return;
-                              await ratingCubit.addProductRating(
-                                productId: productId,
-                                ratingValue: ratingValue,
-                                comment: comment,
-                              );
-
-                              if (ctx.mounted) {
-                                Navigator.pop(ctx);
-                              }
-                            },
-                      radius: 16.r,
-                    ),
-                  ],
+                  ),
                 ),
-              );
-            },
-          ),
+              ),
+            );
+          },
         );
       },
     );

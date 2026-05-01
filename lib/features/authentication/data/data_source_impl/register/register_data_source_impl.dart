@@ -2,9 +2,14 @@ import 'package:injectable/injectable.dart';
 import 'package:tradehub/core/api/api_constant/api_constant.dart';
 import 'package:tradehub/core/api/api_executor/api_executor.dart';
 import 'package:tradehub/core/api/api_result/api_result.dart';
+import 'package:tradehub/core/constants/app_constants.dart';
+import 'package:tradehub/core/utils/di/di.dart';
 import 'package:tradehub/core/utils/firebase_service/social_auth.dart';
+import 'package:tradehub/core/utils/secure_storage/secure_storage_service.dart';
+import 'package:tradehub/core/utils/storage/hive_storage.dart';
 import 'package:tradehub/features/authentication/data/api/api_client.dart';
 import 'package:tradehub/features/authentication/data/data_source_contract/register/register_data_source.dart';
+import 'package:tradehub/features/authentication/data/models/login/login_response_dto.dart';
 import 'package:tradehub/features/authentication/data/models/register/register_body.dart';
 import 'package:tradehub/features/authentication/data/models/register/register_request_body.dart';
 import 'package:tradehub/features/authentication/domain/entites/register/register_entity.dart';
@@ -68,19 +73,28 @@ class RegisterDataSourceImpl implements RegisterDataSource {
   }
 
   @override
-  Future<ApiResult<void>> signWithGoogle() async {
+  Future<ApiResult<LoginResponseDTO>> signWithGoogle() async {
     var user = await SocialAuthFirebase.signInWithGoogle();
     var result = await ApiExecutor.executeApi(
       apiCall: () => _authApiClient.signWithGoogle(accessToken: {
         ApiConstants.capAccessToken: user.credential!.accessToken!
       }),
     );
-    print(" token ${user.credential!.accessToken!}");
 
     switch (result) {
       case Error():
         return Error(error: result.error);
       case Success():
+      await getIt<SecureStorageHelper>()
+        .write(ApiConstants.token, result.data?.token??"");
+        Map<dynamic, dynamic> userInfo = {
+          "fullName": user.user?.displayName ?? "",
+          "email": user.user?.email ?? "",
+          "phone": user.user?.phoneNumber ?? "",
+        };
+        await getIt<HiveStorageHelper>()
+            .saveMap(AppConstants.userInfo, userInfo);
+
         return Success(data: null);
     }
   }

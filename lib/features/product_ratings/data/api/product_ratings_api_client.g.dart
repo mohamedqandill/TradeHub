@@ -36,7 +36,7 @@ class _ProductRatingsApiClient implements ProductRatingsApiClient {
     )
         .compose(
           _dio.options,
-          'api/ProductRatings/${productId}',
+          'api/Products/${productId}/ratings',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -76,7 +76,7 @@ class _ProductRatingsApiClient implements ProductRatingsApiClient {
     )
         .compose(
           _dio.options,
-          'api/ProductRatings/${productId}',
+          'api/Products/${productId}/ratings',
           queryParameters: queryParameters,
           data: _data,
         )

@@ -10,7 +10,10 @@ import '../../constants/app_constants.dart';
 
 class MainLayoutAppBar extends StatelessWidget implements PreferredSizeWidget {
   const MainLayoutAppBar(
-      {super.key, required this.title, this.enableLeading, this.widgets});
+      {super.key,
+      required this.title,
+      this.enableLeading,
+      this.widgets});
   final String title;
   final bool? enableLeading;
   final List<Widget>? widgets;
@@ -21,7 +24,8 @@ class MainLayoutAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: widgets,
       leading: enableLeading == true
           ? InkWell(
-              onTap: () => Navigator.pop(context),
+              onTap: () =>
+                  Navigator.pop(context),
               child: Container(
                 margin: context.locale.languageCode == AppConstants.en
                     ? EdgeInsets.only(left: 20.sp)

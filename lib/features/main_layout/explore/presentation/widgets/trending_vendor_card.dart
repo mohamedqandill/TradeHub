@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tradehub/core/assets/assets.gen.dart';
 import 'package:tradehub/core/colors/app_colors.dart';
-import 'package:tradehub/core/extensions/main_color.dart';
 import 'package:tradehub/core/extensions/is_dark_mode.dart';
 
 class TrendingVendorCard extends StatelessWidget {
@@ -15,12 +14,18 @@ class TrendingVendorCard extends StatelessWidget {
       padding: EdgeInsets.all(12.sp),
       decoration: BoxDecoration(
         color: context.isDarkMode
-            ? AppColors.lightBlack.withOpacity(0.2)
+            ? AppColors.lightBlack.withOpacity(0.55)
             : Colors.white,
         borderRadius: BorderRadius.circular(18.r),
+        border: Border.all(
+          color: context.isDarkMode ? Colors.white12 : Colors.transparent,
+          width: 1,
+        ),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.04),
+            color: context.isDarkMode
+                ? Colors.black.withOpacity(0.25)
+                : Colors.grey.withOpacity(0.04),
             blurRadius: 8,
             offset: const Offset(0, 4),
           ),
@@ -53,8 +58,8 @@ class TrendingVendorCard extends StatelessWidget {
                             fontWeight: FontWeight.w800,
                             fontSize: 16.sp,
                             color: context.isDarkMode
-                                ? Colors.white
-                                : Colors.black,
+                                ? AppColors.white
+                                : AppColors.black,
                           ),
                     ),
                     Icon(Icons.verified_rounded,

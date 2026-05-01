@@ -15,12 +15,12 @@ abstract class ProductRatingsApiClient {
   factory ProductRatingsApiClient(Dio dio,
       {@Named('baseUrl') String? baseUrl}) = _ProductRatingsApiClient;
 
-  @GET("${ApiEndPoints.productRatings}{productId}")
+  @GET("${ApiEndPoints.productRatings}{productId}/ratings")
   Future<List<ProductRatingDTO>> getProductRatings(
     @Path("productId") int productId,
   );
 
-  @POST("${ApiEndPoints.productRatings}{productId}")
+  @POST("${ApiEndPoints.productRatings}{productId}/ratings")
   Future<ProductRatingDTO> addProductRating(
       @Path("productId") int productId, @Body() Map<String, dynamic> body);
 }

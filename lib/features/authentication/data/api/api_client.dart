@@ -38,7 +38,7 @@ abstract class AuthApiClient {
   Future<void> newPassword({@Body() required NewPasswordRequestBody body});
 
   @POST(ApiEndPoints.signWithGoogle)
-  Future<void> signWithGoogle(
+  Future<LoginResponseDTO> signWithGoogle(
       {@Body() required Map<String, dynamic> accessToken});
   @POST(ApiEndPoints.signWithFacebook)
   Future<void> signWithFacebook(

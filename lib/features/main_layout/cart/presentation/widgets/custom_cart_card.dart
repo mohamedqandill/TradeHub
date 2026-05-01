@@ -56,16 +56,13 @@ class _CustomCartCardState extends State<CustomCartCard> {
       padding: EdgeInsets.all(12.w),
       decoration: BoxDecoration(
         color: context.isDarkMode
-            ? AppColors.white.withOpacity(0.05)
-            : AppColors.white,
+            ? AppColors.black.withOpacity(0.05)
+            : Colors.white,
         borderRadius: BorderRadius.circular(16.r),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.03),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
+        // border: Border.all(
+        //   color: context.isDarkMode ? Colors.white12 : Colors.transparent,
+        //   width: 1,
+        // ),
       ),
       child: Row(
         children: [
@@ -151,6 +148,11 @@ class _CustomCartCardState extends State<CustomCartCard> {
                             ? AppColors.white.withOpacity(0.05)
                             : AppColors.grey.withOpacity(0.05),
                         borderRadius: BorderRadius.circular(20.r),
+                        border: Border.all(
+                          color: context.isDarkMode
+                              ? Colors.white12
+                              : Colors.transparent,
+                        ),
                       ),
                       child: Row(
                         children: [
@@ -169,6 +171,9 @@ class _CustomCartCardState extends State<CustomCartCard> {
                               style: TextStyle(
                                 fontSize: 14.sp,
                                 fontWeight: FontWeight.bold,
+                                color: context.isDarkMode
+                                    ? AppColors.white
+                                    : AppColors.black,
                               ),
                             ),
                           ),

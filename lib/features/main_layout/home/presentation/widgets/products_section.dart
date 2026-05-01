@@ -17,48 +17,50 @@ import '../../../../../Core/colors/app_colors.dart';
 
 class ProductsSection extends StatelessWidget {
   final bool? isLoading;
-  final HomeCubit? cubit;
 
-  const ProductsSection({super.key, this.isLoading, this.cubit});
+  const ProductsSection({
+    super.key,
+    this.isLoading,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Skeletonizer(
       enabled: isLoading ?? false,
-      child: BlocConsumer<CartCubit, CartState>(
-        listener: (context, state) {
-          if (state is AddToCartSuccessState) {
-            showSuccessSnackBar(messageTitle: "Added To Cart");
-          }
+      child: MultiBlocListener(
+          listeners: [
+            BlocListener<CartCubit, CartState>(listener: (context, state) {
+              if (state is AddToCartSuccessState) {
+                showSuccessSnackBar(messageTitle: "Added To Cart");
+              }
 
-          if (state is AddToCartErrorState) {
-            showFailureSnackBar(context, messageTitle: "Failed");
-          }
-        },
-        builder: (context, state) {
-          var cartCubit = context.read<CartCubit>();
-          return GridView.builder(
-            padding: EdgeInsets.zero,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: cubit?.randomProducts.length,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 14.w,
-                mainAxisSpacing: 14.h,
-                mainAxisExtent: 300.h),
-            itemBuilder: (context, index) {
-              final product = cubit!.randomProducts[index];
-              return _ProductCard(
-                product: product,
-                cartCubit: cartCubit,
-                isDark: context.isDarkMode,
-                mainColor: context.mainColor,
-              );
-            },
-          );
-        },
-      ),
+              if (state is AddToCartErrorState) {
+                showFailureSnackBar(context, messageTitle: "Failed");
+              }
+            }),
+          ],
+          child: BlocBuilder<HomeCubit, HomeState>(builder: (context, state) {
+            var cartCubit = context.watch<CartCubit>();
+            return GridView.builder(
+              padding: EdgeInsets.zero,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: state.randomProducts.length,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 14.w,
+                  mainAxisSpacing: 14.h,
+                  mainAxisExtent: 300.h),
+              itemBuilder: (context, index) {
+                return _ProductCard(
+                  product: state.randomProducts[index],
+                  cartCubit: cartCubit,
+                  isDark: context.isDarkMode,
+                  mainColor: context.mainColor,
+                );
+              },
+            );
+          })),
     );
   }
 }
@@ -82,11 +84,13 @@ class _ProductCard extends StatelessWidget {
     final bool isAddingToCart = cartCubit.loadingProductId == product.id;
 
     return InkWell(
-      onTap: () => Navigator.pushNamed(
-        context,
-        Routes.productDetails,
-        arguments: product.id,
-      ),
+      onTap: () {
+        Navigator.pushNamed(
+          context,
+          Routes.productDetails,
+          arguments: product.id,
+        );
+      },
       borderRadius: BorderRadius.circular(20.r),
       child: Container(
         decoration: BoxDecoration(
@@ -100,7 +104,7 @@ class _ProductCard extends StatelessWidget {
           boxShadow: [
             BoxShadow(
               color: isDark
-                  ? Colors.black.withOpacity(0.3)
+                  ? Colors.black.withOpacity(0.22)
                   : Colors.black.withOpacity(0.06),
               blurRadius: 16,
               offset: const Offset(0, 6),
@@ -179,25 +183,12 @@ class _ProductCard extends StatelessWidget {
               fit: StackFit.expand,
               children: [
                 CachedNetworkImage(
+                  fadeInDuration: Duration.zero,
+                  fadeOutDuration: Duration.zero,
                   fit: BoxFit.contain,
                   imageUrl: (product.imageUrl?.isNotEmpty == true)
                       ? product.imageUrl!
                       : "https://pngate.com/wp-content/uploads/2025/04/samsung-galaxy-s25-blue-all-angles-1.png",
-                  placeholder: (context, url) => Container(
-                    color: isDark
-                        ? Colors.white.withOpacity(0.05)
-                        : AppColors.lightGrey,
-                    child: Center(
-                      child: SizedBox(
-                        width: 22.sp,
-                        height: 22.sp,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2,
-                          color: mainColor,
-                        ),
-                      ),
-                    ),
-                  ),
                   errorWidget: (context, url, error) => Container(
                     color: isDark
                         ? Colors.white.withOpacity(0.05)
@@ -241,11 +232,18 @@ class _ProductCard extends StatelessWidget {
           child: Container(
             padding: EdgeInsets.all(2.sp),
             decoration: BoxDecoration(
-              color: (isDark ? Colors.black : Colors.white).withOpacity(0.85),
+              color:
+                  (isDark ? AppColors.black : Colors.white).withOpacity(0.88),
               shape: BoxShape.circle,
+              border: Border.all(
+                color: isDark ? Colors.white12 : Colors.transparent,
+                width: 1,
+              ),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.12),
+                  color: isDark
+                      ? Colors.black.withOpacity(0.18)
+                      : Colors.black.withOpacity(0.12),
                   blurRadius: 6,
                   spreadRadius: 1,
                 ),

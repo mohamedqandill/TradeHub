@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tradehub/Core/colors/app_colors.dart';
 import 'package:tradehub/Core/extensions/base_inherited_context.dart';
 import 'package:tradehub/Core/extensions/main_color.dart';
+import 'package:tradehub/core/extensions/is_dark_mode.dart';
 
 class VendorInfoCard extends StatelessWidget {
   final String title;
@@ -27,11 +28,19 @@ class VendorInfoCard extends StatelessWidget {
       margin: EdgeInsets.symmetric(horizontal: 20.w),
       padding: EdgeInsets.all(16.sp),
       decoration: BoxDecoration(
-        color: Theme.of(context).cardColor,
+        color: context.isDarkMode
+            ? AppColors.lightBlack.withOpacity(0.55)
+            : Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(20.r),
+        border: Border.all(
+          color: context.isDarkMode ? Colors.white12 : Colors.transparent,
+          width: 1,
+        ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.08),
+            color: context.isDarkMode
+                ? Colors.black.withOpacity(0.28)
+                : Colors.black.withOpacity(0.08),
             blurRadius: 15,
             offset: const Offset(0, 8),
           ),
@@ -45,6 +54,8 @@ class VendorInfoCard extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(25.r),
                 child: CachedNetworkImage(
+                  fadeInDuration: Duration.zero,
+                  fadeOutDuration: Duration.zero,
                   imageUrl: image,
                   width: 75.w,
                   height: 75.h,
@@ -115,6 +126,7 @@ class VendorInfoCard extends StatelessWidget {
               value,
               style: context.base.theme.textTheme.titleSmall?.copyWith(
                 fontWeight: FontWeight.w700,
+                color: context.greyOrWhite,
                 fontSize: 15.sp,
               ),
             ),

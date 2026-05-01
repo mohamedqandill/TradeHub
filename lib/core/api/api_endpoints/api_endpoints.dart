@@ -20,5 +20,6 @@ abstract class ApiEndPoints {
   static const String productsBySubcategory = "api/Product/by-subcategory/";
   static const String companySubcategories = "api/Product/companies/";
   static const String companyDetails = "api/company/";
-  static const String productRatings = "api/ProductRatings/";
+  static const String productRatings = "api/Products/";
+  static const String companiesByCategory = "api/CompanyCategory/category/";
 }

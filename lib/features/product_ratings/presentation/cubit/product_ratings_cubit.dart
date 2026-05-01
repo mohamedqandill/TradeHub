@@ -1,6 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:tradehub/core/api/api_result/api_result.dart';
+import 'package:tradehub/core/shared_services/shared_product_repository.dart';
+import 'package:tradehub/core/utils/di/di.dart';
 import 'package:tradehub/features/product_ratings/data/models/product_rating_d_t_o.dart';
 import 'package:tradehub/features/product_ratings/domain/use_cases/add_product_rating_usecase.dart';
 import 'package:tradehub/features/product_ratings/domain/use_cases/get_product_ratings_usecase.dart';
@@ -45,6 +47,7 @@ class ProductRatingsCubit extends Cubit<ProductRatingsStates> {
 
     if (result is Success<ProductRatingDTO>) {
       await getProductRatings(productId);
+      getIt<SharedProductRepository>().markUpdated();
       emit(AddProductRatingSuccessState());
     } else if (result is Error<ProductRatingDTO>) {
       emit(AddProductRatingErrorState(

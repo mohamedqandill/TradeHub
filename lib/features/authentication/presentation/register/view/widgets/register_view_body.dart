@@ -48,6 +48,7 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
               );
               showSuccessSnackBar(
                   messageTitle: tr(LocaleKeys.accountCreatedSuccessfully));
+              context.read<RegisterBloc>().add(const VerifyAccount());
             } else if (state.registerState == RequestStates.error) {
               showFailureSnackBar(context,
                   messageTitle: state.errorMessage.toString());
@@ -248,12 +249,6 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                             } else if (bloc.formKey.currentState!.validate() &&
                                 bloc.isRememberMe) {
                               bloc.add(const Register());
-                              Future.delayed(
-                                const Duration(milliseconds: 500),
-                                () {
-                                  bloc.add(const VerifyAccount());
-                                },
-                              );
                             }
                           },
                           text: LocaleKeys.create.tr(),
