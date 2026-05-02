@@ -74,8 +74,7 @@ class _CustomCartCardState extends State<CustomCartCard> {
                     width: 100.w,
                     height: 90.w,
                     fit: BoxFit.contain,
-                    placeholder: (context, url) =>
-                        const Center(child: CircularProgressIndicator()),
+                    
                     errorWidget: (context, url, error) => Icon(
                       Icons.image_not_supported_outlined,
                       color: AppColors.grey,
@@ -157,9 +156,12 @@ class _CustomCartCardState extends State<CustomCartCard> {
                       child: Row(
                         children: [
                           _buildCounterBtn(
-                            icon: Icons.remove,
+                            icon: count == 1 ? Icons.delete : Icons.remove,
+                            iconColor: count == 1 ? Colors.red : null,
                             onTap: () {
-                              if (count > 1) {
+                              if (count == 1) {
+                                widget.onUpdateQuantity(0);
+                              } else if (count > 1) {
                                 widget.onUpdateQuantity(count - 1);
                               }
                             },
@@ -201,6 +203,7 @@ class _CustomCartCardState extends State<CustomCartCard> {
     required IconData icon,
     required VoidCallback onTap,
     bool isPrimary = false,
+    Color? iconColor,
   }) {
     return GestureDetector(
       onTap: onTap,
@@ -212,8 +215,8 @@ class _CustomCartCardState extends State<CustomCartCard> {
         ),
         child: Icon(
           icon,
-          size: 16.sp,
-          color: isPrimary ? Colors.white : AppColors.grey,
+          size: 18.sp,
+          color: iconColor ?? (isPrimary ? Colors.white : AppColors.grey),
         ),
       ),
     );

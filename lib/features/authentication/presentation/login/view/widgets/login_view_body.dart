@@ -112,6 +112,8 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             CustomTextField(
+                              focusedNode: null,
+                              nextFocusNode: bloc.passwordFocus,
                               labelText: LocaleKeys.emailAddress.tr(),
                               suffixIcon: Icon(
                                 Icons.email,
@@ -125,6 +127,8 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                               height: 16.h,
                             ),
                             CustomTextField(
+                              nextFocusNode: null,
+                              focusedNode: bloc.passwordFocus,
                               controller: bloc.password,
                               validator: ValidateFunctions.getInstance()
                                   .validationOfPassword,

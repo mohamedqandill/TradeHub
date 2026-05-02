@@ -16,6 +16,7 @@ import 'package:tradehub/features/main_layout/home/presentation/cubit/home_cubit
 import 'package:tradehub/features/main_layout/home/presentation/widgets/category_section.dart';
 import 'package:tradehub/features/main_layout/home/presentation/widgets/custom_row_headline.dart';
 import 'package:tradehub/features/main_layout/home/presentation/widgets/home_header_widget.dart';
+import 'package:tradehub/features/main_layout/home/presentation/widgets/home_offer_card.dart';
 import 'package:tradehub/features/main_layout/home/presentation/widgets/products_section.dart';
 import 'package:tradehub/features/main_layout/home/presentation/widgets/vendors_section.dart';
 import 'package:tradehub/main.dart';
@@ -80,7 +81,6 @@ class _HomeScreenBodyState extends State<HomeScreenBody> with RouteAware {
     }, builder: (context, state) {
       cubit = context.watch<HomeCubit>();
 
-      // Full-screen error when ALL sections fail
       if (state.getCategoryState == RequestStates.error &&
           state.getCompaniesState == RequestStates.error &&
           state.getRandomProductsState == RequestStates.error) {
@@ -118,7 +118,9 @@ class _HomeScreenBodyState extends State<HomeScreenBody> with RouteAware {
                   cubit: cubit,
                   isLoading: state.getCategoryState == RequestStates.loading,
                 ),
-                SizedBox(height: 32.h),
+                SizedBox(height: 12.h),
+                const HomeOfferCard(),
+                SizedBox(height: 15.h),
                 CustomRowHeadline(
                   title: LocaleKeys.featuredVendors.tr(),
                   subTitle: "",

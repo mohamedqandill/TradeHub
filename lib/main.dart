@@ -11,6 +11,7 @@ import 'package:tradehub/core/api/api_constant/api_constant.dart';
 import 'package:tradehub/core/constants/app_constants.dart';
 import 'package:tradehub/core/routes/app_routes.dart';
 import 'package:tradehub/core/routes/routes.dart';
+import 'package:tradehub/core/shared_widgets/widgets/device_preview.dart';
 import 'package:tradehub/core/theme/app_theme.dart';
 import 'package:tradehub/core/utils/storage/hive_storage.dart';
 import 'package:tradehub/features/main_layout/cart/presentation/cubit/cart_cubit.dart';
@@ -69,12 +70,14 @@ Future<void> main() async {
               create: (context) => getIt<CartCubit>()..getBasket(),
             ),
             BlocProvider(
-              create: (context) => getIt<FavouriteCubit>(),
+              create: (context) => getIt<FavouriteCubit>()..getFavorites(),
             ),
           ],
-          child: MyApp(
-            isFirstTime: isFirstTime,
-            token: token,
+          child: DevicePreviewWidget(
+            child: MyApp(
+              isFirstTime: isFirstTime,
+              token: token,
+            ),
           ),
         ),
       ),

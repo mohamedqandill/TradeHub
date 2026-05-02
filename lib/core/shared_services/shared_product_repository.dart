@@ -5,9 +5,7 @@ import 'package:tradehub/features/main_layout/home/domain/entites/get_random_pro
 
 @singleton
 class SharedProductRepository {
-  
   // List<GetRandomProductEntity> randomProducts = [];
-
 
   // final _controller =
   //     StreamController<List<GetRandomProductEntity>>.broadcast();
@@ -43,13 +41,24 @@ class SharedProductRepository {
   // }
   bool _hasUpdates = false;
 
-bool get hasUpdates => _hasUpdates;
+  bool get hasUpdates => _hasUpdates;
+  bool _isFavoriteChange = false;
 
-void markUpdated() {
-  _hasUpdates = true;
-}
+  bool get isFavoriteChange => _isFavoriteChange;
 
-void clearUpdates() {
-  _hasUpdates = false;
-}
+  void markThatFavoriteChange() {
+    _isFavoriteChange = true;
+  }
+
+  void markUpdated() {
+    _hasUpdates = true;
+  }
+
+  void clearUpdates() {
+    _hasUpdates = false;
+  }
+
+  void clearFavoriteStateUpdate() {
+    _isFavoriteChange = false;
+  }
 }

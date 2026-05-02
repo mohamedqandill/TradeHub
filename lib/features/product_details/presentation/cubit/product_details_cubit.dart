@@ -41,6 +41,7 @@ class ProductDetailsCubit extends Cubit<ProductDetailsStates> {
     var result = await _toggleFavoriteUseCase(productId);
     if (result is Success<void>) {
       repo.markUpdated();
+      repo.markThatFavoriteChange();
       emit(ToggleFavoriteSuccessState());
     } else if (result is Error<void>) {
       emit(ToggleFavoriteErrorState(result.error?.message ?? "Error occurred"));

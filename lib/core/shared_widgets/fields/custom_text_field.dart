@@ -7,6 +7,8 @@ import 'package:tradehub/Core/extensions/is_dark_mode.dart';
 class CustomTextField extends StatefulWidget {
   const CustomTextField(
       {super.key,
+      this.nextFocusNode,
+      this.focusedNode,
       this.controller,
       this.validator,
       this.obscureText = false,
@@ -28,6 +30,8 @@ class CustomTextField extends StatefulWidget {
   final String? initialValue;
   final String autoFillHints;
   final Function(bool isFocused)? isFocused;
+  final FocusNode? nextFocusNode;
+  final FocusNode? focusedNode;
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -36,22 +40,24 @@ class CustomTextField extends StatefulWidget {
 class _CustomTextFieldState extends State<CustomTextField> {
   late FocusNode searchFocused;
 
+  void _focusListener() {
+    widget.isFocused?.call(searchFocused.hasFocus);
+  }
+
   @override
   void initState() {
-    searchFocused = FocusNode();
-
-    searchFocused.addListener(
-      () {
-        if (searchFocused.hasFocus) {
-          print("Search field is focused (opened/tapped)");
-          widget.isFocused?.call(true);
-        } else {
-          print("Search field lost focus (closed/unfocused)");
-          widget.isFocused?.call(false);
-        }
-      },
-    );
     super.initState();
+    searchFocused = widget.focusedNode ?? FocusNode();
+    searchFocused.addListener(_focusListener);
+  }
+
+  @override
+  void dispose() {
+    searchFocused.removeListener(_focusListener);
+    if (widget.focusedNode == null) {
+      searchFocused.dispose();
+    }
+    super.dispose();
   }
 
   @override
@@ -61,9 +67,19 @@ class _CustomTextFieldState extends State<CustomTextField> {
       child: TextFormField(
         initialValue: widget.controller == null ? widget.initialValue : null,
         focusNode: searchFocused,
-        onTapOutside: (event) {
+        onTapOutside: (_) {
           searchFocused.unfocus();
           widget.isFocused?.call(false);
+        },
+        textInputAction: widget.nextFocusNode != null 
+            ? TextInputAction.next
+            : TextInputAction.done,
+        onFieldSubmitted: (_) {
+          if (widget.nextFocusNode != null) {
+            FocusScope.of(context).requestFocus(widget.nextFocusNode);
+          } else {
+            searchFocused.unfocus();
+          }
         },
         autofillHints: [widget.autoFillHints],
         autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -72,15 +88,16 @@ class _CustomTextFieldState extends State<CustomTextField> {
         validator: widget.validator,
         obscureText: widget.obscureText,
         decoration: InputDecoration(
-            isDense: true,
-            labelText: widget.labelText,
-            prefixIcon: widget.prefixIcon,
-            errorStyle: context.base.theme.textTheme.bodySmall!
-                .copyWith(color: Colors.red),
-            hintText: widget.hintText,
-            suffixIconColor:
-                context.isDarkMode ? AppColors.white : AppColors.grey,
-            suffixIcon: widget.suffixIcon),
+          isDense: true,
+          labelText: widget.labelText,
+          prefixIcon: widget.prefixIcon,
+          errorStyle: context.base.theme.textTheme.bodySmall!
+              .copyWith(color: Colors.red),
+          hintText: widget.hintText,
+          suffixIconColor:
+              context.isDarkMode ? AppColors.white : AppColors.grey,
+          suffixIcon: widget.suffixIcon,
+        ),
       ),
     );
   }

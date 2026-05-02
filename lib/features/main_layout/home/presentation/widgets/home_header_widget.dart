@@ -89,14 +89,7 @@ class HomeHeaderWidget extends StatelessWidget {
                 const Spacer(),
                 InkWell(
                   onTap: () {
-                    var cubit = context.read<HomeCubit>();
-                    Navigator.pushNamed(context, Routes.favourite).then(
-                      (value) {
-                        if (value == true) {
-                          cubit.getRandomProducts();
-                        }
-                      },
-                    );
+                    Navigator.pushNamed(context, Routes.favourite);
                   },
                   child: Padding(
                     padding: context.locale.languageCode == AppConstants.ar
@@ -150,25 +143,18 @@ class HomeHeaderWidget extends StatelessWidget {
             SizedBox(height: 24.h),
             Container(
               decoration: BoxDecoration(
-                color: context.isDarkMode ? AppColors.lightBlack : Colors.white,
                 borderRadius: BorderRadius.circular(50.r),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.08),
-                    blurRadius: 15,
-                    offset: const Offset(0, 5),
-                  )
-                ],
               ),
               child: CustomSearchField(
+                fillColor: const Color(0xFF1B3B32),
+                borderColor: const Color(0xFF1B3B32),
+                hintColor: const Color(0xFF8BA99B),
                 prefixIcon: Icon(
                   Icons.search_rounded,
                   size: 24.sp,
-                  color: context.isDarkMode
-                      ? AppColors.white.withOpacity(0.6)
-                      : AppColors.grey.withOpacity(0.6),
+                  color: const Color(0xFF8BA99B),
                 ),
-                hintText: LocaleKeys.searchForProducts.tr(),
+                hintText: "Search products, shops...",
               ),
             ),
           ],

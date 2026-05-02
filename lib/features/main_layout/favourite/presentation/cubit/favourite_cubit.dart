@@ -71,6 +71,7 @@ class FavouriteCubit extends Cubit<FavouriteState> {
       case Success():
         emit(state.copyWith(toggleFavoriteState: RequestStates.success));
         getIt<SharedProductRepository>().markUpdated();
+        getIt<SharedProductRepository>().markThatFavoriteChange();
       case Error():
         emit(state.copyWith(
           toggleFavoriteState: RequestStates.error,

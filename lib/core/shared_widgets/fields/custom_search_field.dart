@@ -14,7 +14,10 @@ class CustomSearchField extends StatelessWidget {
       this.autoFillHints = "",
       this.hintText,
       this.prefixIcon,
-      this.suffixIcon});
+      this.suffixIcon,
+      this.fillColor,
+      this.borderColor,
+      this.hintColor});
 
   final TextEditingController? controller;
   final String? Function(String?)? validator;
@@ -24,6 +27,9 @@ class CustomSearchField extends StatelessWidget {
   final Widget? prefixIcon;
   final Widget? suffixIcon;
   final String autoFillHints;
+  final Color? fillColor;
+  final Color? borderColor;
+  final Color? hintColor;
 
   @override
   Widget build(BuildContext context) {
@@ -39,38 +45,43 @@ class CustomSearchField extends StatelessWidget {
         decoration: InputDecoration(
             focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(
-                    color: context.isDarkMode ? Colors.white : Colors.black,
+                    color: borderColor ??
+                        (context.isDarkMode ? Colors.white : Colors.black),
                     width: 1),
-                borderRadius: BorderRadius.circular(50.r)),
-            fillColor: AppColors.grey.withOpacity(0.05),
+                borderRadius: BorderRadius.circular(15.r)),
+            fillColor: fillColor ?? AppColors.grey.withOpacity(0.05),
             filled: true,
             border: OutlineInputBorder(
                 borderSide: BorderSide(
-                    color: context.isDarkMode
-                        ? AppColors.mainDarkColor
-                        : Colors.white,
+                    color: borderColor ??
+                        (context.isDarkMode
+                            ? AppColors.mainDarkColor
+                            : Colors.white),
                     width: 1),
-                borderRadius: BorderRadius.circular(50.r)),
+                borderRadius: BorderRadius.circular(15.r)),
             enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(
-                    color: context.isDarkMode
-                        ? AppColors.mainDarkColor
-                        : Colors.white,
+                    color: borderColor ??
+                        (context.isDarkMode
+                            ? AppColors.mainDarkColor
+                            : Colors.white),
                     width: 1),
-                borderRadius: BorderRadius.circular(50.r)),
+                borderRadius: BorderRadius.circular(15.r)),
             disabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(
-                    color: context.isDarkMode
-                        ? AppColors.mainDarkColor
-                        : Colors.white,
+                    color: borderColor ??
+                        (context.isDarkMode
+                            ? AppColors.mainDarkColor
+                            : Colors.white),
                     width: 1),
-                borderRadius: BorderRadius.circular(50.r)),
+                borderRadius: BorderRadius.circular(15.r)),
             hintStyle: context.base.theme.textTheme.labelSmall?.copyWith(
                 fontWeight: FontWeight.w600,
                 fontSize: 14.sp,
-                color: context.isDarkMode
-                    ? Colors.white.withOpacity(0.7)
-                    : AppColors.grey.withOpacity(0.4)),
+                color: hintColor ??
+                    (context.isDarkMode
+                        ? Colors.white.withOpacity(0.7)
+                        : AppColors.grey.withOpacity(0.4))),
             isDense: true,
             labelText: labelText,
             prefixIcon: prefixIcon,

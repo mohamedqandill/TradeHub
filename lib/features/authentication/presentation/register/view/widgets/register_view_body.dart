@@ -120,6 +120,8 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         CustomTextField(
+                          focusedNode: null,
+                          nextFocusNode: bloc.lastNameFocus,
                           labelText: LocaleKeys.firstName.tr(),
                           validator: (input) {
                             return ValidateFunctions.getInstance()
@@ -132,6 +134,8 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                           height: bloc.spaceHeight,
                         ),
                         CustomTextField(
+                          focusedNode: bloc.lastNameFocus,
+                          nextFocusNode: bloc.phoneNumberFocus,
                           labelText: LocaleKeys.lastName.tr(),
                           validator: (input) {
                             return ValidateFunctions.getInstance()
@@ -145,6 +149,8 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                           height: bloc.spaceHeight,
                         ),
                         CustomTextField(
+                          focusedNode: bloc.phoneNumberFocus,
+                          nextFocusNode: bloc.emailFocus,
                           labelText: LocaleKeys.phoneNumber.tr(),
                           validator: (input) {
                             return ValidateFunctions.getInstance()
@@ -157,6 +163,8 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                           height: bloc.spaceHeight,
                         ),
                         CustomTextField(
+                          focusedNode: bloc.emailFocus,
+                          nextFocusNode: bloc.passwordFocus,
                           autoFillHints: AutofillHints.email,
                           labelText: LocaleKeys.emailAddress.tr(),
                           validator: (input) {
@@ -175,6 +183,8 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                           height: bloc.spaceHeight,
                         ),
                         CustomTextField(
+                          focusedNode: bloc.passwordFocus,
+                          nextFocusNode: null,
                           obscureText: !bloc.isObscureText,
                           labelText: LocaleKeys.password.tr(),
                           autoFillHints: AutofillHints.password,

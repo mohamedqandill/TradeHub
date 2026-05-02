@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import 'package:tradehub/core/colors/app_colors.dart';
 import 'package:tradehub/core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/functions/show_snakbar.dart';
+import 'package:tradehub/core/utils/animations/loading_product_animation.dart';
 import 'package:tradehub/features/main_layout/cart/presentation/cubit/cart_cubit.dart';
 import 'package:tradehub/features/main_layout/cart/presentation/cubit/cart_states.dart';
 import 'package:tradehub/features/main_layout/cart/presentation/widgets/custom_checkout_card.dart';
@@ -28,7 +30,7 @@ class _CartScreenBodyState extends State<CartScreenBody> {
           showFailureSnackBar(context, messageTitle: state.message);
         } else if (state is UpdateItemQuantityError) {
           showFailureSnackBar(context, messageTitle: state.message);
-        } 
+        }
       },
       buildWhen: (previous, current) {
         return current is GetBasketLoading ||
@@ -42,7 +44,7 @@ class _CartScreenBodyState extends State<CartScreenBody> {
         // Show loading only if we don't have cart data yet
         if ((state is GetBasketLoading || state is CartInitial) &&
             cubit.cart == null) {
-          return const Center(child: CircularProgressIndicator());
+          return loadingProductAnimation();
         }
 
         if (cubit.cart != null) {
@@ -92,7 +94,14 @@ class _CartScreenBodyState extends State<CartScreenBody> {
                                 price: item.price.toString(),
                                 quantity: item.quantity,
                                 onUpdateQuantity: (q) {
-                                  cubit.updateItemQuantity(id: item.productId,quantity: q);
+                                  if (q == 0) {
+                                    cubit.cart!.items.remove(item);
+                                    setState(() {});
+                                    cubit.removeItem(item.productId);
+                                  } else {
+                                    cubit.updateItemQuantity(
+                                        id: item.productId, quantity: q);
+                                  }
                                 },
                               ),
                             );
@@ -123,7 +132,9 @@ class _CartScreenBodyState extends State<CartScreenBody> {
                           topRight: Radius.circular(32.r),
                         ),
                         border: Border.all(
-                          color: context.isDarkMode ? Colors.white12 : Colors.transparent,
+                          color: context.isDarkMode
+                              ? Colors.white12
+                              : Colors.transparent,
                           width: 1,
                         ),
                         boxShadow: [

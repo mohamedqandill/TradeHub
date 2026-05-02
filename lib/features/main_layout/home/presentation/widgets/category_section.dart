@@ -14,9 +14,8 @@ class CategorySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     return SizedBox(
-      height: 220.h,
+      height: 110.h,
       child: GridView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: cubit?.categories.length ?? 0,
@@ -24,7 +23,7 @@ class CategorySection extends StatelessWidget {
             mainAxisSpacing: 4.w,
             crossAxisSpacing: 10.h,
             mainAxisExtent: 99.w,
-            crossAxisCount: 2),
+            crossAxisCount: 1),
         itemBuilder: (context, index) {
           final category = cubit?.categories[index];
           return InkWell(
