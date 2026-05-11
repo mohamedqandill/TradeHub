@@ -52,82 +52,98 @@ class _CustomCartCardState extends State<CustomCartCard> {
         ? "https://pngate.com/wp-content/uploads/2025/04/samsung-galaxy-s25-blue-all-angles-1.png"
         : widget.image;
 
+    final double itemPrice = double.tryParse(widget.price) ?? 0;
+    final double totalPrice = itemPrice * count;
+
     return Container(
       padding: EdgeInsets.all(12.w),
       decoration: BoxDecoration(
-        color: context.isDarkMode
-            ? AppColors.black.withOpacity(0.05)
-            : Colors.white,
-        borderRadius: BorderRadius.circular(16.r),
-        // border: Border.all(
-        //   color: context.isDarkMode ? Colors.white12 : Colors.transparent,
-        //   width: 1,
-        // ),
+        color: context.isDarkMode ? AppColors.lightBlack : Colors.white,
+        borderRadius: BorderRadius.circular(24.r),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.04),
+            blurRadius: 15,
+            offset: const Offset(0, 8),
+          ),
+        ],
+        border: Border.all(
+          color: context.isDarkMode
+              ? Colors.white10
+              : Colors.black.withOpacity(0.05),
+          width: 1,
+        ),
       ),
       child: Row(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(12.r),
-            child: displayImage.startsWith('http')
-                ? CachedNetworkImage(
-                    imageUrl: displayImage,
-                    width: 100.w,
-                    height: 90.w,
-                    fit: BoxFit.contain,
-                    placeholder: (context, url) =>
-                        const Center(child: CircularProgressIndicator()),
-                    errorWidget: (context, url, error) => Icon(
-                      Icons.image_not_supported_outlined,
-                      color: AppColors.grey,
-                      size: 30.sp,
+          Container(
+            width: 90.w,
+            height: 90.w,
+            decoration: BoxDecoration(
+              color: context.isDarkMode
+                  ? Colors.white.withOpacity(0.05)
+                  : AppColors.grey.withOpacity(0.05),
+              borderRadius: BorderRadius.circular(16.r),
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(16.r),
+              child: displayImage.startsWith('http')
+                  ? CachedNetworkImage(
+                      imageUrl: displayImage,
+                      fit: BoxFit.contain,
+                      errorWidget: (context, url, error) => Icon(
+                        Icons.image_not_supported_outlined,
+                        color: AppColors.grey,
+                        size: 24.sp,
+                      ),
+                    )
+                  : Image.asset(
+                      displayImage,
+                      fit: BoxFit.cover,
                     ),
-                  )
-                : Image.asset(
-                    displayImage,
-                    width: 90.w,
-                    height: 90.w,
-                    fit: BoxFit.cover,
-                  ),
+            ),
           ),
-          SizedBox(width: 16.w),
+          SizedBox(width: 10.w),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   widget.title,
-                  maxLines: 1,
+                  maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                    fontSize: 15.sp,
-                    fontWeight: FontWeight.w700,
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w800,
                     color:
                         context.isDarkMode ? AppColors.white : AppColors.black,
+                    fontFamily: 'Poppins',
                   ),
                 ),
-                SizedBox(height: 4.h),
+                SizedBox(height: 6.h),
                 Row(
                   children: [
-                    if (widget.size != null)
+                    Text(
+                      "${widget.price} EGP",
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.grey,
+                        fontFamily: 'Poppins',
+                      ),
+                    ),
+                    if (widget.size != null) ...[
+                      const Text(" • ",
+                          style: TextStyle(color: AppColors.grey)),
                       Text(
-                        "SIZE: ${widget.size}",
+                        "Size ${widget.size}",
                         style: TextStyle(
-                          fontSize: 11.sp,
+                          fontSize: 12.sp,
                           color: AppColors.grey,
-                          fontWeight: FontWeight.w600,
+                          fontFamily: 'Poppins',
                         ),
                       ),
-                    if (widget.size != null && widget.color != null)
-                      Text(" | ", style: TextStyle(color: AppColors.grey)),
-                    if (widget.color != null)
-                      Text(
-                        "COLOR: ${widget.color}",
-                        style: TextStyle(
-                          fontSize: 11.sp,
-                          color: AppColors.grey,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
+                    ],
                   ],
                 ),
                 SizedBox(height: 12.h),
@@ -135,50 +151,54 @@ class _CustomCartCardState extends State<CustomCartCard> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "${widget.price} EGP",
+                      "$totalPrice EGP",
                       style: TextStyle(
                         fontSize: 16.sp,
-                        fontWeight: FontWeight.w800,
+                        fontWeight: FontWeight.w900,
                         color: context.mainColor,
+                        fontFamily: 'Poppins',
                       ),
                     ),
+                    SizedBox(width: 5.w),
                     Container(
+                      padding: EdgeInsets.all(4.w),
                       decoration: BoxDecoration(
                         color: context.isDarkMode
-                            ? AppColors.white.withOpacity(0.05)
-                            : AppColors.grey.withOpacity(0.05),
-                        borderRadius: BorderRadius.circular(20.r),
-                        border: Border.all(
-                          color: context.isDarkMode
-                              ? Colors.white12
-                              : Colors.transparent,
-                        ),
+                            ? Colors.white.withOpacity(0.05)
+                            : AppColors.grey.withOpacity(0.08),
+                        borderRadius: BorderRadius.circular(16.r),
                       ),
                       child: Row(
                         children: [
                           _buildCounterBtn(
-                            icon: Icons.remove,
+                            icon: count == 1
+                                ? Icons.delete_outline_rounded
+                                : Icons.remove_rounded,
+                            iconColor: count == 1 ? Colors.redAccent : null,
                             onTap: () {
-                              if (count > 1) {
+                              if (count == 1) {
+                                widget.onUpdateQuantity(0);
+                              } else if (count > 1) {
                                 widget.onUpdateQuantity(count - 1);
                               }
                             },
                           ),
                           Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 12.w),
+                            padding: EdgeInsets.symmetric(horizontal: 8.w),
                             child: Text(
                               count.toString(),
                               style: TextStyle(
                                 fontSize: 14.sp,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: FontWeight.w800,
                                 color: context.isDarkMode
                                     ? AppColors.white
                                     : AppColors.black,
+                                fontFamily: 'Poppins',
                               ),
                             ),
                           ),
                           _buildCounterBtn(
-                            icon: Icons.add,
+                            icon: Icons.add_rounded,
                             isPrimary: true,
                             onTap: () {
                               widget.onUpdateQuantity(count + 1);
@@ -201,19 +221,29 @@ class _CustomCartCardState extends State<CustomCartCard> {
     required IconData icon,
     required VoidCallback onTap,
     bool isPrimary = false,
+    Color? iconColor,
   }) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: EdgeInsets.all(6.w),
+        padding: EdgeInsets.all(2.w),
         decoration: BoxDecoration(
           color: isPrimary ? context.mainColor : Colors.transparent,
-          borderRadius: BorderRadius.circular(10.r),
+          borderRadius: BorderRadius.circular(12.r),
+          boxShadow: isPrimary
+              ? [
+                  BoxShadow(
+                    color: context.mainColor.withOpacity(0.3),
+                    blurRadius: 8,
+                    offset: const Offset(0, 4),
+                  ),
+                ]
+              : null,
         ),
         child: Icon(
           icon,
           size: 16.sp,
-          color: isPrimary ? Colors.white : AppColors.grey,
+          color: iconColor ?? (isPrimary ? Colors.white : AppColors.grey),
         ),
       ),
     );

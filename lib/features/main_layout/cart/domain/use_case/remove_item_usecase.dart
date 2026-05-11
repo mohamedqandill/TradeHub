@@ -8,7 +8,7 @@ class RemoveItemUseCase {
 
   RemoveItemUseCase(this._repo);
 
-  Future<ApiResult<void>> call(int id) {
-    return _repo.removeItem(id);
+  Future<ApiResult<void>> call({required int companyId, required int productId}) {
+    return _repo.removeItem(companyId: companyId, productId: productId);
   }
 }

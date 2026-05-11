@@ -12,9 +12,10 @@ class CartRepoImpl extends CartRepoContract {
   CartRepoImpl(this._dataSource);
 
   @override
-  Future<ApiResult<CartResponseDTO>> getBasket() {
+  Future<ApiResult<List<CartResponseDTO>>> getBasket() {
     return _dataSource.getBasket();
   }
+
 
   @override
   Future<ApiResult<void>> removeBasket() {
@@ -22,12 +23,12 @@ class CartRepoImpl extends CartRepoContract {
   }
 
   @override
-  Future<ApiResult<void>> removeItem(int id) {
-    return _dataSource.removeItem(id);
+  Future<ApiResult<void>> removeItem({required int companyId, required int productId}) {
+    return _dataSource.removeItem(companyId: companyId, productId: productId);
   }
 
   @override
-  Future<ApiResult<void>> updateItemQuantity({required int id, required int quantity}) {
-    return _dataSource.updateItemQuantity(id: id, quantity: quantity);
+  Future<ApiResult<void>> updateItemQuantity({required int companyId, required int productId, required int quantity}) {
+    return _dataSource.updateItemQuantity(companyId: companyId, productId: productId, quantity: quantity);
   }
 }

@@ -13,11 +13,12 @@ class CartDataSourceImpl extends CartDataSourceContract {
   CartDataSourceImpl(this._apiClient);
 
   @override
-  Future<ApiResult<CartResponseDTO>> getBasket() {
-    return ApiExecutor.executeApi<CartResponseDTO>(
+  Future<ApiResult<List<CartResponseDTO>>> getBasket() {
+    return ApiExecutor.executeApi<List<CartResponseDTO>>(
       apiCall: () => _apiClient.getBasket(),
     );
   }
+
 
   @override
   Future<ApiResult<void>> removeBasket() {
@@ -27,16 +28,16 @@ class CartDataSourceImpl extends CartDataSourceContract {
   }
 
   @override
-  Future<ApiResult<void>> removeItem(int id) {
+  Future<ApiResult<void>> removeItem({required int companyId, required int productId}) {
     return ApiExecutor.executeApi<void>(
-      apiCall: () => _apiClient.removeItem(id),
+      apiCall: () => _apiClient.removeItem(companyId,productId),
     );
   }
 
   @override
-  Future<ApiResult<void>> updateItemQuantity({required int id, required int quantity}) {
+  Future<ApiResult<void>> updateItemQuantity({required int companyId, required int productId, required int quantity}) {
     return ApiExecutor.executeApi<void>(
-      apiCall: () => _apiClient.updateItemQuantity(id,quantity),
+      apiCall: () => _apiClient.updateItemQuantity(companyId,productId,quantity),
     );
   }
 }

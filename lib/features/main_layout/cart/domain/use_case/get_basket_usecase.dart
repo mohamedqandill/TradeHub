@@ -9,7 +9,8 @@ class GetBasketUseCase {
 
   GetBasketUseCase(this._repo);
 
-  Future<ApiResult<CartResponseDTO>> call() {
+  Future<ApiResult<List<CartResponseDTO>>> call() {
     return _repo.getBasket();
   }
 }
+

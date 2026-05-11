@@ -14,17 +14,22 @@ part 'cart_api_client.g.dart';
 @injectable
 abstract class CartApiClient {
   @factoryMethod
-  factory CartApiClient(Dio dio, {@Named('baseUrl') String? baseUrl}) = _CartApiClient;
+  factory CartApiClient(Dio dio, {@Named('baseUrl') String? baseUrl}) =
+      _CartApiClient;
 
   @GET(ApiEndPoints.basket)
-  Future<CartResponseDTO> getBasket();
+  Future<List<CartResponseDTO>> getBasket();
 
   @DELETE(ApiEndPoints.basket)
   Future<void> removeBasket();
 
-  @DELETE("${ApiEndPoints.basketItems}{id}")
-  Future<void> removeItem(@Path(ApiConstants.id) int id);
+  @DELETE("${ApiEndPoints.basket}/{companyId}/items/{productId}")
+  Future<void> removeItem(@Path(ApiConstants.companyId) int companyId,
+      @Path(ApiConstants.productId) int productId);
 
-  @PUT("${ApiEndPoints.basketItems}{id}")
-  Future<void> updateItemQuantity(@Path(ApiConstants.id) int id, @Query(ApiConstants.quantity) int quantity);
+  @PUT("${ApiEndPoints.basket}/{companyId}/items/{productId}")
+  Future<void> updateItemQuantity(
+      @Path(ApiConstants.companyId) int companyId,
+      @Path(ApiConstants.productId) int productId,
+      @Query(ApiConstants.quantity) int quantity);
 }

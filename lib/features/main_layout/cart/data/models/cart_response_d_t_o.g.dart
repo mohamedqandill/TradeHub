@@ -10,17 +10,23 @@ CartResponseDTO _$CartResponseDTOFromJson(Map<String, dynamic> json) =>
     CartResponseDTO(
       id: (json['id'] as num).toInt(),
       buyerId: json['buyerId'] as String,
+      companyName: json['companyName'] as String,
+      companyId: json['companyId'] as String,
       items: (json['items'] as List<dynamic>)
           .map((e) => Items.fromJson(e as Map<String, dynamic>))
           .toList(),
       subTotal: (json['subTotal'] as num?)?.toInt() ?? 0,
+      logoUrl: json['logoUrl'] as String?,
     );
 
 Map<String, dynamic> _$CartResponseDTOToJson(CartResponseDTO instance) =>
     <String, dynamic>{
       'id': instance.id,
       'buyerId': instance.buyerId,
+      'companyName': instance.companyName,
+      'companyId': instance.companyId,
       'items': instance.items,
+      'logoUrl': instance.logoUrl,
       'subTotal': instance.subTotal,
     };
 

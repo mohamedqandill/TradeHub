@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tradehub/Core/extensions/base_inherited_context.dart';
@@ -16,6 +17,7 @@ import 'package:tradehub/features/main_layout/home/presentation/cubit/home_cubit
 import 'package:tradehub/features/main_layout/home/presentation/widgets/category_section.dart';
 import 'package:tradehub/features/main_layout/home/presentation/widgets/custom_row_headline.dart';
 import 'package:tradehub/features/main_layout/home/presentation/widgets/home_header_widget.dart';
+import 'package:tradehub/features/main_layout/home/presentation/widgets/home_offer_card.dart';
 import 'package:tradehub/features/main_layout/home/presentation/widgets/products_section.dart';
 import 'package:tradehub/features/main_layout/home/presentation/widgets/vendors_section.dart';
 import 'package:tradehub/main.dart';
@@ -80,7 +82,6 @@ class _HomeScreenBodyState extends State<HomeScreenBody> with RouteAware {
     }, builder: (context, state) {
       cubit = context.watch<HomeCubit>();
 
-      // Full-screen error when ALL sections fail
       if (state.getCategoryState == RequestStates.error &&
           state.getCompaniesState == RequestStates.error &&
           state.getRandomProductsState == RequestStates.error) {
@@ -97,7 +98,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> with RouteAware {
           HomeHeaderWidget(
             address: address,
             onPlaceSelected: updateAddress,
-          ),
+          ).animate().fadeIn(duration: 400.ms).slideY(begin: -0.1),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.w),
             child: Column(
@@ -112,32 +113,37 @@ class _HomeScreenBodyState extends State<HomeScreenBody> with RouteAware {
                         context.isDarkMode ? AppColors.white : AppColors.black,
                     letterSpacing: -0.5,
                   ),
-                ),
+                ).animate().fadeIn(delay: 200.ms).slideX(begin: -0.2),
                 SizedBox(height: 16.h),
                 CategorySection(
                   cubit: cubit,
                   isLoading: state.getCategoryState == RequestStates.loading,
-                ),
-                SizedBox(height: 32.h),
+                ).animate().fadeIn(delay: 300.ms).slideY(begin: 0.1),
+                SizedBox(height: 12.h),
+                const HomeOfferCard()
+                    .animate()
+                    .fadeIn(delay: 400.ms)
+                    .scale(begin: const Offset(0.95, 0.95)),
+                SizedBox(height: 15.h),
                 CustomRowHeadline(
                   title: LocaleKeys.featuredVendors.tr(),
                   subTitle: "",
-                ),
+                ).animate().fadeIn(delay: 500.ms).slideX(begin: -0.2),
                 SizedBox(height: 16.h),
                 VendorsSection(
                   isLoading: state.getCompaniesState == RequestStates.loading,
                   cubit: cubit,
-                ),
+                ).animate().fadeIn(delay: 600.ms).slideY(begin: 0.1),
                 SizedBox(height: 32.h),
                 CustomRowHeadline(
                   title: LocaleKeys.popularProducts.tr(),
                   subTitle: "",
-                ),
+                ).animate().fadeIn(delay: 700.ms).slideX(begin: -0.2),
                 SizedBox(height: 16.h),
                 ProductsSection(
                   isLoading:
                       state.getRandomProductsState == RequestStates.loading,
-                ),
+                ).animate().fadeIn(delay: 800.ms).slideY(begin: 0.1),
                 SizedBox(height: 10.h),
               ],
             ),

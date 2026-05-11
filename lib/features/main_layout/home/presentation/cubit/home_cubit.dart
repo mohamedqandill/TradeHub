@@ -37,8 +37,8 @@ class HomeCubit extends Cubit<HomeState> {
     await Future.wait([
       getCategories().catchError((_) {}),
       getCompanies().catchError((_) {}),
-      getRandomProducts().catchError((_) {}),
     ]);
+    unawaited(getRandomProducts());
   }
 
   Future<void> getCategories() async {
@@ -48,8 +48,8 @@ class HomeCubit extends Cubit<HomeState> {
 
     switch (result) {
       case Success():
-        emit(state.copyWith(getCategoryState: RequestStates.success));
         categories = result.data ?? [];
+        emit(state.copyWith(getCategoryState: RequestStates.success));
       case Error():
         emit(state.copyWith(
             getCategoryState: RequestStates.error,
@@ -64,8 +64,9 @@ class HomeCubit extends Cubit<HomeState> {
 
     switch (result) {
       case Success():
+              companies = result.data ?? [];
+
         emit(state.copyWith(getCompaniesState: RequestStates.success));
-        companies = result.data ?? [];
       case Error():
         emit(state.copyWith(
             getCompaniesState: RequestStates.error,

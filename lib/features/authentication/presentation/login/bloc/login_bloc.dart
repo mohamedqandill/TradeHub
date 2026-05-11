@@ -25,6 +25,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   bool isRememberMe = false;
   bool isObscureText = false;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final emailFocus = FocusNode();
+  final passwordFocus = FocusNode();
 
   LoginBloc(this._loginUseCase, this._signWithGoogleUseCase,
       this._signWithFacebookUseCase)
@@ -75,6 +77,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   Future<void> close() {
     email.dispose();
     password.dispose();
+    emailFocus.dispose();
+    passwordFocus.dispose();
     return super.close();
   }
 }

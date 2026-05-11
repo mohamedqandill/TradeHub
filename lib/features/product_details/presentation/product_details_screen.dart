@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tradehub/core/colors/app_colors.dart';
@@ -201,7 +202,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               fontSize: 12.sp,
                               fontWeight: FontWeight.w800,
                             ),
-                          );
+                          ).animate().fadeIn(delay: 100.ms).slideX(begin: -0.2);
                         },
                       ),
                       SizedBox(width: 12.w),
@@ -221,12 +222,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 fontSize: 16.sp,
                                 fontWeight: FontWeight.w800,
                               ),
-                            );
+                            ).animate().fadeIn(delay: 200.ms).slideX(begin: 0.2);
                           },
                         ),
                       ),
                     ],
-                  )),
+                  )).animate().slideY(begin: 1, end: 0, duration: 600.ms, curve: Curves.easeOutCubic),
             );
           },
         ),

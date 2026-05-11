@@ -34,6 +34,10 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   double spaceHeight = 16.h;
   double? waveHeight;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final passwordFocus = FocusNode();
+  final emailFocus = FocusNode();
+  final lastNameFocus = FocusNode();
+  final phoneNumberFocus = FocusNode();
 
   RegisterBloc(
       this._registerUseCase,
@@ -111,6 +115,10 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     firstName.dispose();
     lastName.dispose();
     password.dispose();
+    emailFocus.dispose();
+    passwordFocus.dispose();
+    lastNameFocus.dispose();
+    phoneNumberFocus.dispose();
     return super.close();
   }
 }
