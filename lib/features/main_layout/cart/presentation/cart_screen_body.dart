@@ -1,11 +1,14 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:tradehub/core/colors/app_colors.dart';
 import 'package:tradehub/core/extensions/is_dark_mode.dart';
+import 'package:tradehub/core/extensions/main_color.dart';
 import 'package:tradehub/core/functions/show_snakbar.dart';
 import 'package:tradehub/core/utils/animations/loading_product_animation.dart';
+import 'package:tradehub/features/main_layout/cart/data/models/cart_response_d_t_o.dart';
 import 'package:tradehub/features/main_layout/cart/presentation/cubit/cart_cubit.dart';
 import 'package:tradehub/features/main_layout/cart/presentation/cubit/cart_states.dart';
 import 'package:tradehub/features/main_layout/cart/presentation/widgets/custom_checkout_card.dart';
@@ -13,6 +16,9 @@ import 'package:tradehub/features/main_layout/cart/presentation/widgets/empty_ca
 import 'package:tradehub/core/shared_widgets/widgets/custom_error_widget.dart';
 
 import 'widgets/custom_cart_card.dart';
+import 'widgets/seller_card.dart';
+
+import 'package:flutter_animate/flutter_animate.dart';
 
 class CartScreenBody extends StatefulWidget {
   const CartScreenBody({super.key});
@@ -21,7 +27,28 @@ class CartScreenBody extends StatefulWidget {
   State<CartScreenBody> createState() => _CartScreenBodyState();
 }
 
-class _CartScreenBodyState extends State<CartScreenBody> {
+class _CartScreenBodyState extends State<CartScreenBody>
+    with TickerProviderStateMixin {
+  TabController? _tabController;
+
+  @override
+  void dispose() {
+    _tabController?.dispose();
+    super.dispose();
+  }
+
+  void _initTabController(int length) {
+    if (_tabController == null || _tabController!.length != length) {
+      _tabController?.dispose();
+      _tabController = TabController(length: length, vsync: this);
+      _tabController!.addListener(() {
+        if (!_tabController!.indexIsChanging) {
+          setState(() {});
+        }
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<CartCubit, CartState>(
@@ -30,6 +57,13 @@ class _CartScreenBodyState extends State<CartScreenBody> {
           showFailureSnackBar(context, messageTitle: state.message);
         } else if (state is UpdateItemQuantityError) {
           showFailureSnackBar(context, messageTitle: state.message);
+        }
+        if (state is UpdateItemQuantitySuccess || state is RemoveItemSuccess) {
+          context.read<CartCubit>().getBasket();
+        }
+
+        if (state is RemoveBasketSuccess || state is RemoveItemSuccess) {
+          context.read<CartCubit>().getBasket();
         }
       },
       buildWhen: (previous, current) {
@@ -41,143 +75,41 @@ class _CartScreenBodyState extends State<CartScreenBody> {
       builder: (context, state) {
         final cubit = context.read<CartCubit>();
 
-        // Show loading only if we don't have cart data yet
         if ((state is GetBasketLoading || state is CartInitial) &&
-            cubit.cart == null) {
+            cubit.cartGroups == null) {
           return loadingProductAnimation();
         }
 
-        if (cubit.cart != null) {
-          final items = cubit.cart!.items;
-          final subTotal = cubit.cart!.subTotal;
+        if (cubit.cartGroups != null && cubit.cartGroups!.isNotEmpty) {
+          final groups = cubit.cartGroups!;
+          _initTabController(groups.length);
 
-          if (items.isEmpty) {
-            return const EmptyCartScreenBody();
-          }
+          final currentGroup = groups[_tabController!.index];
+          final subTotal = currentGroup.subTotal;
 
-          return Stack(
+          return Column(
             children: [
-              CustomScrollView(
-                physics: const BouncingScrollPhysics(),
-                slivers: [
-                  SliverToBoxAdapter(child: SizedBox(height: 20.h)),
-                  SliverPadding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.w),
-                    sliver: SliverList(
-                      delegate: SliverChildBuilderDelegate(
-                        (context, index) {
-                          final int itemIndex = index ~/ 2;
-                          if (index.isEven) {
-                            final item = items[itemIndex];
-                            return Dismissible(
-                              key:
-                                  Key("cart_item_${item.productId}_${item.id}"),
-                              direction: DismissDirection.endToStart,
-                              background: Container(
-                                alignment: Alignment.centerRight,
-                                padding: EdgeInsets.only(right: 20.w),
-                                decoration: BoxDecoration(
-                                  color: Colors.redAccent.withOpacity(0.8),
-                                  borderRadius: BorderRadius.circular(16.r),
-                                ),
-                                child: const Icon(Icons.delete_rounded,
-                                    color: Colors.white),
-                              ),
-                              onDismissed: (_) {
-                                cubit.cart!.items.remove(item);
-                                setState(() {});
-                                cubit.removeItem(item.productId);
-                              },
-                              child: CustomCartCard(
-                                image: item.pictureUrl,
-                                title: item.productName,
-                                price: item.price.toString(),
-                                quantity: item.quantity,
-                                onUpdateQuantity: (q) {
-                                  if (q == 0) {
-                                    cubit.cart!.items.remove(item);
-                                    setState(() {});
-                                    cubit.removeItem(item.productId);
-                                  } else {
-                                    cubit.updateItemQuantity(
-                                        id: item.productId, quantity: q);
-                                  }
-                                },
-                              ),
-                            );
-                          }
-                          return SizedBox(height: 16.h);
-                        },
-                        childCount: items.isEmpty ? 0 : (items.length * 2 - 1),
-                      ),
+              _buildCompanyTabBar(groups),
+              Expanded(
+                child: Stack(
+                  children: [
+                    TabBarView(
+                      controller: _tabController,
+                      children: groups.map((group) {
+                        return _buildItemsList(cubit, group.items);
+                      }).toList(),
                     ),
-                  ),
-                  SliverToBoxAdapter(child: SizedBox(height: 200.h)),
-                ],
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: DraggableScrollableSheet(
-                  initialChildSize: 0.12,
-                  minChildSize: 0.11,
-                  maxChildSize: 0.35,
-                  builder: (context, scrollController) {
-                    return Container(
-                      decoration: BoxDecoration(
-                        color: context.isDarkMode
-                            ? AppColors.lightBlack.withOpacity(0.8)
-                            : AppColors.white,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(32.r),
-                          topRight: Radius.circular(32.r),
-                        ),
-                        border: Border.all(
-                          color: context.isDarkMode
-                              ? Colors.white12
-                              : Colors.transparent,
-                          width: 1,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: context.isDarkMode
-                                ? Colors.black.withOpacity(0.3)
-                                : Colors.black.withOpacity(0.1),
-                            blurRadius: 20,
-                            offset: const Offset(0, -10),
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        children: [
-                          SizedBox(height: 12.h),
-                          Container(
-                            width: 40.w,
-                            height: 4.h,
-                            decoration: BoxDecoration(
-                              color: context.isDarkMode
-                                  ? Colors.white.withOpacity(0.18)
-                                  : AppColors.grey.withOpacity(0.2),
-                              borderRadius: BorderRadius.circular(2.r),
-                            ),
-                          ),
-                          Expanded(
-                            child: SingleChildScrollView(
-                              controller: scrollController,
-                              child: CustomCheckoutCard(
-                                isLoading: state is RemoveItemLoading ||
-                                    state is UpdateItemQuantityLoading,
-                                subTotal: subTotal,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
+                    _buildCheckoutSection(
+                        state, subTotal, currentGroup.companyName),
+                  ],
                 ),
               ),
             ],
           );
+        }
+
+        if (cubit.cartGroups != null && cubit.cartGroups!.isEmpty) {
+          return const EmptyCartScreenBody();
         }
 
         return CustomErrorWidget(
@@ -186,5 +118,123 @@ class _CartScreenBodyState extends State<CartScreenBody> {
         );
       },
     );
+  }
+
+  Widget _buildCompanyTabBar(List<CartResponseDTO> groups) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
+          child: Text(
+            "ACTIVE SELLERS (${groups.length})",
+            style: TextStyle(
+              fontSize: 12.sp,
+              fontWeight: FontWeight.w800,
+              color: context.greyOrWhite,
+              letterSpacing: 1.5,
+              fontFamily: 'Poppins',
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 145.h,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            itemCount: groups.length,
+            itemBuilder: (context, index) {
+              return SellerCard(
+                group: groups[index],
+                isSelected: _tabController!.index == index,
+                index: index,
+                onTap: () {
+                  _tabController!.animateTo(index);
+                  setState(() {});
+                },
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildItemsList(CartCubit cubit, List<Items> items) {
+    return ListView.separated(
+      physics: const BouncingScrollPhysics(),
+      padding:
+          EdgeInsets.only(left: 20.w, right: 20.w, top: 16.h, bottom: 50.h),
+      itemCount: items.length,
+      separatorBuilder: (context, index) => SizedBox(height: 12.h),
+      itemBuilder: (context, index) {
+        final item = items[index];
+        return Dismissible(
+          key: Key("cart_item_${item.productId}_${item.id}"),
+          direction: DismissDirection.endToStart,
+          background: Container(
+            alignment: Alignment.centerRight,
+            padding: EdgeInsets.only(right: 24.w),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Colors.redAccent.shade100, Colors.redAccent.shade400],
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+              ),
+              borderRadius: BorderRadius.circular(20.r),
+            ),
+            child: const Icon(Icons.delete_outline_rounded,
+                color: Colors.white, size: 28),
+          ),
+          confirmDismiss: (_) async {
+            setState(() {
+              items.removeWhere((element) => element.id == item.id);
+            });
+            cubit.removeItem(
+              companyId: cubit.cartGroups![_tabController!.index].id,
+              productId: item.productId,
+            );
+
+            return true;
+          },
+          child: CustomCartCard(
+            image: item.pictureUrl,
+            title: item.productName,
+            price: item.price.toString(),
+            quantity: item.quantity,
+            onUpdateQuantity: (q) {
+              if (q == 0) {
+                cubit.removeItem(
+                  companyId: cubit.cartGroups![_tabController!.index].id,
+                  productId: item.productId,
+                );
+              } else {
+                cubit.updateItemQuantity(
+                    companyId: cubit.cartGroups![_tabController!.index].id,
+                    productId: item.productId,
+                    quantity: q);
+              }
+            },
+          ),
+        )
+            .animate()
+            .fadeIn(delay: (index * 50).ms, duration: 400.ms)
+            .slideX(begin: 0.1, end: 0);
+      },
+    );
+  }
+
+  Widget _buildCheckoutSection(
+      CartState state, int subTotal, String companyName) {
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: CustomCheckoutCard(
+        isLoading:
+            state is RemoveItemLoading || state is UpdateItemQuantityLoading,
+        subTotal: subTotal,
+      ),
+    )
+        .animate()
+        .slideY(begin: 1, end: 0, duration: 600.ms, curve: Curves.easeOutCubic);
   }
 }

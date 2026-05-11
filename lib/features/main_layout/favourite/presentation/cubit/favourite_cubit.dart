@@ -58,12 +58,11 @@ class FavouriteCubit extends Cubit<FavouriteState> {
     }
     favorites = List.from(favorites);
 
-    emit(state.copyWith(
-      favoritesUpdate: RequestStates.success,
-    ));
+   
 
     emit(state.copyWith(
       toggleFavoriteState: RequestStates.loading,
+       favoritesUpdate: RequestStates.success,
     ));
     var result = await _toggleFavoriteUseCase(id);
 
@@ -73,6 +72,11 @@ class FavouriteCubit extends Cubit<FavouriteState> {
         getIt<SharedProductRepository>().markUpdated();
         getIt<SharedProductRepository>().markThatFavoriteChange();
       case Error():
+       if (favoritesIds.contains(id)) {
+        favoritesIds.remove(id);
+      } else {
+        favoritesIds.add(id);
+      }
         emit(state.copyWith(
           toggleFavoriteState: RequestStates.error,
           errorMessage: result.error?.message,

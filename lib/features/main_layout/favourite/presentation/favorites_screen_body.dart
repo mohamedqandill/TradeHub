@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -42,7 +43,7 @@ class _FavoritesScreenBodyState extends State<FavoritesScreenBody> {
       },
       child: BlocBuilder<FavouriteCubit, FavouriteState>(
           builder: (context, state) {
-        var cubit = context.read<FavouriteCubit>();
+        var cubit = context.watch<FavouriteCubit>();
 
         if (state.getFavoritesState == RequestStates.loading) {
           return loadingProductAnimation();
@@ -66,7 +67,7 @@ class _FavoritesScreenBodyState extends State<FavoritesScreenBody> {
                       : AppColors.grey.withOpacity(0.8),
                 ),
                 hintText: LocaleKeys.searchYourFavorites.tr(),
-              ),
+              ).animate().fadeIn(duration: 400.ms).slideY(begin: -0.1),
               Expanded(
                 child: CustomScrollView(
                   physics: const BouncingScrollPhysics(),
@@ -114,7 +115,10 @@ class _FavoritesScreenBodyState extends State<FavoritesScreenBody> {
                                     price: product.price.toString(),
                                   );
                                 }),
-                              ),
+                              )
+                                  .animate()
+                                  .fadeIn(delay: (index * 50).ms)
+                                  .slideY(begin: 0.1),
                             );
                           },
                           childCount: cubit.favorites.length,

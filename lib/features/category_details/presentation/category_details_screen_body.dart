@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -55,7 +56,7 @@ class CategoryDetailsScreenBody extends StatelessWidget {
                           : Colors.grey.shade600)
                       .withOpacity(0.95),
                 ),
-              ),
+              ).animate().fadeIn(duration: 400.ms).slideX(begin: -0.2),
               SizedBox(
                 height: 25.h,
               ),
@@ -69,7 +70,10 @@ class CategoryDetailsScreenBody extends StatelessWidget {
                         enabled:
                             state.getCompaniesState == RequestStates.loading,
                         child:
-                            VendorCardWidget(company: cubit.companies[index]));
+                            VendorCardWidget(company: cubit.companies[index])
+                                .animate()
+                                .fadeIn(delay: (index * 50).ms)
+                                .slideY(begin: 0.1));
                   },
                 ),
               ),

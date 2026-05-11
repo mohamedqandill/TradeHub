@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -8,6 +9,7 @@ import 'package:tradehub/Core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/extensions/main_color.dart';
 import 'package:tradehub/features/product_details/presentation/cubit/product_details_cubit.dart';
 import 'package:tradehub/features/product_details/presentation/widgets/product_options_widget.dart';
+import 'package:tradehub/features/product_details/presentation/widgets/product_review_card.dart';
 import 'package:tradehub/features/product_ratings/presentation/cubit/product_ratings_cubit.dart';
 import 'package:tradehub/features/product_ratings/presentation/cubit/product_ratings_states.dart';
 
@@ -246,7 +248,7 @@ class _ProductDetailsBodyState extends State<ProductDetailsBody> {
                     fontWeight: FontWeight.w900,
                     letterSpacing: 1.5,
                   ),
-                ),
+                ).animate().fadeIn(duration: 400.ms).slideX(begin: -0.2),
               ),
             ),
           ),
@@ -265,7 +267,10 @@ class _ProductDetailsBodyState extends State<ProductDetailsBody> {
                   return ProductOptionWidget(
                     categoryAttName: attr?.categoryAttributeName ?? "",
                     value: attr?.value ?? "",
-                  );
+                  )
+                      .animate()
+                      .fadeIn(delay: (index * 50).ms)
+                      .slideY(begin: 0.1);
                 },
                 childCount: product?.attributes?.length ?? 0,
               ),
@@ -284,7 +289,7 @@ class _ProductDetailsBodyState extends State<ProductDetailsBody> {
                 fontWeight: FontWeight.w900,
                 letterSpacing: 1.5,
               ),
-            ),
+            ).animate().fadeIn(duration: 400.ms).slideX(begin: -0.2),
           ),
         ),
         BlocBuilder<ProductRatingsCubit, ProductRatingsStates>(
@@ -339,63 +344,10 @@ class _ProductDetailsBodyState extends State<ProductDetailsBody> {
                 itemCount: ratings.length,
                 separatorBuilder: (_, __) => SizedBox(height: 12.h),
                 itemBuilder: (context, index) {
-                  final r = ratings[index];
-                  final name = (r.userFullname ?? "").trim();
-                  final comment = (r.comment ?? "").trim();
-                  final value = r.ratingValue ?? 0;
-
-                  return Container(
-                    padding: EdgeInsets.all(14.w),
-                    decoration: BoxDecoration(
-                      color: context.isDarkMode
-                          ? AppColors.black.withOpacity(0.3)
-                          : AppColors.grey.withOpacity(0.06),
-                      borderRadius: BorderRadius.circular(16.r),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                name.isEmpty ? "Anonymous" : name,
-                                style: TextStyle(
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w900,
-                                ),
-                              ),
-                            ),
-                            Icon(
-                              Icons.star_rounded,
-                              color: Colors.amber,
-                              size: 18.sp,
-                            ),
-                            SizedBox(width: 4.w),
-                            Text(
-                              value.toString(),
-                              style: TextStyle(
-                                fontWeight: FontWeight.w800,
-                                fontSize: 13.sp,
-                              ),
-                            ),
-                          ],
-                        ),
-                        if (comment.isNotEmpty) ...[
-                          SizedBox(height: 8.h),
-                          Text(
-                            comment,
-                            style: TextStyle(
-                              fontSize: 13.sp,
-                              height: 1.4,
-                              color: AppColors.grey,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                      ],
-                    ),
-                  );
+                  return ProductReviewCard(rating: ratings[index])
+                      .animate()
+                      .fadeIn(delay: (index * 50).ms)
+                      .slideY(begin: 0.1);
                 },
               ),
             );

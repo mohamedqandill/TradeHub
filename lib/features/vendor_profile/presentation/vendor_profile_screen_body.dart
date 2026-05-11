@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tradehub/core/extensions/base_inherited_context.dart';
@@ -14,6 +15,7 @@ import 'package:tradehub/features/vendor_profile/presentation/cubit/vendor_profi
 import 'package:tradehub/features/vendor_profile/presentation/cubit/vendor_profile_states.dart';
 import 'package:tradehub/features/vendor_profile/presentation/widgets/product_card_horizontal.dart';
 import 'package:tradehub/features/vendor_profile/presentation/widgets/product_card_vertical.dart';
+import 'package:tradehub/features/vendor_profile/presentation/widgets/sliver_category_delegate.dart';
 import 'package:tradehub/features/vendor_profile/presentation/widgets/vendor_category_pills.dart';
 import 'package:tradehub/features/vendor_profile/presentation/widgets/vendor_info_card.dart';
 
@@ -130,7 +132,7 @@ class VendorProfileScreenBody extends StatelessWidget {
                   subTitle: vendor.businessTypeName.isNotEmpty
                       ? vendor.businessTypeName
                       : "",
-                ),
+                ).animate().fadeIn(duration: 500.ms).slideY(begin: 0.2),
               ),
             ),
 
@@ -142,7 +144,7 @@ class VendorProfileScreenBody extends StatelessWidget {
             // 4. Sticky Category Pills
             SliverPersistentHeader(
               pinned: true,
-              delegate: _SliverCategoryDelegate(
+              delegate: SliverCategoryDelegate(
                 child: VendorCategoryPills(
                   categories: cubit.subcategories.map((e) => e.name).toList(),
                   onCategorySelected: (index) {
@@ -152,7 +154,7 @@ class VendorProfileScreenBody extends StatelessWidget {
                           cubit.subcategories[index].id);
                     }
                   },
-                ),
+                ).animate().fadeIn(delay: 200.ms).slideX(begin: -0.1),
               ),
             ),
 
@@ -166,7 +168,7 @@ class VendorProfileScreenBody extends StatelessWidget {
                     fontWeight: FontWeight.w800,
                     fontSize: 22.sp,
                   ),
-                ),
+                ).animate().fadeIn(delay: 300.ms).slideX(begin: -0.2),
               ),
             ),
             SliverToBoxAdapter(
@@ -198,7 +200,7 @@ class VendorProfileScreenBody extends StatelessWidget {
                                   ? product.imageUrl ?? ""
                                   : "https://pngate.com/wp-content/uploads/2025/04/samsung-galaxy-s25-blue-all-angles-1.png",
                             ),
-                          );
+                          ).animate().fadeIn(delay: (400 + index * 50).ms).slideX(begin: 0.1);
                         },
                       ),
               ),
@@ -219,7 +221,7 @@ class VendorProfileScreenBody extends StatelessWidget {
                     fontWeight: FontWeight.w800,
                     fontSize: 22.sp,
                   ),
-                ),
+                ).animate().fadeIn(delay: 500.ms).slideX(begin: -0.2),
               ),
             ),
             if (state is GetProductsBySubcategoryLoadingState)
@@ -249,7 +251,7 @@ class VendorProfileScreenBody extends StatelessWidget {
                             ? "${product.attributes.first.name}: ${product.attributes.first.value}"
                             : "No reviews yet.",
                       ),
-                    );
+                    ).animate().fadeIn(delay: (600 + index * 50).ms).slideY(begin: 0.1);
                   },
                   childCount: cubit.products.length,
                 ),
@@ -262,29 +264,4 @@ class VendorProfileScreenBody extends StatelessWidget {
       );
     });
   }
-}
-
-class _SliverCategoryDelegate extends SliverPersistentHeaderDelegate {
-  final Widget child;
-
-  _SliverCategoryDelegate({required this.child});
-
-  @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return Container(
-      color: Theme.of(context).scaffoldBackgroundColor,
-      child: child,
-    );
-  }
-
-  @override
-  double get maxExtent => 60.h;
-
-  @override
-  double get minExtent => 60.h;
-
-  @override
-  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) =>
-      false;
 }

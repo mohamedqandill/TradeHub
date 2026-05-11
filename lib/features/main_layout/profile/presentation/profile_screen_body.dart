@@ -10,6 +10,7 @@ import 'package:tradehub/core/extensions/base_inherited_context.dart';
 import 'package:tradehub/core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/extensions/main_color.dart';
 import 'package:tradehub/core/localization/locale_keys.g.dart';
+import 'package:tradehub/core/shared_services/shared_product_repository.dart';
 import 'package:tradehub/core/utils/di/di.dart';
 import 'package:tradehub/core/utils/secure_storage/secure_storage_service.dart';
 import 'package:tradehub/core/utils/storage/hive_storage.dart';
@@ -155,7 +156,10 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> {
                                         Navigator.pop(dialogContext);
                                         await getIt<SecureStorageHelper>()
                                             .delete(ApiConstants.token);
+
                                         cartCbit.resetCart();
+                                        getIt<SharedProductRepository>()
+                                            .markThatFavoriteChange();
                                         if (context.mounted) {
                                           Navigator.pushNamedAndRemoveUntil(
                                               context,

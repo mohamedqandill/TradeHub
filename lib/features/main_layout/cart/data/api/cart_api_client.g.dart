@@ -24,12 +24,12 @@ class _CartApiClient implements CartApiClient {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<CartResponseDTO> getBasket() async {
+  Future<List<CartResponseDTO>> getBasket() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<CartResponseDTO>(Options(
+    final _options = _setStreamType<List<CartResponseDTO>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -45,10 +45,13 @@ class _CartApiClient implements CartApiClient {
           _dio.options.baseUrl,
           baseUrl,
         )));
-    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late CartResponseDTO _value;
+    final _result = await _dio.fetch<List<dynamic>>(_options);
+    late List<CartResponseDTO> _value;
     try {
-      _value = CartResponseDTO.fromJson(_result.data!);
+      _value = _result.data!
+          .map((dynamic i) =>
+              CartResponseDTO.fromJson(i as Map<String, dynamic>))
+          .toList();
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -82,7 +85,10 @@ class _CartApiClient implements CartApiClient {
   }
 
   @override
-  Future<void> removeItem(int id) async {
+  Future<void> removeItem(
+    int companyId,
+    int productId,
+  ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -94,7 +100,7 @@ class _CartApiClient implements CartApiClient {
     )
         .compose(
           _dio.options,
-          'api/basket/items/${id}',
+          'api/basket/${companyId}/items/${productId}',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -108,7 +114,8 @@ class _CartApiClient implements CartApiClient {
 
   @override
   Future<void> updateItemQuantity(
-    int id,
+    int companyId,
+    int productId,
     int quantity,
   ) async {
     final _extra = <String, dynamic>{};
@@ -122,7 +129,7 @@ class _CartApiClient implements CartApiClient {
     )
         .compose(
           _dio.options,
-          'api/basket/items/${id}',
+          'api/basket/${companyId}/items/${productId}',
           queryParameters: queryParameters,
           data: _data,
         )

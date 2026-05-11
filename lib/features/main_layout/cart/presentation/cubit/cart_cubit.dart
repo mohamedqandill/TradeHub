@@ -17,7 +17,7 @@ class CartCubit extends Cubit<CartState> {
   final UpdateItemQuantityUseCase _updateItemQuantityUseCase;
   final AddToCartUseCase _addToCartUseCase;
 
-  CartResponseDTO? cart;
+  List<CartResponseDTO>? cartGroups;
   int? loadingProductId;
   bool _isCartChanged = false;
   bool isCartInitated = false;
@@ -36,12 +36,12 @@ class CartCubit extends Cubit<CartState> {
     final result = await _getBasketUseCase.call();
     switch (result) {
       case Success():
-        cart = result.data;
+        cartGroups = result.data;
         emit(GetBasketSuccess());
         _isCartChanged = false;
         isCartInitated = true;
       case Error():
-        emit(GetBasketError(result.error?.message ?? "Falied To Get Cart"));
+        emit(GetBasketError(result.error?.message ?? "Failed To Get Cart"));
     }
   }
 
@@ -49,14 +49,14 @@ class CartCubit extends Cubit<CartState> {
     loadingProductId = productId;
     emit(AddToCartLoadingState());
     var result = await _addToCartUseCase(productId, quantity: quantity);
-    if (result is Success<CartResponseDTO>) {
-      _isCartChanged = true;
-      emit(AddToCartSuccessState());
-
-      loadingProductId = null;
-    } else if (result is Error<CartResponseDTO>) {
-      emit(AddToCartErrorState(result.error?.message ?? "Error occurred"));
-      loadingProductId = null;
+    switch (result) {
+      case Success():
+        _isCartChanged = true;
+        emit(AddToCartSuccessState());
+        loadingProductId = null;
+      case Error():
+        emit(AddToCartErrorState(result.error?.message ?? "Error occurred"));
+        loadingProductId = null;
     }
   }
 
@@ -68,35 +68,35 @@ class CartCubit extends Cubit<CartState> {
         _isCartChanged = true;
         emit(RemoveBasketSuccess());
         // Refresh basket after removing
-        getBasket();
+       
       case Error():
         emit(RemoveBasketError(
             result.error?.message ?? "Failed to clear basket"));
     }
   }
 
-  void removeItem(int id) async {
-    emit(RemoveItemLoading(id));
-    final result = await _removeItemUseCase(id);
+  void removeItem({required int companyId, required int productId}) async {
+    emit(RemoveItemLoading(productId));
+    final result = await _removeItemUseCase(companyId: companyId, productId: productId);
     switch (result) {
       case Success():
         _isCartChanged = true;
         emit(RemoveItemSuccess());
         // Refresh basket after removing item
-        getBasket();
+        
       case Error():
         emit(RemoveItemError(result.error?.message ?? "Failed to remove item"));
     }
   }
 
-  void updateItemQuantity({required int id, required int quantity}) async {
-    emit(UpdateItemQuantityLoading(id));
-    final result = await _updateItemQuantityUseCase(id: id, quantity: quantity);
+  void updateItemQuantity({required int companyId, required int productId, required int quantity}) async {
+    emit(UpdateItemQuantityLoading(companyId));
+    final result = await _updateItemQuantityUseCase(companyId: companyId, productId: productId, quantity: quantity);
     switch (result) {
       case Success():
         _isCartChanged = true;
         emit(UpdateItemQuantitySuccess());
-        getBasket();
+        
       case Error():
         emit(UpdateItemQuantityError(
             result.error?.message ?? "Failed to update quantity"));
@@ -104,7 +104,7 @@ class CartCubit extends Cubit<CartState> {
   }
 
 void resetCart() {
-  cart = null;
+  cartGroups = null;
   _isCartChanged = true;
   isCartInitated = false;
 }}

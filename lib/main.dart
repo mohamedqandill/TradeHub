@@ -67,18 +67,20 @@ Future<void> main() async {
         child: MultiBlocProvider(
           providers: [
             BlocProvider(
-              create: (context) => getIt<CartCubit>()..getBasket(),
+              create: (context) => getIt<CartCubit>(),
             ),
             BlocProvider(
-              create: (context) => getIt<FavouriteCubit>()..getFavorites(),
+              create: (context) => getIt<FavouriteCubit>(),
             ),
           ],
-          child: DevicePreviewWidget(
-            child: MyApp(
-              isFirstTime: isFirstTime,
-              token: token,
+          
+            child: DevicePreviewWidget(
+              child: MyApp(
+                isFirstTime: isFirstTime,
+                token: token,
+              ),
             ),
-          ),
+          
         ),
       ),
     ),

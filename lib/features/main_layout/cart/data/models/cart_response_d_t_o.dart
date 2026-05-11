@@ -9,16 +9,25 @@ class CartResponseDTO {
   final int id;
   @JsonKey(name: ApiConstants.buyerId)
   final String buyerId;
+  @JsonKey(name: ApiConstants.companyName)
+  final String companyName;
+  @JsonKey(name: ApiConstants.companyId)
+  final String companyId;
   @JsonKey(name: ApiConstants.items)
   final List<Items> items;
-  @JsonKey(defaultValue: 0)
+  @JsonKey(name: ApiConstants.logoUrl)
+  final String? logoUrl;
+  @JsonKey(name: ApiConstants.subTotal, defaultValue: 0)
   final int subTotal;
 
   const CartResponseDTO({
     required this.id,
     required this.buyerId,
+    required this.companyName,
+    required this.companyId,
     required this.items,
     required this.subTotal,
+      required this.logoUrl,
   });
 
   factory CartResponseDTO.fromJson(Map<String, dynamic> json) =>
@@ -58,3 +67,4 @@ class Items {
 
   Map<String, dynamic> toJson() => _$ItemsToJson(this);
 }
+

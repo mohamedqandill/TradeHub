@@ -87,116 +87,127 @@ class _CustomFavoriteCardState extends State<CustomFavoriteCard> {
                     isTapped: true,
                     onTap: () {
                       context.read<FavouriteCubit>().toggleFavorite(widget.id);
+                      setState(() {});
                     },
                   ),
                 ),
               ),
             ],
           ),
-          Padding(
-            padding: EdgeInsets.all(12.sp),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  widget.title,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: context.base.theme.textTheme.bodyMedium?.copyWith(
-                    color:
-                        context.isDarkMode ? AppColors.white : AppColors.black,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 14.sp,
-                  ),
-                ),
-                SizedBox(height: 2.h),
-                Text(
-                  widget.storeName,
-                  style: TextStyle(
-                    color: AppColors.grey.withOpacity(0.7),
-                    fontSize: 11.sp,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                SizedBox(height: 8.h),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        "${widget.price} EGP",
-                        style: TextStyle(
-                          color: context.mainColor,
-                          fontWeight: FontWeight.w800,
-                          fontSize: 14.sp,
-                        ),
-                      ),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.all(12.sp),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.title,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: context.base.theme.textTheme.bodyMedium?.copyWith(
+                      color: context.isDarkMode
+                          ? AppColors.white
+                          : AppColors.black,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 14.sp,
                     ),
-                    SizedBox(
-                      width: 2.w,
+                  ),
+                  SizedBox(height: 2.h),
+                  Text(
+                    widget.storeName,
+                    style: TextStyle(
+                      color: AppColors.grey.withOpacity(0.7),
+                      fontSize: 11.sp,
+                      fontWeight: FontWeight.w500,
                     ),
-                    Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                        onTap: widget.isAddingToCart ?? false
-                            ? null
-                            : () {
-                                context.read<CartCubit>().addToCart(widget.id);
-                              },
-                        borderRadius: BorderRadius.circular(10.r),
-                        child: AnimatedContainer(
-                          duration: const Duration(milliseconds: 250),
-                          curve: Curves.easeInOut,
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 10.w, vertical: 7.h),
-                          decoration: BoxDecoration(
-                            gradient: context.isDarkMode
-                                ? AppColors.linearDarkColor
-                                : AppColors.linearLight,
-                            borderRadius: BorderRadius.circular(10.r),
-                            boxShadow: [
-                              BoxShadow(
-                                color: context.mainColor.withOpacity(0.3),
-                                blurRadius: 8,
-                                offset: const Offset(0, 3),
-                              ),
-                            ],
+                  ),
+                  // SizedBox(height: 8.h),
+                  const Spacer(),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Flexible(
+                          child: Text(
+                            "${widget.price} EGP",
+                            style: TextStyle(
+                              color: context.mainColor,
+                              fontWeight: FontWeight.w800,
+                              fontSize: 14.sp,
+                            ),
                           ),
-                          child: widget.isAddingToCart ?? false
-                              ? SizedBox(
-                                  width: 16.sp,
-                                  height: 16.sp,
-                                  child: const CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                    color: Colors.white,
-                                  ),
-                                )
-                              : Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Icon(
-                                      Icons.add_shopping_cart_rounded,
-                                      size: 15.sp,
-                                      color: Colors.white,
-                                    ),
-                                    SizedBox(width: 4.w),
-                                    Text(
-                                      "Add",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 11.sp,
-                                        fontWeight: FontWeight.w700,
-                                        letterSpacing: 0.3,
-                                      ),
-                                    ),
-                                  ],
-                                ),
                         ),
-                      ),
+                        SizedBox(
+                          width: 2.w,
+                        ),
+                        Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            onTap: widget.isAddingToCart ?? false
+                                ? null
+                                : () {
+                                    context
+                                        .read<CartCubit>()
+                                        .addToCart(widget.id);
+                                  },
+                            borderRadius: BorderRadius.circular(10.r),
+                            child: AnimatedContainer(
+                              duration: const Duration(milliseconds: 250),
+                              curve: Curves.easeInOut,
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 10.w, vertical: 7.h),
+                              decoration: BoxDecoration(
+                                gradient: context.isDarkMode
+                                    ? AppColors.linearDarkColor
+                                    : AppColors.linearLight,
+                                borderRadius: BorderRadius.circular(10.r),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: context.mainColor.withOpacity(0.3),
+                                    blurRadius: 8,
+                                    offset: const Offset(0, 3),
+                                  ),
+                                ],
+                              ),
+                              child: widget.isAddingToCart ?? false
+                                  ? SizedBox(
+                                      width: 16.sp,
+                                      height: 16.sp,
+                                      child: const CircularProgressIndicator(
+                                        strokeWidth: 2,
+                                        color: Colors.white,
+                                      ),
+                                    )
+                                  : Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Icon(
+                                          Icons.add_shopping_cart_rounded,
+                                          size: 15.sp,
+                                          color: Colors.white,
+                                        ),
+                                        SizedBox(width: 4.w),
+                                        Text(
+                                          "Add",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 11.sp,
+                                            fontWeight: FontWeight.w700,
+                                            letterSpacing: 0.3,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ],
+                  ),
+                ],
+              ),
             ),
           ),
         ],
