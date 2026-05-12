@@ -65,4 +65,26 @@ abstract class ApiConstants {
   static const String pictureUrl = "pictureUrl";
   static const String total = "total";
   static const String subTotal = "subTotal";
+
+  static const String basketId = "basketId";
+  static const String deliveryFee = "deliveryFee";
+  static const String address = "address";
+
+  static const String orderId = "orderId";
+  static const String clientSecret = "clientSecret";
+  static const String paymentIntentId = "paymentIntentId";
+  static const String publicKey = "publicKey";
+  static const String paymentUrl = "paymentUrl";
+
+  static const String orderStatus = "orderStatus";
+  static const String paymentStatus = "paymentStatus";
+  static const String companyLogo = "companyLogo";
+  static const String productIdUnderscore = "product_id";
+
+  static const String obj = "obj";
+  static const String success = "success";
+  static const String pending = "pending";
+  static const String extras = "extras";
+  static const String orderIdUnderscore = "order_id";
+  static const String order = "order";
 }

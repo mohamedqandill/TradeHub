@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,11 +10,14 @@ import 'package:tradehub/core/extensions/main_color.dart';
 import 'package:tradehub/core/localization/locale_keys.g.dart';
 import 'package:tradehub/core/shared_widgets/widgets/svg_widget.dart';
 
+import 'package:tradehub/features/order_details/presentation/order_details_args.dart';
+
 import 'custom_order_details_card.dart';
 import 'order_status_timeline_section.dart';
 
 class OrderDetailsBody extends StatelessWidget {
-  const OrderDetailsBody({super.key});
+  final OrderDetailsArgs args;
+  const OrderDetailsBody({super.key, required this.args});
 
   @override
   Widget build(BuildContext context) {
@@ -30,9 +34,9 @@ class OrderDetailsBody extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "#TRD-10245",
+                "#TRD-${args.orderId}",
                 style: context.base.theme.textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.w800, // Make this highly bold
+                  fontWeight: FontWeight.w800,
                   color: textColor,
                   fontSize: 20.sp,
                 ),
@@ -44,7 +48,7 @@ class OrderDetailsBody extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20.r),
                 ),
                 child: Text(
-                  LocaleKeys.orderDelivered.tr(),
+                  args.status,
                   style: context.base.theme.textTheme.bodySmall?.copyWith(
                     color: const Color(0xFF2E7D32),
                     fontWeight: FontWeight.w700,
@@ -55,7 +59,7 @@ class OrderDetailsBody extends StatelessWidget {
           ),
           SizedBox(height: 6.h),
           Text(
-            "${LocaleKeys.placedOn.tr()}30 Feb 2026",
+            "${LocaleKeys.placedOn.tr()} ${DateTime.now().day} ${DateTime.now().month} ${DateTime.now().year}",
             style: context.base.theme.textTheme.bodyMedium?.copyWith(
               color: AppColors.grey,
               fontWeight: FontWeight.w500,
@@ -69,7 +73,6 @@ class OrderDetailsBody extends StatelessWidget {
           _buildPaymentSection(context, textColor),
           _buildOrderSummarySection(context, textColor),
           SizedBox(height: 24.h),
-          SizedBox(height: 24.h),
         ],
       ),
     );
@@ -81,57 +84,71 @@ class OrderDetailsBody extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "${LocaleKeys.items.tr()} (1)",
+            "${LocaleKeys.items.tr()} (${args.items.length})",
             style: context.base.theme.textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.bold,
               color: textColor,
             ),
           ),
           SizedBox(height: 16.h),
-          Row(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(12.r),
-                child: Image.asset(
-                  Assets.images.foodA.path,
-                  fit: BoxFit.cover,
-                  width: 80.w,
-                  height: 80.h,
-                ),
-              ),
-              SizedBox(width: 16.w),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Loaded Rice Bowl",
-                      style: context.base.theme.textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.w700,
-                        color: textColor,
-                      ),
+          ListView.separated(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: args.items.length,
+            separatorBuilder: (context, index) => SizedBox(height: 16.h),
+            itemBuilder: (context, index) {
+              final item = args.items[index];
+              return Row(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(12.r),
+                    child: CachedNetworkImage(
+                      imageUrl: item.pictureUrl,
+                      fit: BoxFit.contain,
+                      width: 80.w,
+                      height: 80.h,
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.image_not_supported_outlined),
                     ),
-                    SizedBox(height: 6.h),
-                    Text(
-                      "${LocaleKeys.qty.tr()}: 1",
-                      style: context.base.theme.textTheme.bodyMedium?.copyWith(
-                        color: AppColors.grey,
-                        fontWeight: FontWeight.w500,
-                      ),
+                  ),
+                  SizedBox(width: 16.w),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          item.productName,
+                          style: context.base.theme.textTheme.titleMedium
+                              ?.copyWith(
+                            fontWeight: FontWeight.w700,
+                            color: textColor,
+                          ),
+                        ),
+                        SizedBox(height: 6.h),
+                        Text(
+                          "${LocaleKeys.qty.tr()}: ${item.quantity}",
+                          style:
+                              context.base.theme.textTheme.bodyMedium?.copyWith(
+                            color: AppColors.grey,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        SizedBox(height: 8.h),
+                        Text(
+                          "${item.price} EGP",
+                          style: context.base.theme.textTheme.titleMedium
+                              ?.copyWith(
+                            fontWeight: FontWeight.w800,
+                            color: context.mainColor,
+                          ),
+                        ),
+                      ],
                     ),
-                    SizedBox(height: 8.h),
-                    Text(
-                      "180.00 EGP",
-                      style: context.base.theme.textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.w800,
-                        color: context.mainColor,
-                      ),
-                    ),
-                  ],
-                ),
-              )
-            ],
-          )
+                  )
+                ],
+              );
+            },
+          ),
         ],
       ),
     );
@@ -166,15 +183,7 @@ class OrderDetailsBody extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Mohamed Qandil",
-                  style: context.base.theme.textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w700,
-                    color: textColor,
-                  ),
-                ),
-                SizedBox(height: 8.h),
-                Text(
-                  "10th Of Ramadan City",
+                  args.address,
                   style: context.base.theme.textTheme.bodyMedium?.copyWith(
                     color: AppColors.grey,
                     height: 1.5,
@@ -210,7 +219,7 @@ class OrderDetailsBody extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(left: 32.w),
             child: Text(
-              "Vodafone Cash ending in 2345",
+              "Paid via Visa Card",
               style: context.base.theme.textTheme.bodyMedium?.copyWith(
                 color: AppColors.grey,
               ),
@@ -243,7 +252,7 @@ class OrderDetailsBody extends StatelessWidget {
                 style: context.base.theme.textTheme.bodyMedium?.copyWith(
                     color: AppColors.grey, fontWeight: FontWeight.w500),
               ),
-              Text("180.00 EGP",
+              Text("${args.subTotal} EGP",
                   style: context.base.theme.textTheme.bodyMedium?.copyWith(
                     fontWeight: FontWeight.w700,
                     color: textColor,
@@ -265,22 +274,6 @@ class OrderDetailsBody extends StatelessWidget {
                       fontWeight: FontWeight.w700)),
             ],
           ),
-          SizedBox(height: 12.h),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                LocaleKeys.tax.tr(),
-                style: context.base.theme.textTheme.bodyMedium?.copyWith(
-                    color: AppColors.grey, fontWeight: FontWeight.w500),
-              ),
-              Text("18.00 EGP",
-                  style: context.base.theme.textTheme.bodyMedium?.copyWith(
-                    fontWeight: FontWeight.w700,
-                    color: textColor,
-                  )),
-            ],
-          ),
           SizedBox(height: 16.h),
           Divider(color: AppColors.grey.withOpacity(0.2)),
           SizedBox(height: 16.h),
@@ -295,7 +288,7 @@ class OrderDetailsBody extends StatelessWidget {
                     fontSize: 18.sp),
               ),
               Text(
-                "198.00 EGP",
+                "${args.subTotal} EGP",
                 style: context.base.theme.textTheme.titleLarge?.copyWith(
                   color: context.mainColor,
                   fontWeight: FontWeight.w800,

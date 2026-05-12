@@ -7,7 +7,12 @@ import 'package:tradehub/core/colors/app_colors.dart';
 import 'package:tradehub/core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/extensions/main_color.dart';
 import 'package:tradehub/core/functions/show_snakbar.dart';
+import 'package:tradehub/core/routes/routes.dart';
+import 'package:tradehub/core/shared_services/shared_product_repository.dart';
 import 'package:tradehub/core/utils/animations/loading_product_animation.dart';
+import 'package:tradehub/core/utils/di/di.dart';
+import 'package:tradehub/features/checkout/data/models/request/checkout_request_d_t_o.dart';
+import 'package:tradehub/features/checkout/presentation/cubit/checkout_cubit.dart';
 import 'package:tradehub/features/main_layout/cart/data/models/cart_response_d_t_o.dart';
 import 'package:tradehub/features/main_layout/cart/presentation/cubit/cart_cubit.dart';
 import 'package:tradehub/features/main_layout/cart/presentation/cubit/cart_states.dart';
@@ -20,6 +25,9 @@ import 'widgets/seller_card.dart';
 
 import 'package:flutter_animate/flutter_animate.dart';
 
+import 'package:tradehub/core/constants/app_constants.dart';
+import 'package:tradehub/core/utils/shared_prefs/prefs.dart';
+
 class CartScreenBody extends StatefulWidget {
   const CartScreenBody({super.key});
 
@@ -30,6 +38,18 @@ class CartScreenBody extends StatefulWidget {
 class _CartScreenBodyState extends State<CartScreenBody>
     with TickerProviderStateMixin {
   TabController? _tabController;
+  String placeName = "";
+
+  @override
+  void initState() {
+    getSavedPlaceName();
+    super.initState();
+  }
+
+  getSavedPlaceName() {
+    placeName = getIt<SharedPrefsHelper>().getString(AppConstants.savedPlace) ??
+        "10th of ramadan";
+  }
 
   @override
   void dispose() {
@@ -228,10 +248,47 @@ class _CartScreenBodyState extends State<CartScreenBody>
       CartState state, int subTotal, String companyName) {
     return Align(
       alignment: Alignment.bottomCenter,
-      child: CustomCheckoutCard(
-        isLoading:
-            state is RemoveItemLoading || state is UpdateItemQuantityLoading,
-        subTotal: subTotal,
+      child: BlocProvider<CheckoutCubit>(
+        create: (context) => getIt<CheckoutCubit>(),
+        child: BlocConsumer<CheckoutCubit, CheckoutState>(
+          listener: (context, state) {
+            if (state is CheckoutLoading) {
+              showDialog(
+                context: context,
+                builder: (context) => loadingProductAnimation(),
+              );
+            }
+            if (state is CheckoutSuccess) {
+              
+              Navigator.pop(context);
+              Navigator.pushNamed(context, Routes.checkout,
+                  arguments: context.read<CheckoutCubit>());
+            }
+            if (state is CheckoutError) {
+              Navigator.pop(context);
+              showFailureSnackBar(context, messageTitle: state.error.message);
+            }
+          },
+          builder: (context, state) {
+            var checkoutCubit = context.read<CheckoutCubit>();
+            var cartCubit = context.read<CartCubit>();
+
+            return CustomCheckoutCard(
+              onTap: () {
+                var body = CheckoutRequestDTO(
+                    basketId: cartCubit.cartGroups![_tabController!.index].id,
+                    deliveryFee: 0,
+                    address: placeName);
+                checkoutCubit.getCheckoutData(
+                    cartItems: cartCubit.cartGroups![_tabController!.index],
+                    address: placeName);
+                checkoutCubit.checkout(body: body);
+              },
+              isLoading: state is CheckoutLoading,
+              subTotal: subTotal,
+            );
+          },
+        ),
       ),
     )
         .animate()

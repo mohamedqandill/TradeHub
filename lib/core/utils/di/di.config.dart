@@ -85,6 +85,21 @@ import '../../../features/category_details/domain/use_cases/get_companies_by_cat
     as _i117;
 import '../../../features/category_details/presentation/cubit/category_details_cubit.dart'
     as _i890;
+import '../../../features/checkout/data/api/checkout_api_client.dart' as _i800;
+import '../../../features/checkout/data/data_source_contract/checkout_data_source.dart'
+    as _i1008;
+import '../../../features/checkout/data/data_source_impl/checkout_data_source_impl.dart'
+    as _i343;
+import '../../../features/checkout/data/repo_impl/checkout_repository_impl.dart'
+    as _i679;
+import '../../../features/checkout/domain/repo_contract/checkout_repository.dart'
+    as _i19;
+import '../../../features/checkout/domain/use_cases/checkout_use_case.dart'
+    as _i953;
+import '../../../features/checkout/domain/use_cases/payment_webhook_use_case.dart'
+    as _i105;
+import '../../../features/checkout/presentation/cubit/checkout_cubit.dart'
+    as _i90;
 import '../../../features/main_layout/cart/data/api/cart_api_client.dart'
     as _i790;
 import '../../../features/main_layout/cart/data/data_source/cart_data_source_contract.dart'
@@ -184,6 +199,19 @@ import '../../../features/vendor_profile/domain/use_cases/vendor_use_cases.dart'
     as _i484;
 import '../../../features/vendor_profile/presentation/cubit/vendor_profile_cubit.dart'
     as _i538;
+import '../../../features/your_orders/data/api/orders_api_client.dart' as _i639;
+import '../../../features/your_orders/data/data_source_contract/orders_data_source.dart'
+    as _i338;
+import '../../../features/your_orders/data/data_source_impl/orders_data_source_impl.dart'
+    as _i1001;
+import '../../../features/your_orders/data/repo_impl/orders_repository_impl.dart'
+    as _i1022;
+import '../../../features/your_orders/domain/repo_contract/orders_repository.dart'
+    as _i583;
+import '../../../features/your_orders/domain/use_cases/get_orders_use_case.dart'
+    as _i378;
+import '../../../features/your_orders/presentation/cubit/orders_cubit.dart'
+    as _i429;
 import '../../shared_services/shared_product_repository.dart' as _i153;
 import '../dio/dio_services.dart' as _i825;
 import '../secure_storage/secure_storage_service.dart' as _i611;
@@ -204,6 +232,8 @@ extension GetItInjectableX on _i174.GetIt {
     final dioServices = _$DioServices();
     gh.factory<_i522.LanguageViewModel>(() => _i522.LanguageViewModel());
     gh.factory<_i364.ThemeViewModel>(() => _i364.ThemeViewModel());
+    gh.singleton<_i153.SharedProductRepository>(
+        () => _i153.SharedProductRepository());
     gh.singleton<_i528.PrettyDioLogger>(() => dioServices.provideDioLogger());
     await gh.singletonAsync<_i557.CookieJar>(
       () => dioServices.provideCookieJar(),
@@ -213,8 +243,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i25.SharedPrefsHelper>(() => _i25.SharedPrefsHelper());
     gh.singleton<_i799.HiveStorageHelper>(() => _i799.HiveStorageHelper());
     gh.singleton<_i199.SessionManager>(() => _i199.SessionManager());
-    gh.singleton<_i153.SharedProductRepository>(
-        () => _i153.SharedProductRepository());
     gh.factory<_i595.HomeLocalDataSource>(
         () => _i595.HomeLocalDataSourceImpl());
     gh.factory<String>(
@@ -230,6 +258,19 @@ extension GetItInjectableX on _i174.GetIt {
           baseUrl: gh<String>(instanceName: 'baseUrl'),
         ));
     gh.factory<_i762.VendorApiClient>(() => _i762.VendorApiClient(
+          gh<_i361.Dio>(),
+          baseUrl: gh<String>(instanceName: 'baseUrl'),
+        ));
+    gh.factory<_i639.OrdersApiClient>(() => _i639.OrdersApiClient(
+          gh<_i361.Dio>(),
+          baseUrl: gh<String>(instanceName: 'baseUrl'),
+        ));
+    gh.singleton<_i620.CategoryDetailsApiClient>(
+        () => _i620.CategoryDetailsApiClient(
+              gh<_i361.Dio>(),
+              baseUrl: gh<String>(instanceName: 'baseUrl'),
+            ));
+    gh.singleton<_i800.CheckoutApiClient>(() => _i800.CheckoutApiClient(
           gh<_i361.Dio>(),
           baseUrl: gh<String>(instanceName: 'baseUrl'),
         ));
@@ -255,11 +296,6 @@ extension GetItInjectableX on _i174.GetIt {
               gh<_i361.Dio>(),
               baseUrl: gh<String>(instanceName: 'baseUrl'),
             ));
-    gh.singleton<_i620.CategoryDetailsApiClient>(
-        () => _i620.CategoryDetailsApiClient(
-              gh<_i361.Dio>(),
-              baseUrl: gh<String>(instanceName: 'baseUrl'),
-            ));
     gh.factory<_i768.FavouriteDataSource>(
         () => _i768.FavouriteDataSourceImpl(gh<_i54.FavouriteApiClient>()));
     gh.factory<_i276.NewPasswordDataSourceContract>(
@@ -274,6 +310,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i788.RegisterDataSourceImpl(gh<_i891.AuthApiClient>()));
     gh.factory<_i994.VerifyOTPDataSourceContract>(
         () => _i232.VerifyOTPDataSourceImpl(gh<_i891.AuthApiClient>()));
+    gh.factory<_i1008.CheckoutDataSource>(
+        () => _i343.CheckoutDataSourceImpl(gh<_i800.CheckoutApiClient>()));
     gh.factory<_i366.RegisterRepo>(
         () => _i651.RegisterRepoImpl(gh<_i91.RegisterDataSource>()));
     gh.factory<_i463.ProductDetailsDataSourceContract>(() =>
@@ -292,6 +330,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i467.GetFavoritesUseCase(gh<_i959.FavouriteRepoContract>()));
     gh.factory<_i1057.ToggleFavoriteUseCase>(
         () => _i1057.ToggleFavoriteUseCase(gh<_i959.FavouriteRepoContract>()));
+    gh.factory<_i338.OrdersDataSource>(
+        () => _i1001.OrdersDataSourceImpl(gh<_i639.OrdersApiClient>()));
     gh.factory<_i600.CategoryDetailsDataSource>(() =>
         _i600.CategoryDetailsDataSourceImpl(
             gh<_i620.CategoryDetailsApiClient>()));
@@ -309,6 +349,10 @@ extension GetItInjectableX on _i174.GetIt {
         _i704.CategoryDetailsRepoImpl(gh<_i600.CategoryDetailsDataSource>()));
     gh.factory<_i581.LoginRepoContract>(
         () => _i199.LoginRepoImpl(gh<_i942.LoginDataSourceContract>()));
+    gh.factory<_i19.CheckoutRepository>(
+        () => _i679.CheckoutRepositoryImpl(gh<_i1008.CheckoutDataSource>()));
+    gh.factory<_i583.OrdersRepository>(
+        () => _i1022.OrdersRepositoryImpl(gh<_i338.OrdersDataSource>()));
     gh.factory<_i1070.ProductDetailsRepositoryContract>(() =>
         _i1002.ProductDetailsRepositoryImpl(
             gh<_i463.ProductDetailsDataSourceContract>()));
@@ -350,17 +394,25 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i467.GetFavoritesUseCase>(),
           gh<_i1057.ToggleFavoriteUseCase>(),
         ));
-    gh.factory<_i165.GetProductRatingsUseCase>(() =>
-        _i165.GetProductRatingsUseCase(
-            gh<_i350.ProductRatingsRepositoryContract>()));
     gh.factory<_i603.AddProductRatingUseCase>(() =>
         _i603.AddProductRatingUseCase(
             gh<_i350.ProductRatingsRepositoryContract>()));
+    gh.factory<_i165.GetProductRatingsUseCase>(() =>
+        _i165.GetProductRatingsUseCase(
+            gh<_i350.ProductRatingsRepositoryContract>()));
+    gh.factory<_i953.CheckoutUseCase>(
+        () => _i953.CheckoutUseCase(gh<_i19.CheckoutRepository>()));
+    gh.factory<_i105.PaymentWebhookUseCase>(
+        () => _i105.PaymentWebhookUseCase(gh<_i19.CheckoutRepository>()));
     gh.factory<_i167.HomeCubit>(() => _i167.HomeCubit(
           gh<_i894.GetAllCategoryUseCase>(),
           gh<_i48.GetAllCompaniesUseCase>(),
           gh<_i231.GetRandomProductsUseCase>(),
         ));
+    gh.factory<_i378.GetOrdersUseCase>(
+        () => _i378.GetOrdersUseCase(gh<_i583.OrdersRepository>()));
+    gh.factory<_i429.OrdersCubit>(
+        () => _i429.OrdersCubit(gh<_i378.GetOrdersUseCase>()));
     gh.factory<_i484.GetVendorDetailsUseCase>(
         () => _i484.GetVendorDetailsUseCase(gh<_i858.VendorRepository>()));
     gh.factory<_i484.GetVendorSubcategoriesUseCase>(() =>
@@ -376,6 +428,10 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i550.VerifyOTPUseCase(gh<_i95.VerifyOTPRepoContract>()));
     gh.factory<_i747.NewPasswordUseCase>(
         () => _i747.NewPasswordUseCase(gh<_i917.NewPasswordRepoContract>()));
+    gh.factory<_i90.CheckoutCubit>(() => _i90.CheckoutCubit(
+          gh<_i953.CheckoutUseCase>(),
+          gh<_i105.PaymentWebhookUseCase>(),
+        ));
     gh.factory<_i31.ProductRatingsCubit>(() => _i31.ProductRatingsCubit(
           gh<_i165.GetProductRatingsUseCase>(),
           gh<_i603.AddProductRatingUseCase>(),

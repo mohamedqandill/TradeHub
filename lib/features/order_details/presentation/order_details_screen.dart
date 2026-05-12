@@ -7,6 +7,7 @@ import 'package:tradehub/core/localization/locale_keys.g.dart';
 import 'package:tradehub/core/routes/routes.dart';
 import 'package:tradehub/core/shared_widgets/app_bars/main_layout_app_bar.dart';
 import 'package:tradehub/core/shared_widgets/buttons/custom_large_main_button.dart';
+import 'package:tradehub/features/order_details/presentation/order_details_args.dart';
 import 'package:tradehub/features/order_details/presentation/widgets/order_details_body.dart';
 
 class OrderDetailsScreen extends StatelessWidget {
@@ -14,12 +15,13 @@ class OrderDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)!.settings.arguments as OrderDetailsArgs;
     return Scaffold(
       appBar: MainLayoutAppBar(
         title: LocaleKeys.orderDetails.tr(),
         enableLeading: true,
       ),
-      body: const OrderDetailsBody(),
+      body: OrderDetailsBody(args: args),
       bottomNavigationBar: Padding(
         padding: EdgeInsets.symmetric(horizontal: 40.w, vertical: 20.h),
         child: CustomLargeMainButton(

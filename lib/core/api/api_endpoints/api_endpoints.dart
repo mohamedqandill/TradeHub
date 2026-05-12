@@ -22,4 +22,7 @@ abstract class ApiEndPoints {
   static const String companyDetails = "api/company/";
   static const String productRatings = "api/Products/";
   static const String companiesByCategory = "api/CompanyCategory/category/";
+  static const String checkout = "api/Orders/checkout/";
+  static const String orders = "api/Orders/";
+  static const String paymentWebhook = "api/Paymobwebhook/webhook/";
 }
