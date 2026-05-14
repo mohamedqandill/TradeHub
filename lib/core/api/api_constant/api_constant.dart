@@ -87,4 +87,8 @@ abstract class ApiConstants {
   static const String extras = "extras";
   static const String orderIdUnderscore = "order_id";
   static const String order = "order";
+  static const String type = "type";
+  static const String pan = "pan";
+  static const String subType = "sub_type";
+  static const String sourceData = "source_data";
 }

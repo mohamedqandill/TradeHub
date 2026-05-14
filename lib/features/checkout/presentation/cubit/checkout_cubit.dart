@@ -18,6 +18,7 @@ class CheckoutCubit extends Cubit<CheckoutState> {
   CartResponseDTO? items;
   CheckoutResponseDTO? checkoutResponse;
   String? address;
+  PaymentWebhookRequest? paymentRequest;
 
   CheckoutCubit(this._checkoutUseCase, this._paymentWebhookUseCase)
       : super(CheckoutInitial());
@@ -48,5 +49,8 @@ class CheckoutCubit extends Cubit<CheckoutState> {
   getCheckoutData({required CartResponseDTO cartItems, required String address}) {
     items = cartItems;
     this.address = address;
+  }
+  saveRequestData(PaymentWebhookRequest body){
+    paymentRequest = body;
   }
 }

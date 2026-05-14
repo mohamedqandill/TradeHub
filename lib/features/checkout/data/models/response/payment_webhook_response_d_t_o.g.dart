@@ -23,6 +23,9 @@ Map<String, dynamic> _$PaymentWebhookRequestToJson(
 WebhookObject _$WebhookObjectFromJson(Map<String, dynamic> json) =>
     WebhookObject(
       id: (json['id'] as num?)?.toInt(),
+      sourceData: json['source_data'] == null
+          ? null
+          : SourceData.fromJson(json['source_data'] as Map<String, dynamic>),
       success: json['success'] as bool?,
       pending: json['pending'] as bool?,
       extras: json['extras'] == null
@@ -40,6 +43,7 @@ Map<String, dynamic> _$WebhookObjectToJson(WebhookObject instance) =>
       'pending': instance.pending,
       'extras': instance.extras,
       'order': instance.order,
+      'source_data': instance.sourceData,
     };
 
 WebhookExtras _$WebhookExtrasFromJson(Map<String, dynamic> json) =>
@@ -59,4 +63,17 @@ WebhookOrder _$WebhookOrderFromJson(Map<String, dynamic> json) => WebhookOrder(
 Map<String, dynamic> _$WebhookOrderToJson(WebhookOrder instance) =>
     <String, dynamic>{
       'id': instance.id,
+    };
+
+SourceData _$SourceDataFromJson(Map<String, dynamic> json) => SourceData(
+      type: json['type'] as String?,
+      pan: json['pan'] as String?,
+      subType: json['sub_type'] as String?,
+    );
+
+Map<String, dynamic> _$SourceDataToJson(SourceData instance) =>
+    <String, dynamic>{
+      'type': instance.type,
+      'pan': instance.pan,
+      'sub_type': instance.subType,
     };

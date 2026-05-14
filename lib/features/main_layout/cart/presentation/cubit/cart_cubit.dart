@@ -19,7 +19,7 @@ class CartCubit extends Cubit<CartState> {
 
   List<CartResponseDTO>? cartGroups;
   int? loadingProductId;
-  bool _isCartChanged = false;
+  bool isCartChanged = false;
   bool isCartInitated = false;
 
   CartCubit(
@@ -31,14 +31,14 @@ class CartCubit extends Cubit<CartState> {
   ) : super(CartInitial());
 
   void getBasket() async {
-    if (!_isCartChanged && isCartInitated) return;
+    if (!isCartChanged && isCartInitated) return;
     emit(GetBasketLoading());
     final result = await _getBasketUseCase.call();
     switch (result) {
       case Success():
         cartGroups = result.data;
         emit(GetBasketSuccess());
-        _isCartChanged = false;
+        isCartChanged = false;
         isCartInitated = true;
       case Error():
         emit(GetBasketError(result.error?.message ?? "Failed To Get Cart"));
@@ -51,7 +51,7 @@ class CartCubit extends Cubit<CartState> {
     var result = await _addToCartUseCase(productId, quantity: quantity);
     switch (result) {
       case Success():
-        _isCartChanged = true;
+        isCartChanged = true;
         emit(AddToCartSuccessState());
         loadingProductId = null;
       case Error():
@@ -65,7 +65,7 @@ class CartCubit extends Cubit<CartState> {
     final result = await _removeBasketUseCase();
     switch (result) {
       case Success():
-        _isCartChanged = true;
+        isCartChanged = true;
         emit(RemoveBasketSuccess());
       // Refresh basket after removing
 
@@ -81,7 +81,7 @@ class CartCubit extends Cubit<CartState> {
         await _removeItemUseCase(companyId: companyId, productId: productId);
     switch (result) {
       case Success():
-        _isCartChanged = true;
+        isCartChanged = true;
         emit(RemoveItemSuccess());
       // Refresh basket after removing item
 
@@ -99,7 +99,7 @@ class CartCubit extends Cubit<CartState> {
         companyId: companyId, productId: productId, quantity: quantity);
     switch (result) {
       case Success():
-        _isCartChanged = true;
+        isCartChanged = true;
         emit(UpdateItemQuantitySuccess());
 
       case Error():
@@ -110,7 +110,7 @@ class CartCubit extends Cubit<CartState> {
 
   void resetCart() {
     cartGroups = null;
-    _isCartChanged = true;
+    isCartChanged = true;
     isCartInitated = false;
   }
 }

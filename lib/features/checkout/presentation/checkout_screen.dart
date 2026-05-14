@@ -29,18 +29,17 @@ class CheckoutScreen extends StatelessWidget {
             showSuccessSnackBar(messageTitle: "Payment Successful!");
 
             // 1. Refresh Cart (Remove checked out items)
-            context.read<CartCubit>().resetCart();
+            context.read<CartCubit>().isCartChanged = true;
+            context.read<CartCubit>().getBasket();
+            
 
             // 2. Navigate to Order Details
-            Navigator.pushNamed(
+            Navigator.pushNamedAndRemoveUntil(
               context,
               Routes.orderDetails,
+              (route) => route.settings.name == Routes.mainLayout,
               arguments: OrderDetailsArgs(
                 orderId: cubit.checkoutResponse?.orderId ?? 0,
-                items: cubit.items?.items ?? [],
-                address: cubit.address ?? "Address not specified",
-                status: "Processing",
-                subTotal: cubit.items?.subTotal ?? 0,
               ),
             );
           } else if (state is PaymentWebhookError) {

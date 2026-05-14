@@ -31,21 +31,6 @@ class OrderCardWidget extends StatelessWidget {
           Routes.orderDetails,
           arguments: OrderDetailsArgs(
             orderId: order.id ?? 0,
-            items: order.items
-                    ?.map((e) => cart.Items(
-                          total: e.price! * e.quantity!,
-                          id: 0, // Not needed for details view usually
-                          productId: e.productId ?? 0,
-                          productName: e.productName ?? "",
-                          pictureUrl: e.imageUrl ?? "",
-                          price: e.price ?? 0,
-                          quantity: e.quantity ?? 0,
-                        ))
-                    .toList() ??
-                [],
-            address: order.address ?? "",
-            status: order.orderStatus ?? "",
-            subTotal: order.subTotal ?? 0,
           ),
         );
       },

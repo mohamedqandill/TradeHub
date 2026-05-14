@@ -30,9 +30,12 @@ class WebhookObject {
   final WebhookExtras? extras;
   @JsonKey(name: ApiConstants.order)
   final WebhookOrder? order;
+  @JsonKey(name: ApiConstants.sourceData)
+  final SourceData? sourceData;
 
   const WebhookObject({
     required this.id,
+    required this.sourceData,
     required this.success,
     required this.pending,
     required this.extras,
@@ -73,4 +76,26 @@ class WebhookOrder {
       _$WebhookOrderFromJson(json);
 
   Map<String, dynamic> toJson() => _$WebhookOrderToJson(this);
+}
+
+@JsonSerializable()
+class SourceData {
+
+  @JsonKey(name: ApiConstants.type)
+  final String? type;
+  @JsonKey(name: ApiConstants.pan)
+  final String? pan;
+  @JsonKey(name: ApiConstants.subType)
+  final String? subType;
+
+  const SourceData({
+    required this.type,
+    required this.pan,
+    required this.subType,
+  });
+
+  factory SourceData.fromJson(Map<String, dynamic> json) =>
+      _$SourceDataFromJson(json);
+
+  Map<String, dynamic> toJson() => _$SourceDataToJson(this);
 }

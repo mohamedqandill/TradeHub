@@ -47,9 +47,17 @@ class _PaymentWebViewScreenState extends State<PaymentWebViewScreen> {
     final success = uri.queryParameters['success'] == 'true';
     final integrationId = int.tryParse(uri.queryParameters['integration_id'] ?? '');
     final orderId = widget.cubit.checkoutResponse?.orderId??0;
-
+    final type=uri.queryParameters['source_data.type'];
+    final pan=uri.queryParameters['source_data.pan'];
+    final subType=uri.queryParameters['source_data.sub_type'];
     final request = PaymentWebhookRequest(
       obj: WebhookObject(
+        sourceData: SourceData(
+          type: type,
+          pan: pan,
+          subType: subType,
+          
+        ),
         id: id,
         success: success,
         pending: pending,
@@ -60,7 +68,8 @@ class _PaymentWebViewScreenState extends State<PaymentWebViewScreen> {
     );
 
     widget.cubit.paymentWebhook(body: request);
-    Navigator.pop(context);
+    widget.cubit.saveRequestData(request);
+    
   }
 
   @override
@@ -74,3 +83,5 @@ class _PaymentWebViewScreenState extends State<PaymentWebViewScreen> {
     );
   }
 }
+
+
