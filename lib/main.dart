@@ -16,6 +16,7 @@ import 'package:tradehub/core/theme/app_theme.dart';
 import 'package:tradehub/core/utils/storage/hive_storage.dart';
 import 'package:tradehub/features/main_layout/cart/presentation/cubit/cart_cubit.dart';
 import 'package:tradehub/features/main_layout/favourite/presentation/cubit/favourite_cubit.dart';
+import 'package:tradehub/features/main_layout/profile/presentation/cubit/profile_cubit.dart';
 import 'package:tradehub/features/onBoarding/view_model/language_view_model.dart';
 import 'package:tradehub/features/onBoarding/view_model/theme_view_model.dart';
 
@@ -71,6 +72,9 @@ Future<void> main() async {
             ),
             BlocProvider(
               create: (context) => getIt<FavouriteCubit>(),
+            ),
+            BlocProvider(
+              create: (context) => getIt<ProfileCubit>(),
             ),
           ],
           

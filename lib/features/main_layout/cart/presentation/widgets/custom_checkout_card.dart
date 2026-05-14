@@ -13,11 +13,17 @@ class CustomCheckoutCard extends StatelessWidget {
     this.isProceedButton,
     this.subTotal = 0,
     this.isLoading,
+    this.onTap,
+    this.buttonText,
+    this.buttonIcon,
   });
 
   final bool? isProceedButton;
   final int subTotal;
   final bool? isLoading;
+  final void Function()? onTap;
+  final String? buttonText;
+  final IconData? buttonIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -75,9 +81,7 @@ class CustomCheckoutCard extends StatelessWidget {
             ),
             SizedBox(width: 5.w),
             GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(context, Routes.checkout);
-              },
+              onTap: onTap,
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
                 decoration: BoxDecoration(
@@ -93,26 +97,27 @@ class CustomCheckoutCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                child: Row(
-                  children: [
-                    Text(
-                      "CHECKOUT",
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w800,
-                        color: Colors.white,
-                        letterSpacing: 1,
-                        fontFamily: 'Poppins',
+                child: 
+                Row(
+                      children: [
+                          Text(
+                            buttonText ?? "CHECKOUT",
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w800,
+                              color: Colors.white,
+                              letterSpacing: 1,
+                              fontFamily: 'Poppins',
+                            ),
+                          ),
+                          SizedBox(width: 12.w),
+                          Icon(
+                            buttonIcon ?? Icons.arrow_forward,
+                            color: Colors.white,
+                            size: 18.sp,
+                          ),
+                        ],
                       ),
-                    ),
-                    SizedBox(width: 12.w),
-                    Icon(
-                      Icons.arrow_forward,
-                      color: Colors.white,
-                      size: 18.sp,
-                    ),
-                  ],
-                ),
               ),
             ),
           ],
