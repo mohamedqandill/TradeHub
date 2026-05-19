@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tradehub/Core/colors/app_colors.dart';
 import 'package:tradehub/Core/extensions/base_inherited_context.dart';
@@ -12,14 +11,18 @@ import 'package:tradehub/core/localization/locale_keys.g.dart';
 import 'package:tradehub/core/routes/routes.dart';
 import 'package:tradehub/core/shared_widgets/fields/custom_search_field.dart';
 import 'package:tradehub/core/shared_widgets/widgets/svg_widget.dart';
-import 'package:tradehub/features/main_layout/home/presentation/cubit/home_cubit.dart';
 
 class HomeHeaderWidget extends StatelessWidget {
   final String address;
   final VoidCallback onPlaceSelected;
+  final VoidCallback? onSearchTap;
 
-  const HomeHeaderWidget(
-      {super.key, required this.address, required this.onPlaceSelected});
+  const HomeHeaderWidget({
+    super.key,
+    required this.address,
+    required this.onPlaceSelected,
+    this.onSearchTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +65,9 @@ class HomeHeaderWidget extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          address,
+                          address.length > 26
+                              ? '${address.substring(0, 26)}..'
+                              : address,
                           style:
                               context.base.theme.textTheme.bodyMedium?.copyWith(
                             fontSize: 14.sp,
@@ -146,6 +151,8 @@ class HomeHeaderWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(50.r),
               ),
               child: CustomSearchField(
+                readOnly: onSearchTap != null,
+                onTap: onSearchTap,
                 fillColor: const Color(0xFF1B3B32),
                 borderColor: const Color(0xFF1B3B32),
                 hintColor: const Color(0xFF8BA99B),

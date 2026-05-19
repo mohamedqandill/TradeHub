@@ -91,4 +91,5 @@ abstract class ApiConstants {
   static const String pan = "pan";
   static const String subType = "sub_type";
   static const String sourceData = "source_data";
+  static const String profilePicture = "profilePicture";
 }

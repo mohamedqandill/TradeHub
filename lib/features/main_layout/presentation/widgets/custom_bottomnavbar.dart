@@ -7,7 +7,6 @@ import 'package:tradehub/core/assets/assets.gen.dart';
 import 'package:tradehub/core/extensions/main_color.dart';
 import 'package:tradehub/core/localization/locale_keys.g.dart';
 import 'package:tradehub/core/shared_widgets/widgets/svg_widget.dart';
-
 import '../../../../Core/colors/app_colors.dart';
 
 class CustomBottomNavbar extends StatefulWidget {
@@ -31,9 +30,9 @@ class _CustomBottomNavbarState extends State<CustomBottomNavbar> {
         'label': LocaleKeys.Home.tr(),
       },
       {
-        'activeIcon': Assets.icons.categoryFilled,
-        'icon': Assets.icons.category,
-        'label': LocaleKeys.explore.tr(),
+        'activeIcon': Assets.icons.myOrders,
+        'icon': Assets.icons.myOrders,
+        'label': LocaleKeys.yourOrders.tr(),
       },
       {
         'activeIcon': Assets.icons.cartFilled,
@@ -54,8 +53,8 @@ class _CustomBottomNavbarState extends State<CustomBottomNavbar> {
               top: BorderSide(
                   width: 1,
                   color: context.isDarkMode
-                      ? Colors.white.withOpacity(0.5)
-                      : Colors.grey.withOpacity(0.5)))),
+                      ? Colors.white.withOpacity(0.1)
+                      : Colors.grey.withOpacity(0.2)))),
       child: BottomNavigationBar(
         showUnselectedLabels: true,
         onTap: (value) {
@@ -67,8 +66,8 @@ class _CustomBottomNavbarState extends State<CustomBottomNavbar> {
         currentIndex: selectedIndex,
         selectedItemColor: context.mainColor,
         unselectedItemColor:
-            context.isDarkMode ? AppColors.white : AppColors.grey,
-        backgroundColor: Colors.transparent,
+            context.isDarkMode ? AppColors.white.withOpacity(0.6) : AppColors.grey,
+        backgroundColor: context.isDarkMode ? AppColors.black : AppColors.white,
         elevation: 0,
         unselectedLabelStyle: context.base.theme.textTheme.bodyMedium
             ?.copyWith(fontSize: 11.sp, color: context.greyOrWhite),
@@ -76,32 +75,22 @@ class _CustomBottomNavbarState extends State<CustomBottomNavbar> {
             context.base.theme.textTheme.bodyMedium?.copyWith(fontSize: 13.sp),
         items: navItems.map((item) {
           return BottomNavigationBarItem(
-            activeIcon: item['activeIcon'] == Assets.icons.categoryFilled
-                ? Icon(
-                    Icons.category,
-                    color: context.mainColor,
-                    size: 24.sp,
-                  )
-                : SvgWidget(
-                    color: context.mainColor,
-                    width: 24.w,
-                    height: 24.h,
-                    fit: BoxFit.cover,
-                    assetName: item['activeIcon'],
-                  ),
-            icon: item['icon'] == Assets.icons.category
-                ? Icon(
-                    Icons.category_outlined,
-                    color: context.greyOrWhite,
-                    size: 24.sp,
-                  )
-                : SvgWidget(
-                    color: context.greyOrWhite,
-                    width: 24.w,
-                    height: 24.h,
-                    fit: BoxFit.cover,
-                    assetName: item['icon'],
-                  ),
+            activeIcon: SvgWidget(
+              color: context.mainColor,
+              width: 24.w,
+              height: 24.h,
+              fit: BoxFit.contain,
+              assetName: item['activeIcon'],
+            ),
+            icon: SvgWidget(
+              color: context.isDarkMode
+                  ? AppColors.white.withOpacity(0.6)
+                  : AppColors.grey,
+              width: 24.w,
+              height: 24.h,
+              fit: BoxFit.contain,
+              assetName: item['icon'],
+            ),
             label: item['label'],
           );
         }).toList(),

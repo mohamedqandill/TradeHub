@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tradehub/core/colors/app_colors.dart';
-import 'package:tradehub/core/extensions/is_dark_mode.dart';
+import 'package:tradehub/Core/colors/app_colors.dart';
+import 'package:tradehub/Core/extensions/is_dark_mode.dart';
 
 class CustomOrderDetailsCard extends StatelessWidget {
   final Widget child;
@@ -12,27 +12,28 @@ class CustomOrderDetailsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isDarkMode = context.isDarkMode;
-    Color cardColor =
-        isDarkMode ? AppColors.black.withOpacity(0.3) : AppColors.white;
 
     return Container(
       width: double.infinity,
       padding: padding ?? EdgeInsets.all(16.sp),
       margin: EdgeInsets.only(bottom: 16.h),
       decoration: BoxDecoration(
-        color: cardColor,
-        borderRadius: BorderRadius.circular(16.r),
+        color: isDarkMode ? Colors.white.withOpacity(0.05) : AppColors.white,
+        borderRadius: BorderRadius.circular(20.r),
         border: Border.all(
-          color: isDarkMode ? Colors.grey[800]! : Colors.grey.withOpacity(0.2),
+          color: isDarkMode
+              ? Colors.white.withOpacity(0.08)
+              : AppColors.lightGrey.withOpacity(0.8),
           width: 1,
         ),
         boxShadow: [
-          if (!isDarkMode)
-            BoxShadow(
-              color: Colors.black.withOpacity(0.04),
-              blurRadius: 10,
-              offset: const Offset(0, 4),
-            ),
+          BoxShadow(
+            color: isDarkMode
+                ? Colors.black.withOpacity(0.25)
+                : Colors.black.withOpacity(0.04),
+            blurRadius: 15,
+            offset: const Offset(0, 5),
+          ),
         ],
       ),
       child: child,

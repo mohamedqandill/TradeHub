@@ -31,12 +31,16 @@ class GetRandomProductEntity {
 
   final bool? isFavourite;
 
-    @JsonKey(name: ApiConstants.imageUrl)
+  @JsonKey(name: ApiConstants.imageUrl)
   final String? imageUrl;
+
+  @JsonKey(name: ApiConstants.logoUrl)
+  final String? logoUrl;
 
   GetRandomProductEntity({
     required this.isFavourite,
-        required this.imageUrl,
+    required this.imageUrl,
+    required this.logoUrl,
     required this.id,
     required this.name,
     required this.description,
@@ -66,6 +70,7 @@ class GetRandomProductEntity {
     int? ratingCount,
     bool? isFavourite,
     String? imageUrl,
+    String? logoUrl,
   }) {
     return GetRandomProductEntity(
       id: id ?? this.id,
@@ -82,6 +87,7 @@ class GetRandomProductEntity {
       ratingCount: ratingCount ?? this.ratingCount,
       isFavourite: isFavourite ?? this.isFavourite,
       imageUrl: imageUrl ?? this.imageUrl,
+      logoUrl: logoUrl ?? this.logoUrl,
     );
   }
 }

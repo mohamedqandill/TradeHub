@@ -16,6 +16,7 @@ LoginResponseDTO _$LoginResponseDTOFromJson(Map<String, dynamic> json) =>
       loginProvider: json['LoginProvider'] as String?,
       token: json['token'] as String?,
       refreshTokenExpiration: json['refreshTokenExpiration'] as String?,
+      profilePicture: json['profilePicture'] as String?,
     );
 
 Map<String, dynamic> _$LoginResponseDTOToJson(LoginResponseDTO instance) =>
@@ -27,4 +28,5 @@ Map<String, dynamic> _$LoginResponseDTOToJson(LoginResponseDTO instance) =>
       'LoginProvider': instance.loginProvider,
       'token': instance.token,
       'refreshTokenExpiration': instance.refreshTokenExpiration,
+      'profilePicture': instance.profilePicture,
     };

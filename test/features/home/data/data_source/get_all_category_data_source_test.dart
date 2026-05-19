@@ -21,7 +21,7 @@ void main() {
   });
 
   group('GetAllCategoryDataSourceImpl', () {
-    final tResponse = [const GetAllCategoryResponse(id: 1, name: 'Food')];
+    final tResponse = [const GetAllCategoryResponse(id: 1, name: 'Food', imageUrl: 'image_url')];
 
     test('should return Success with list of categories when API call succeeds',
         () async {

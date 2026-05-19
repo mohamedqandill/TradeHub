@@ -3,17 +3,17 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
+import 'dart:async' as _i5;
 
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:tradehub/features/main_layout/home/data/api/home_api_client.dart'
-    as _i3;
+    as _i4;
 import 'package:tradehub/features/main_layout/home/data/models/responses/get_all_category_response.dart'
-    as _i5;
+    as _i6;
 import 'package:tradehub/features/main_layout/home/data/models/responses/get_companies.dart'
     as _i2;
-import 'package:tradehub/features/main_layout/home/data/models/responses/get_random_products_d_t_o.dart'
-    as _i6;
+import 'package:tradehub/features/main_layout/home/data/models/responses/get_random_products_response.dart'
+    as _i3;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -38,48 +38,76 @@ class _FakeGetCompanies_0 extends _i1.SmartFake implements _i2.GetCompanies {
         );
 }
 
+class _FakeGetRandomProductsResponse_1 extends _i1.SmartFake
+    implements _i3.GetRandomProductsResponse {
+  _FakeGetRandomProductsResponse_1(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
 /// A class which mocks [HomeApiClient].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockHomeApiClient extends _i1.Mock implements _i3.HomeApiClient {
+class MockHomeApiClient extends _i1.Mock implements _i4.HomeApiClient {
   MockHomeApiClient() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i4.Future<List<_i5.GetAllCategoryResponse>> getAllCategory() =>
+  _i5.Future<List<_i6.GetAllCategoryResponse>> getAllCategory() =>
       (super.noSuchMethod(
         Invocation.method(
           #getAllCategory,
           [],
         ),
-        returnValue: _i4.Future<List<_i5.GetAllCategoryResponse>>.value(
-            <_i5.GetAllCategoryResponse>[]),
-      ) as _i4.Future<List<_i5.GetAllCategoryResponse>>);
+        returnValue: _i5.Future<List<_i6.GetAllCategoryResponse>>.value(
+            <_i6.GetAllCategoryResponse>[]),
+      ) as _i5.Future<List<_i6.GetAllCategoryResponse>>);
 
   @override
-  _i4.Future<_i2.GetCompanies> getCompanies() => (super.noSuchMethod(
+  _i5.Future<_i2.GetCompanies> getCompanies() => (super.noSuchMethod(
         Invocation.method(
           #getCompanies,
           [],
         ),
-        returnValue: _i4.Future<_i2.GetCompanies>.value(_FakeGetCompanies_0(
+        returnValue: _i5.Future<_i2.GetCompanies>.value(_FakeGetCompanies_0(
           this,
           Invocation.method(
             #getCompanies,
             [],
           ),
         )),
-      ) as _i4.Future<_i2.GetCompanies>);
+      ) as _i5.Future<_i2.GetCompanies>);
 
   @override
-  _i4.Future<List<_i6.GetRandomProductsDTO>> getRandomProducts() =>
+  _i5.Future<_i3.GetRandomProductsResponse> getRandomProducts({
+    int? pageIndex,
+    int? pageSize,
+  }) =>
       (super.noSuchMethod(
         Invocation.method(
           #getRandomProducts,
           [],
+          {
+            #pageIndex: pageIndex,
+            #pageSize: pageSize,
+          },
         ),
-        returnValue: _i4.Future<List<_i6.GetRandomProductsDTO>>.value(
-            <_i6.GetRandomProductsDTO>[]),
-      ) as _i4.Future<List<_i6.GetRandomProductsDTO>>);
+        returnValue: _i5.Future<_i3.GetRandomProductsResponse>.value(
+            _FakeGetRandomProductsResponse_1(
+          this,
+          Invocation.method(
+            #getRandomProducts,
+            [],
+            {
+              #pageIndex: pageIndex,
+              #pageSize: pageSize,
+            },
+          ),
+        )),
+      ) as _i5.Future<_i3.GetRandomProductsResponse>);
 }

@@ -3,6 +3,7 @@ import 'package:tradehub/core/api/api_constant/api_constant.dart';
 import 'package:tradehub/core/api/api_executor/api_executor.dart';
 import 'package:tradehub/core/api/api_result/api_result.dart';
 import 'package:tradehub/core/constants/app_constants.dart';
+import 'package:tradehub/core/shared_services/signalr_connection.dart';
 import 'package:tradehub/core/utils/di/di.dart';
 import 'package:tradehub/core/utils/firebase_service/social_auth.dart';
 import 'package:tradehub/core/utils/secure_storage/secure_storage_service.dart';
@@ -85,13 +86,15 @@ class RegisterDataSourceImpl implements RegisterDataSource {
       case Error():
         return Error(error: result.error);
       case Success():
-      await getIt<SecureStorageHelper>()
-        .write(ApiConstants.token, result.data?.token??"");
+        await getIt<SecureStorageHelper>()
+            .write(ApiConstants.token, result.data?.token ?? "");
         Map<dynamic, dynamic> userInfo = {
-          "fullName": user.user?.displayName ?? "",
-          "email": user.user?.email ?? "",
-          "phone": user.user?.phoneNumber ?? "",
+          ApiConstants.fullName: result.data?.fullName ?? "",
+          ApiConstants.email: result.data?.email ?? "",
+          ApiConstants.phoneNumber: result.data?.phoneNumber ?? "",
+          ApiConstants.profilePicture: result.data?.profilePicture ?? "",
         };
+        SignalRService().start(result.data!.token ?? "");
         await getIt<HiveStorageHelper>()
             .saveMap(AppConstants.userInfo, userInfo);
 

@@ -46,42 +46,36 @@ class _PaymentWebViewScreenState extends State<PaymentWebViewScreen> {
     final pending = uri.queryParameters['pending'] == 'true';
     final success = uri.queryParameters['success'] == 'true';
     final integrationId = int.tryParse(uri.queryParameters['integration_id'] ?? '');
-    final orderId = widget.cubit.checkoutResponse?.orderId??0;
-    final type=uri.queryParameters['source_data.type'];
-    final pan=uri.queryParameters['source_data.pan'];
-    final subType=uri.queryParameters['source_data.sub_type'];
+    final orderId = widget.cubit.checkoutResponse?.orderId ?? 0;
+    final type = uri.queryParameters['source_data.type'];
+    final pan = uri.queryParameters['source_data.pan'];
+    final subType = uri.queryParameters['source_data.sub_type'];
     final request = PaymentWebhookRequest(
       obj: WebhookObject(
         sourceData: SourceData(
           type: type,
           pan: pan,
           subType: subType,
-          
         ),
         id: id,
         success: success,
         pending: pending,
         extras: WebhookExtras(orderId: orderId),
         order: WebhookOrder(id: integrationId),
-       
       ),
     );
 
     widget.cubit.paymentWebhook(body: request);
     widget.cubit.saveRequestData(request);
-    
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const MainLayoutAppBar(
-        
         title: "Secure Payment",
       ),
       body: WebViewWidget(controller: _controller),
     );
   }
 }
-
-
