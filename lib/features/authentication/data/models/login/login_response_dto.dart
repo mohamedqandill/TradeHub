@@ -20,6 +20,8 @@ class LoginResponseDTO {
   final String? token;
   @JsonKey(name: ApiConstants.refreshTokenExpiration)
   final String? refreshTokenExpiration;
+  @JsonKey(name: ApiConstants.profilePicture)
+  final String? profilePicture;
 
   const LoginResponseDTO({
     this.fullName,
@@ -29,6 +31,7 @@ class LoginResponseDTO {
     this.loginProvider,
     this.token,
     this.refreshTokenExpiration,
+    this.profilePicture,
   });
 
   factory LoginResponseDTO.fromJson(Map<String, dynamic> json) =>

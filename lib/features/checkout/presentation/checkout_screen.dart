@@ -1,19 +1,89 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tradehub/core/colors/app_colors.dart';
+import 'package:tradehub/core/extensions/is_dark_mode.dart';
+import 'package:tradehub/core/extensions/main_color.dart';
 import 'package:tradehub/core/functions/show_snakbar.dart';
 import 'package:tradehub/core/localization/locale_keys.g.dart';
 import 'package:tradehub/core/routes/routes.dart';
 import 'package:tradehub/core/shared_widgets/app_bars/main_layout_app_bar.dart';
 import 'package:tradehub/features/checkout/presentation/cubit/checkout_cubit.dart';
 import 'package:tradehub/features/main_layout/cart/presentation/cubit/cart_cubit.dart';
-
+import 'package:tradehub/features/your_orders/presentation/cubit/orders_cubit.dart';
 import 'checkout_screen_body.dart';
-
 import 'package:tradehub/features/order_details/presentation/order_details_args.dart';
 
-class CheckoutScreen extends StatelessWidget {
+class CheckoutScreen extends StatefulWidget {
   const CheckoutScreen({super.key});
+
+  @override
+  State<CheckoutScreen> createState() => _CheckoutScreenState();
+}
+
+class _CheckoutScreenState extends State<CheckoutScreen> {
+  bool _canPop = false;
+
+  Future<bool> _showAwaitingPaymentDialog(BuildContext context) async {
+    final bool? result = await showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (dialogCtx) => AlertDialog(
+        backgroundColor: context.isDarkMode ? const Color(0xFF0F0F10) : Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.r),
+          side: BorderSide(
+            color: context.isDarkMode ? Colors.white10 : Colors.black.withOpacity(0.05),
+          ),
+        ),
+        title: Row(
+          children: [
+            Icon(Icons.warning_amber_rounded, color: context.mainColor, size: 24.sp),
+            SizedBox(width: 10.w),
+            Text(
+              "Order Not Confirmed",
+              style: TextStyle(
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w800,
+                color: context.isDarkMode ? Colors.white : Colors.black,
+              ),
+            ),
+          ],
+        ),
+        content: Text(
+          "Your order is not confirmed yet and is awaiting payment.",
+          style: TextStyle(
+            fontSize: 13.sp,
+            fontWeight: FontWeight.w500,
+            color: context.isDarkMode ? Colors.white70 : Colors.black87,
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogCtx).pop(false),
+            child: Text(
+              "Continue Payment",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: context.mainColor,
+              ),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () => Navigator.of(dialogCtx).pop(true),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.redAccent,
+              foregroundColor: Colors.white,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
+            ),
+            child: const Text("Yes, Go Back"),
+          ),
+        ],
+      ),
+    );
+    return result ?? false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +101,14 @@ class CheckoutScreen extends StatelessWidget {
             // 1. Refresh Cart (Remove checked out items)
             context.read<CartCubit>().isCartChanged = true;
             context.read<CartCubit>().getBasket();
-            
 
-            // 2. Navigate to Order Details
+            // 2. Refresh Orders screen list
+            OrdersCubit.instance?.getOrders();
+
+            // 3. Navigate to Order Details
+            setState(() {
+              _canPop = true;
+            });
             Navigator.pushNamedAndRemoveUntil(
               context,
               Routes.orderDetails,
@@ -46,7 +121,30 @@ class CheckoutScreen extends StatelessWidget {
             showFailureSnackBar(context, messageTitle: state.error.message);
           }
         },
-        child: const CheckoutScreenBody(),
+        child: PopScope(
+          canPop: _canPop,
+          onPopInvoked: (didPop) async {
+            if (didPop) return;
+
+            final cubit = context.read<CheckoutCubit>();
+            if (cubit.state is PaymentWebhookSuccess) {
+              setState(() {
+                _canPop = true;
+              });
+              Navigator.of(context).pop();
+              return;
+            }
+
+            final shouldPop = await _showAwaitingPaymentDialog(context);
+            if (shouldPop && context.mounted) {
+              setState(() {
+                _canPop = true;
+              });
+              Navigator.of(context).pop();
+            }
+          },
+          child: const CheckoutScreenBody(),
+        ),
       ),
     );
   }

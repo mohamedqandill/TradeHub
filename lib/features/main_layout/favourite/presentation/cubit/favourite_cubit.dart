@@ -52,11 +52,11 @@ class FavouriteCubit extends Cubit<FavouriteState> {
   Future<void> toggleFavorite(int id) async {
     if (favoritesIds.contains(id)) {
       favoritesIds.remove(id);
-      favorites.removeWhere((e) => e.id == id);
+      favorites = favorites.where((element) => element.id != id).toList();
     } else {
       favoritesIds.add(id);
     }
-    favorites = List.from(favorites);
+   
 
    
 

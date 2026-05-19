@@ -1,0 +1,41 @@
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
+class LocalNotificationService {
+  static final FlutterLocalNotificationsPlugin _notificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+
+  static void initialize() {
+    const InitializationSettings initializationSettings =
+        InitializationSettings(
+      android: AndroidInitializationSettings('@mipmap/ic_launcher'),
+    );
+
+    _notificationsPlugin.initialize(initializationSettings);
+    _notificationsPlugin
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
+        ?.createNotificationChannel(
+          const AndroidNotificationChannel(
+            'channel_id',
+            'High Importance Notifications',
+            importance: Importance.max,
+          ),
+        );
+  }
+
+  static void showNotification({
+    required String title,
+    required String body,
+  }) async {
+    const NotificationDetails details = NotificationDetails(
+      android: AndroidNotificationDetails(
+        'channel_id',
+        'channel_name',
+        importance: Importance.max,
+        priority: Priority.high,
+      ),
+    );
+
+    await _notificationsPlugin.show(0, title, body, details);
+  }
+}

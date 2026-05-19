@@ -93,12 +93,19 @@ class _HomeApiClient implements HomeApiClient {
   }
 
   @override
-  Future<List<GetRandomProductsDTO>> getRandomProducts() async {
+  Future<GetRandomProductsResponse> getRandomProducts({
+    int? pageIndex,
+    int? pageSize,
+  }) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'pageIndex': pageIndex,
+      r'pageSize': pageSize,
+    };
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<List<GetRandomProductsDTO>>(Options(
+    final _options = _setStreamType<GetRandomProductsResponse>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -114,13 +121,10 @@ class _HomeApiClient implements HomeApiClient {
           _dio.options.baseUrl,
           baseUrl,
         )));
-    final _result = await _dio.fetch<List<dynamic>>(_options);
-    late List<GetRandomProductsDTO> _value;
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late GetRandomProductsResponse _value;
     try {
-      _value = _result.data!
-          .map((dynamic i) =>
-              GetRandomProductsDTO.fromJson(i as Map<String, dynamic>))
-          .toList();
+      _value = GetRandomProductsResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

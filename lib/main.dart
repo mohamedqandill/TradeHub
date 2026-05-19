@@ -11,6 +11,8 @@ import 'package:tradehub/core/api/api_constant/api_constant.dart';
 import 'package:tradehub/core/constants/app_constants.dart';
 import 'package:tradehub/core/routes/app_routes.dart';
 import 'package:tradehub/core/routes/routes.dart';
+import 'package:tradehub/core/shared_services/local_notifications_service';
+import 'package:tradehub/core/shared_services/request_notification_service.dart';
 import 'package:tradehub/core/shared_widgets/widgets/device_preview.dart';
 import 'package:tradehub/core/theme/app_theme.dart';
 import 'package:tradehub/core/utils/storage/hive_storage.dart';
@@ -42,7 +44,8 @@ Future<void> main() async {
 
   await ScreenUtil.ensureScreenSize();
   await SharedPrefsHelper.init();
-
+  LocalNotificationService.initialize();
+  requestNotificationPermission();
   SharedPrefsHelper prefs = getIt<SharedPrefsHelper>();
   await HiveStorageHelper.init();
   final languageViewModel = getIt<LanguageViewModel>();
@@ -78,11 +81,9 @@ Future<void> main() async {
             ),
           ],
           
-            child: DevicePreviewWidget(
-              child: MyApp(
-                isFirstTime: isFirstTime,
-                token: token,
-              ),
+            child: MyApp(
+              isFirstTime: isFirstTime,
+              token: token,
             ),
           
         ),

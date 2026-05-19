@@ -5,19 +5,28 @@ import 'package:tradehub/Core/extensions/base_inherited_context.dart';
 import 'package:tradehub/Core/extensions/is_dark_mode.dart';
 
 class CustomSearchField extends StatelessWidget {
-  const CustomSearchField(
-      {super.key,
-      this.controller,
-      this.validator,
-      this.obscureText = false,
-      this.labelText,
-      this.autoFillHints = "",
-      this.hintText,
-      this.prefixIcon,
-      this.suffixIcon,
-      this.fillColor,
-      this.borderColor,
-      this.hintColor});
+  const CustomSearchField({
+    super.key,
+    this.controller,
+    this.validator,
+    this.obscureText = false,
+    this.labelText,
+    this.autoFillHints = "",
+    this.hintText,
+    this.prefixIcon,
+    this.suffixIcon,
+    this.fillColor,
+    this.borderColor,
+    this.hintColor,
+    this.onTap,
+    this.onChanged,
+    this.readOnly = false,
+    this.enabled = true,
+    this.focusNode,
+    this.autofocus = false,
+    this.textInputAction,
+    this.onFieldSubmitted,
+  });
 
   final TextEditingController? controller;
   final String? Function(String?)? validator;
@@ -30,6 +39,14 @@ class CustomSearchField extends StatelessWidget {
   final Color? fillColor;
   final Color? borderColor;
   final Color? hintColor;
+  final VoidCallback? onTap;
+  final ValueChanged<String>? onChanged;
+  final bool readOnly;
+  final bool enabled;
+  final FocusNode? focusNode;
+  final bool autofocus;
+  final TextInputAction? textInputAction;
+  final ValueChanged<String>? onFieldSubmitted;
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +59,14 @@ class CustomSearchField extends StatelessWidget {
         controller: controller,
         validator: validator,
         obscureText: obscureText,
+        onTap: onTap,
+        onChanged: onChanged,
+        readOnly: readOnly,
+        enabled: enabled,
+        focusNode: focusNode,
+        autofocus: autofocus,
+        textInputAction: textInputAction,
+        onFieldSubmitted: onFieldSubmitted,
         decoration: InputDecoration(
             focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(

@@ -56,13 +56,7 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> {
 
     return BlocListener<ProfileCubit, ProfileState>(
       listener: (context, state) {
-        if (state is ProfilePictureUploadSuccess) {
-          showSuccessSnackBar(messageTitle: "Profile photo updated!");
-        } else if (state is ProfilePictureUploadError) {
-          showFailureSnackBar(context, messageTitle: state.message);
-        } else if (state is ProfilePictureDeleteSuccess) {
-          showSuccessSnackBar(messageTitle: "Profile photo removed.");
-        } else if (state is ProfilePictureDeleteError) {
+        if (state is ProfilePictureDeleteError) {
           showFailureSnackBar(context, messageTitle: state.message);
         }
       },
@@ -74,14 +68,14 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> {
                   onSettingTap: () {
                     Navigator.pushNamed(context, Routes.settings);
                   },
-                  profileImageUrl: userInfo?["imageUrl"],
-                  name: userInfo?["fullName"] ?? "")),
+                  profileImageUrl: userInfo?[ApiConstants.profilePicture],
+                  name: userInfo?[ApiConstants.fullName] ?? "")),
           SizedBox(
             height: 15.h,
           ),
           CardInfo(
-            name: userInfo?["fullName"] ?? "",
-            email: userInfo?["email"] ?? "",
+            name: userInfo?[ApiConstants.fullName] ?? "",
+            email: userInfo?[ApiConstants.email] ?? "",
             onEditTap: () {},
           ),
           SizedBox(
@@ -124,7 +118,8 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> {
                                     : Colors.white,
                                 title: Text(
                                   LocaleKeys.logOut.tr(),
-                                  style: context.base.theme.textTheme.titleLarge!
+                                  style: context
+                                      .base.theme.textTheme.titleLarge!
                                       .copyWith(
                                           color: context.mainColor,
                                           fontSize: 22.sp),
@@ -185,8 +180,8 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> {
                                           }
                                         },
                                         child: Text(LocaleKeys.ok.tr(),
-                                            style: context
-                                                .base.theme.textTheme.titleLarge!
+                                            style: context.base.theme.textTheme
+                                                .titleLarge!
                                                 .copyWith(
                                                     color: AppColors.white,
                                                     fontSize: 16.sp)),

@@ -4,12 +4,12 @@ import 'package:tradehub/core/api/api_result/api_result.dart';
 import 'package:tradehub/features/main_layout/home/data/api/home_api_client.dart';
 import 'package:tradehub/features/main_layout/home/data/models/responses/get_all_category_response.dart';
 import 'package:tradehub/features/main_layout/home/data/models/responses/get_companies.dart';
-import 'package:tradehub/features/main_layout/home/data/models/responses/get_random_products_d_t_o.dart';
+import 'package:tradehub/features/main_layout/home/data/models/responses/get_random_products_response.dart';
 
 abstract class HomeDataSource {
   Future<ApiResult<List<GetAllCategoryResponse>>> getCategory();
   Future<ApiResult<GetCompanies>> getCompanies();
-  Future<ApiResult<List<GetRandomProductsDTO>>> getRandomProducts();
+  Future<ApiResult<GetRandomProductsResponse>> getRandomProducts({int? pageIndex, int? pageSize});
 }
 
 @Injectable(as: HomeDataSource)
@@ -45,14 +45,14 @@ class HomeDataSourceImpl implements HomeDataSource {
   }
 
   @override
-  Future<ApiResult<List<GetRandomProductsDTO>>> getRandomProducts() async {
+  Future<ApiResult<GetRandomProductsResponse>> getRandomProducts({int? pageIndex, int? pageSize}) async {
     var result = await ApiExecutor.executeApi(
-      apiCall: () => _homeApiClient.getRandomProducts(),
+      apiCall: () => _homeApiClient.getRandomProducts(pageIndex: pageIndex, pageSize: pageSize),
     );
     switch (result) {
       case Success():
         return Success(data: result.data);
-      case Error<List<GetRandomProductsDTO>>():
+      case Error<GetRandomProductsResponse>():
         return Error(error: result.error);
     }
   }

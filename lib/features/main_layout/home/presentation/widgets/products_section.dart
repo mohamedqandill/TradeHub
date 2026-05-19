@@ -37,16 +37,12 @@ class ProductsSection extends StatelessWidget {
           ],
           child: BlocBuilder<HomeCubit, HomeState>(builder: (context, state) {
             var cartCubit = context.watch<CartCubit>();
-            return GridView.builder(
+            return ListView.separated(
               padding: EdgeInsets.zero,
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: state.randomProducts.length,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 14.w,
-                  mainAxisSpacing: 14.h,
-                  mainAxisExtent: 300.h),
+              separatorBuilder: (context, index) => SizedBox(height: 14.h),
               itemBuilder: (context, index) {
                 return ProductCard(
                   product: state.randomProducts[index],

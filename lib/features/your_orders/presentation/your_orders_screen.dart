@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tradehub/core/extensions/main_color.dart';
 import 'package:tradehub/core/localization/locale_keys.g.dart';
 import 'package:tradehub/core/shared_widgets/app_bars/main_layout_app_bar.dart';
 import 'package:tradehub/core/utils/di/di.dart';
@@ -15,12 +16,25 @@ class YourOrdersScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => getIt<OrdersCubit>()..getOrders(),
-      child: Scaffold(
-        appBar: MainLayoutAppBar(
-          title: tr(LocaleKeys.yourOrders),
-          enableLeading: true,
-        ),
-        body: const YourOrdersScreenBody(),
+      child: Builder(
+        builder: (context) {
+          final bool canPop = Navigator.of(context).canPop();
+          return RefreshIndicator(
+            onRefresh: () async {
+              context.read<OrdersCubit>().getOrders();
+            },
+            color: context.mainColor,
+            strokeWidth: 2,
+            triggerMode: RefreshIndicatorTriggerMode.anywhere,
+            child: Scaffold(
+              appBar: MainLayoutAppBar(
+                title: tr(LocaleKeys.yourOrders),
+                enableLeading: canPop,
+              ),
+              body: const YourOrdersScreenBody(),
+            ),
+          );
+        },
       ),
     );
   }

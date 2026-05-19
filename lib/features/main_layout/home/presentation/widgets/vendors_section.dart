@@ -28,7 +28,7 @@ class _VendorsSectionState extends State<VendorsSection> {
   }
 
   void _startAutoScroll() {
-    _autoScrollTimer = Timer.periodic(const Duration(seconds: 20), (_) {
+    _autoScrollTimer = Timer.periodic(const Duration(seconds: 40), (_) {
       if (!_scrollController.hasClients) return;
 
       final maxScroll = _scrollController.position.maxScrollExtent;
@@ -67,11 +67,11 @@ class _VendorsSectionState extends State<VendorsSection> {
     return Skeletonizer(
       enabled: widget.isLoading ?? false,
       child: SizedBox(
-        height: 180.h,
+        height: 245.h,
         child: ListView.separated(
           controller: _scrollController,
           scrollDirection: Axis.horizontal,
-          padding: EdgeInsets.symmetric(horizontal: 4.w),
+          padding: EdgeInsets.only(left: 4.w, right: 4.w, bottom: 8.h),
           itemCount: widget.cubit?.companies.length ?? 6,
           separatorBuilder: (context, index) => SizedBox(width: 16.w),
           itemBuilder: (context, index) {

@@ -10,8 +10,11 @@ part 'orders_state.dart';
 @injectable
 class OrdersCubit extends Cubit<OrdersState> {
   final GetOrdersUseCase _getOrdersUseCase;
+  static OrdersCubit? instance;
 
-  OrdersCubit(this._getOrdersUseCase) : super(OrdersInitial());
+  OrdersCubit(this._getOrdersUseCase) : super(OrdersInitial()) {
+    instance = this;
+  }
 
   Future<void> getOrders() async {
     emit(GetOrdersLoading());

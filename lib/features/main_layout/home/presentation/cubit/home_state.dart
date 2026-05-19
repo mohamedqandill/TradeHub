@@ -7,6 +7,9 @@ class HomeState with _$HomeState {
     @Default(RequestStates.initial) RequestStates getCompaniesState,
     @Default(RequestStates.initial) RequestStates getRandomProductsState,
     @Default([]) List<GetRandomProductEntity> randomProducts,
+    @Default(1) int productsPageIndex,
+    @Default(false) bool productsHasReachedMax,
+    @Default(false) bool isFetchingMoreProducts,
     String? errorMessage,
   }) = _Initial;
 }

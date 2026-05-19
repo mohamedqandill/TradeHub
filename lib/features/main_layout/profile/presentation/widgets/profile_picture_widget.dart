@@ -66,10 +66,6 @@ class ProfilePictureWidget extends StatelessWidget {
                   color: context.isDarkMode
                       ? AppColors.lightBlack
                       : Colors.grey.shade100,
-                  border: Border.all(
-                    color: context.mainColor.withOpacity(0.4),
-                    width: 3,
-                  ),
                   boxShadow: [
                     BoxShadow(
                       color: context.mainColor.withOpacity(0.12),
@@ -134,7 +130,8 @@ class ProfilePictureWidget extends StatelessWidget {
     if (localPath != null) {
       return Image.file(
         File(localPath),
-        fit: BoxFit.contain,
+        fit: BoxFit.cover,
+        alignment: Alignment.center,
         width: double.infinity,
         height: double.infinity,
       );
@@ -142,7 +139,8 @@ class ProfilePictureWidget extends StatelessWidget {
     if (networkUrl != null && networkUrl.isNotEmpty) {
       return CachedNetworkImage(
         imageUrl: networkUrl,
-        fit: BoxFit.contain,
+        fit: BoxFit.cover,
+        alignment: Alignment.center,
         width: double.infinity,
         height: double.infinity,
         errorWidget: (_, __, ___) => _defaultAvatar(),
@@ -178,6 +176,7 @@ class ProfilePictureWidget extends StatelessWidget {
                     child: InteractiveViewer(
                       minScale: 0.5,
                       maxScale: 4.0,
+                      scaleEnabled: true,
                       child: Container(
                         margin: EdgeInsets.all(20.w),
                         child: ClipRRect(

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:tradehub/core/api/api_constant/api_constant.dart';
 import 'package:tradehub/core/api/api_result/api_result.dart';
 import 'package:tradehub/core/constants/app_constants.dart';
 import 'package:tradehub/core/utils/storage/hive_storage.dart';
@@ -31,7 +32,7 @@ class ProfileCubit extends Cubit<ProfileState> {
         if (imageUrl != null) {
           final userInfo =
               _hiveStorageHelper.getMap(AppConstants.userInfo) ?? {};
-          userInfo["imageUrl"] = imageUrl;
+          userInfo[ApiConstants.profilePicture] = imageUrl;
           _hiveStorageHelper.saveMap(AppConstants.userInfo, userInfo);
         }
         emit(ProfilePictureUploadSuccess(imageUrl: imageUrl));
@@ -50,7 +51,7 @@ class ProfileCubit extends Cubit<ProfileState> {
         // Remove imageUrl from local cache
         final userInfo = _hiveStorageHelper.getMap(AppConstants.userInfo);
         if (userInfo != null) {
-          userInfo.remove("imageUrl");
+          userInfo.remove(ApiConstants.profilePicture);
           _hiveStorageHelper.saveMap(AppConstants.userInfo, userInfo);
         }
         emit(ProfilePictureDeleteSuccess());
