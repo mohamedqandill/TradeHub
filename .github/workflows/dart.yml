@@ -7,51 +7,36 @@ jobs:
   build-ios:
     name: 🎉 iOS Build
     runs-on: macos-latest
-
     steps:
       - uses: actions/checkout@v3
 
       - uses: subosito/flutter-action@v2
         with:
-          channel: stable
+          channel: 'stable'
+          architecture: x64
+      - run: flutter pub get
+      
 
-      - name: Flutter Pub Get
-        run: flutter pub get
+      - run: pod repo update
+        working-directory: ios
 
-      - name: Clean Build
-        run: flutter clean
+      - run: flutter build ios --release --no-codesign
 
-      - name: Remove Pods
-        run: |
-          rm -rf ios/Pods
-          rm -rf ios/Podfile.lock
-
-      - name: Install Pods
-        run: |
-          cd ios
-          pod repo update
-          pod install --repo-update
-
-      - name: Build iOS
-        run: flutter build ios --release --no-codesign
-
-      - name: Create Payload
-        run: mkdir Payload
+      - run: mkdir Payload
         working-directory: build/ios/iphoneos
 
-      - name: Move Runner.app
-        run: mv Runner.app Payload
+      - run: mv Runner.app/ Payload
         working-directory: build/ios/iphoneos
 
-      - name: Create IPA
+      - name: Zip output
         run: zip -qq -r -9 FlutterIpaExport.ipa Payload
         working-directory: build/ios/iphoneos
 
-      - name: Upload IPA
+      - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: build/ios/iphoneos/FlutterIpaExport.ipa
           tag: v1.0
           overwrite: true
-          body: "iOS IPA Build"
+          body: "This is first release"
