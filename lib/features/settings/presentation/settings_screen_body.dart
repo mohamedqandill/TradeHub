@@ -45,6 +45,8 @@ class _SettingsScreenBodyState extends State<SettingsScreenBody> {
                           Navigator.pushNamed(context, Routes.accountInfo);
                         } else if (index == 1) {
                           Navigator.pushNamed(context, Routes.savedAddresses);
+                        } else if (index == 3) {
+                          Navigator.pushNamed(context, Routes.changePassword);
                         }
                       },
                       index: index);

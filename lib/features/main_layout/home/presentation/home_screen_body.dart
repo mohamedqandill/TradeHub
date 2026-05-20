@@ -182,7 +182,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> with RouteAware {
               RefreshIndicator(
                 onRefresh: () async {
                  getSavedPlaceName();
-                 await   cubit.revokeHomeApis();
+                 await   cubit.getRandomProducts();
                 },
                 child: ListView(
                   controller: _scrollController,

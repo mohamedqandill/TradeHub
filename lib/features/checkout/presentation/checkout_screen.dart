@@ -9,6 +9,7 @@ import 'package:tradehub/core/functions/show_snakbar.dart';
 import 'package:tradehub/core/localization/locale_keys.g.dart';
 import 'package:tradehub/core/routes/routes.dart';
 import 'package:tradehub/core/shared_widgets/app_bars/main_layout_app_bar.dart';
+import 'package:tradehub/core/utils/storage/hive_storage.dart';
 import 'package:tradehub/features/checkout/presentation/cubit/checkout_cubit.dart';
 import 'package:tradehub/features/main_layout/cart/presentation/cubit/cart_cubit.dart';
 import 'package:tradehub/features/your_orders/presentation/cubit/orders_cubit.dart';
@@ -137,10 +138,20 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
             final shouldPop = await _showAwaitingPaymentDialog(context);
             if (shouldPop && context.mounted) {
+              final orderId = cubit.checkoutResponse?.orderId;
+              final paymentUrl = cubit.checkoutResponse?.paymentUrl;
+              if (orderId != null && paymentUrl != null) {
+                await HiveStorageHelper().saveString(
+                  "payment_url_order_$orderId",
+                  paymentUrl,
+                );
+              }
               setState(() {
                 _canPop = true;
               });
-              Navigator.of(context).pop();
+              if (context.mounted) {
+                Navigator.of(context).pop();
+              }
             }
           },
           child: const CheckoutScreenBody(),

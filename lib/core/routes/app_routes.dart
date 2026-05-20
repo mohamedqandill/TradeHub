@@ -10,6 +10,7 @@ import 'package:tradehub/features/main_layout/favourite/presentation/favourite_s
 import 'package:tradehub/features/main_layout/presentation/main_layout.dart';
 import 'package:tradehub/features/about_app/presentation/about_app_screen.dart';
 import 'package:tradehub/features/get_help/presentation/get_help_screen.dart';
+import 'package:tradehub/features/notification/presentation/notification_screen.dart';
 import 'package:tradehub/features/product_details/presentation/product_details_screen.dart';
 import 'package:tradehub/features/settings/presentation/settings_screen.dart';
 import 'package:tradehub/features/settings/presentation/account_info/account_info_screen.dart';
@@ -17,6 +18,7 @@ import 'package:tradehub/features/your_orders/presentation/your_orders_screen.da
 import 'package:tradehub/features/checkout/presentation/checkout_screen.dart';
 import 'package:tradehub/features/order_details/presentation/order_details_screen.dart';
 import 'package:tradehub/features/settings/presentation/saved_addresses/saved_addresses_screen.dart';
+import 'package:tradehub/features/settings/presentation/change_password/change_password_screen.dart';
 import 'package:tradehub/features/track_order/presentation/track_order_screen.dart';
 import '../../features/authentication/presentation/forget password/view/forget_password_screen.dart';
 import '../../features/authentication/presentation/login/view/login_screen.dart';
@@ -163,6 +165,17 @@ abstract class AppRoutes {
         return MaterialPageRoute(
           settings: settings,
           builder: (context) => const FavouriteScreen(),
+        );
+      case Routes.changePassword:
+        return const ChangePasswordScreen().customRoute(
+          settings: settings,
+          type: TransitionType.slideRight,
+        );
+
+      case Routes.notifications:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (context) => const NotificationScreen(),
         );
       // Default → Undefined
       default:

@@ -45,5 +45,72 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+
+	<!-- ========================================== -->
+	<!--             iOS Permissions                 -->
+	<!-- ========================================== -->
+
+	<!-- Camera Access (Used for picking/taking profile picture and product photos) -->
+	<key>NSCameraUsageDescription</key>
+	<string>TradeHub needs access to your camera to capture photos for your profile picture and list new items.</string>
+
+	<!-- Photo Library Access (Used for choosing profile picture and product photos) -->
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>TradeHub needs access to your photo gallery to upload your profile photo and item assets.</string>
+
+	<!-- Saving Photos (Used if the user wants to download images/receipts to their gallery) -->
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>TradeHub needs permission to save images, receipts, and invoices to your photo gallery.</string>
+
+	<!-- Microphone Access (Optional but standard for recording video reviews or chat voice messages) -->
+	<key>NSMicrophoneUsageDescription</key>
+	<string>TradeHub needs access to your microphone for recording videos or voice messages in chats.</string>
+
+	<!-- Location Services (Used in Google Maps & Location Package to show nearby products/vendors and delivery address) -->
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>TradeHub needs access to your location to find nearby stores, vendors, and deliver orders to your current address.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>TradeHub needs access to your location to find nearby stores and track delivery updates in real-time.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>TradeHub needs access to your location to track deliveries in the background.</string>
+
+	<!-- Notification Permissions (FCM/Local Notifications for order status & messages) -->
+	<key>PermissionGroupNotification</key>
+	<string>TradeHub needs notification access to keep you updated on your order statuses, chat messages, and offers.</string>
+
+	<!-- ========================================== -->
+	<!--           URL Launcher & Queries            -->
+	<!-- ========================================== -->
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<!-- Common Web & Phone Schemes -->
+		<string>https</string>
+		<string>http</string>
+		<string>tel</string>
+		<string>sms</string>
+		<string>mailto</string>
+		<!-- Google Maps Schemes -->
+		<string>googlechromes</string>
+		<string>comgooglemaps</string>
+	</array>
+
+	<!-- ========================================== -->
+	<!--       Social Authentication (Google)       -->
+	<!-- ========================================== -->
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<!-- Google Sign-In URL Scheme (Reversed Client ID) -->
+				<!-- Note: The client ID is derived from project number 25154560706 (found in firebase_options.dart) -->
+				<!-- Example format: com.googleusercontent.apps.25154560706-xxxxxxxxxxxxxxxx -->
+				<!-- Make sure to replace this with your actual REVERSED_CLIENT_ID from your GoogleService-Info.plist -->
+	<string>com.googleusercontent.apps.25154560706-747epeuagr9b9d2vu1rif1uuftehogb4</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>

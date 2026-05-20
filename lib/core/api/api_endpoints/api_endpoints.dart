@@ -27,4 +27,8 @@ abstract class ApiEndPoints {
   static const String paymentWebhook = "api/Paymobwebhook/webhook/";
   static const String deleteProfilePicture = "api/user/delete-profile-picture";
   static const String uploadProfilePicture = "api/user/upload-profile-picture";
+  static const String changePassword = "api/account/change-password";
+  static const String notifications = "api/Notifications";
+  static const String notificationsUnreadCount = "api/Notifications/unread-count";
+  static const String notificationRead = "api/Notifications/{id}/read";
 }

@@ -8,11 +8,13 @@ import 'package:webview_flutter/webview_flutter.dart';
 class PaymentWebViewScreen extends StatefulWidget {
   final String url;
   final CheckoutCubit cubit;
+  final int? orderId;
 
   const PaymentWebViewScreen({
     super.key,
     required this.url,
     required this.cubit,
+     this.orderId,
   });
 
   @override
@@ -33,6 +35,7 @@ class _PaymentWebViewScreenState extends State<PaymentWebViewScreen> {
             final url = change.url ?? '';
             if (url.contains('localhost:4200/payment-result')) {
               _handlePaymentResult(url);
+              Navigator.of(context).pop();
             }
           },
         ),
@@ -45,8 +48,9 @@ class _PaymentWebViewScreenState extends State<PaymentWebViewScreen> {
     final id = int.tryParse(uri.queryParameters['id'] ?? '');
     final pending = uri.queryParameters['pending'] == 'true';
     final success = uri.queryParameters['success'] == 'true';
-    final integrationId = int.tryParse(uri.queryParameters['integration_id'] ?? '');
-    final orderId = widget.cubit.checkoutResponse?.orderId ?? 0;
+    final integrationId =
+        int.tryParse(uri.queryParameters['integration_id'] ?? '');
+    final orderId = widget.cubit.checkoutResponse?.orderId ?? widget.orderId;
     final type = uri.queryParameters['source_data.type'];
     final pan = uri.queryParameters['source_data.pan'];
     final subType = uri.queryParameters['source_data.sub_type'];

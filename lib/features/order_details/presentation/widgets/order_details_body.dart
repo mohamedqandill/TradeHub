@@ -121,7 +121,7 @@ class OrderDetailsBody extends StatelessWidget {
                         style: TextStyle(
                           fontWeight: FontWeight.w900,
                           color: textColor,
-                          fontSize: 22.sp,
+                          fontSize: 20.sp,
                           letterSpacing: -0.6,
                         ),
                       ),
@@ -149,37 +149,40 @@ class OrderDetailsBody extends StatelessWidget {
                   ),
                 ],
               ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 8.h),
-                decoration: BoxDecoration(
-                  color: statusColor.withOpacity(0.12),
-                  borderRadius: BorderRadius.circular(30.r),
-                  border: Border.all(
-                    color: statusColor.withOpacity(0.25),
-                    width: 1,
+              Expanded(
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 8.h),
+                  decoration: BoxDecoration(
+                    color: statusColor.withOpacity(0.12),
+                    borderRadius: BorderRadius.circular(30.r),
+                    border: Border.all(
+                      color: statusColor.withOpacity(0.25),
+                      width: 1,
+                    ),
                   ),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                      width: 6.w,
-                      height: 6.w,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: statusColor,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        width: 6.w,
+                        height: 6.w,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: statusColor,
+                        ),
                       ),
-                    ),
-                    SizedBox(width: 6.w),
-                    Text(
-                      order.orderStatus.toUpperCase(),
-                      style: TextStyle(
-                        color: statusColor,
-                        fontWeight: FontWeight.w900,
-                        fontSize: 8.sp,
+                      SizedBox(width: 2.w),
+                      Text(
+                        order.orderStatus.toUpperCase(),
+                        style: TextStyle(
+                          color: statusColor,
+                          fontWeight: FontWeight.w900,
+                          fontSize: 8.sp,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ],

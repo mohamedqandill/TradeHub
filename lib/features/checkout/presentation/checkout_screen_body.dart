@@ -8,6 +8,7 @@ import 'package:tradehub/core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/extensions/main_color.dart';
 import 'package:tradehub/core/utils/di/di.dart';
 import 'package:tradehub/core/utils/shared_prefs/prefs.dart';
+import 'package:tradehub/core/utils/storage/hive_storage.dart';
 import 'package:tradehub/features/checkout/presentation/cubit/checkout_cubit.dart';
 import 'package:tradehub/features/checkout/presentation/payment_webview_screen.dart';
 import 'package:tradehub/features/main_layout/cart/presentation/widgets/custom_checkout_card.dart';
@@ -79,17 +80,27 @@ class _CheckoutScreenBodyState extends State<CheckoutScreenBody> {
                 buttonText: "PAY NOW",
                 buttonIcon: Icons.security_rounded,
                 isLoading: state is CheckoutLoading,
-                onTap: () {
+                onTap: () async {
                   if (cubit.checkoutResponse?.paymentUrl != null) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => PaymentWebViewScreen(
-                          url: cubit.checkoutResponse!.paymentUrl!,
-                          cubit: cubit,
+                    final orderId = cubit.checkoutResponse?.orderId;
+                    final paymentUrl = cubit.checkoutResponse?.paymentUrl;
+                    if (orderId != null && paymentUrl != null) {
+                      await HiveStorageHelper().saveString(
+                        "payment_url_order_$orderId",
+                        paymentUrl,
+                      );
+                    }
+                    if (context.mounted) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PaymentWebViewScreen(
+                            url: cubit.checkoutResponse!.paymentUrl!,
+                            cubit: cubit,
+                          ),
                         ),
-                      ),
-                    );
+                      );
+                    }
                   }
                 },
               );

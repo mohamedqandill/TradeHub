@@ -16,6 +16,7 @@ import 'package:tradehub/core/shared_services/request_notification_service.dart'
 import 'package:tradehub/core/shared_widgets/widgets/device_preview.dart';
 import 'package:tradehub/core/theme/app_theme.dart';
 import 'package:tradehub/core/utils/storage/hive_storage.dart';
+import 'package:tradehub/features/checkout/presentation/cubit/checkout_cubit.dart';
 import 'package:tradehub/features/main_layout/cart/presentation/cubit/cart_cubit.dart';
 import 'package:tradehub/features/main_layout/favourite/presentation/cubit/favourite_cubit.dart';
 import 'package:tradehub/features/main_layout/profile/presentation/cubit/profile_cubit.dart';
@@ -78,6 +79,9 @@ Future<void> main() async {
             ),
             BlocProvider(
               create: (context) => getIt<ProfileCubit>(),
+            ),
+            BlocProvider(
+              create: (context) => getIt<CheckoutCubit>(),
             ),
           ],
           
