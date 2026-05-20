@@ -23,4 +23,6 @@ abstract class Routes {
   static const String trackOrder = "trackOrder";
   static const String savedAddresses = "savedAddresses";
   static const String favourite = "favourite";
+  static const String notifications = "notifications";
+  static const String changePassword = "changePassword";
 }

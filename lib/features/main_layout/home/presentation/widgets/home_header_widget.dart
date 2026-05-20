@@ -119,26 +119,31 @@ class HomeHeaderWidget extends StatelessWidget {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: context.locale.languageCode == AppConstants.ar
-                      ? EdgeInsets.only(left: 4.w)
-                      : EdgeInsets.only(right: 4.w),
-                  child: Container(
-                    width: 38.w,
-                    height: 38.w,
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.15),
-                      shape: BoxShape.circle,
-                    ),
-                    child: Center(
-                      child: SvgWidget(
-                        width: 20.w,
-                        height: 20.h,
-                        fit: BoxFit.cover,
-                        assetName: context.isDarkMode
-                            ? Assets.icons.notificationDark
-                            : Assets.icons.notification,
-                        color: Colors.white,
+                InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, Routes.notifications);
+                  },
+                  child: Padding(
+                    padding: context.locale.languageCode == AppConstants.ar
+                        ? EdgeInsets.only(left: 4.w)
+                        : EdgeInsets.only(right: 4.w),
+                    child: Container(
+                      width: 38.w,
+                      height: 38.w,
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.15),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Center(
+                        child: SvgWidget(
+                          width: 20.w,
+                          height: 20.h,
+                          fit: BoxFit.cover,
+                          assetName: context.isDarkMode
+                              ? Assets.icons.notificationDark
+                              : Assets.icons.notification,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),

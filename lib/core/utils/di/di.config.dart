@@ -162,6 +162,14 @@ import '../../../features/main_layout/profile/domain/use_cases/profile_picture_u
     as _i855;
 import '../../../features/main_layout/profile/presentation/cubit/profile_cubit.dart'
     as _i579;
+import '../../../features/notification/data/api/notification_api_client.dart'
+    as _i414;
+import '../../../features/notification/data/repo/notification_repository.dart'
+    as _i577;
+import '../../../features/notification/data/repo/notification_repository_impl.dart'
+    as _i707;
+import '../../../features/notification/presentation/cubit/notification_cubit.dart'
+    as _i366;
 import '../../../features/onBoarding/view_model/language_view_model.dart'
     as _i522;
 import '../../../features/onBoarding/view_model/theme_view_model.dart' as _i364;
@@ -211,6 +219,14 @@ import '../../../features/product_ratings/domain/use_cases/get_product_ratings_u
     as _i165;
 import '../../../features/product_ratings/presentation/cubit/product_ratings_cubit.dart'
     as _i31;
+import '../../../features/settings/data/api/change_password_api_client.dart'
+    as _i920;
+import '../../../features/settings/data/repo/change_password_repository.dart'
+    as _i172;
+import '../../../features/settings/data/repo/change_password_repository_impl.dart'
+    as _i293;
+import '../../../features/settings/presentation/change_password/cubit/change_password_cubit.dart'
+    as _i502;
 import '../../../features/vendor_profile/data/api/vendor_api_client.dart'
     as _i762;
 import '../../../features/vendor_profile/data/data_sources/vendor_data_source.dart'
@@ -328,10 +344,26 @@ extension GetItInjectableX on _i174.GetIt {
               gh<_i361.Dio>(),
               baseUrl: gh<String>(instanceName: 'baseUrl'),
             ));
+    gh.singleton<_i920.ChangePasswordApiClient>(
+        () => _i920.ChangePasswordApiClient(
+              gh<_i361.Dio>(),
+              baseUrl: gh<String>(instanceName: 'baseUrl'),
+            ));
+    gh.singleton<_i414.NotificationApiClient>(() => _i414.NotificationApiClient(
+          gh<_i361.Dio>(),
+          baseUrl: gh<String>(instanceName: 'baseUrl'),
+        ));
     gh.factory<_i768.FavouriteDataSource>(
         () => _i768.FavouriteDataSourceImpl(gh<_i54.FavouriteApiClient>()));
     gh.factory<_i276.NewPasswordDataSourceContract>(
         () => _i336.NewPasswordDataSourceImpl(gh<_i891.AuthApiClient>()));
+    gh.factory<_i172.ChangePasswordRepository>(() =>
+        _i293.ChangePasswordRepositoryImpl(
+            gh<_i920.ChangePasswordApiClient>()));
+    gh.factory<_i577.NotificationRepository>(() =>
+        _i707.NotificationRepositoryImpl(gh<_i414.NotificationApiClient>()));
+    gh.factory<_i502.ChangePasswordCubit>(
+        () => _i502.ChangePasswordCubit(gh<_i172.ChangePasswordRepository>()));
     gh.factory<_i959.FavouriteRepoContract>(
         () => _i951.FavouriteRepoImpl(gh<_i768.FavouriteDataSource>()));
     gh.factory<_i942.LoginDataSourceContract>(
@@ -344,6 +376,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i232.VerifyOTPDataSourceImpl(gh<_i891.AuthApiClient>()));
     gh.factory<_i1008.CheckoutDataSource>(
         () => _i343.CheckoutDataSourceImpl(gh<_i800.CheckoutApiClient>()));
+    gh.factory<_i366.NotificationCubit>(
+        () => _i366.NotificationCubit(gh<_i577.NotificationRepository>()));
     gh.factory<_i366.RegisterRepo>(
         () => _i651.RegisterRepoImpl(gh<_i91.RegisterDataSource>()));
     gh.factory<_i463.ProductDetailsDataSourceContract>(() =>
