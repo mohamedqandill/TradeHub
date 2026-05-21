@@ -588,16 +588,18 @@ class OrderDetailsBody extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 12.h),
-                Text(
-                  order.maskedCardNumber ?? tr("•••• •••• •••• 2346"),
-                  style: TextStyle(
-                    color: textColor,
-                    fontWeight: FontWeight.w800,
-                    letterSpacing: 2.0,
-                    fontSize: 13.sp,
-                    fontFamily: 'monospace',
-                  ),
-                ),
+                isPaid
+                    ? Text(
+                        order.maskedCardNumber ?? tr("•••• •••• •••• 2346"),
+                        style: TextStyle(
+                          color: textColor,
+                          fontWeight: FontWeight.w800,
+                          letterSpacing: 2.0,
+                          fontSize: 13.sp,
+                          fontFamily: 'monospace',
+                        ),
+                      )
+                    : const SizedBox.shrink(),
               ],
             ),
           ),

@@ -14,11 +14,10 @@ class YourOrdersScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => getIt<OrdersCubit>()..getOrders(),
+    return BlocProvider.value(
+      value: context.read<OrdersCubit>()..getOrders(),
       child: Builder(
         builder: (context) {
-          final bool canPop = Navigator.of(context).canPop();
           return RefreshIndicator(
             onRefresh: () async {
               context.read<OrdersCubit>().getOrders();
@@ -29,7 +28,7 @@ class YourOrdersScreen extends StatelessWidget {
             child: Scaffold(
               appBar: MainLayoutAppBar(
                 title: tr(LocaleKeys.yourOrders),
-                enableLeading: canPop,
+                enableLeading: false,
               ),
               body: const YourOrdersScreenBody(),
             ),

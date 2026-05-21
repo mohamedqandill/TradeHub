@@ -180,9 +180,10 @@ class _HomeScreenBodyState extends State<HomeScreenBody> with RouteAware {
             children: [
               // Main Home Scrollable Listing
               RefreshIndicator(
+                color: context.mainColor,
                 onRefresh: () async {
-                 getSavedPlaceName();
-                 await   cubit.getRandomProducts();
+                  getSavedPlaceName();
+                  await cubit.getRandomProducts();
                 },
                 child: ListView(
                   controller: _scrollController,
@@ -245,8 +246,10 @@ class _HomeScreenBodyState extends State<HomeScreenBody> with RouteAware {
                           if (state.isFetchingMoreProducts)
                             Padding(
                               padding: EdgeInsets.symmetric(vertical: 16.h),
-                              child: const Center(
-                                child: CircularProgressIndicator(),
+                              child: Center(
+                                child: CircularProgressIndicator(
+                                  color: context.mainColor,
+                                ),
                               ),
                             ),
                           SizedBox(height: 24.h),

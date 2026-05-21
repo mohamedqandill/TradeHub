@@ -1,7 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:tradehub/core/colors/app_colors.dart';
+import 'package:tradehub/core/extensions/base_inherited_context.dart';
+import 'package:tradehub/core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/shared_widgets/app_bars/main_layout_app_bar.dart';
+import 'package:tradehub/core/utils/animations/loading_product_animation.dart';
 import 'package:tradehub/core/utils/di/di.dart';
 import 'package:tradehub/features/notification/data/models/notification_model.dart';
 import 'package:tradehub/features/notification/presentation/cubit/notification_cubit.dart';
@@ -15,6 +21,8 @@ class NotificationScreen extends StatefulWidget {
 }
 
 class _NotificationScreenState extends State<NotificationScreen> {
+  List<int>? notificationIds;
+  late NotificationCubit cubit;
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -22,13 +30,51 @@ class _NotificationScreenState extends State<NotificationScreen> {
         ..fetchNotifications()
         ..fetchUnreadCount(),
       child: Scaffold(
-        appBar: const MainLayoutAppBar(
+        appBar: MainLayoutAppBar(
+          widgets: [
+            notificationIds != null && notificationIds!.isEmpty
+                ? const SizedBox.shrink()
+                : InkWell(
+                    onTap: () {
+                      if (notificationIds!.isEmpty) {
+                        return;
+                      }
+                      cubit.markAllAsRead(notificationIds!);
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: Container(
+                        decoration: const BoxDecoration(
+                            color: AppColors.lightGrey,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10))),
+                        child: Center(
+                            child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 5.w),
+                          child: Text(
+                            "Mark All",
+                            style: context.base.theme.textTheme.bodySmall
+                                ?.copyWith(color: Colors.blue),
+                          ),
+                        )),
+                      ),
+                    ),
+                  )
+          ],
           title: "Notifications",
           enableLeading: true,
         ),
         body: BlocBuilder<NotificationCubit, NotificationState>(
             builder: (context, state) {
+          if (state is NotificationLoading) {
+            return loadingProductAnimation();
+          }
           final notificationCubit = context.read<NotificationCubit>();
+          cubit = notificationCubit;
+          notificationIds = notificationCubit.notifications
+              .where((e) => !e.isRead)
+              .map((e) => e.id)
+              .toList();
           return Column(
             children: [
               Expanded(
@@ -61,51 +107,6 @@ class NotificationItemWidget extends StatelessWidget {
   const NotificationItemWidget(
       {super.key, required this.notification, this.onMarkAsRead});
 
-  Color _iconBg(BuildContext context) {
-    switch (notification.type) {
-      case 'payment':
-        return const Color(0xFFE1F5EE);
-      case 'security':
-        return const Color(0xFFFCEBEB);
-      case 'order':
-        return const Color(0xFFE6F1FB);
-      case 'promo':
-        return const Color(0xFFFAEEDA);
-      default:
-        return const Color(0xFFF1EFE8);
-    }
-  }
-
-  Color _iconColor() {
-    switch (notification.type) {
-      case 'payment':
-        return const Color(0xFF0F6E56);
-      case 'security':
-        return const Color(0xFFA32D2D);
-      case 'order':
-        return const Color(0xFF185FA5);
-      case 'promo':
-        return const Color(0xFF854F0B);
-      default:
-        return const Color(0xFF5F5E5A);
-    }
-  }
-
-  IconData _icon() {
-    switch (notification.type) {
-      case 'payment':
-        return Icons.credit_card_rounded;
-      case 'security':
-        return Icons.shield_rounded;
-      case 'order':
-        return Icons.inventory_2_rounded;
-      case 'promo':
-        return Icons.local_offer_rounded;
-      default:
-        return Icons.settings_rounded;
-    }
-  }
-
   String _formattedTime() {
     final now = DateTime.now();
     final diff = now.difference(notification.createdAt);
@@ -119,7 +120,7 @@ class NotificationItemWidget extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.isDarkMode ? AppColors.lightBlack : Colors.white,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
@@ -141,10 +142,11 @@ class NotificationItemWidget extends StatelessWidget {
                   width: 40,
                   height: 40,
                   decoration: BoxDecoration(
-                    color: _iconBg(context),
+                    color: AppColors.lightGrey,
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: Icon(_icon(), color: _iconColor(), size: 20),
+                  child: const Icon(Icons.credit_card_rounded,
+                      color: Colors.blueAccent, size: 20),
                 ),
                 const SizedBox(width: 14),
                 Expanded(
@@ -203,30 +205,30 @@ class NotificationItemWidget extends StatelessWidget {
                                 fontSize: 11, color: Color(0xFF9E9E9E)),
                           ),
                           const Spacer(),
-
-                          // 👇 Mark as read button — only shows when unread
-                          if (!notification.isRead && onMarkAsRead != null)
-                            GestureDetector(
-                              onTap: onMarkAsRead,
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 4),
-                                decoration: BoxDecoration(
-                                  color: const Color(0xFFE6F1FB),
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                child: const Text(
-                                  'Mark as read',
-                                  style: TextStyle(
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.w500,
-                                    color: Color(0xFF185FA5),
-                                  ),
-                                ),
-                              ),
-                            ),
                         ],
                       ),
+                      // 👇 Mark as read button — only shows when unread
+                      if (!notification.isRead && onMarkAsRead != null)
+                        GestureDetector(
+                          onTap: onMarkAsRead,
+                          child: Container(
+                            margin: const EdgeInsets.only(top: 8),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 4),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFE6F1FB),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: const Text(
+                              'Mark as read',
+                              style: TextStyle(
+                                fontSize: 11,
+                                fontWeight: FontWeight.w500,
+                                color: Color(0xFF185FA5),
+                              ),
+                            ),
+                          ),
+                        ),
                     ],
                   ),
                 ),

@@ -21,136 +21,117 @@ import 'package:tradehub/features/order_details/presentation/order_details_args.
 import 'package:tradehub/features/order_details/presentation/widgets/order_details_body.dart';
 import 'package:tradehub/features/your_orders/presentation/cubit/orders_cubit.dart';
 
-class OrderDetailsScreen extends StatelessWidget {
-  const OrderDetailsScreen({super.key});
+class OrderDetailsScreen extends StatefulWidget {
+  final OrderDetailsArgs args;
+  const OrderDetailsScreen({super.key, required this.args});
+
+  @override
+  State<OrderDetailsScreen> createState() => _OrderDetailsScreenState();
+}
+
+class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
+  final OrderDetailsCubit _orderDetailsCubit = getIt<OrderDetailsCubit>();
+
+  @override
+  void initState() {
+    super.initState();
+    _orderDetailsCubit.getOrderDetails(widget.args.orderId);
+  }
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as OrderDetailsArgs;
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) =>
-              getIt<OrderDetailsCubit>()..getOrderDetails(args.orderId),
-        ),
-        BlocProvider(
-          create: (context) => getIt<CheckoutCubit>(),
-        ),
-      ],
-      child: RefreshIndicator(
-        onRefresh: () async {
-          await context.read<OrderDetailsCubit>().getOrderDetails(args.orderId);
-        },
-        child: BlocListener<CheckoutCubit,CheckoutState>(
-          listener: (context, state) {
-          final cubit = context.read<CheckoutCubit>();
-          if (state is PaymentWebhookSuccess) {
-            showSuccessSnackBar(messageTitle: "Payment Successful!");
+    return BlocProvider.value(
+      value: _orderDetailsCubit,
+      child: BlocBuilder<OrderDetailsCubit, OrderDetailsState>(
+        builder: (context, detailsState) => RefreshIndicator(
+          onRefresh: () async {
+            await context
+                .read<OrderDetailsCubit>()
+                .getOrderDetails(widget.args.orderId);
+          },
+          child: BlocListener<CheckoutCubit, CheckoutState>(
+            listener: (context, state) {
+              if (state is PaymentWebhookSuccess) {
+                showSuccessSnackBar(messageTitle: "Payment Successful!");
 
-            context.read<CartCubit>().isCartChanged = true;
-            context.read<CartCubit>().getBasket();
+                context.read<CartCubit>().isCartChanged = true;
+                context.read<CartCubit>().getBasket();
 
-            OrdersCubit.instance?.getOrders();
+                OrdersCubit.instance?.getOrders();
 
-           
-            Navigator.pushNamedAndRemoveUntil(
-              context,
-              Routes.orderDetails,
-              (route) => route.settings.name == Routes.mainLayout,
-              arguments: OrderDetailsArgs(
-                orderId: cubit.checkoutResponse?.orderId ?? 0,
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  Routes.orderDetails,
+                  (route) => route.settings.name == Routes.mainLayout,
+                  arguments: OrderDetailsArgs(
+                    orderId: widget.args.orderId,
+                  ),
+                );
+              } else if (state is PaymentWebhookError) {
+                showFailureSnackBar(context, messageTitle: state.error.message);
+              }
+            },
+            child: Scaffold(
+              appBar: MainLayoutAppBar(
+                title: LocaleKeys.orderDetails.tr(),
+                enableLeading: true,
               ),
-            );
-          } else if (state is PaymentWebhookError) {
-            showFailureSnackBar(context, messageTitle: state.error.message);
-          }
-        },
-          child: Scaffold(
-            appBar: MainLayoutAppBar(
-              title: LocaleKeys.orderDetails.tr(),
-              enableLeading: true,
-            ),
-            body: OrderDetailsBody(args: args),
-            bottomNavigationBar:
-                BlocBuilder<OrderDetailsCubit, OrderDetailsState>(
-              builder: (context, detailsState) {
-                if (detailsState is GetOrderDetailsSuccess) {
-                  final order = detailsState.orderDetails;
-                  final bool isAwaitingPayment =
-                      order.orderStatus == "AwaitingPayment";
-          
-                  if (isAwaitingPayment) {
+              body: OrderDetailsBody(args: widget.args),
+              bottomNavigationBar:
+                  BlocBuilder<OrderDetailsCubit, OrderDetailsState>(
+                builder: (context, detailsState) {
+                  if (detailsState is GetOrderDetailsSuccess) {
+                    final order = detailsState.orderDetails;
+                    final bool isAwaitingPayment =
+                        order.orderStatus == "AwaitingPayment";
+
                     return Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 40.w, vertical: 20.h),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 40.w, vertical: 20.h),
                       child: BlocConsumer<CheckoutCubit, CheckoutState>(
-                        listener: (context, checkoutState) {
-                          if (checkoutState is PaymentWebhookSuccess) {
-                            showSuccessSnackBar(
-                                messageTitle: "Payment Successful!");
-                            // Refresh order details immediately
-                            context
-                                .read<OrderDetailsCubit>()
-                                .getOrderDetails(order.id);
-                            // Refresh orders screen list using static instance
-                            OrdersCubit.instance?.getOrders();
-                          } else if (checkoutState is PaymentWebhookError) {
-                            showFailureSnackBar(context,
-                                messageTitle: checkoutState.error.message);
-                          } else if (checkoutState is CheckoutSuccess) {
-                            if (checkoutState.response.paymentUrl != null) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => PaymentWebViewScreen(
-                                    url: checkoutState.response.paymentUrl!,
-                                    cubit: context.read<CheckoutCubit>(),
-                                  ),
-                                ),
-                              );
-                            } else {
-                              showFailureSnackBar(context,
-                                  messageTitle: "Payment URL not found.");
-                            }
-                          } else if (checkoutState is CheckoutError) {
-                            showFailureSnackBar(context,
-                                messageTitle: checkoutState.error.message);
-                          }
-                        },
+                        listener: (context, checkoutState) {},
                         builder: (context, checkoutState) {
-                          return CustomLargeMainButton(
-                            text: "Complete Payment",
-                            radius: 25.r,
-                            isLoading: checkoutState is CheckoutLoading ||
-                                checkoutState is PaymentWebhookLoading,
-                            textStyle: context.base.theme.textTheme.titleLarge!
-                                .copyWith(
-                                    color: AppColors.white, fontSize: 16.sp),
-                            onPressed: () {
-                              final savedUrl = HiveStorageHelper()
-                                  .getString("payment_url_order_${order.id}");
-                              if (savedUrl != null && savedUrl.isNotEmpty) {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => PaymentWebViewScreen(
-                                      url: savedUrl,
-                                      cubit: context.read<CheckoutCubit>(),
-                                      orderId: args.orderId,
-                                    ),
-                                  ),
-                                );
-                              }
-                            },
-                          );
+                          return isAwaitingPayment
+                              ? CustomLargeMainButton(
+                                  text: "Complete Payment",
+                                  radius: 25.r,
+                                  isLoading: checkoutState is CheckoutLoading ||
+                                      checkoutState is PaymentWebhookLoading,
+                                  textStyle: context
+                                      .base.theme.textTheme.titleLarge!
+                                      .copyWith(
+                                          color: AppColors.white,
+                                          fontSize: 16.sp),
+                                  onPressed: () {
+                                    final savedUrl = HiveStorageHelper()
+                                        .getString(
+                                            "payment_url_order_${order.id}");
+                                    if (savedUrl != null &&
+                                        savedUrl.isNotEmpty) {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              PaymentWebViewScreen(
+                                            url: savedUrl,
+                                            cubit:
+                                                context.read<CheckoutCubit>(),
+                                            orderId: widget.args.orderId,
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                  },
+                                )
+                              : const SizedBox();
                         },
                       ),
                     );
                   }
-                }
-          
-                return const SizedBox();
-              },
+
+                  return const SizedBox();
+                },
+              ),
             ),
           ),
         ),
