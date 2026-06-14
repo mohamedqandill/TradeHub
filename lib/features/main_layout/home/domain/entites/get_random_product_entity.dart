@@ -36,6 +36,12 @@ class GetRandomProductEntity {
 
   @JsonKey(name: ApiConstants.logoUrl)
   final String? logoUrl;
+  final bool? hasOffer;
+  final bool? isOfferActive;
+  final int? discountPercentage;
+  final String? offerStartDate;
+  final String? offerEndDate;
+  final int? finalPrice;
 
   GetRandomProductEntity({
     required this.isFavourite,
@@ -53,6 +59,12 @@ class GetRandomProductEntity {
     required this.attributes,
     required this.averageRating,
     required this.ratingCount,
+    required this.hasOffer,
+    required this.isOfferActive,
+    required this.discountPercentage,
+    required this.offerStartDate,
+    required this.offerEndDate,
+    required this.finalPrice,
   });
 
   GetRandomProductEntity copyWith({
@@ -71,6 +83,12 @@ class GetRandomProductEntity {
     bool? isFavourite,
     String? imageUrl,
     String? logoUrl,
+    bool? hasOffer,
+    bool? isOfferActive,
+    int? discountPercentage,
+    String? offerStartDate,
+    String? offerEndDate,
+    int? finalPrice,
   }) {
     return GetRandomProductEntity(
       id: id ?? this.id,
@@ -88,6 +106,12 @@ class GetRandomProductEntity {
       isFavourite: isFavourite ?? this.isFavourite,
       imageUrl: imageUrl ?? this.imageUrl,
       logoUrl: logoUrl ?? this.logoUrl,
+      hasOffer: hasOffer ?? this.hasOffer,
+      isOfferActive: isOfferActive ?? this.isOfferActive,
+      discountPercentage: discountPercentage ?? this.discountPercentage,
+      offerStartDate: offerStartDate ?? this.offerStartDate,
+      offerEndDate: offerEndDate ?? this.offerEndDate,
+      finalPrice: finalPrice ?? this.finalPrice,
     );
   }
 }

@@ -43,9 +43,7 @@ class VendorProfileScreenBody extends StatelessWidget {
               ModalRoute.of(context)?.settings.arguments as String? ?? "";
           return BlocListener<CartCubit, CartState>(
             listener: (context, state) {
-              if (state is AddToCartSuccessState) {
-                showSuccessSnackBar(messageTitle: "Added To Cart");
-              }
+             
               if (state is AddToCartErrorState) {
                 showFailureSnackBar(context,
                     messageTitle: "Failed Add To Cart");
@@ -71,9 +69,7 @@ class VendorProfileScreenBody extends StatelessWidget {
 
         return BlocListener<CartCubit, CartState>(
           listener: (context, state) {
-            if (state is AddToCartSuccessState) {
-              showSuccessSnackBar(messageTitle: "Added To Cart");
-            }
+           
             if (state is AddToCartErrorState) {
               showFailureSnackBar(context, messageTitle: "Failed Add To Cart");
             }
@@ -364,6 +360,12 @@ class VendorProfileScreenBody extends StatelessWidget {
                             averageRating: product.averageRating,
                             ratingCount: product.ratingCount,
                             isFavourite: product.isFavourite,
+                            hasOffer: product.hasOffer,
+                            isOfferActive: product.isOfferActive,
+                            discountPercentage: product.discountPercentage,
+                            offerStartDate: product.offerStartDate,
+                            offerEndDate: product.offerEndDate,
+                            finalPrice: product.finalPrice,
                             attributes: product.attributes
                                 .map((attr) => {
                                       'categoryAttributeName': attr.name,

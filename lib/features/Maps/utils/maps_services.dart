@@ -26,11 +26,9 @@ class MapsApiServices {
         maxWidth: 90,
         enabled: kDebugMode,
         filter: (options, args) {
-          // don't print requests with uris containing '/posts'
           if (options.path.contains('/posts')) {
             return false;
           }
-          // don't print responses with unit8 list data
           return !args.isResponse || !args.hasUint8ListData;
         }));
   }
@@ -38,36 +36,54 @@ class MapsApiServices {
   Future<String> getPlaceName(LatLng point) async {
     try {
       var response = await dio.get(
-          "https://api.openrouteservice.org/geocode/reverse?api_key=$apiKey&point.lon=${point.longitude}&point.lat=${point.latitude}");
+          "https://api.openrouteservice.org/geocode/reverse?api_key=$apiKey&point.lon=${point.longitude}&point.lat=${point.latitude}&size=1");
       if (response.statusCode == 200) {
         final features = response.data['features'] as List;
         if (features.isNotEmpty) {
-          return features[0]['properties']['name'] ??
-              features[0]['properties']['label'] ??
-              "Unknown Place";
+          final props = features[0]['properties'];
+          final name = props['name'];
+          final street = props['street'];
+          final locality =
+              props['locality'] ?? props['region'] ?? props['county'];
+
+          final parts = <String>[];
+          if (name != null) {
+            if (double.tryParse(name.toString()) != null && street != null) {
+              parts.add('$name $street');
+            } else {
+              parts.add(name.toString());
+            }
+          } else if (street != null) {
+            parts.add(street.toString());
+          }
+
+          if (locality != null && (parts.isEmpty || parts[0] != locality)) {
+            parts.add(locality.toString());
+          }
+
+          if (parts.isNotEmpty) return parts.join(', ');
+          return props['label'] ?? 'Selected Location';
         }
       }
-      return "Selected Location";
+      return 'Selected Location';
     } catch (e) {
-      log("Error=>${e.toString()}");
-      return "Unknown Location";
+      log('Error=>${e.toString()}');
+      return 'Unknown Location';
     }
   }
 
-  getPlaces(String query) async {
+  Future<List<Features>?> getPlaces(String query) async {
     try {
-      // var encodedQuery = Uri.encodeComponent(query);
       var response = await dio.get(
           "https://api.openrouteservice.org/geocode/autocomplete?api_key=$apiKey&text=$query");
       if (response.statusCode == 200) {
         var data = PlacesAutoCompleteModel.fromJson(response.data);
-        List<Features>? places = data.features;
-        print("places=>>${data.features!.length}");
-        return places;
+        return data.features;
       }
     } catch (e) {
-      print("Error=>${e.toString()}");
+      log('Error=>${e.toString()}');
       rethrow;
     }
+    return null;
   }
 }

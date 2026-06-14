@@ -9,17 +9,11 @@ import 'package:tradehub/core/localization/locale_keys.g.dart';
 import 'package:tradehub/core/shared_widgets/widgets/svg_widget.dart';
 import '../../../../Core/colors/app_colors.dart';
 
-class CustomBottomNavbar extends StatefulWidget {
-  const CustomBottomNavbar({super.key, required this.getSelectedIndex});
+class CustomBottomNavbar extends StatelessWidget {
+  const CustomBottomNavbar({super.key, required this.getSelectedIndex,  required this.currentIndex});
 
   final Function(int) getSelectedIndex;
-
-  @override
-  State<CustomBottomNavbar> createState() => _CustomBottomNavbarState();
-}
-
-class _CustomBottomNavbarState extends State<CustomBottomNavbar> {
-  int selectedIndex = 0;
+  final int currentIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -58,12 +52,12 @@ class _CustomBottomNavbarState extends State<CustomBottomNavbar> {
       child: BottomNavigationBar(
         showUnselectedLabels: true,
         onTap: (value) {
-          widget.getSelectedIndex(value);
-          selectedIndex = value;
-          setState(() {});
+          getSelectedIndex(value);
+          
+          
         },
         type: BottomNavigationBarType.fixed,
-        currentIndex: selectedIndex,
+        currentIndex: currentIndex,
         selectedItemColor: context.mainColor,
         unselectedItemColor:
             context.isDarkMode ? AppColors.white.withOpacity(0.6) : AppColors.grey,

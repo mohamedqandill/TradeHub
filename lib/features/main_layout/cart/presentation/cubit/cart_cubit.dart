@@ -45,10 +45,12 @@ class CartCubit extends Cubit<CartState> {
     }
   }
 
-  Future<void> addToCart(int productId, {int quantity = 1}) async {
+  Future<void> addToCart(int productId,
+      {int quantity = 1, List<int>? selectedOptionValueIds}) async {
     loadingProductId = productId;
     emit(AddToCartLoadingState());
-    var result = await _addToCartUseCase(productId, quantity: quantity);
+    var result = await _addToCartUseCase(productId,
+        quantity: quantity, selectedOptionValueIds: selectedOptionValueIds);
     switch (result) {
       case Success():
         isCartChanged = true;

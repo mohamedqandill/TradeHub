@@ -46,7 +46,7 @@ class MapsCubit extends Cubit<MapsState> {
       emit(state.copyWith(snackBarMessage: "Getting Your Location....."));
     }
 
-    Timer timeoutTimer = Timer(const Duration(seconds: 5), () {
+    final timeoutTimer = Timer(const Duration(seconds: 5), () {
       if (!state.gotLocation) {
         updateMyLocation();
       }
@@ -79,7 +79,10 @@ class MapsCubit extends Cubit<MapsState> {
         emit(state.copyWith(isPlacesLoading: true));
         try {
           final places = await _mapsApiServices.getPlaces(text);
-          emit(state.copyWith(isPlacesLoading: false, places: places));
+          emit(state.copyWith(
+            isPlacesLoading: false,
+            places: places ?? [],
+          ));
         } catch (e) {
           emit(state.copyWith(isPlacesLoading: false, places: []));
         }
@@ -93,16 +96,22 @@ class MapsCubit extends Cubit<MapsState> {
     emit(state.copyWith(isFocusedState: isFocused));
   }
 
-  void selectPlace(String placeName, LatLng latLng) {
+  void clearSnackBarMessage() {
+    emit(state.copyWith(snackBarMessage: null));
+  }
+
+  void selectPlace(String placeName, LatLng latLng, {String? placeLabel}) {
     emit(state.copyWith(
       selectedPlaceName: placeName,
+      selectedPlaceLabel: placeLabel,
       selectedLocation: latLng,
       isFocusedState: false,
+      places: [],
     ));
   }
 
-  void updatePlaceName(String newName) {
-    emit(state.copyWith(selectedPlaceName: newName));
+  void clearSelectedPlace() {
+    emit(state.copyWith(clearSelection: true));
   }
 
   Future<void> addDestinationMarker(LatLng point) async {
@@ -112,12 +121,14 @@ class MapsCubit extends Cubit<MapsState> {
     ));
 
     try {
-      String placeName = await _mapsApiServices.getPlaceName(point);
+      final placeName = await _mapsApiServices.getPlaceName(point);
       emit(state.copyWith(
         selectedPlaceName: placeName,
+        selectedPlaceLabel: placeName,
         selectedLocation: point,
         isFocusedState: false,
         isLoading: false,
+        places: [],
       ));
     } catch (e) {
       log("Error fetching place: ${e.toString()}");

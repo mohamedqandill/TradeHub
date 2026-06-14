@@ -25,6 +25,12 @@ ProductDetailsResponseDTO _$ProductDetailsResponseDTOFromJson(
           .toList(),
       averageRating: (json['averageRating'] as num?)?.toInt(),
       ratingCount: (json['ratingCount'] as num?)?.toInt(),
+      hasOffer: json['hasOffer'] as bool?,
+      discountPercentage: (json['discountPercentage'] as num?)?.toInt(),
+      offerStartDate: json['offerStartDate'] as String?,
+      offerEndDate: json['offerEndDate'] as String?,
+      finalPrice: (json['finalPrice'] as num?)?.toInt(),
+      isOfferActive: json['isOfferActive'] as bool?,
     );
 
 Map<String, dynamic> _$ProductDetailsResponseDTOToJson(
@@ -44,6 +50,12 @@ Map<String, dynamic> _$ProductDetailsResponseDTOToJson(
       'ratingCount': instance.ratingCount,
       'isFavourite': instance.isFavourite,
       'imageUrl': instance.imageUrl,
+      'hasOffer': instance.hasOffer,
+      'discountPercentage': instance.discountPercentage,
+      'offerStartDate': instance.offerStartDate,
+      'offerEndDate': instance.offerEndDate,
+      'finalPrice': instance.finalPrice,
+      'isOfferActive': instance.isOfferActive,
     };
 
 Attributes _$AttributesFromJson(Map<String, dynamic> json) => Attributes(

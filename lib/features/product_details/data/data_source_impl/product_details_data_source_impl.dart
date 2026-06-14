@@ -4,6 +4,7 @@ import '../../../../core/api/api_executor/api_executor.dart';
 import '../../../../core/api/api_result/api_result.dart';
 import '../api/product_details_api_client.dart';
 import '../models/response/product_details_response_d_t_o.dart';
+import '../models/response/product_option_response_dto.dart';
 import '../data_source_contract/product_details_data_source_contract.dart';
 import '../../../../core/api/api_constant/api_constant.dart';
 
@@ -21,11 +22,22 @@ class ProductDetailsDataSourceImpl extends ProductDetailsDataSourceContract {
   }
 
   @override
-  Future<ApiResult<CartResponseDTO>> addToCart(int productId, {int quantity = 1}) {
+  Future<ApiResult<List<ProductOptionDTO>>> getProductOptions(int productId) {
+    return ApiExecutor.executeApi<List<ProductOptionDTO>>(
+      apiCall: () => _apiClient.getProductOptions(productId),
+    );
+  }
+
+
+  @override
+  Future<ApiResult<CartResponseDTO>> addToCart(int productId, {int quantity = 1, List<int>? selectedOptionValueIds}) {
     return ApiExecutor.executeApi<CartResponseDTO>(
       apiCall: () => _apiClient.addToCart({
         ApiConstants.productId: productId,
         ApiConstants.quantity: quantity,
+        if (selectedOptionValueIds != null && selectedOptionValueIds.isNotEmpty) ...{
+          ApiConstants.selectedOptionValueIds: selectedOptionValueIds,
+        }
       }),
     );
   }

@@ -48,6 +48,9 @@ OrderItemDTO _$OrderItemDTOFromJson(Map<String, dynamic> json) => OrderItemDTO(
       imageUrl: json['imageUrl'] as String,
       price: (json['price'] as num).toDouble(),
       quantity: (json['quantity'] as num).toInt(),
+      options: (json['options'] as List<dynamic>?)
+          ?.map((e) => OrderOptionDTO.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$OrderItemDTOToJson(OrderItemDTO instance) =>
@@ -57,4 +60,21 @@ Map<String, dynamic> _$OrderItemDTOToJson(OrderItemDTO instance) =>
       'imageUrl': instance.imageUrl,
       'price': instance.price,
       'quantity': instance.quantity,
+      'options': instance.options,
+    };
+
+OrderOptionDTO _$OrderOptionDTOFromJson(Map<String, dynamic> json) =>
+    OrderOptionDTO(
+      productOptionValueId: (json['productOptionValueId'] as num?)?.toInt(),
+      optionName: json['optionName'] as String?,
+      valueName: json['valueName'] as String?,
+      extraPrice: (json['extraPrice'] as num?)?.toInt(),
+    );
+
+Map<String, dynamic> _$OrderOptionDTOToJson(OrderOptionDTO instance) =>
+    <String, dynamic>{
+      'productOptionValueId': instance.productOptionValueId,
+      'optionName': instance.optionName,
+      'valueName': instance.valueName,
+      'extraPrice': instance.extraPrice,
     };

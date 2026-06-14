@@ -21,7 +21,6 @@ class _SettingsScreenBodyState extends State<SettingsScreenBody> {
     List<String> titles = [
       LocaleKeys.accountInfo.tr(),
       LocaleKeys.savedAddresses.tr(),
-      LocaleKeys.changeEmail.tr(),
       LocaleKeys.changePassword.tr(),
       LocaleKeys.notification.tr(),
       LocaleKeys.language.tr(),
@@ -45,7 +44,7 @@ class _SettingsScreenBodyState extends State<SettingsScreenBody> {
                           Navigator.pushNamed(context, Routes.accountInfo);
                         } else if (index == 1) {
                           Navigator.pushNamed(context, Routes.savedAddresses);
-                        } else if (index == 3) {
+                        } else if (index == 2) {
                           Navigator.pushNamed(context, Routes.changePassword);
                         }
                       },

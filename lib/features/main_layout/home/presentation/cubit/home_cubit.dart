@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:tradehub/core/api/api_result/api_result.dart';
-import 'package:tradehub/core/shared_services/shared_product_repository.dart';
 import 'package:tradehub/features/main_layout/home/domain/entites/get_category_entity.dart';
 import 'package:tradehub/features/main_layout/home/domain/entites/get_company_entity.dart';
 import 'package:tradehub/features/main_layout/home/domain/entites/get_random_product_entity.dart';
@@ -21,7 +20,6 @@ class HomeCubit extends Cubit<HomeState> {
   final GetAllCategoryUseCase _getAllCategoryUseCase;
   final GetAllCompaniesUseCase _getAllCompaniesUseCase;
   final GetRandomProductsUseCase _getRandomProductsUseCase;
-  // final NetworkInfo _networkInfo;
 
   HomeCubit(
     this._getAllCategoryUseCase,
@@ -58,6 +56,11 @@ class HomeCubit extends Cubit<HomeState> {
     unawaited(getRandomProducts(isRefresh: true));
   }
 
+  Future<void> changeProductSort(String sort) async {
+    if (state.productsSort == sort) return;
+    await getRandomProducts(isRefresh: true, sort: sort);
+  }
+
   Future<void> getCategories() async {
     emit(state.copyWith(getCategoryState: RequestStates.loading));
 
@@ -81,7 +84,7 @@ class HomeCubit extends Cubit<HomeState> {
 
     switch (result) {
       case Success():
-              companies = result.data ?? [];
+        companies = result.data ?? [];
 
         emit(state.copyWith(getCompaniesState: RequestStates.success));
       case Error():
@@ -91,16 +94,26 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
-  Future<void> getRandomProducts({bool isRefresh = false}) async {
+  Future<void> getRandomProducts({
+    bool isRefresh = false,
+    String? sort,
+  }) async {
+    final effectiveSort = sort ?? state.productsSort;
+    final pageIndex = isRefresh ? 1 : state.productsPageIndex;
+
     if (isRefresh) {
+      if (isClosed) return;
       emit(state.copyWith(
         getRandomProductsState: RequestStates.loading,
         productsPageIndex: 1,
         productsHasReachedMax: false,
         randomProducts: [],
+        productsSort: effectiveSort,
+        isFetchingMoreProducts: false,
       ));
     } else {
       if (state.productsHasReachedMax || state.isFetchingMoreProducts) return;
+      if (isClosed) return;
       if (state.productsPageIndex > 1) {
         emit(state.copyWith(isFetchingMoreProducts: true));
       } else {
@@ -109,20 +122,24 @@ class HomeCubit extends Cubit<HomeState> {
     }
 
     var result = await _getRandomProductsUseCase(
-      pageIndex: state.productsPageIndex,
+      pageIndex: pageIndex,
       pageSize: 5,
+      sort: effectiveSort,
     );
+
+    if (isClosed) return;
 
     switch (result) {
       case Success():
         final newProducts = result.data?.products ?? [];
         final totalCount = result.data?.count ?? 0;
-        final currentPage = result.data?.pageIndex ?? state.productsPageIndex;
+        final currentPage = result.data?.pageIndex ?? pageIndex;
         final updatedProducts = isRefresh
             ? newProducts
             : [...state.randomProducts, ...newProducts];
-        
-        final hasReachedMax = updatedProducts.length >= totalCount || newProducts.isEmpty;
+
+        final hasReachedMax =
+            updatedProducts.length >= totalCount || newProducts.isEmpty;
 
         emit(state.copyWith(
           getRandomProductsState: RequestStates.success,
@@ -134,7 +151,7 @@ class HomeCubit extends Cubit<HomeState> {
 
       case Error():
         emit(state.copyWith(
-          getRandomProductsState: state.productsPageIndex == 1
+          getRandomProductsState: pageIndex == 1
               ? RequestStates.error
               : state.getRandomProductsState,
           isFetchingMoreProducts: false,

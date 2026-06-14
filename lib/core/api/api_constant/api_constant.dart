@@ -5,6 +5,7 @@ abstract class ApiConstants {
   static const String otpCode = "otpCode";
   static const String id = "id";
   static const String name = "name";
+  static const String maskedCardNumber = "maskedCardNumber";
   static const String phone = "phone";
   static const String accessToken = "accessToken";
   static const String capAccessToken = "AccessToken";
@@ -92,4 +93,20 @@ abstract class ApiConstants {
   static const String subType = "sub_type";
   static const String sourceData = "source_data";
   static const String profilePicture = "profilePicture";
+  static const String isRequired = "isRequired";
+  static const String allowMultiple = "allowMultiple";
+  static const String values = "values";
+  static const String extraPrice = "extraPrice";
+  static const String options = "options";
+  static const String productOptionValueId = "productOptionValueId";
+  static const String optionName = "optionName";
+  static const String valueName = "valueName";
+  static const String selectedOptionValueIds = "selectedOptionValueIds";
+
+  static const String hasOffer = "hasOffer";
+  static const String discountPercentage = "discountPercentage";
+  static const String offerStartDate = "offerStartDate";
+  static const String offerEndDate = "offerEndDate";
+  static const String finalPrice = "finalPrice";
+  static const String isOfferActive = "isOfferActive";
 }

@@ -28,5 +28,6 @@ abstract class HomeApiClient {
   Future<GetRandomProductsResponse> getRandomProducts({
     @Query('pageIndex') int? pageIndex,
     @Query('pageSize') int? pageSize,
+    @Query('sort') String? sort,
   });
 }

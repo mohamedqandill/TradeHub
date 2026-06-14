@@ -87,6 +87,7 @@ class MockHomeApiClient extends _i1.Mock implements _i4.HomeApiClient {
   _i5.Future<_i3.GetRandomProductsResponse> getRandomProducts({
     int? pageIndex,
     int? pageSize,
+    String? sort,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -95,6 +96,7 @@ class MockHomeApiClient extends _i1.Mock implements _i4.HomeApiClient {
           {
             #pageIndex: pageIndex,
             #pageSize: pageSize,
+            #sort: sort,
           },
         ),
         returnValue: _i5.Future<_i3.GetRandomProductsResponse>.value(
@@ -106,6 +108,7 @@ class MockHomeApiClient extends _i1.Mock implements _i4.HomeApiClient {
             {
               #pageIndex: pageIndex,
               #pageSize: pageSize,
+              #sort: sort,
             },
           ),
         )),

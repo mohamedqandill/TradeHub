@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -7,8 +8,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:tradehub/Core/colors/app_colors.dart';
 import 'package:tradehub/Core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/extensions/main_color.dart';
+import 'package:tradehub/features/product_details/data/models/response/product_details_response_d_t_o.dart';
 import 'package:tradehub/features/product_details/presentation/cubit/product_details_cubit.dart';
 import 'package:tradehub/features/product_details/presentation/widgets/product_options_widget.dart';
+import 'package:tradehub/features/product_details/presentation/widgets/product_options_selection_widget.dart';
 import 'package:tradehub/features/product_details/presentation/widgets/product_review_card.dart';
 import 'package:tradehub/features/product_ratings/presentation/cubit/product_ratings_cubit.dart';
 import 'package:tradehub/features/product_ratings/presentation/cubit/product_ratings_states.dart';
@@ -22,6 +25,7 @@ class ProductDetailsBody extends StatefulWidget {
 }
 
 class _ProductDetailsBodyState extends State<ProductDetailsBody> {
+  int _selectedOptionsExtraPrice = 0;
   // int _currentImageIndex = 0;
   final List<String> _images = [
     "https://pngate.com/wp-content/uploads/2025/04/samsung-galaxy-s25-blue-all-angles-1.png",
@@ -133,14 +137,42 @@ class _ProductDetailsBodyState extends State<ProductDetailsBody> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Text(
-                          "${product?.price ?? 0} EGP",
-                          style: GoogleFonts.manrope(
-                            fontSize: 22.sp,
-                            fontWeight: FontWeight.w900,
-                            color: context.mainColor,
+                        if (product?.isOfferActive == true &&
+                            product?.hasOffer == true) ...[
+                          // Strikethrough original price
+                          Text(
+                            "${(product?.price ?? 0) + _selectedOptionsExtraPrice} EGP",
+                            style: GoogleFonts.manrope(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.grey,
+                              decoration: TextDecoration.lineThrough,
+                              decorationColor: context.isDarkMode
+                                  ? AppColors.white
+                                  : AppColors.black,
+                              decorationThickness: 4,
+                            ),
                           ),
-                        ),
+                          SizedBox(height: 2.h),
+                          // Final discounted price
+                          Text(
+                            "${(product!.finalPrice ?? 0) + _selectedOptionsExtraPrice} EGP",
+                            style: GoogleFonts.manrope(
+                              fontSize: 22.sp,
+                              fontWeight: FontWeight.w900,
+                              color: Colors.green,
+                            ),
+                          ),
+                        ] else ...[
+                          Text(
+                            "${(product?.price ?? 0) + _selectedOptionsExtraPrice} EGP",
+                            style: GoogleFonts.manrope(
+                              fontSize: 22.sp,
+                              fontWeight: FontWeight.w900,
+                              color: context.mainColor,
+                            ),
+                          ),
+                        ],
                         Text(
                           "Tax Incl.",
                           style: TextStyle(
@@ -197,6 +229,33 @@ class _ProductDetailsBodyState extends State<ProductDetailsBody> {
             ),
           ),
         ),
+
+        // 2.3 Offer Banner (shown only when offer is active)
+        if (product?.hasOffer == true && product?.isOfferActive == true) ...[
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: EdgeInsets.only(bottom: 15.h),
+              child: _ProductOfferBanner(product: product!),
+            ),
+          ),
+        ],
+
+        // 2.5 Selectable Product Options
+        if (widget.cubit.productOptions != null &&
+            widget.cubit.productOptions!.isNotEmpty) ...[
+          SliverToBoxAdapter(
+            child: ProductOptionsSelectionWidget(
+              options: widget.cubit.productOptions!,
+              onSelectionChanged: (selectedOptions, extraPrice) {
+                setState(() {
+                  _selectedOptionsExtraPrice = extraPrice;
+                  widget.cubit.selectedOptionValueIds =
+                      selectedOptions.values.expand((x) => x).toList();
+                });
+              },
+            ),
+          ),
+        ],
 
         // 3. Description Section
         // SliverToBoxAdapter(
@@ -267,10 +326,7 @@ class _ProductDetailsBodyState extends State<ProductDetailsBody> {
                   return ProductOptionWidget(
                     categoryAttName: attr?.categoryAttributeName ?? "",
                     value: attr?.value ?? "",
-                  )
-                      .animate()
-                      .fadeIn(delay: (index * 50).ms)
-                      .slideY(begin: 0.1);
+                  ).animate().fadeIn(delay: (index * 50).ms).slideY(begin: 0.1);
                 },
                 childCount: product?.attributes?.length ?? 0,
               ),
@@ -359,6 +415,329 @@ class _ProductDetailsBodyState extends State<ProductDetailsBody> {
           child: SizedBox(height: 100.h),
         ),
       ],
+    );
+  }
+}
+
+// ─────────────────── OFFER BANNER WIDGET ───────────────────
+
+class _ProductOfferBanner extends StatefulWidget {
+  final ProductDetailsResponseDTO product;
+  const _ProductOfferBanner({required this.product});
+
+  @override
+  State<_ProductOfferBanner> createState() => _ProductOfferBannerState();
+}
+
+class _ProductOfferBannerState extends State<_ProductOfferBanner> {
+  Timer? _timer;
+  Duration _remaining = Duration.zero;
+
+  @override
+  void initState() {
+    super.initState();
+    _calcRemaining();
+    _timer = Timer.periodic(const Duration(seconds: 1), (_) {
+      if (mounted) {
+        _calcRemaining();
+      }
+    });
+  }
+
+  void _calcRemaining() {
+    final endDateStr = widget.product.offerEndDate;
+    if (endDateStr == null) return;
+    final endDate = DateTime.tryParse(endDateStr);
+    if (endDate == null) return;
+    final now = DateTime.now();
+    final diff = endDate.difference(now);
+    setState(() {
+      _remaining = diff.isNegative ? Duration.zero : diff;
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  String _pad(int n) => n.toString().padLeft(2, '0');
+
+  @override
+  Widget build(BuildContext context) {
+    final product = widget.product;
+    final isDark = context.isDarkMode;
+    final days = _remaining.inDays;
+    final hours = _remaining.inHours.remainder(24);
+    final minutes = _remaining.inMinutes.remainder(60);
+    final seconds = _remaining.inSeconds.remainder(60);
+    final isExpired = _remaining == Duration.zero;
+
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 20.w),
+      child: Container(
+        padding: EdgeInsets.all(16.w),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: isDark
+                ? [
+                    Colors.green.shade900.withOpacity(0.5),
+                    Colors.teal.shade900.withOpacity(0.4),
+                  ]
+                : [
+                    Colors.green.shade50,
+                    Colors.teal.shade50,
+                  ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          borderRadius: BorderRadius.circular(20.r),
+          border: Border.all(
+            color: Colors.green.withOpacity(isDark ? 0.3 : 0.2),
+            width: 1.5,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.green.withOpacity(0.1),
+              blurRadius: 16,
+              offset: const Offset(0, 6),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Header Row
+            Row(
+              children: [
+                Container(
+                  padding: EdgeInsets.all(6.w),
+                  decoration: BoxDecoration(
+                    color: Colors.green.withOpacity(0.15),
+                    borderRadius: BorderRadius.circular(10.r),
+                  ),
+                  child: Icon(
+                    Icons.local_offer_rounded,
+                    color: Colors.green,
+                    size: 18.sp,
+                  ),
+                ),
+                SizedBox(width: 10.w),
+                Text(
+                  "LIMITED TIME OFFER",
+                  style: TextStyle(
+                    fontSize: 13.sp,
+                    fontWeight: FontWeight.w900,
+                    color: Colors.green,
+                    letterSpacing: 1.2,
+                  ),
+                ),
+                const Spacer(),
+                // Discount badge
+                Container(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
+                  decoration: BoxDecoration(
+                    color: Colors.green,
+                    borderRadius: BorderRadius.circular(30.r),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.green.withOpacity(0.4),
+                        blurRadius: 8,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: Text(
+                    "${product.discountPercentage ?? 0}% OFF",
+                    style: TextStyle(
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w900,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 14.h),
+
+            // Price Row
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Original Price",
+                      style: TextStyle(
+                        fontSize: 10.sp,
+                        color: AppColors.grey,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    SizedBox(height: 2.h),
+                    Text(
+                      "${product.price ?? 0} EGP",
+                      style: GoogleFonts.manrope(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.grey,
+                        decoration: TextDecoration.lineThrough,
+                        decorationColor: AppColors.grey,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(width: 16.w),
+                Container(
+                  width: 1,
+                  height: 32.h,
+                  color: Colors.green.withOpacity(0.2),
+                ),
+                SizedBox(width: 16.w),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Offer Price",
+                      style: TextStyle(
+                        fontSize: 10.sp,
+                        color: Colors.green,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    SizedBox(height: 2.h),
+                    Text(
+                      "${product.finalPrice ?? 0} EGP",
+                      style: GoogleFonts.manrope(
+                        fontSize: 22.sp,
+                        fontWeight: FontWeight.w900,
+                        color: Colors.green,
+                      ),
+                    ),
+                  ],
+                ),
+                const Spacer(),
+                Text(
+                  "You save\n${(product.price ?? 0) - (product.finalPrice ?? 0)} EGP",
+                  textAlign: TextAlign.right,
+                  style: TextStyle(
+                    fontSize: 11.sp,
+                    fontWeight: FontWeight.w800,
+                    color: Colors.green,
+                    height: 1.4,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 14.h),
+
+            // Divider
+            Divider(
+              color: Colors.green.withOpacity(0.15),
+              thickness: 1,
+              height: 1,
+            ),
+            SizedBox(height: 12.h),
+
+            // Countdown Timer
+            Row(
+              children: [
+                Icon(
+                  isExpired ? Icons.timer_off_rounded : Icons.timer_rounded,
+                  color: isExpired ? Colors.red : Colors.green,
+                  size: 16.sp,
+                ),
+                SizedBox(width: 6.w),
+                Text(
+                  isExpired ? "Offer Ended" : "Ends In:",
+                  style: TextStyle(
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.w700,
+                    color: isExpired
+                        ? Colors.red
+                        : (isDark ? Colors.white70 : Colors.black54),
+                  ),
+                ),
+                SizedBox(width: 12.w),
+                if (!isExpired) ...[
+                  _CountdownUnit(label: "D", value: _pad(days)),
+                  SizedBox(width: 4.w),
+                  _CountdownSeparator(),
+                  SizedBox(width: 4.w),
+                  _CountdownUnit(label: "H", value: _pad(hours)),
+                  SizedBox(width: 4.w),
+                  _CountdownSeparator(),
+                  SizedBox(width: 4.w),
+                  _CountdownUnit(label: "M", value: _pad(minutes)),
+                  SizedBox(width: 4.w),
+                  _CountdownSeparator(),
+                  SizedBox(width: 4.w),
+                  _CountdownUnit(label: "S", value: _pad(seconds)),
+                ],
+              ],
+            ),
+          ],
+        ),
+      ).animate().fadeIn(duration: 400.ms).slideY(begin: 0.1),
+    );
+  }
+}
+
+class _CountdownUnit extends StatelessWidget {
+  final String label;
+  final String value;
+  const _CountdownUnit({required this.label, required this.value});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 7.w, vertical: 4.h),
+      decoration: BoxDecoration(
+        color: Colors.green.withOpacity(0.15),
+        borderRadius: BorderRadius.circular(6.r),
+        border: Border.all(color: Colors.green.withOpacity(0.2), width: 1),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            value,
+            style: TextStyle(
+              fontSize: 13.sp,
+              fontWeight: FontWeight.w900,
+              color: Colors.green,
+              fontFamily: 'monospace',
+            ),
+          ),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 8.sp,
+              fontWeight: FontWeight.w700,
+              color: Colors.green.withOpacity(0.7),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _CountdownSeparator extends StatelessWidget {
+  const _CountdownSeparator();
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      ":",
+      style: TextStyle(
+        fontSize: 13.sp,
+        fontWeight: FontWeight.w900,
+        color: Colors.green.withOpacity(0.6),
+      ),
     );
   }
 }

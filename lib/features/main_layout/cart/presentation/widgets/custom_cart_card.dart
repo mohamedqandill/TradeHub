@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tradehub/Core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/colors/app_colors.dart';
 import 'package:tradehub/core/extensions/main_color.dart';
+import 'package:tradehub/features/main_layout/cart/data/models/cart_response_d_t_o.dart';
 
 class CustomCartCard extends StatefulWidget {
   const CustomCartCard({
@@ -15,6 +16,7 @@ class CustomCartCard extends StatefulWidget {
     required this.quantity,
     required this.onUpdateQuantity,
     this.color,
+    this.options,
   });
 
   final String image;
@@ -24,6 +26,7 @@ class CustomCartCard extends StatefulWidget {
   final String price;
   final int quantity;
   final Function(int) onUpdateQuantity;
+  final List<CartOptionDTO>? options;
 
   @override
   State<CustomCartCard> createState() => _CustomCartCardState();
@@ -146,6 +149,24 @@ class _CustomCartCardState extends State<CustomCartCard> {
                     ],
                   ],
                 ),
+                if (widget.options != null && widget.options!.isNotEmpty) ...[
+                  SizedBox(height: 4.h),
+                  Wrap(
+                    spacing: 4.w,
+                    children: widget.options!.map((opt) {
+                      final isLast = widget.options!.last == opt;
+                      return Text(
+                        "${opt.optionName}: ${opt.valueName}${isLast ? "" : "  •"}",
+                        style: TextStyle(
+                          fontSize: 12.sp,
+                          color: AppColors.grey,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w600,
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                ],
                 SizedBox(height: 12.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

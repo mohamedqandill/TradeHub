@@ -13,7 +13,7 @@ import 'package:tradehub/features/order_details/presentation/order_details_args.
 import 'package:tradehub/features/your_orders/data/models/order_response_d_t_o.dart';
 
 class OrderCardWidget extends StatelessWidget {
-  final OrderResponseDTO order;
+  final OrderDataResponseDTO order;
   const OrderCardWidget({super.key, required this.order});
 
   @override

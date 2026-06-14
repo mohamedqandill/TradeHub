@@ -37,77 +37,68 @@ class HomeCategoryWidget extends StatelessWidget {
       textColor = Colors.black87;
     }
 
-    return Container(
-      width: 82.w,
-      margin: EdgeInsets.symmetric(vertical: 6.h, horizontal: 4.w),
-      decoration: BoxDecoration(
-        color: cardBgColor,
-        borderRadius: BorderRadius.circular(18.r),
-        border: Border.all(
-          color: borderColor,
-          width: 1,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.02),
-            blurRadius: 8,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          // Elegant white circular frame for the category image
-          Container(
-            padding: EdgeInsets.all(2.w),
-            decoration: BoxDecoration(
-              color: isDarkMode ? Colors.white.withOpacity(0.05) : Colors.white,
-              shape: BoxShape.circle,
-              boxShadow: const [
-                BoxShadow(
-                  color: Colors.black12,
-                  blurRadius: 4,
-                  offset: Offset(0, 1),
-                )
-              ],
+    return Column(
+      children: [
+        Container(
+          width: 82.w,
+          padding: EdgeInsets.all(8.sp),
+          decoration: BoxDecoration(
+            color: cardBgColor,
+            borderRadius: BorderRadius.circular(12.r),
+            border: Border.all(
+              color: borderColor,
+              width: 1,
             ),
-            child: SizedBox(
-              width: 44.w,
-              height: 44.w,
-              child: ClipOval(
-                child: CachedNetworkImage(
-                  fadeInDuration: Duration.zero,
-                  fadeOutDuration: Duration.zero,
-                  imageUrl: image,
-                  fit: BoxFit.cover,
-                  errorWidget: (context, url, error) => Icon(
-                    Icons.category_rounded,
-                    color: context.mainColor,
-                    size: 20.sp,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.02),
+                blurRadius: 8,
+                offset: const Offset(0, 3),
+              ),
+            ],
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Elegant white circular frame for the category image
+              SizedBox(
+                width: 60.w,
+                height: 50.h,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8.r),
+                  child: CachedNetworkImage(
+                    fadeInDuration: Duration.zero,
+                    fadeOutDuration: Duration.zero,
+                    imageUrl: image,
+                    fit: BoxFit.contain,
+                    errorWidget: (context, url, error) => Icon(
+                      Icons.category_rounded,
+                      color: context.mainColor,
+                      size: 20.sp,
+                    ),
                   ),
                 ),
               ),
+            ],
+          ),
+        ),
+        SizedBox(height: 2.h),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 6.w),
+          child: Text(
+            title,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
+            style: GoogleFonts.poppins(
+              fontSize: 12.sp,
+              fontWeight: FontWeight.w600,
+              color: textColor,
+              letterSpacing: -0.1,
             ),
           ),
-          SizedBox(height: 8.h),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 6.w),
-            child: Text(
-              title,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.center,
-              style: GoogleFonts.outfit(
-                fontSize: 10.5.sp,
-                fontWeight: FontWeight.w800,
-                color: textColor,
-                letterSpacing: -0.1,
-              ),
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

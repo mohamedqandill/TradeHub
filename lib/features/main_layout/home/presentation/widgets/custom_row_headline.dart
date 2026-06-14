@@ -11,10 +11,12 @@ class CustomRowHeadline extends StatelessWidget {
     super.key,
     required this.title,
     required this.subTitle,
+    this.trailing,
   });
 
   final String title;
   final String subTitle; // Can act as a trailing CTA label (e.g. See All)
+  final Widget? trailing;
 
   @override
   Widget build(BuildContext context) {
@@ -132,6 +134,12 @@ class CustomRowHeadline extends StatelessWidget {
               ],
             ),
           ),
+
+          if (trailing != null)
+            Padding(
+              padding: EdgeInsets.only(top: 4.h),
+              child: trailing!,
+            ),
 
           // Trailing See All CTA button if needed
           if (subTitle.isNotEmpty && displayDescription != subTitle)

@@ -57,7 +57,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                 context.read<CartCubit>().isCartChanged = true;
                 context.read<CartCubit>().getBasket();
 
-                OrdersCubit.instance?.getOrders();
+                OrdersCubit.instance?.getOrders(isRefresh: true);
 
                 Navigator.pushNamedAndRemoveUntil(
                   context,

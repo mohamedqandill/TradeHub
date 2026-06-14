@@ -6,5 +6,9 @@ import 'package:tradehub/features/main_layout/home/domain/entites/get_random_pro
 abstract class HomeRepoContract {
   Future<ApiResult<List<GetCategoryEntity>>> getCategory();
   Future<ApiResult<List<GetCompanyEntity>>> getCompanies();
-  Future<ApiResult<GetRandomProductsResponseEntity>> getRandomProducts({int? pageIndex, int? pageSize});
+  Future<ApiResult<GetRandomProductsResponseEntity>> getRandomProducts({
+    int? pageIndex,
+    int? pageSize,
+    String? sort,
+  });
 }

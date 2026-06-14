@@ -5,6 +5,30 @@ part 'order_response_d_t_o.g.dart';
 
 @JsonSerializable()
 class OrderResponseDTO {
+  @JsonKey(name: ApiConstants.data)
+  final List<OrderDataResponseDTO>? data;
+  @JsonKey(name: ApiConstants.pageIndex)
+  final int? pageIndex;
+  @JsonKey(name: ApiConstants.pageSize)
+  final int? pageSize;
+  @JsonKey(name: ApiConstants.count)
+  final int? count;
+
+  const OrderResponseDTO({
+    required this.data,
+    required this.pageIndex,
+    required this.pageSize,
+    required this.count,
+  });
+
+  factory OrderResponseDTO.fromJson(Map<String, dynamic> json) =>
+      _$OrderResponseDTOFromJson(json);
+
+  Map<String, dynamic> toJson() => _$OrderResponseDTOToJson(this);
+}
+
+@JsonSerializable()
+class OrderDataResponseDTO {
   @JsonKey(name: ApiConstants.id)
   final int? id;
   @JsonKey(name: ApiConstants.subTotal)
@@ -28,7 +52,7 @@ class OrderResponseDTO {
   @JsonKey(name: ApiConstants.items)
   final List<OrderItemDTO>? items;
 
-  const OrderResponseDTO({
+  const OrderDataResponseDTO({
     required this.id,
     required this.subTotal,
     required this.deliveryFee,
@@ -42,10 +66,10 @@ class OrderResponseDTO {
     required this.items,
   });
 
-  factory OrderResponseDTO.fromJson(Map<String, dynamic> json) =>
-      _$OrderResponseDTOFromJson(json);
+  factory OrderDataResponseDTO.fromJson(Map<String, dynamic> json) =>
+      _$OrderDataResponseDTOFromJson(json);
 
-  Map<String, dynamic> toJson() => _$OrderResponseDTOToJson(this);
+  Map<String, dynamic> toJson() => _$OrderDataResponseDTOToJson(this);
 }
 
 @JsonSerializable()

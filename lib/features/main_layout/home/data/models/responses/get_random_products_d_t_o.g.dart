@@ -24,6 +24,12 @@ GetRandomProductsDTO _$GetRandomProductsDTOFromJson(
       ratingCount: (json['ratingCount'] as num?)?.toInt(),
       imageUrl: json['imageUrl'] as String?,
       logoUrl: json['logoUrl'] as String?,
+      hasOffer: json['hasOffer'] as bool?,
+      isOfferActive: json['isOfferActive'] as bool?,
+      discountPercentage: (json['discountPercentage'] as num?)?.toInt(),
+      offerStartDate: json['offerStartDate'] as String?,
+      offerEndDate: json['offerEndDate'] as String?,
+      finalPrice: (json['finalPrice'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$GetRandomProductsDTOToJson(
@@ -44,4 +50,10 @@ Map<String, dynamic> _$GetRandomProductsDTOToJson(
       'averageRating': instance.averageRating,
       'ratingCount': instance.ratingCount,
       'isFavourite': instance.isFavourite,
+      'hasOffer': instance.hasOffer,
+      'isOfferActive': instance.isOfferActive,
+      'discountPercentage': instance.discountPercentage,
+      'offerStartDate': instance.offerStartDate,
+      'offerEndDate': instance.offerEndDate,
+      'finalPrice': instance.finalPrice,
     };

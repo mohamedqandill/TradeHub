@@ -102,6 +102,19 @@ class VendorProductModel {
   final bool? isFavourite;
   @JsonKey(name: ApiConstants.imageUrl)
   final String? imageUrl;
+  @JsonKey(name: ApiConstants.hasOffer)
+  final bool? hasOffer;
+  @JsonKey(name: ApiConstants.isOfferActive)
+  final bool? isOfferActive;
+  @JsonKey(name: ApiConstants.discountPercentage)
+  final int? discountPercentage;
+  @JsonKey(name: ApiConstants.offerStartDate)
+  final String? offerStartDate;
+  @JsonKey(name: ApiConstants.offerEndDate)
+  final String? offerEndDate;
+  @JsonKey(name: ApiConstants.finalPrice)
+  final int? finalPrice;
+
 
   VendorProductModel(
       {this.id,
@@ -114,7 +127,13 @@ class VendorProductModel {
       this.averageRating,
       this.ratingCount,
       this.isFavourite,
-      this.imageUrl});
+      this.imageUrl,
+      this.hasOffer,
+      this.isOfferActive,
+      this.discountPercentage,
+      this.offerStartDate,
+      this.offerEndDate,
+      this.finalPrice});
 
   factory VendorProductModel.fromJson(Map<String, dynamic> json) =>
       _$VendorProductModelFromJson(json);
@@ -131,6 +150,12 @@ class VendorProductModel {
         averageRating: averageRating ?? 0,
         ratingCount: ratingCount ?? 0,
         isFavourite: isFavourite ?? false,
+        hasOffer: hasOffer ?? false,
+        isOfferActive: isOfferActive ?? false,
+        discountPercentage: discountPercentage ?? 0,
+        offerStartDate: offerStartDate ?? "",
+        offerEndDate: offerEndDate ?? "",
+        finalPrice: finalPrice ?? 0,
       );
 }
 

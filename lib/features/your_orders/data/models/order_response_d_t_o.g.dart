@@ -8,6 +8,25 @@ part of 'order_response_d_t_o.dart';
 
 OrderResponseDTO _$OrderResponseDTOFromJson(Map<String, dynamic> json) =>
     OrderResponseDTO(
+      data: (json['data'] as List<dynamic>?)
+          ?.map((e) => OrderDataResponseDTO.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      pageIndex: (json['pageIndex'] as num?)?.toInt(),
+      pageSize: (json['pageSize'] as num?)?.toInt(),
+      count: (json['count'] as num?)?.toInt(),
+    );
+
+Map<String, dynamic> _$OrderResponseDTOToJson(OrderResponseDTO instance) =>
+    <String, dynamic>{
+      'data': instance.data,
+      'pageIndex': instance.pageIndex,
+      'pageSize': instance.pageSize,
+      'count': instance.count,
+    };
+
+OrderDataResponseDTO _$OrderDataResponseDTOFromJson(
+        Map<String, dynamic> json) =>
+    OrderDataResponseDTO(
       id: (json['id'] as num?)?.toInt(),
       subTotal: (json['subTotal'] as num?)?.toInt(),
       deliveryFee: (json['deliveryFee'] as num?)?.toInt(),
@@ -23,7 +42,8 @@ OrderResponseDTO _$OrderResponseDTOFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
-Map<String, dynamic> _$OrderResponseDTOToJson(OrderResponseDTO instance) =>
+Map<String, dynamic> _$OrderDataResponseDTOToJson(
+        OrderDataResponseDTO instance) =>
     <String, dynamic>{
       'id': instance.id,
       'subTotal': instance.subTotal,

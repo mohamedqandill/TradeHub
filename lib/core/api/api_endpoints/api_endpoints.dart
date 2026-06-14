@@ -10,7 +10,7 @@ abstract class ApiEndPoints {
   static const String resetPassword = "api/account/reset-password";
   static const String getAllCategory = "api/Category";
   static const String getCompanies = "api/company";
-  static const String getRandomProducts = "api/Product/random";
+  static const String getRandomProducts = "api/Product";
   static const String productDetails = "api/Product/";
   static const String addToCart = "api/basket/items";
   static const String toggleFavorite = "api/Favourite/toggle/";
@@ -31,4 +31,5 @@ abstract class ApiEndPoints {
   static const String notifications = "api/Notifications";
   static const String notificationsUnreadCount = "api/Notifications/unread-count";
   static const String notificationRead = "api/Notifications/{id}/read";
+  static const String productOptions = "api/ProductOptions";
 }

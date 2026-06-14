@@ -10,8 +10,13 @@ part 'orders_api_client.g.dart';
 @injectable
 abstract class OrdersApiClient {
   @factoryMethod
-  factory OrdersApiClient(Dio dio,{@Named('baseUrl') String? baseUrl}) = _OrdersApiClient;
+  factory OrdersApiClient(Dio dio, {@Named('baseUrl') String? baseUrl}) =
+      _OrdersApiClient;
 
   @GET(ApiEndPoints.orders)
-  Future<List<OrderResponseDTO>> getOrders();
+  Future<OrderResponseDTO> getOrders({
+    @Query('OrderStatus') String? orderStatus,
+    @Query('pageIndex') int? pageIndex,
+    @Query('pageSize') int? pageSize,
+  });
 }

@@ -6,6 +6,7 @@ class MapsState {
   final bool gotLocation;
   final LatLng? selectedLocation;
   final String? selectedPlaceName;
+  final String? selectedPlaceLabel;
   final List<Features> places;
   final bool isLoading;
   final bool isPlacesLoading;
@@ -18,6 +19,7 @@ class MapsState {
     this.gotLocation = false,
     this.selectedLocation,
     this.selectedPlaceName,
+    this.selectedPlaceLabel,
     this.places = const [],
     this.isLoading = false,
     this.isPlacesLoading = false,
@@ -31,18 +33,26 @@ class MapsState {
     bool? gotLocation,
     LatLng? selectedLocation,
     String? selectedPlaceName,
+    String? selectedPlaceLabel,
     List<Features>? places,
     bool? isLoading,
     bool? isPlacesLoading,
     bool? isFocusedState,
     String? errorMessage,
     String? snackBarMessage,
+    bool clearSelection = false,
   }) {
     return MapsState(
       currentLocation: currentLocation ?? this.currentLocation,
       gotLocation: gotLocation ?? this.gotLocation,
-      selectedLocation: selectedLocation ?? this.selectedLocation,
-      selectedPlaceName: selectedPlaceName ?? this.selectedPlaceName,
+      selectedLocation:
+          clearSelection ? null : (selectedLocation ?? this.selectedLocation),
+      selectedPlaceName: clearSelection
+          ? null
+          : (selectedPlaceName ?? this.selectedPlaceName),
+      selectedPlaceLabel: clearSelection
+          ? null
+          : (selectedPlaceLabel ?? this.selectedPlaceLabel),
       places: places ?? this.places,
       isLoading: isLoading ?? this.isLoading,
       isPlacesLoading: isPlacesLoading ?? this.isPlacesLoading,

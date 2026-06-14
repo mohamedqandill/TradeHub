@@ -35,7 +35,7 @@ class _VendorsSectionState extends State<VendorsSection> {
       final currentScroll = _scrollController.offset;
 
       if (_isScrollingForward) {
-        final nextScroll = currentScroll + 280.w;
+        final nextScroll = currentScroll + 326.w;
 
         if (nextScroll >= maxScroll) {
           _scrollController.animateTo(
@@ -67,7 +67,7 @@ class _VendorsSectionState extends State<VendorsSection> {
     return Skeletonizer(
       enabled: widget.isLoading ?? false,
       child: SizedBox(
-        height: 245.h,
+        height: 142.h,
         child: ListView.separated(
           controller: _scrollController,
           scrollDirection: Axis.horizontal,

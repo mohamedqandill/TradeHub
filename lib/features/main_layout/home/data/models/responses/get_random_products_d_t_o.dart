@@ -42,6 +42,19 @@ class GetRandomProductsDTO {
   @JsonKey(name: ApiConstants.isFavourite)
   final bool? isFavourite;
 
+    @JsonKey(name: ApiConstants.hasOffer)
+  final bool? hasOffer;
+  @JsonKey(name: ApiConstants.isOfferActive)
+  final bool? isOfferActive;
+  @JsonKey(name: ApiConstants.discountPercentage)
+  final int? discountPercentage;
+  @JsonKey(name: ApiConstants.offerStartDate)
+  final String? offerStartDate;
+  @JsonKey(name: ApiConstants.offerEndDate)
+  final String? offerEndDate;
+  @JsonKey(name: ApiConstants.finalPrice)
+  final int? finalPrice;
+
   const GetRandomProductsDTO({
     required this.isFavourite,
     required this.id,
@@ -58,6 +71,12 @@ class GetRandomProductsDTO {
     required this.ratingCount,
     required this.imageUrl,
     required this.logoUrl,
+    required this.hasOffer,
+    required this.isOfferActive,
+    required this.discountPercentage,
+    required this.offerStartDate,
+    required this.offerEndDate,
+    required this.finalPrice,
   });
 
   factory GetRandomProductsDTO.fromJson(Map<String, dynamic> json) =>
@@ -81,7 +100,13 @@ class GetRandomProductsDTO {
       attributes: attributes??[],
       averageRating: averageRating??0,
       ratingCount: ratingCount??0,
-      isFavourite: isFavourite??false
+      isFavourite: isFavourite??false,
+      hasOffer: hasOffer??false,
+      isOfferActive: isOfferActive??false,
+      discountPercentage: discountPercentage??0,
+      offerStartDate: offerStartDate??"",
+      offerEndDate: offerEndDate??"",
+      finalPrice: finalPrice??0,
     );
   }
 }

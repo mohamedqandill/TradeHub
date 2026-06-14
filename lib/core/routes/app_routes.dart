@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tradehub/core/extensions/screen_route_transition.dart';
 import 'package:tradehub/core/routes/routes.dart';
-import 'package:tradehub/features/Maps/flutter_map_screen.dart';
+import 'package:tradehub/maps/flutter_map_screen.dart';
 import 'package:tradehub/features/category_details/presentation/category_details_screen.dart';
 import 'package:tradehub/features/category_details/presentation/category_details_args.dart';
 import 'package:tradehub/features/checkout/presentation/cubit/checkout_cubit.dart';

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:tradehub/core/shared_services/app_providers.dart';
 import 'package:tradehub/features/main_layout/cart/presentation/cubit/cart_cubit.dart';
 import 'package:tradehub/features/main_layout/presentation/widgets/custom_bottomnavbar.dart';
 import 'package:tradehub/features/your_orders/presentation/your_orders_screen.dart';
@@ -26,9 +28,21 @@ class _MainLayoutState extends State<MainLayout> {
   ];
 
   @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (ModalRoute.of(context)!.settings.arguments != null) {
+        selectedIndex = ModalRoute.of(context)!.settings.arguments as int;
+        setState(() {});
+      }
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         bottomNavigationBar: CustomBottomNavbar(
+          currentIndex: selectedIndex,
           getSelectedIndex: (index) {
             setState(() {
               selectedIndex = index;

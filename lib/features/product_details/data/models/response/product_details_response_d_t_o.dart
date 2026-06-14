@@ -33,6 +33,18 @@ class ProductDetailsResponseDTO {
   final bool? isFavourite;
   @JsonKey(name: ApiConstants.imageUrl)
   final String? imageUrl;
+  @JsonKey(name: ApiConstants.hasOffer)
+  final bool? hasOffer;
+  @JsonKey(name: ApiConstants.discountPercentage)
+  final int? discountPercentage;
+  @JsonKey(name: ApiConstants.offerStartDate)
+  final String? offerStartDate;
+  @JsonKey(name: ApiConstants.offerEndDate)
+  final String? offerEndDate;
+  @JsonKey(name: ApiConstants.finalPrice)
+  final int? finalPrice;
+  @JsonKey(name: ApiConstants.isOfferActive)
+  final bool? isOfferActive;
 
   const ProductDetailsResponseDTO({
     required this.imageUrl,
@@ -49,6 +61,12 @@ class ProductDetailsResponseDTO {
     required this.attributes,
     required this.averageRating,
     required this.ratingCount,
+    required this.hasOffer,
+    required this.discountPercentage,
+    required this.offerStartDate,
+    required this.offerEndDate,
+    required this.finalPrice,
+    required this.isOfferActive,
   });
 
   factory ProductDetailsResponseDTO.fromJson(Map<String, dynamic> json) =>

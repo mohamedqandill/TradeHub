@@ -79,7 +79,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             onPressed: () {
               context.read<CartCubit>().isCartChanged = true;
               context.read<CartCubit>().getBasket();
-              OrdersCubit.instance?.getOrders();
+              OrdersCubit.instance?.getOrders(isRefresh: true);
               Navigator.of(dialogCtx).pop(true);
             },
             style: ElevatedButton.styleFrom(
@@ -114,7 +114,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             context.read<CartCubit>().getBasket();
 
             // 2. Refresh Orders screen list
-            OrdersCubit.instance?.getOrders();
+            OrdersCubit.instance?.getOrders(isRefresh: true);
 
             // 3. Navigate to Order Details
             setState(() {

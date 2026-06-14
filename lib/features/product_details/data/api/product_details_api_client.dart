@@ -6,6 +6,7 @@ import 'package:tradehub/features/main_layout/cart/data/models/cart_response_d_t
 
 import '../../../../../core/api/api_endpoints/api_endpoints.dart';
 import '../models/response/product_details_response_d_t_o.dart';
+import '../models/response/product_option_response_dto.dart';
 
 part 'product_details_api_client.g.dart';
 
@@ -20,6 +21,10 @@ abstract class ProductDetailsApiClient {
   @GET("${ApiEndPoints.productDetails}{id}")
   Future<ProductDetailsResponseDTO> getProductDetails(@Path("id") int id);
 
+  @GET(ApiEndPoints.productOptions)
+  Future<List<ProductOptionDTO>> getProductOptions(@Query("productId") int productId);
+
   @POST(ApiEndPoints.addToCart)
   Future<CartResponseDTO> addToCart(@Body() Map<String, dynamic> body);
 }
+
