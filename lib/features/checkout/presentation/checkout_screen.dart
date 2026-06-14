@@ -31,16 +31,20 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       context: context,
       barrierDismissible: false,
       builder: (dialogCtx) => AlertDialog(
-        backgroundColor: context.isDarkMode ? const Color(0xFF0F0F10) : Colors.white,
+        backgroundColor:
+            context.isDarkMode ? const Color(0xFF0F0F10) : Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20.r),
           side: BorderSide(
-            color: context.isDarkMode ? Colors.white10 : Colors.black.withOpacity(0.05),
+            color: context.isDarkMode
+                ? Colors.white10
+                : Colors.black.withOpacity(0.05),
           ),
         ),
         title: Row(
           children: [
-            Icon(Icons.warning_amber_rounded, color: context.mainColor, size: 24.sp),
+            Icon(Icons.warning_amber_rounded,
+                color: context.mainColor, size: 24.sp),
             SizedBox(width: 10.w),
             Text(
               "Order Not Confirmed",
@@ -72,11 +76,17 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             ),
           ),
           ElevatedButton(
-            onPressed: () => Navigator.of(dialogCtx).pop(true),
+            onPressed: () {
+              context.read<CartCubit>().isCartChanged = true;
+              context.read<CartCubit>().getBasket();
+              OrdersCubit.instance?.getOrders(isRefresh: true);
+              Navigator.of(dialogCtx).pop(true);
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.redAccent,
               foregroundColor: Colors.white,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.r)),
             ),
             child: const Text("Yes, Go Back"),
           ),
@@ -104,7 +114,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             context.read<CartCubit>().getBasket();
 
             // 2. Refresh Orders screen list
-            OrdersCubit.instance?.getOrders();
+            OrdersCubit.instance?.getOrders(isRefresh: true);
 
             // 3. Navigate to Order Details
             setState(() {

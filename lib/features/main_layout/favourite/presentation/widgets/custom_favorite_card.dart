@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:tradehub/Core/colors/app_colors.dart';
@@ -9,6 +10,7 @@ import 'package:tradehub/core/extensions/main_color.dart';
 import 'package:tradehub/core/shared_widgets/widgets/heart_button.dart';
 import 'package:tradehub/features/main_layout/cart/presentation/cubit/cart_cubit.dart';
 import 'package:tradehub/features/main_layout/favourite/presentation/cubit/favourite_cubit.dart';
+import 'package:tradehub/main.dart';
 
 class CustomFavoriteCard extends StatefulWidget {
   const CustomFavoriteCard(
@@ -71,26 +73,32 @@ class _CustomFavoriteCardState extends State<CustomFavoriteCard> {
                 top: 8.h,
                 right: 2.w,
                 child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.8),
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
-                        blurRadius: 4,
-                      )
-                    ],
-                  ),
-                  child: HeartButton(
-                    height: 30.h,
-                    width: 30.w,
-                    isTapped: true,
-                    onTap: () {
-                      context.read<FavouriteCubit>().toggleFavorite(widget.id);
-                      setState(() {});
-                    },
-                  ),
-                ),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.8),
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          blurRadius: 4,
+                        )
+                      ],
+                    ),
+                    child: BlocBuilder<FavouriteCubit, FavouriteState>(
+                      buildWhen: (prev, curr) =>
+                          curr.favoritesUpdate ==
+                          RequestStates.success, // يبني بس لما الفافوريت تتغير
+                      builder: (context, state) {
+                        return HeartButton(
+                          isTapped: true, // ← مش hardcoded true
+                          onTap: () {
+                            context
+                                .read<FavouriteCubit>()
+                                .toggleFavorite(widget.id);
+                            
+                          },
+                        );
+                      },
+                    )),
               ),
             ],
           ),

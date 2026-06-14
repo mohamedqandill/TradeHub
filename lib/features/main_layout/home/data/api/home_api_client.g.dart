@@ -96,11 +96,13 @@ class _HomeApiClient implements HomeApiClient {
   Future<GetRandomProductsResponse> getRandomProducts({
     int? pageIndex,
     int? pageSize,
+    String? sort,
   }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'pageIndex': pageIndex,
       r'pageSize': pageSize,
+      r'sort': sort,
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
@@ -112,7 +114,7 @@ class _HomeApiClient implements HomeApiClient {
     )
         .compose(
           _dio.options,
-          'api/Product/random',
+          'api/Product',
           queryParameters: queryParameters,
           data: _data,
         )

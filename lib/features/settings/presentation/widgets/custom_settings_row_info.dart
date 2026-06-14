@@ -60,7 +60,7 @@ class _CustomSettingsRowInfoState extends State<CustomSettingsRowInfo> {
             ),
           ),
           const Spacer(),
-          widget.index == 5
+          widget.index == 4
               ? AdvancedSwitch(
                   thumb: !controller.value
                       ? Image.asset(AppAssets.america)
@@ -103,7 +103,7 @@ class _CustomSettingsRowInfoState extends State<CustomSettingsRowInfo> {
                 )
               : Row(
                   children: [
-                    widget.index == 4
+                    widget.index == 3
                         ? Text(
                             "Enabled",
                             style: context.base.theme.textTheme.titleLarge!

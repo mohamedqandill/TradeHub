@@ -2,364 +2,449 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:palette_generator/palette_generator.dart';
 import 'package:tradehub/Core/colors/app_colors.dart';
 import 'package:tradehub/Core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/extensions/main_color.dart';
 import 'package:tradehub/core/routes/routes.dart';
 import 'package:tradehub/features/main_layout/home/domain/entites/get_company_entity.dart';
 
-class VendorCard extends StatefulWidget {
+class VendorCard extends StatelessWidget {
   final GetCompanyEntity? vendor;
 
   const VendorCard({super.key, this.vendor});
 
-  @override
-  State<VendorCard> createState() => _VendorCardState();
-}
+  bool get _isOpen => true;
 
-class _VendorCardState extends State<VendorCard> {
-  Color? _extractedColor;
-  bool _isColorExtracted = false;
+  bool get _hasOffers => vendor?.id != null && vendor!.id!.hashCode.isEven;
 
-  @override
-  void initState() {
-    super.initState();
-    _extractColor();
-  }
-
-  @override
-  void didUpdateWidget(VendorCard oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.vendor?.logoUrl != widget.vendor?.logoUrl) {
-      _extractColor();
-    }
-  }
-
-  Future<void> _extractColor() async {
-    final logoUrl = widget.vendor?.logoUrl;
-    if (logoUrl == null || logoUrl.isEmpty) return;
-
-    try {
-      final ImageProvider imageProvider = CachedNetworkImageProvider(logoUrl);
-      final PaletteGenerator paletteGenerator =
-          await PaletteGenerator.fromImageProvider(
-        imageProvider,
-        maximumColorCount: 8,
-      );
-
-      final Color? baseColor = paletteGenerator.dominantColor?.color ??
-          paletteGenerator.vibrantColor?.color ??
-          paletteGenerator.mutedColor?.color;
-
-      if (baseColor != null && mounted) {
-        setState(() {
-          _extractedColor = baseColor;
-          _isColorExtracted = true;
-        });
-      }
-    } catch (e) {
-      // Fallback gracefully on errors
-    }
-  }
-
-  // Dynamic senior category icon mapper
-  IconData _getCategoryIcon(String? categoryName) {
-    if (categoryName == null) return Icons.storefront_rounded;
-    final name = categoryName.toLowerCase();
-    if (name.contains('furniture') || name.contains('home')) {
-      return Icons.chair_alt_rounded;
-    }
-    if (name.contains('tech') ||
-        name.contains('electronic') ||
-        name.contains('phone') ||
-        name.contains('gadget')) {
-      return Icons.devices_rounded;
-    }
-    if (name.contains('fashion') ||
-        name.contains('cloth') ||
-        name.contains('wear') ||
-        name.contains('apparel')) {
-      return Icons.checkroom_rounded;
-    }
-    if (name.contains('food') ||
-        name.contains('restaurant') ||
-        name.contains('cafe') ||
-        name.contains('grocery')) {
-      return Icons.restaurant_rounded;
-    }
-    if (name.contains('book')) return Icons.menu_book_rounded;
-    if (name.contains('sport') || name.contains('gym')) {
-      return Icons.sports_gymnastics_rounded;
-    }
-    return Icons.store_rounded;
-  }
+  static const double _rating = 4.5;
+  static const int _ratingCount = 138;
 
   @override
   Widget build(BuildContext context) {
-    bool isDarkMode = context.isDarkMode;
+    final isDark = context.isDarkMode;
+    final accent = context.mainColor;
+    final textColor = isDark ? AppColors.white : AppColors.black;
+    final labelColor = isDark ? Colors.white54 : AppColors.grey;
+    final cardBg = isDark ? const Color(0xFF0F0F10) : AppColors.white;
+    final borderColor =
+        isDark ? Colors.white.withOpacity(0.08) : AppColors.lightGrey;
 
-    // Dynamic brand accent color from logo palette
-    Color brandAccentColor = context.mainColor;
-    if (_isColorExtracted && _extractedColor != null) {
-      if (isDarkMode) {
-        brandAccentColor = Color.lerp(_extractedColor, Colors.white, 0.40)!;
-      } else {
-        brandAccentColor = Color.lerp(_extractedColor, Colors.black, 0.25)!;
-      }
-    }
-
-    // Suited, premium branded card backgrounds
-    Color finalCardBg = isDarkMode ? const Color(0xFF0A0A0B) : AppColors.white;
-    Color finalBorderColor = isDarkMode
-        ? Colors.white.withOpacity(0.06)
-        : AppColors.lightGrey.withOpacity(0.8);
-    Color finalTextColor = isDarkMode ? AppColors.white : AppColors.black;
-    Color finalSubtitleColor = isDarkMode ? Colors.white70 : Colors.black54;
-
-    return InkWell(
-      onTap: () => Navigator.pushNamed(
-        context,
-        Routes.vendorProfile,
-        arguments: widget.vendor?.id,
-      ),
-      borderRadius: BorderRadius.circular(20.r),
-      child: Container(
-        width: 250.w,
-        decoration: BoxDecoration(
-          color: finalCardBg,
-          borderRadius: BorderRadius.circular(20.r),
-          border: Border.all(
-            color: finalBorderColor,
-            width: 1.2,
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: isDarkMode
-                  ? Colors.black.withOpacity(0.4)
-                  : Colors.black.withOpacity(0.03),
-              blurRadius: 16,
-              offset: const Offset(0, 6),
-            ),
-          ],
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: () => Navigator.pushNamed(
+          context,
+          Routes.vendorProfile,
+          arguments: vendor?.id,
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // 1. TOP HEADER BANNER (Full bleed image takes all width)
-            Stack(
-              children: [
-                Container(
-                  height: 115.h,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: isDarkMode
-                        ? Colors.white.withOpacity(0.03)
-                        : Colors.grey.shade50,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(19.r),
-                      topRight: Radius.circular(19.r),
-                    ),
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(19.r),
-                      topRight: Radius.circular(19.r),
-                    ),
-                    child: CachedNetworkImage(
-                      imageUrl: widget.vendor?.logoUrl ?? "",
-                      fit: BoxFit
-                          .cover, // Full bleed layout takes all width and height
-                      alignment: Alignment.center,
-                      errorWidget: (context, url, error) => Container(
-                        color: brandAccentColor.withOpacity(0.08),
-                        child: Icon(
-                          Icons.storefront_rounded,
-                          color: brandAccentColor,
-                          size: 32.sp,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                // "Verified" floating tag overlay on top left
-                Positioned(
-                  top: 10.h,
-                  left: 10.w,
-                  child: Container(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 8.w, vertical: 3.h),
-                    decoration: BoxDecoration(
-                      color: Colors.green.withOpacity(0.9),
-                      borderRadius: BorderRadius.circular(30.r),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Colors.black26,
-                          blurRadius: 4,
-                          offset: Offset(0, 1),
-                        )
-                      ],
-                    ),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.verified_rounded,
-                          color: Colors.white,
-                          size: 11.sp,
-                        ),
-                        SizedBox(width: 4.w),
-                        Text(
-                          "Verified",
-                          style: GoogleFonts.outfit(
-                            color: Colors.white,
-                            fontSize: 8.sp,
-                            fontWeight: FontWeight.w900,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-
-            // 2. STORE INFO SECTION (Under image)
-            Padding(
-              padding: EdgeInsets.all(12.w),
-              child: Column(
+        borderRadius: BorderRadius.circular(16.r),
+        child: Container(
+          width: 310.w,
+          padding: EdgeInsets.all(12.w),
+          decoration: BoxDecoration(
+            color: cardBg,
+            borderRadius: BorderRadius.circular(16.r),
+            border: Border.all(color: borderColor),
+            boxShadow: [
+              BoxShadow(
+                color: isDark
+                    ? Colors.black.withOpacity(0.35)
+                    : Colors.black.withOpacity(0.05),
+                blurRadius: 12,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: Stack(
+            clipBehavior: Clip.none,
+            children: [
+              Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      // Store Name
-                      Expanded(
-                        child: Text(
-                          widget.vendor?.businessName ?? "Premium Store",
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: GoogleFonts.outfit(
-                            color: finalTextColor,
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w900,
-                            letterSpacing: -0.3,
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 6.w),
-                      // Rating Star Badge
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            Icons.star_rounded,
-                            color: Colors.amber,
-                            size: 13.sp,
-                          ),
-                          SizedBox(width: 2.w),
-                          Text(
-                            "4.9",
-                            style: GoogleFonts.outfit(
-                              color: finalTextColor,
-                              fontSize: 10.sp,
-                              fontWeight: FontWeight.w900,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+                  _VendorLogo(
+                    logoUrl: vendor?.logoUrl,
+                    isDark: isDark,
+                    accent: accent,
                   ),
-                  SizedBox(height: 5.h),
-                  // Location Row
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.location_on_rounded,
-                        color: brandAccentColor,
-                        size: 11.sp,
-                      ),
-                      SizedBox(width: 4.w),
-                      Expanded(
-                        child: Text(
-                          widget.vendor?.locationName ?? "Cairo, Egypt",
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: GoogleFonts.outfit(
-                            color: finalSubtitleColor,
-                            fontSize: 10.5.sp,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 10.h),
-                  Divider(
-                    height: 1,
-                    thickness: 1,
-                    color: isDarkMode
-                        ? Colors.white.withOpacity(0.06)
-                        : Colors.grey.shade100,
-                  ),
-                  SizedBox(height: 10.h),
-                  // Category Tag and Visit Action
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      // Category Tag
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 8.w, vertical: 4.h),
-                        decoration: BoxDecoration(
-                          color: brandAccentColor.withOpacity(0.08),
-                          borderRadius: BorderRadius.circular(8.r),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
+                  SizedBox(width: 12.w),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Row(
                           children: [
-                            Icon(
-                              _getCategoryIcon(widget.vendor?.businessTypeName),
-                              color: brandAccentColor,
-                              size: 12.sp,
-                            ),
-                            SizedBox(width: 4.w),
-                            Text(
-                              widget.vendor?.businessTypeName ?? "Retail",
-                              style: GoogleFonts.outfit(
-                                color: brandAccentColor,
-                                fontSize: 9.sp,
-                                fontWeight: FontWeight.w800,
+                            Expanded(
+                              child: Text(
+                                vendor?.businessName ?? 'Premium Store',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: GoogleFonts.outfit(
+                                  color: textColor,
+                                  fontSize: 15.sp,
+                                  fontWeight: FontWeight.w700,
+                                  height: 1.2,
+                                ),
                               ),
                             ),
+                            SizedBox(width: 8.w),
+                            _StatusBadge(isOpen: _isOpen),
                           ],
                         ),
-                      ),
-                      // Visit CTA Link
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            "Visit Store",
-                            style: GoogleFonts.outfit(
-                              color: brandAccentColor,
-                              fontSize: 10.5.sp,
-                              fontWeight: FontWeight.w900,
-                            ),
-                          ),
-                          SizedBox(width: 2.w),
-                          Icon(
-                            Icons.arrow_forward_rounded,
-                            color: brandAccentColor,
-                            size: 13.sp,
+                        if (vendor?.businessTypeName?.isNotEmpty == true) ...[
+                          SizedBox(height: 3.h),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.storefront_outlined,
+                                size: 12.sp,
+                                color: labelColor,
+                              ),
+                              SizedBox(width: 4.w),
+                              Expanded(
+                                child: Text(
+                                  vendor!.businessTypeName!,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: GoogleFonts.outfit(
+                                    color: labelColor,
+                                    fontSize: 11.sp,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ],
-                      ),
-                    ],
+                        SizedBox(height: 6.h),
+                        _StarRatingBar(
+                          rating: _rating,
+                          ratingCount: _ratingCount,
+                          labelColor: labelColor,
+                        ),
+                        SizedBox(height: 10.h),
+                        _DeliveryInfoRow(
+                          textColor: textColor,
+                          labelColor: labelColor,
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
+              if (_hasOffers)
+                Positioned(
+                  right: -14.w,
+                  bottom: 4.h,
+                  child: const _OffersRibbon(),
+                ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _VendorLogo extends StatelessWidget {
+  final String? logoUrl;
+  final bool isDark;
+  final Color accent;
+
+  const _VendorLogo({
+    required this.logoUrl,
+    required this.isDark,
+    required this.accent,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 72.w,
+      height: 72.w,
+      decoration: BoxDecoration(
+        color: isDark ? Colors.white.withOpacity(0.05) : AppColors.lightGrey,
+        borderRadius: BorderRadius.circular(12.r),
+        border: Border.all(
+          color: isDark ? Colors.white12 : AppColors.whiteGrey,
+        ),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(11.r),
+        child: CachedNetworkImage(
+          imageUrl: logoUrl ?? '',
+          fit: BoxFit.contain,
+          placeholder: (_, __) => Center(
+            child: SizedBox(
+              width: 20.w,
+              height: 20.w,
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+                color: accent.withOpacity(0.5),
+              ),
+            ),
+          ),
+          errorWidget: (_, __, ___) => Icon(
+            Icons.storefront_rounded,
+            color: accent.withOpacity(0.7),
+            size: 28.sp,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _StatusBadge extends StatelessWidget {
+  final bool isOpen;
+
+  const _StatusBadge({required this.isOpen});
+
+  @override
+  Widget build(BuildContext context) {
+    final color = isOpen ? AppColors.linearColor : AppColors.red;
+
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          width: 6.w,
+          height: 6.w,
+          decoration: BoxDecoration(
+            color: color,
+            shape: BoxShape.circle,
+          ),
+        ),
+        SizedBox(width: 4.w),
+        Text(
+          isOpen ? 'Open' : 'Closed',
+          style: GoogleFonts.outfit(
+            color: color,
+            fontSize: 12.sp,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _StarRatingBar extends StatelessWidget {
+  final double rating;
+  final int ratingCount;
+  final Color labelColor;
+
+  const _StarRatingBar({
+    required this.rating,
+    required this.ratingCount,
+    required this.labelColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        ...List.generate(5, (index) {
+          final fill = (rating - index).clamp(0.0, 1.0);
+          return Padding(
+            padding: EdgeInsets.only(right: 1.w),
+            child: SizedBox(
+              width: 14.sp,
+              height: 14.sp,
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  Icon(
+                    Icons.star_rounded,
+                    size: 14.sp,
+                    color: labelColor.withOpacity(0.25),
+                  ),
+                  if (fill > 0)
+                    ClipRect(
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        widthFactor: fill,
+                        child: Icon(
+                          Icons.star_rounded,
+                          size: 14.sp,
+                          color: const Color(0xffFFC107),
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          );
+        }),
+        SizedBox(width: 6.w),
+        Flexible(
+          child: Text(
+            '($ratingCount ratings)',
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: GoogleFonts.outfit(
+              color: labelColor,
+              fontSize: 11.sp,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _DeliveryInfoRow extends StatelessWidget {
+  final Color textColor;
+  final Color labelColor;
+
+  const _DeliveryInfoRow({
+    required this.textColor,
+    required this.labelColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return IntrinsicHeight(
+      child: Row(
+        children: [
+          Expanded(
+            child: _InfoCell(
+              icon: Icons.shopping_bag_outlined,
+              label: 'Min. order',
+              value: '0.00',
+              textColor: textColor,
+              labelColor: labelColor,
+            ),
+          ),
+          _VerticalDivider(color: labelColor.withOpacity(0.3)),
+          Expanded(
+            child: _InfoCell(
+              icon: Icons.schedule_rounded,
+              label: 'Delivery',
+              value: '30-45 mins',
+              textColor: textColor,
+              labelColor: labelColor,
+            ),
+          ),
+          _VerticalDivider(color: labelColor.withOpacity(0.3)),
+          Expanded(
+            child: _InfoCell(
+              icon: Icons.delivery_dining_rounded,
+              label: 'Fee',
+              value: 'Free',
+              textColor: textColor,
+              labelColor: labelColor,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _InfoCell extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final String value;
+  final Color textColor;
+  final Color labelColor;
+
+  const _InfoCell({
+    required this.icon,
+    required this.label,
+    required this.value,
+    required this.textColor,
+    required this.labelColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Row(
+          children: [
+            Icon(icon, size: 11.sp, color: labelColor),
+            SizedBox(width: 3.w),
+            Flexible(
+              child: Text(
+                label,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: GoogleFonts.outfit(
+                  color: labelColor,
+                  fontSize: 9.5.sp,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
             ),
           ],
+        ),
+        SizedBox(height: 2.h),
+        Text(
+          value,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: GoogleFonts.outfit(
+            color: textColor,
+            fontSize: 11.sp,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _VerticalDivider extends StatelessWidget {
+  final Color color;
+
+  const _VerticalDivider({required this.color});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 6.w),
+      child: Container(
+        width: 1,
+        color: color,
+      ),
+    );
+  }
+}
+
+class _OffersRibbon extends StatelessWidget {
+  const _OffersRibbon();
+
+  @override
+  Widget build(BuildContext context) {
+    return Transform.rotate(
+      angle: -0.785398,
+      child: Container(
+        width: 68.w,
+        padding: EdgeInsets.symmetric(vertical: 3.h),
+        decoration: BoxDecoration(
+          gradient: AppColors.linearLight,
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.mainColor.withOpacity(0.25),
+              blurRadius: 4,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        alignment: Alignment.center,
+        child: Text(
+          'OFFERS',
+          style: GoogleFonts.outfit(
+            color: AppColors.white,
+            fontSize: 8.sp,
+            fontWeight: FontWeight.w800,
+            letterSpacing: 0.5,
+          ),
         ),
       ),
     );

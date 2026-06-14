@@ -22,6 +22,7 @@ import 'package:tradehub/features/main_layout/favourite/presentation/cubit/favou
 import 'package:tradehub/features/main_layout/profile/presentation/cubit/profile_cubit.dart';
 import 'package:tradehub/features/onBoarding/view_model/language_view_model.dart';
 import 'package:tradehub/features/onBoarding/view_model/theme_view_model.dart';
+import 'package:tradehub/features/your_orders/presentation/cubit/orders_cubit.dart';
 
 import 'core/base/base_inherited_widgets.dart';
 import 'core/utils/di/di.dart';
@@ -82,6 +83,9 @@ Future<void> main() async {
             ),
             BlocProvider(
               create: (context) => getIt<CheckoutCubit>(),
+            ),
+            BlocProvider(
+              create: (context) => getIt<OrdersCubit>(),
             ),
           ],
           

@@ -64,6 +64,12 @@ VendorProductModel _$VendorProductModelFromJson(Map<String, dynamic> json) =>
       ratingCount: (json['ratingCount'] as num?)?.toInt(),
       isFavourite: json['isFavourite'] as bool?,
       imageUrl: json['imageUrl'] as String?,
+      hasOffer: json['hasOffer'] as bool?,
+      isOfferActive: json['isOfferActive'] as bool?,
+      discountPercentage: (json['discountPercentage'] as num?)?.toInt(),
+      offerStartDate: json['offerStartDate'] as String?,
+      offerEndDate: json['offerEndDate'] as String?,
+      finalPrice: (json['finalPrice'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$VendorProductModelToJson(VendorProductModel instance) =>
@@ -79,6 +85,12 @@ Map<String, dynamic> _$VendorProductModelToJson(VendorProductModel instance) =>
       'ratingCount': instance.ratingCount,
       'isFavourite': instance.isFavourite,
       'imageUrl': instance.imageUrl,
+      'hasOffer': instance.hasOffer,
+      'isOfferActive': instance.isOfferActive,
+      'discountPercentage': instance.discountPercentage,
+      'offerStartDate': instance.offerStartDate,
+      'offerEndDate': instance.offerEndDate,
+      'finalPrice': instance.finalPrice,
     };
 
 VendorProductAttributeModel _$VendorProductAttributeModelFromJson(

@@ -9,7 +9,7 @@ class AddToCartUseCase {
 
   AddToCartUseCase(this._repository);
 
-  Future<ApiResult< CartResponseDTO>> call(int productId, {int quantity = 1}) {
-    return _repository.addToCart(productId, quantity: quantity);
+  Future<ApiResult< CartResponseDTO>> call(int productId, {int quantity = 1, List<int>? selectedOptionValueIds}) {
+    return _repository.addToCart(productId, quantity: quantity, selectedOptionValueIds: selectedOptionValueIds);
   }
 }

@@ -52,6 +52,8 @@ class Items {
   final int quantity;
   @JsonKey(name: ApiConstants.total)
   final int total;
+  @JsonKey(name: ApiConstants.options)
+  final List<CartOptionDTO>? options;
 
   const Items({
     required this.id,
@@ -61,10 +63,36 @@ class Items {
     required this.price,
     required this.quantity,
     required this.total,
+    this.options,
   });
 
   factory Items.fromJson(Map<String, dynamic> json) => _$ItemsFromJson(json);
 
   Map<String, dynamic> toJson() => _$ItemsToJson(this);
 }
+
+@JsonSerializable()
+class CartOptionDTO {
+  @JsonKey(name: ApiConstants.productOptionValueId)
+  final int? productOptionValueId;
+  @JsonKey(name: ApiConstants.optionName)
+  final String? optionName;
+  @JsonKey(name: ApiConstants.valueName)
+  final String? valueName;
+  @JsonKey(name: ApiConstants.extraPrice)
+  final int? extraPrice;
+
+  const CartOptionDTO({
+    required this.productOptionValueId,
+    required this.optionName,
+    required this.valueName,
+    required this.extraPrice,
+  });
+
+  factory CartOptionDTO.fromJson(Map<String, dynamic> json) =>
+      _$CartOptionDTOFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CartOptionDTOToJson(this);
+}
+
 

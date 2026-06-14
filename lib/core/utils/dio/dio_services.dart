@@ -59,9 +59,6 @@ abstract class DioServices {
       ),
     );
 
-    dio.interceptors.add(CookieManager(cookieJar));
-    
-
     /// 🔐 Request Interceptor (يحط التوكن دايماً)
     dio.interceptors.add(
       InterceptorsWrapper(
@@ -77,6 +74,28 @@ abstract class DioServices {
         },
       ),
     );
+    dio.interceptors.add(
+      InterceptorsWrapper(
+        onResponse: (response, handler) async {
+          print("📋 ALL HEADERS = ${response.headers.map}");
+          // استخرج الكوكي يدوياً واحفظها
+          final setCookie = response.headers['set-cookie'];
+          print("🍪 SET-COOKIE = $setCookie");
+
+          if (setCookie != null) {
+            final uri = Uri.parse(ApiEndPoints.baseURL);
+            final cookies =
+                setCookie.map((c) => Cookie.fromSetCookieValue(c)).toList();
+            await cookieJar.saveFromResponse(uri, cookies);
+            print("✅ Cookies saved manually!");
+          }
+
+          return handler.next(response);
+        },
+      ),
+    );
+
+    dio.interceptors.add(CookieManager(cookieJar));
 
     /// 🔁 Refresh Logic
     bool isRefreshing = false;
@@ -86,6 +105,9 @@ abstract class DioServices {
       InterceptorsWrapper(
         onError: (DioException err, handler) async {
           final status = err.response?.statusCode;
+          print("Path = ${err.requestOptions.path}");
+          print("Status = ${err.response?.statusCode}");
+          print("Body = ${err.response?.data}");
 
           if (status == 401) {
             final requestOptions = err.requestOptions;
@@ -110,19 +132,30 @@ abstract class DioServices {
 
             isRefreshing = true;
 
-            final refreshDio = Dio(
-              BaseOptions(
-                baseUrl: ApiEndPoints.baseURL,
-                validateStatus: (status) => status != null && status < 500,
-              ),
-            );
-
-            refreshDio.interceptors.add(CookieManager(cookieJar));
-
             try {
-              final response =
-                  await refreshDio.get('api/account/refresh-token');
+              final token =
+                  await getIt<SecureStorageHelper>().read(ApiConstants.token);
+              final uri = Uri.parse(ApiEndPoints.baseURL);
+              final savedCookies = await cookieJar.loadForRequest(uri);
+              print("🍪 Cookies to send: $savedCookies");
 
+              final cookieHeader =
+                  savedCookies.map((c) => '${c.name}=${c.value}').join('; ');
+
+
+              final response = await dio.get('api/account/refresh-token',
+                  options: Options(headers: {
+                    'Authorization': "Bearer $token",
+                    'Cookie': cookieHeader
+                  }));
+                  
+              print("⬅️ Refresh status = ${response.statusCode}");
+              print("⬅️ Refresh body = ${response.data}");
+              final cookies = await cookieJar.loadForRequest(
+                Uri.parse('${ApiEndPoints.baseURL}api/account/refresh-token'),
+              );
+
+              print("Cookies: $cookies");
               if (response.statusCode == 200) {
                 final newToken = response.data['token'];
 

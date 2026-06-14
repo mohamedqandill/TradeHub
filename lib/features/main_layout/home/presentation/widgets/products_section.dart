@@ -37,13 +37,25 @@ class ProductsSection extends StatelessWidget {
           ],
           child: BlocBuilder<HomeCubit, HomeState>(builder: (context, state) {
             var cartCubit = context.watch<CartCubit>();
+            final isLoadingEmpty = (isLoading ?? false) &&
+                state.randomProducts.isEmpty;
+            final itemCount = isLoadingEmpty
+                ? 3
+                : state.randomProducts.length;
+
             return ListView.separated(
               padding: EdgeInsets.zero,
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: state.randomProducts.length,
+              itemCount: itemCount,
               separatorBuilder: (context, index) => SizedBox(height: 14.h),
               itemBuilder: (context, index) {
+                if (isLoadingEmpty) {
+                  return _ProductSkeletonPlaceholder(
+                    isDark: context.isDarkMode,
+                  );
+                }
+
                 return ProductCard(
                   product: state.randomProducts[index],
                   cartCubit: cartCubit,
@@ -53,6 +65,26 @@ class ProductsSection extends StatelessWidget {
               },
             );
           })),
+    );
+  }
+}
+
+class _ProductSkeletonPlaceholder extends StatelessWidget {
+  final bool isDark;
+
+  const _ProductSkeletonPlaceholder({required this.isDark});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 168.h,
+      decoration: BoxDecoration(
+        color: isDark ? Colors.white.withOpacity(0.04) : Colors.white,
+        borderRadius: BorderRadius.circular(16.r),
+        border: Border.all(
+          color: isDark ? Colors.white12 : const Color(0xFFEFF0F6),
+        ),
+      ),
     );
   }
 }

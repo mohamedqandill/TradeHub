@@ -7,6 +7,7 @@ import 'package:tradehub/core/colors/app_colors.dart';
 import 'package:tradehub/core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/functions/show_snakbar.dart';
 import 'package:tradehub/core/localization/locale_keys.g.dart';
+import 'package:tradehub/core/routes/routes.dart';
 import 'package:tradehub/core/shared_widgets/buttons/custom_large_main_button.dart';
 import 'package:tradehub/core/shared_widgets/widgets/heart_button.dart';
 import 'package:tradehub/core/utils/di/di.dart';
@@ -15,6 +16,7 @@ import 'package:tradehub/features/main_layout/cart/presentation/cubit/cart_state
 import 'package:tradehub/features/product_details/presentation/cubit/product_details_cubit.dart';
 import 'package:tradehub/features/product_details/presentation/cubit/product_details_states.dart';
 import 'package:tradehub/features/product_details/presentation/product_details_body.dart';
+import 'package:tradehub/features/product_details/presentation/widgets/success_dialog.dart';
 import 'package:tradehub/features/product_ratings/presentation/cubit/product_ratings_cubit.dart';
 import 'package:tradehub/features/product_ratings/presentation/cubit/product_ratings_states.dart';
 
@@ -50,7 +52,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         listeners: [
           BlocListener<CartCubit, CartState>(
             listener: (context, state) {
-              if (state is AddToCartErrorState) {
+              if (state is AddToCartSuccessState) {
+                successDialog(context);
+              } else if (state is AddToCartErrorState) {
                 showFailureSnackBar(context, messageTitle: state.message);
               }
             },
@@ -159,75 +163,92 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               ),
               body: ProductDetailsBody(cubit: cubit),
               bottomNavigationBar: Container(
-                  padding: EdgeInsets.fromLTRB(24.w, 12.h, 24.w, 32.h),
-                  decoration: BoxDecoration(
-                    color: context.isDarkMode
-                        ? AppColors.black.withOpacity(0.9)
-                        : AppColors.white.withOpacity(0.9),
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(32.r),
-                      topRight: Radius.circular(32.r),
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.05),
-                        blurRadius: 20,
-                        offset: const Offset(0, -10),
-                      ),
-                    ],
-                  ),
-                  child: Row(
-                    children: [
-                      BlocBuilder<ProductRatingsCubit, ProductRatingsStates>(
-                        builder: (context, ratingState) {
-                          final isLoading =
-                              ratingState is AddProductRatingLoadingState;
-                          return CustomLargeMainButton(
-                            width: 120.w,
-                            height: 46.h,
-                            radius: 18.r,
-                            isLoading: isLoading,
-                            onPressed: isLoading
-                                ? null
-                                : () => _showAddRatingSheet(
-                                      isLoading: isLoading,
-                                      ratingCubit:
-                                          context.read<ProductRatingsCubit>(),
-                                      context,
-                                      productId: id,
-                                    ),
-                            text: "Add rating",
-                            textStyle: TextStyle(
-                              color: Colors.white,
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w800,
-                            ),
-                          ).animate().fadeIn(delay: 100.ms).slideX(begin: -0.2);
-                        },
-                      ),
-                      SizedBox(width: 12.w),
-                      Expanded(
-                        child: BlocBuilder<CartCubit, CartState>(
-                          builder: (context, cartState) {
-                            return CustomLargeMainButton(
-                              isLoading: cartState is AddToCartLoadingState,
-                              onPressed: cartState is AddToCartLoadingState
-                                  ? null
-                                  : () =>
-                                      context.read<CartCubit>().addToCart(id),
-                              text: LocaleKeys.addToCart.tr(),
-                              radius: 20.r,
-                              textStyle: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.w800,
-                              ),
-                            ).animate().fadeIn(delay: 200.ms).slideX(begin: 0.2);
-                          },
+                      padding: EdgeInsets.fromLTRB(24.w, 12.h, 24.w, 32.h),
+                      decoration: BoxDecoration(
+                        color: context.isDarkMode
+                            ? AppColors.black.withOpacity(0.9)
+                            : AppColors.white.withOpacity(0.9),
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(32.r),
+                          topRight: Radius.circular(32.r),
                         ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.05),
+                            blurRadius: 20,
+                            offset: const Offset(0, -10),
+                          ),
+                        ],
                       ),
-                    ],
-                  )).animate().slideY(begin: 1, end: 0, duration: 600.ms, curve: Curves.easeOutCubic),
+                      child: Row(
+                        children: [
+                          BlocBuilder<ProductRatingsCubit,
+                              ProductRatingsStates>(
+                            builder: (context, ratingState) {
+                              final isLoading =
+                                  ratingState is AddProductRatingLoadingState;
+                              return CustomLargeMainButton(
+                                width: 120.w,
+                                height: 46.h,
+                                radius: 18.r,
+                                isLoading: isLoading,
+                                onPressed: isLoading
+                                    ? null
+                                    : () => _showAddRatingSheet(
+                                          isLoading: isLoading,
+                                          ratingCubit: context
+                                              .read<ProductRatingsCubit>(),
+                                          context,
+                                          productId: id,
+                                        ),
+                                text: "Add rating",
+                                textStyle: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              )
+                                  .animate()
+                                  .fadeIn(delay: 100.ms)
+                                  .slideX(begin: -0.2);
+                            },
+                          ),
+                          SizedBox(width: 12.w),
+                          Expanded(
+                            child: BlocBuilder<CartCubit, CartState>(
+                              builder: (context, cartState) {
+                                return CustomLargeMainButton(
+                                  isLoading: cartState is AddToCartLoadingState,
+                                  onPressed: cartState is AddToCartLoadingState
+                                      ? null
+                                      : () =>
+                                          context.read<CartCubit>().addToCart(
+                                                id,
+                                                selectedOptionValueIds: prodCubit
+                                                    ?.selectedOptionValueIds,
+                                              ),
+                                  text: LocaleKeys.addToCart.tr(),
+                                  radius: 20.r,
+                                  textStyle: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                )
+                                    .animate()
+                                    .fadeIn(delay: 200.ms)
+                                    .slideX(begin: 0.2);
+                              },
+                            ),
+                          ),
+                        ],
+                      ))
+                  .animate()
+                  .slideY(
+                      begin: 1,
+                      end: 0,
+                      duration: 600.ms,
+                      curve: Curves.easeOutCubic),
             );
           },
         ),

@@ -9,7 +9,15 @@ class GetOrdersUseCase {
 
   GetOrdersUseCase(this._repository);
 
-  Future<ApiResult<List<OrderResponseDTO>>> call() async {
-    return await _repository.getOrders();
+  Future<ApiResult<OrderResponseDTO>> call({
+    String? orderStatus,
+    int? pageIndex,
+    int? pageSize,
+  }) async {
+    return await _repository.getOrders(
+      orderStatus: orderStatus,
+      pageIndex: pageIndex,
+      pageSize: pageSize,
+    );
   }
 }

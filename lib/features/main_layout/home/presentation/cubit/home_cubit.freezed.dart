@@ -25,6 +25,7 @@ mixin _$HomeState {
   int get productsPageIndex => throw _privateConstructorUsedError;
   bool get productsHasReachedMax => throw _privateConstructorUsedError;
   bool get isFetchingMoreProducts => throw _privateConstructorUsedError;
+  String? get productsSort => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
@@ -36,6 +37,7 @@ mixin _$HomeState {
             int productsPageIndex,
             bool productsHasReachedMax,
             bool isFetchingMoreProducts,
+            String? productsSort,
             String? errorMessage)
         initial,
   }) =>
@@ -50,6 +52,7 @@ mixin _$HomeState {
             int productsPageIndex,
             bool productsHasReachedMax,
             bool isFetchingMoreProducts,
+            String? productsSort,
             String? errorMessage)?
         initial,
   }) =>
@@ -64,6 +67,7 @@ mixin _$HomeState {
             int productsPageIndex,
             bool productsHasReachedMax,
             bool isFetchingMoreProducts,
+            String? productsSort,
             String? errorMessage)?
         initial,
     required TResult orElse(),
@@ -106,6 +110,7 @@ abstract class $HomeStateCopyWith<$Res> {
       int productsPageIndex,
       bool productsHasReachedMax,
       bool isFetchingMoreProducts,
+      String? productsSort,
       String? errorMessage});
 }
 
@@ -131,6 +136,7 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
     Object? productsPageIndex = null,
     Object? productsHasReachedMax = null,
     Object? isFetchingMoreProducts = null,
+    Object? productsSort = freezed,
     Object? errorMessage = freezed,
   }) {
     return _then(_value.copyWith(
@@ -162,6 +168,10 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
           ? _value.isFetchingMoreProducts
           : isFetchingMoreProducts // ignore: cast_nullable_to_non_nullable
               as bool,
+      productsSort: freezed == productsSort
+          ? _value.productsSort
+          : productsSort // ignore: cast_nullable_to_non_nullable
+              as String?,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
@@ -186,6 +196,7 @@ abstract class _$$InitialImplCopyWith<$Res>
       int productsPageIndex,
       bool productsHasReachedMax,
       bool isFetchingMoreProducts,
+      String? productsSort,
       String? errorMessage});
 }
 
@@ -209,6 +220,7 @@ class __$$InitialImplCopyWithImpl<$Res>
     Object? productsPageIndex = null,
     Object? productsHasReachedMax = null,
     Object? isFetchingMoreProducts = null,
+    Object? productsSort = freezed,
     Object? errorMessage = freezed,
   }) {
     return _then(_$InitialImpl(
@@ -240,6 +252,10 @@ class __$$InitialImplCopyWithImpl<$Res>
           ? _value.isFetchingMoreProducts
           : isFetchingMoreProducts // ignore: cast_nullable_to_non_nullable
               as bool,
+      productsSort: freezed == productsSort
+          ? _value.productsSort
+          : productsSort // ignore: cast_nullable_to_non_nullable
+              as String?,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
@@ -259,6 +275,7 @@ class _$InitialImpl implements _Initial {
       this.productsPageIndex = 1,
       this.productsHasReachedMax = false,
       this.isFetchingMoreProducts = false,
+      this.productsSort,
       this.errorMessage})
       : _randomProducts = randomProducts;
 
@@ -290,11 +307,13 @@ class _$InitialImpl implements _Initial {
   @JsonKey()
   final bool isFetchingMoreProducts;
   @override
+  final String? productsSort;
+  @override
   final String? errorMessage;
 
   @override
   String toString() {
-    return 'HomeState.initial(getCategoryState: $getCategoryState, getCompaniesState: $getCompaniesState, getRandomProductsState: $getRandomProductsState, randomProducts: $randomProducts, productsPageIndex: $productsPageIndex, productsHasReachedMax: $productsHasReachedMax, isFetchingMoreProducts: $isFetchingMoreProducts, errorMessage: $errorMessage)';
+    return 'HomeState.initial(getCategoryState: $getCategoryState, getCompaniesState: $getCompaniesState, getRandomProductsState: $getRandomProductsState, randomProducts: $randomProducts, productsPageIndex: $productsPageIndex, productsHasReachedMax: $productsHasReachedMax, isFetchingMoreProducts: $isFetchingMoreProducts, productsSort: $productsSort, errorMessage: $errorMessage)';
   }
 
   @override
@@ -316,6 +335,8 @@ class _$InitialImpl implements _Initial {
                 other.productsHasReachedMax == productsHasReachedMax) &&
             (identical(other.isFetchingMoreProducts, isFetchingMoreProducts) ||
                 other.isFetchingMoreProducts == isFetchingMoreProducts) &&
+            (identical(other.productsSort, productsSort) ||
+                other.productsSort == productsSort) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage));
   }
@@ -330,6 +351,7 @@ class _$InitialImpl implements _Initial {
       productsPageIndex,
       productsHasReachedMax,
       isFetchingMoreProducts,
+      productsSort,
       errorMessage);
 
   /// Create a copy of HomeState
@@ -351,6 +373,7 @@ class _$InitialImpl implements _Initial {
             int productsPageIndex,
             bool productsHasReachedMax,
             bool isFetchingMoreProducts,
+            String? productsSort,
             String? errorMessage)
         initial,
   }) {
@@ -362,6 +385,7 @@ class _$InitialImpl implements _Initial {
         productsPageIndex,
         productsHasReachedMax,
         isFetchingMoreProducts,
+        productsSort,
         errorMessage);
   }
 
@@ -376,6 +400,7 @@ class _$InitialImpl implements _Initial {
             int productsPageIndex,
             bool productsHasReachedMax,
             bool isFetchingMoreProducts,
+            String? productsSort,
             String? errorMessage)?
         initial,
   }) {
@@ -387,6 +412,7 @@ class _$InitialImpl implements _Initial {
         productsPageIndex,
         productsHasReachedMax,
         isFetchingMoreProducts,
+        productsSort,
         errorMessage);
   }
 
@@ -401,6 +427,7 @@ class _$InitialImpl implements _Initial {
             int productsPageIndex,
             bool productsHasReachedMax,
             bool isFetchingMoreProducts,
+            String? productsSort,
             String? errorMessage)?
         initial,
     required TResult orElse(),
@@ -414,6 +441,7 @@ class _$InitialImpl implements _Initial {
           productsPageIndex,
           productsHasReachedMax,
           isFetchingMoreProducts,
+          productsSort,
           errorMessage);
     }
     return orElse();
@@ -457,6 +485,7 @@ abstract class _Initial implements HomeState {
       final int productsPageIndex,
       final bool productsHasReachedMax,
       final bool isFetchingMoreProducts,
+      final String? productsSort,
       final String? errorMessage}) = _$InitialImpl;
 
   @override
@@ -473,6 +502,8 @@ abstract class _Initial implements HomeState {
   bool get productsHasReachedMax;
   @override
   bool get isFetchingMoreProducts;
+  @override
+  String? get productsSort;
   @override
   String? get errorMessage;
 

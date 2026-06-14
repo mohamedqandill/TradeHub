@@ -1,61 +1,37 @@
-// import 'dart:developer';
-// import 'dart:io';
+import 'dart:developer';
 
-// import 'package:hive/hive.dart';
-// import 'package:path_provider/path_provider.dart';
+import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart';
 
-// import '../models/saved_places_model.dart';
+import '../models/saved_places_model.dart';
 
-// class SavedPlacesDatabase {
-//   static const kPlacesKey = 'SavedPlaces';
+class SavedPlacesDatabase {
+  static const kPlacesKey = 'SavedPlaces';
 
-//   // static Future<void> deleteMovie(SavedPlacesModel place) async {
-//   //   final Directory appDocumentsDir = await getApplicationDocumentsDirectory();
-//   //
-//   //   // Open the box directly
-//   //   var box = await Hive.openBox<Map>(kPlacesKey, path: appDocumentsDir.path);
-//   //
-//   //   await box.delete(place);
-//   // }
+  Future<void> savePlace(SavedPlacesModel place) async {
+    final appDocumentsDir = await getApplicationDocumentsDirectory();
+    final box = await Hive.openBox<Map>(kPlacesKey, path: appDocumentsDir.path);
+    await box.add(place.toJson());
+    log('place saved: ${place.placeName}');
+  }
 
-//   // Save a movie to the local storage
-//   Future<void> savePlace(SavedPlacesModel place) async {
-//     final Directory appDocumentsDir = await getApplicationDocumentsDirectory();
+  Future<List<SavedPlacesModel>> getPlaces() async {
+    final appDocumentsDir = await getApplicationDocumentsDirectory();
+    final box = await Hive.openBox<Map>(kPlacesKey, path: appDocumentsDir.path);
 
-//     // Open the box directly
-//     var box = await Hive.openBox<Map>(kPlacesKey, path: appDocumentsDir.path);
+    final places = <SavedPlacesModel>[];
+    for (final key in box.keys) {
+      final json = box.get(key);
+      if (json != null) {
+        places.add(SavedPlacesModel.fromJson(json));
+      }
+    }
+    return places;
+  }
 
-//     await box.add(place.toJson()); // Use movie ID as the key
-//     log("place saved: ${place.placeName}");
-//   }
-
-//   // Retrieve all saved movies
-//   Future<List<SavedPlacesModel>> getPlaces() async {
-//     final Directory appDocumentsDir = await getApplicationDocumentsDirectory();
-
-//     // Open the box directly
-//     var box = await Hive.openBox<Map>(kPlacesKey, path: appDocumentsDir.path);
-
-//     // Get all values from the box
-//     List<SavedPlacesModel> movies = [];
-
-//     // Iterate over all keys in the box
-//     for (var key in box.keys) {
-//       var json = box.get(key);
-//       if (json != null) {
-//         movies.add(SavedPlacesModel.fromJson(json));
-//         // Deserialize and add to list
-//       }
-//     }
-
-//     return movies;
-//   }
-
-//   // Clear all saved films from local storage
-//   Future<void> clearSavedPlaces() async {
-//     final Directory appDocumentsDir = await getApplicationDocumentsDirectory();
-//     var box = await Hive.openBox<Map>(kPlacesKey, path: appDocumentsDir.path);
-//     await box.clear();
-//     print("All saved Places have been cleared.");
-//   }
-// }
+  Future<void> clearSavedPlaces() async {
+    final appDocumentsDir = await getApplicationDocumentsDirectory();
+    final box = await Hive.openBox<Map>(kPlacesKey, path: appDocumentsDir.path);
+    await box.clear();
+  }
+}

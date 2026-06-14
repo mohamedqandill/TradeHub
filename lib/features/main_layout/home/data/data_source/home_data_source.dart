@@ -9,7 +9,11 @@ import 'package:tradehub/features/main_layout/home/data/models/responses/get_ran
 abstract class HomeDataSource {
   Future<ApiResult<List<GetAllCategoryResponse>>> getCategory();
   Future<ApiResult<GetCompanies>> getCompanies();
-  Future<ApiResult<GetRandomProductsResponse>> getRandomProducts({int? pageIndex, int? pageSize});
+  Future<ApiResult<GetRandomProductsResponse>> getRandomProducts({
+    int? pageIndex,
+    int? pageSize,
+    String? sort,
+  });
 }
 
 @Injectable(as: HomeDataSource)
@@ -45,9 +49,17 @@ class HomeDataSourceImpl implements HomeDataSource {
   }
 
   @override
-  Future<ApiResult<GetRandomProductsResponse>> getRandomProducts({int? pageIndex, int? pageSize}) async {
+  Future<ApiResult<GetRandomProductsResponse>> getRandomProducts({
+    int? pageIndex,
+    int? pageSize,
+    String? sort,
+  }) async {
     var result = await ApiExecutor.executeApi(
-      apiCall: () => _homeApiClient.getRandomProducts(pageIndex: pageIndex, pageSize: pageSize),
+      apiCall: () => _homeApiClient.getRandomProducts(
+        pageIndex: pageIndex,
+        pageSize: pageSize,
+        sort: sort,
+      ),
     );
     switch (result) {
       case Success():

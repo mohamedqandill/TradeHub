@@ -56,8 +56,16 @@ class HomeRepoImpl implements HomeRepoContract {
   }
 
   @override
-  Future<ApiResult<GetRandomProductsResponseEntity>> getRandomProducts({int? pageIndex, int? pageSize}) async {
-    var result = await _homeDataSource.getRandomProducts(pageIndex: pageIndex, pageSize: pageSize);
+  Future<ApiResult<GetRandomProductsResponseEntity>> getRandomProducts({
+    int? pageIndex,
+    int? pageSize,
+    String? sort,
+  }) async {
+    var result = await _homeDataSource.getRandomProducts(
+      pageIndex: pageIndex,
+      pageSize: pageSize,
+      sort: sort,
+    );
 
     switch (result) {
       case Success():

@@ -10,6 +10,7 @@ class HomeState with _$HomeState {
     @Default(1) int productsPageIndex,
     @Default(false) bool productsHasReachedMax,
     @Default(false) bool isFetchingMoreProducts,
+    String? productsSort,
     String? errorMessage,
   }) = _Initial;
 }

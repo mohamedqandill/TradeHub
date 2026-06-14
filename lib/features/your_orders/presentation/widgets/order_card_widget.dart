@@ -13,7 +13,7 @@ import 'package:tradehub/features/order_details/presentation/order_details_args.
 import 'package:tradehub/features/your_orders/data/models/order_response_d_t_o.dart';
 
 class OrderCardWidget extends StatelessWidget {
-  final OrderResponseDTO order;
+  final OrderDataResponseDTO order;
   const OrderCardWidget({super.key, required this.order});
 
   @override
@@ -282,7 +282,7 @@ class OrderCardWidget extends StatelessWidget {
                               borderRadius: BorderRadius.circular(7.r),
                               child: CachedNetworkImage(
                                 imageUrl: item.imageUrl ?? "",
-                                fit: BoxFit.cover,
+                                fit: BoxFit.contain,
                                 errorWidget: (context, url, error) => Icon(
                                   Icons.image_outlined,
                                   size: 14.sp,
@@ -492,7 +492,7 @@ class OrderCardWidget extends StatelessWidget {
 
   Color _getStatusColor(String? status) {
     switch (status) {
-      case "Delivered":
+      case "Confirmed":
         return Colors.green;
       case "AwaitingPayment":
         return Colors.orange;

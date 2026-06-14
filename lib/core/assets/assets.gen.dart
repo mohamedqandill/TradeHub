@@ -144,9 +144,6 @@ class $AssetsImagesGen {
   /// File path: assets/images/Flowers.png
   AssetGenImage get flowers => const AssetGenImage('assets/images/Flowers.png');
 
-  /// File path: assets/images/Grocery.png
-  AssetGenImage get grocery => const AssetGenImage('assets/images/Grocery.png');
-
   /// File path: assets/images/Image.png
   AssetGenImage get image => const AssetGenImage('assets/images/Image.png');
 
@@ -160,9 +157,9 @@ class $AssetsImagesGen {
   AssetGenImage get trackingOnlineDeliveryOfGoods => const AssetGenImage(
       'assets/images/Tracking online delivery of goods.png');
 
-  /// File path: assets/images/accessories.png
+  /// File path: assets/images/accessories.jpg
   AssetGenImage get accessories =>
-      const AssetGenImage('assets/images/accessories.png');
+      const AssetGenImage('assets/images/accessories.jpg');
 
   /// File path: assets/images/black girl with cart.png
   AssetGenImage get blackGirlWithCart =>
@@ -171,8 +168,8 @@ class $AssetsImagesGen {
   /// File path: assets/images/blbn.png
   AssetGenImage get blbn => const AssetGenImage('assets/images/blbn.png');
 
-  /// File path: assets/images/clothes.png
-  AssetGenImage get clothes => const AssetGenImage('assets/images/clothes.png');
+  /// File path: assets/images/clothes.jpg
+  AssetGenImage get clothes => const AssetGenImage('assets/images/clothes.jpg');
 
   /// File path: assets/images/darkToggle.png
   AssetGenImage get darkToggle =>
@@ -192,9 +189,9 @@ class $AssetsImagesGen {
   AssetGenImage get dataSecurity =>
       const AssetGenImage('assets/images/data security.png');
 
-  /// File path: assets/images/electronics.png
+  /// File path: assets/images/electronics.jpg
   AssetGenImage get electronics =>
-      const AssetGenImage('assets/images/electronics.png');
+      const AssetGenImage('assets/images/electronics.jpg');
 
   /// File path: assets/images/emptyCart.png
   AssetGenImage get emptyCart =>
@@ -217,16 +214,16 @@ class $AssetsImagesGen {
   /// File path: assets/images/food_b.png
   AssetGenImage get foodB => const AssetGenImage('assets/images/food_b.png');
 
-  /// File path: assets/images/furniture.png
+  /// File path: assets/images/furniture.jpg
   AssetGenImage get furniture =>
-      const AssetGenImage('assets/images/furniture.png');
+      const AssetGenImage('assets/images/furniture.jpg');
 
   /// File path: assets/images/girl.png
   AssetGenImage get girl => const AssetGenImage('assets/images/girl.png');
 
-  /// File path: assets/images/healthAndBeauty.png
+  /// File path: assets/images/healthAndBeauty.jpg
   AssetGenImage get healthAndBeauty =>
-      const AssetGenImage('assets/images/healthAndBeauty.png');
+      const AssetGenImage('assets/images/healthAndBeauty.jpg');
 
   /// File path: assets/images/image_t.png
   AssetGenImage get imageT => const AssetGenImage('assets/images/image_t.png');
@@ -248,8 +245,8 @@ class $AssetsImagesGen {
   /// File path: assets/images/mainLogo.svg
   String get mainLogo => 'assets/images/mainLogo.svg';
 
-  /// File path: assets/images/markets.png
-  AssetGenImage get markets => const AssetGenImage('assets/images/markets.png');
+  /// File path: assets/images/markets.jpg
+  AssetGenImage get markets => const AssetGenImage('assets/images/markets.jpg');
 
   /// File path: assets/images/moon.png
   AssetGenImage get moon => const AssetGenImage('assets/images/moon.png');
@@ -257,9 +254,9 @@ class $AssetsImagesGen {
   /// File path: assets/images/person.webp
   AssetGenImage get person => const AssetGenImage('assets/images/person.webp');
 
-  /// File path: assets/images/resturants.png
-  AssetGenImage get resturants =>
-      const AssetGenImage('assets/images/resturants.png');
+  /// File path: assets/images/resturant.jpg
+  AssetGenImage get resturant =>
+      const AssetGenImage('assets/images/resturant.jpg');
 
   /// File path: assets/images/splashLogo.svg
   String get splashLogo => 'assets/images/splashLogo.svg';
@@ -282,7 +279,6 @@ class $AssetsImagesGen {
         cybersecurityWithPasswordProtection,
         digitalShoppingAndOnlinePayment,
         flowers,
-        grocery,
         image,
         quickShop,
         sun,
@@ -315,7 +311,7 @@ class $AssetsImagesGen {
         markets,
         moon,
         person,
-        resturants,
+        resturant,
         splashLogo,
         topWave,
         tshirt,
@@ -327,6 +323,9 @@ class $AssetsImagesGen {
 class $AssetsLottieGen {
   const $AssetsLottieGen();
 
+  /// File path: assets/lottie/emptyOrders.json
+  String get emptyOrders => 'assets/lottie/emptyOrders.json';
+
   /// File path: assets/lottie/loading.json
   String get loading => 'assets/lottie/loading.json';
 
@@ -335,7 +334,7 @@ class $AssetsLottieGen {
       'assets/lottie/loadingProductAnimation.json';
 
   /// List of all assets
-  List<String> get values => [loading, loadingProductAnimation];
+  List<String> get values => [emptyOrders, loading, loadingProductAnimation];
 }
 
 class $AssetsTranslationsGen {

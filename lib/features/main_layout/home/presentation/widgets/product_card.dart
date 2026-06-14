@@ -26,12 +26,17 @@ class ProductCard extends StatelessWidget {
     required this.mainColor,
   });
 
+  // ─── Offer helpers ───────────────────────────────────────────────────────────
+
+  bool get _isOfferActive => product.isOfferActive == true;
+
+  // ─────────────────────────────────────────────────────────────────────────────
+
   @override
   Widget build(BuildContext context) {
     final int rating = product.averageRating ?? 0;
     final bool isAddingToCart = cartCubit.loadingProductId == product.id;
 
-    // Premium Color System
     Color cardBgColor = isDark ? const Color(0xFF0A0A0B) : AppColors.white;
     Color borderColor = isDark
         ? Colors.white.withOpacity(0.06)
@@ -54,8 +59,10 @@ class ProductCard extends StatelessWidget {
           color: cardBgColor,
           borderRadius: BorderRadius.circular(24.r),
           border: Border.all(
-            color: borderColor,
-            width: 1.2,
+            color: _isOfferActive
+                ? mainColor.withOpacity(isDark ? 0.35 : 0.28)
+                : borderColor,
+            width: _isOfferActive ? 1.5 : 1.2,
           ),
           boxShadow: [
             BoxShadow(
@@ -79,11 +86,9 @@ class ProductCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Vendor & Category
                   _buildVendorHeader(context, subtitleColor),
                   SizedBox(height: 6.h),
 
-                  // Title (Luxury Typography)
                   Text(
                     product.name ?? "",
                     maxLines: 1,
@@ -97,7 +102,6 @@ class ProductCard extends StatelessWidget {
                   ),
                   SizedBox(height: 4.h),
 
-                  // Description
                   if (product.description?.isNotEmpty == true)
                     Text(
                       product.description!,
@@ -111,7 +115,6 @@ class ProductCard extends StatelessWidget {
                     ),
                   SizedBox(height: 8.h),
 
-                  // Attributes Section
                   _buildAttributesSection(isDark),
                   SizedBox(height: 8.h),
 
@@ -119,21 +122,19 @@ class ProductCard extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      _buildRatingRow(rating, product.ratingCount ?? 0, subtitleColor),
-                      Text(
-                        "${product.price ?? 0} EGP",
-                        style: GoogleFonts.shareTechMono(
-                          color: mainColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15.sp,
-                          letterSpacing: 0.2,
-                        ),
-                      ),
+                      _buildRatingRow(
+                          rating, product.ratingCount ?? 0, subtitleColor),
+                      _buildPriceSection(subtitleColor),
                     ],
                   ),
-                  SizedBox(height: 10.h),
+                  SizedBox(height: 8.h),
 
-                  // Bottom Action Button (Full Width within info col)
+                  // Offer Banner (days left)
+                  if (_isOfferActive) ...[
+                    _buildOfferBanner(),
+                    SizedBox(height: 8.h),
+                  ],
+
                   _buildBottomAction(context, isAddingToCart),
                 ],
               ),
@@ -144,18 +145,16 @@ class ProductCard extends StatelessWidget {
     );
   }
 
+  // ─── Image Section ────────────────────────────────────────────────────────────
+
   Widget _buildImageSection(BuildContext context) {
     return Stack(
       children: [
-        // Product Image Container
-        ClipRRect(
-          borderRadius: BorderRadius.circular(16.r),
-          child: Container(
-            height: 145.h,
-            width: 115.w,
-            color: isDark
-                ? Colors.white.withOpacity(0.03)
-                : AppColors.lightGrey.withOpacity(0.4),
+        Container(
+          height: 145.h,
+          width: 115.w,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(16.r),
             child: CachedNetworkImage(
               fadeInDuration: Duration.zero,
               fadeOutDuration: Duration.zero,
@@ -172,14 +171,23 @@ class ProductCard extends StatelessWidget {
           ),
         ),
 
-        // Glassmorphic Favourite Button overlay
+        // Discount badge — top-left corner of image
+        if (_isOfferActive && (product.discountPercentage ?? 0) > 0)
+          Positioned(
+            top: 0,
+            left: 0,
+            child: _buildDiscountBadge(),
+          ),
+
+        // Favourite button — top-right corner
         Positioned(
           top: 8.h,
           right: 8.w,
           child: Container(
             padding: EdgeInsets.all(3.sp),
             decoration: BoxDecoration(
-              color: (isDark ? const Color(0xFF0A0A0B) : Colors.white).withOpacity(0.9),
+              color: (isDark ? const Color(0xFF0A0A0B) : Colors.white)
+                  .withOpacity(0.9),
               shape: BoxShape.circle,
               boxShadow: const [
                 BoxShadow(
@@ -211,6 +219,142 @@ class ProductCard extends StatelessWidget {
       ],
     );
   }
+
+  // ─── Discount Badge ───────────────────────────────────────────────────────────
+
+  Widget _buildDiscountBadge() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 7.w, vertical: 4.h),
+      decoration: BoxDecoration(
+        color: const Color(0xFFE53935),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(16.r),
+          bottomRight: Radius.circular(10.r),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xFFE53935).withOpacity(0.35),
+            blurRadius: 6,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Text(
+        "-${product.discountPercentage ?? 0}%",
+        style: GoogleFonts.manrope(
+          color: Colors.white,
+          fontSize: 10.sp,
+          fontWeight: FontWeight.w900,
+          letterSpacing: 0.3,
+        ),
+      ),
+    );
+  }
+
+  // ─── Price Section ────────────────────────────────────────────────────────────
+
+  Widget _buildPriceSection(Color subtitleColor) {
+    if (!_isOfferActive || product.finalPrice == null) {
+      // No active offer — show normal price
+      return Text(
+        "${product.price ?? 0} EGP",
+        style: GoogleFonts.shareTechMono(
+          color: mainColor,
+          fontWeight: FontWeight.bold,
+          fontSize: 15.sp,
+          letterSpacing: 0.2,
+        ),
+      );
+    }
+
+    // Active offer — show original (struck) + final price
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Text(
+          "${product.price ?? 0} EGP",
+          style: GoogleFonts.shareTechMono(
+            color: subtitleColor.withOpacity(0.6),
+            fontWeight: FontWeight.w500,
+            fontSize: 10.sp,
+            decoration: TextDecoration.lineThrough,
+            decorationColor: subtitleColor.withOpacity(0.6),
+          ),
+        ),
+        Text(
+          "${product.finalPrice} EGP",
+          style: GoogleFonts.shareTechMono(
+            color: const Color(0xFFE53935),
+            fontWeight: FontWeight.bold,
+            fontSize: 15.sp,
+            letterSpacing: 0.2,
+          ),
+        ),
+      ],
+    );
+  }
+
+  int? get _daysLeft {
+    if (product.offerStartDate == null || product.offerEndDate == null)
+      return null;
+
+    final now = DateTime.now();
+    final start = DateTime.tryParse(product.offerStartDate!);
+    final end = DateTime.tryParse(product.offerEndDate!);
+
+    if (start == null || end == null) return null;
+    if (now.isBefore(start)) return null;
+    if (now.isAfter(end)) return 0;
+
+    final today = DateTime(now.year, now.month, now.day);
+    final endDay = DateTime(end.year, end.month, end.day);
+
+    print(endDay.difference(today).inDays);
+    return endDay.difference(today).inDays;
+  }
+  // ─── Offer Banner (days left) ─────────────────────────────────────────────────
+
+  Widget _buildOfferBanner() {
+    final days = _daysLeft;
+    final Color bannerBg = isDark
+        ? const Color(0xFFE53935).withOpacity(0.12)
+        : const Color(0xFFFFEBEE);
+    const Color bannerText = Color(0xFFE53935);
+
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 5.h),
+      decoration: BoxDecoration(
+        color: bannerBg,
+        borderRadius: BorderRadius.circular(8.r),
+        border: Border.all(
+          color: const Color(0xFFE53935).withOpacity(isDark ? 0.25 : 0.18),
+          width: 0.8,
+        ),
+      ),
+      child: Row(
+        children: [
+          Icon(
+            Icons.local_fire_department_rounded,
+            size: 13.sp,
+            color: bannerText,
+          ),
+          SizedBox(width: 5.w),
+          Text(
+            "${days.toString()} days left",
+            style: GoogleFonts.manrope(
+              color: bannerText,
+              fontSize: 10.sp,
+              fontWeight: FontWeight.w700,
+              letterSpacing: 0.1,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // ─── Vendor Header ────────────────────────────────────────────────────────────
 
   Widget _buildVendorHeader(BuildContext context, Color subtitleColor) {
     return Row(
@@ -280,6 +424,8 @@ class ProductCard extends StatelessWidget {
     );
   }
 
+  // ─── Attributes ───────────────────────────────────────────────────────────────
+
   Widget _buildAttributesSection(bool isDark) {
     if (product.attributes == null || product.attributes!.isEmpty) {
       return const SizedBox();
@@ -322,6 +468,8 @@ class ProductCard extends StatelessWidget {
     );
   }
 
+  // ─── Rating Row ───────────────────────────────────────────────────────────────
+
   Widget _buildRatingRow(int rating, int ratingCount, Color subtitleColor) {
     return Row(
       children: [
@@ -352,8 +500,9 @@ class ProductCard extends StatelessWidget {
     );
   }
 
+  // ─── Bottom Action Button ─────────────────────────────────────────────────────
+
   Widget _buildBottomAction(BuildContext context, bool isAddingToCart) {
-    // Elegant luxury linear gradient blend utilizing mainColor
     final Gradient premiumGradient = LinearGradient(
       colors: [
         mainColor,
@@ -389,34 +538,34 @@ class ProductCard extends StatelessWidget {
           ),
           child: Center(
             child: isAddingToCart
-              ? SizedBox(
-                  width: 14.sp,
-                  height: 14.sp,
-                  child: const CircularProgressIndicator(
-                    strokeWidth: 2,
-                    color: Colors.white,
-                  ),
-                )
-              : Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.add_shopping_cart_rounded,
-                      size: 14.sp,
+                ? SizedBox(
+                    width: 14.sp,
+                    height: 14.sp,
+                    child: const CircularProgressIndicator(
+                      strokeWidth: 2,
                       color: Colors.white,
                     ),
-                    SizedBox(width: 6.w),
-                    Text(
-                      "ADD TO CART",
-                      style: GoogleFonts.manrope(
+                  )
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.add_shopping_cart_rounded,
+                        size: 14.sp,
                         color: Colors.white,
-                        fontSize: 10.sp,
-                        fontWeight: FontWeight.w800,
-                        letterSpacing: 0.5,
                       ),
-                    ),
-                  ],
-                ),
+                      SizedBox(width: 6.w),
+                      Text(
+                        "ADD TO CART",
+                        style: GoogleFonts.manrope(
+                          color: Colors.white,
+                          fontSize: 10.sp,
+                          fontWeight: FontWeight.w800,
+                          letterSpacing: 0.5,
+                        ),
+                      ),
+                    ],
+                  ),
           ),
         ),
       ),

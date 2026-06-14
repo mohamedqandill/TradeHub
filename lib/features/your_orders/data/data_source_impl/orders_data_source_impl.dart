@@ -12,9 +12,17 @@ class OrdersDataSourceImpl implements OrdersDataSource {
   OrdersDataSourceImpl(this._apiClient);
 
   @override
-  Future<ApiResult<List<OrderResponseDTO>>> getOrders() async {
-    return await ApiExecutor.executeApi<List<OrderResponseDTO>>(
-      apiCall: () => _apiClient.getOrders(),
+  Future<ApiResult<OrderResponseDTO>> getOrders({
+    String? orderStatus,
+    int? pageIndex,
+    int? pageSize,
+  }) async {
+    return await ApiExecutor.executeApi<OrderResponseDTO>(
+      apiCall: () => _apiClient.getOrders(
+        orderStatus: orderStatus,
+        pageIndex: pageIndex,
+        pageSize: pageSize,
+      ),
     );
   }
 }

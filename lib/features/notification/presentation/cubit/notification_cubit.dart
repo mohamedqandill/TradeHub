@@ -10,13 +10,13 @@ class NotificationCubit extends Cubit<NotificationState> {
   final NotificationRepository _repository;
 
   NotificationCubit(this._repository) : super(NotificationInitial());
-List<NotificationModel> notifications = [];
+  List<NotificationModel> notifications = [];
   Future<void> fetchNotifications() async {
     emit(NotificationLoading());
     final result = await _repository.getAllNotifications();
     switch (result) {
       case Success():
-      notifications=result.data ?? [];
+        notifications = result.data ?? [];
         emit(NotificationSuccess(result.data ?? []));
       case Error():
         emit(NotificationError(result.error!));
@@ -30,7 +30,7 @@ List<NotificationModel> notifications = [];
         emit(UnreadCountSuccess(result.data ?? 0));
       case Error():
         emit(UnreadCountError(result.error!));
-    } 
+    }
   }
 
   Future<void> markAsRead(int id) async {
@@ -38,10 +38,25 @@ List<NotificationModel> notifications = [];
     final result = await _repository.markAsRead(id);
     switch (result) {
       case Success():
-      fetchNotifications();
-        emit(NotificationMarkSuccess());
+        notifications = notifications
+            .map((e) => e.id == id ? e.copyWith(isReadState: true) : e)
+            .toList();
+        emit(NotificationSuccess(notifications));
       case Error():
-        emit(NotificationMarkError(result.error!));
-    } 
+        emit(NotificationError(result.error!));
+    }
+  }
+
+  Future<void> markAllAsRead(List<int> ids) async {
+    emit(NotificationMarkLoading());
+    final result = await Future.wait(ids.map((e) => _repository.markAsRead(e)));
+
+    switch (result) {
+      case Success():
+        await fetchNotifications();
+
+      case Error():
+        return;
+    }
   }
 }

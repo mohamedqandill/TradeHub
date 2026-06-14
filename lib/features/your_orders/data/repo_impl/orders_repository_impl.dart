@@ -11,7 +11,15 @@ class OrdersRepositoryImpl implements OrdersRepository {
   OrdersRepositoryImpl(this._dataSource);
 
   @override
-  Future<ApiResult<List<OrderResponseDTO>>> getOrders() async {
-    return await _dataSource.getOrders();
+  Future<ApiResult<OrderResponseDTO>> getOrders({
+    String? orderStatus,
+    int? pageIndex,
+    int? pageSize,
+  }) async {
+    return await _dataSource.getOrders(
+      orderStatus: orderStatus,
+      pageIndex: pageIndex,
+      pageSize: pageSize,
+    );
   }
 }

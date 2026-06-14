@@ -222,6 +222,7 @@ class _CartScreenBodyState extends State<CartScreenBody>
             title: item.productName,
             price: item.price.toString(),
             quantity: item.quantity,
+            options: item.options,
             onUpdateQuantity: (q) {
               if (q == 0) {
                 cubit.removeItem(

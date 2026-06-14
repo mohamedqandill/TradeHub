@@ -38,6 +38,9 @@ Items _$ItemsFromJson(Map<String, dynamic> json) => Items(
       price: (json['price'] as num).toInt(),
       quantity: (json['quantity'] as num).toInt(),
       total: (json['total'] as num).toInt(),
+      options: (json['options'] as List<dynamic>?)
+          ?.map((e) => CartOptionDTO.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$ItemsToJson(Items instance) => <String, dynamic>{
@@ -48,4 +51,21 @@ Map<String, dynamic> _$ItemsToJson(Items instance) => <String, dynamic>{
       'price': instance.price,
       'quantity': instance.quantity,
       'total': instance.total,
+      'options': instance.options,
+    };
+
+CartOptionDTO _$CartOptionDTOFromJson(Map<String, dynamic> json) =>
+    CartOptionDTO(
+      productOptionValueId: (json['productOptionValueId'] as num?)?.toInt(),
+      optionName: json['optionName'] as String?,
+      valueName: json['valueName'] as String?,
+      extraPrice: (json['extraPrice'] as num?)?.toInt(),
+    );
+
+Map<String, dynamic> _$CartOptionDTOToJson(CartOptionDTO instance) =>
+    <String, dynamic>{
+      'productOptionValueId': instance.productOptionValueId,
+      'optionName': instance.optionName,
+      'valueName': instance.valueName,
+      'extraPrice': instance.extraPrice,
     };

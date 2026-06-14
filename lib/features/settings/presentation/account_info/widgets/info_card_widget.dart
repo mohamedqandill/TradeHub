@@ -69,7 +69,7 @@ class InfoCardWidget extends StatelessWidget {
                   value,
                   style: context.base.theme.textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w700,
-                    fontSize: 16.sp,
+                    fontSize: 14.sp,
                     color:
                         context.isDarkMode ? AppColors.white : AppColors.black,
                   ),

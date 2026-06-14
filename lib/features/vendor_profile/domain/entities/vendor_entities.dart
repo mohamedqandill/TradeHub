@@ -48,6 +48,13 @@ class VendorProductEntity {
 
   final String? imageUrl;
 
+  final bool? hasOffer;
+  final bool? isOfferActive;
+  final int? discountPercentage;
+  final String? offerStartDate;
+  final String? offerEndDate;
+  final int? finalPrice;
+
   VendorProductEntity({
     required this.imageUrl,
     required this.id,
@@ -60,6 +67,12 @@ class VendorProductEntity {
     required this.averageRating,
     required this.ratingCount,
     required this.isFavourite,
+    required this.hasOffer,
+    required this.isOfferActive,
+    required this.discountPercentage,
+    required this.offerStartDate,
+    required this.offerEndDate,
+    required this.finalPrice,
   });
 }
 

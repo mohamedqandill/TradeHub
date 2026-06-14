@@ -381,6 +381,24 @@ class OrderDetailsBody extends StatelessWidget {
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
+                        if (item.options != null &&
+                            item.options!.isNotEmpty) ...[
+                          SizedBox(height: 4.h),
+                          Wrap(
+                            spacing: 4.w,
+                            children: item.options!.map((opt) {
+                              final isLast = item.options!.last == opt;
+                              return Text(
+                                "${opt.optionName}: ${opt.valueName}${isLast ? "" : "  •"}",
+                                style: TextStyle(
+                                  fontSize: 11.sp,
+                                  color: AppColors.grey,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                        ],
                         SizedBox(height: 8.h),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -588,16 +606,18 @@ class OrderDetailsBody extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 12.h),
-                Text(
-                  order.maskedCardNumber ?? tr("•••• •••• •••• 2346"),
-                  style: TextStyle(
-                    color: textColor,
-                    fontWeight: FontWeight.w800,
-                    letterSpacing: 2.0,
-                    fontSize: 13.sp,
-                    fontFamily: 'monospace',
-                  ),
-                ),
+                isPaid
+                    ? Text(
+                        order.maskedCardNumber ?? tr("•••• •••• •••• 2346"),
+                        style: TextStyle(
+                          color: textColor,
+                          fontWeight: FontWeight.w800,
+                          letterSpacing: 2.0,
+                          fontSize: 13.sp,
+                          fontFamily: 'monospace',
+                        ),
+                      )
+                    : const SizedBox.shrink(),
               ],
             ),
           ),

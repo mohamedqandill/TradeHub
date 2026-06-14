@@ -26,4 +26,17 @@ class NotificationModel {
       _$NotificationModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$NotificationModelToJson(this);
+
+ NotificationModel copyWith({bool? isReadState}){
+    return NotificationModel(
+      id: id,
+      userId: userId,
+      title: title,
+      message: message,
+      type: type,
+      isRead: isReadState ?? isRead,
+      createdAt: createdAt,
+    );
+
+  }
 }

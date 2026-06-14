@@ -25,6 +25,7 @@ import 'package:tradehub/features/main_layout/home/presentation/widgets/custom_r
 import 'package:tradehub/features/main_layout/home/presentation/widgets/home_header_widget.dart';
 import 'package:tradehub/features/main_layout/home/presentation/widgets/home_offer_card.dart';
 import 'package:tradehub/features/main_layout/home/presentation/widgets/product_card.dart';
+import 'package:tradehub/features/main_layout/home/presentation/widgets/product_sort_bottom_sheet.dart';
 import 'package:tradehub/features/main_layout/home/presentation/widgets/products_section.dart';
 import 'package:tradehub/features/main_layout/home/presentation/widgets/vendors_section.dart';
 import 'package:tradehub/main.dart';
@@ -49,6 +50,8 @@ class _HomeScreenBodyState extends State<HomeScreenBody> with RouteAware {
   Timer? _debounceTimer;
   final TextEditingController _searchController = TextEditingController();
   final FocusNode _searchFocusNode = FocusNode();
+  final GlobalKey _productsSectionKey = GlobalKey();
+  bool _scrollAfterSortLoad = false;
 
   @override
   void didChangeDependencies() {
@@ -93,6 +96,31 @@ class _HomeScreenBodyState extends State<HomeScreenBody> with RouteAware {
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.offset;
     return currentScroll >= (maxScroll * 0.9);
+  }
+
+  void _scrollToProductsSection({bool fromSort = false}) {
+    if (fromSort) _scrollAfterSortLoad = true;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted || !_scrollController.hasClients) return;
+
+      final sectionContext = _productsSectionKey.currentContext;
+      if (sectionContext != null) {
+        Scrollable.ensureVisible(
+          sectionContext,
+          duration: const Duration(milliseconds: 450),
+          curve: Curves.easeInOut,
+          alignment: 0.02,
+        );
+        return;
+      }
+
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 450),
+        curve: Curves.easeInOut,
+      );
+    });
   }
 
   getSavedPlaceName() {
@@ -149,6 +177,11 @@ class _HomeScreenBodyState extends State<HomeScreenBody> with RouteAware {
                     .map((e) => e.id)
                     .toList(),
               );
+
+          if (_scrollAfterSortLoad) {
+            _scrollAfterSortLoad = false;
+            _scrollToProductsSection();
+          }
         }
       },
       builder: (context, state) {
@@ -180,9 +213,10 @@ class _HomeScreenBodyState extends State<HomeScreenBody> with RouteAware {
             children: [
               // Main Home Scrollable Listing
               RefreshIndicator(
+                color: context.mainColor,
                 onRefresh: () async {
-                 getSavedPlaceName();
-                 await   cubit.getRandomProducts();
+                  getSavedPlaceName();
+                  await cubit.getRandomProducts();
                 },
                 child: ListView(
                   controller: _scrollController,
@@ -216,7 +250,6 @@ class _HomeScreenBodyState extends State<HomeScreenBody> with RouteAware {
                             isLoading:
                                 state.getCategoryState == RequestStates.loading,
                           ).animate().fadeIn(delay: 300.ms).slideY(begin: 0.1),
-                          SizedBox(height: 26.h),
                           const HomeOfferCard()
                               .animate()
                               .fadeIn(delay: 400.ms)
@@ -232,21 +265,50 @@ class _HomeScreenBodyState extends State<HomeScreenBody> with RouteAware {
                                 RequestStates.loading,
                             cubit: cubit,
                           ).animate().fadeIn(delay: 600.ms).slideY(begin: 0.1),
-                          SizedBox(height: 36.h),
-                          CustomRowHeadline(
-                            title: LocaleKeys.popularProducts.tr(),
-                            subTitle: "",
-                          ).animate().fadeIn(delay: 700.ms).slideX(begin: -0.2),
-                          SizedBox(height: 6.h),
-                          ProductsSection(
-                            isLoading: state.getRandomProductsState ==
-                                RequestStates.loading,
-                          ).animate().fadeIn(delay: 800.ms).slideY(begin: 0.1),
+                          SizedBox(height: 20.h),
+                          KeyedSubtree(
+                            key: _productsSectionKey,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                CustomRowHeadline(
+                                  title: LocaleKeys.popularProducts.tr(),
+                                  subTitle: "",
+                                  trailing: BlocBuilder<HomeCubit, HomeState>(
+                                    buildWhen: (prev, curr) =>
+                                        prev.productsSort != curr.productsSort,
+                                    builder: (context, state) {
+                                      final hasActiveSort =
+                                          state.productsSort != null &&
+                                              state.productsSort!.isNotEmpty;
+                                      return ProductSortFilterButton(
+                                        isActive: hasActiveSort,
+                                        onTap: () => showProductSortBottomSheet(
+                                          context,
+                                          onSortSelected: () =>
+                                              _scrollToProductsSection(
+                                            fromSort: true,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ).animate().fadeIn(delay: 700.ms).slideX(begin: -0.2),
+                                SizedBox(height: 6.h),
+                                ProductsSection(
+                                  isLoading: state.getRandomProductsState ==
+                                      RequestStates.loading,
+                                ).animate().fadeIn(delay: 800.ms).slideY(begin: 0.1),
+                              ],
+                            ),
+                          ),
                           if (state.isFetchingMoreProducts)
                             Padding(
                               padding: EdgeInsets.symmetric(vertical: 16.h),
-                              child: const Center(
-                                child: CircularProgressIndicator(),
+                              child: Center(
+                                child: CircularProgressIndicator(
+                                  color: context.mainColor,
+                                ),
                               ),
                             ),
                           SizedBox(height: 24.h),
@@ -469,9 +531,6 @@ class _HomeScreenBodyState extends State<HomeScreenBody> with RouteAware {
       listeners: [
         BlocListener<CartCubit, CartState>(
           listener: (context, state) {
-            if (state is AddToCartSuccessState) {
-              showSuccessSnackBar(messageTitle: "Added To Cart");
-            }
             if (state is AddToCartErrorState) {
               showFailureSnackBar(context, messageTitle: "Failed");
             }

@@ -201,6 +201,8 @@ import '../../../features/product_details/domain/use_cases/add_to_cart_usecase.d
     as _i875;
 import '../../../features/product_details/domain/use_cases/get_product_details_usecase.dart'
     as _i631;
+import '../../../features/product_details/domain/use_cases/get_product_options_usecase.dart'
+    as _i119;
 import '../../../features/product_details/presentation/cubit/product_details_cubit.dart'
     as _i39;
 import '../../../features/product_ratings/data/api/product_ratings_api_client.dart'
@@ -526,6 +528,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i631.GetProductDetailsUseCase>(() =>
         _i631.GetProductDetailsUseCase(
             gh<_i1070.ProductDetailsRepositoryContract>()));
+    gh.factory<_i119.GetProductOptionsUseCase>(() =>
+        _i119.GetProductOptionsUseCase(
+            gh<_i1070.ProductDetailsRepositoryContract>()));
     gh.factory<_i395.RegisterBloc>(() => _i395.RegisterBloc(
           gh<_i490.RegisterUseCase>(),
           gh<_i501.SendOTPUseCase>(),
@@ -536,6 +541,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i39.ProductDetailsCubit>(() => _i39.ProductDetailsCubit(
           gh<_i153.SharedProductRepository>(),
           gh<_i631.GetProductDetailsUseCase>(),
+          gh<_i119.GetProductOptionsUseCase>(),
           gh<_i1057.ToggleFavoriteUseCase>(),
         ));
     gh.factory<_i459.ForgetPasswordBloc>(
