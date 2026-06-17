@@ -42,7 +42,18 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   Widget build(BuildContext context) {
     return BlocProvider.value(
       value: _orderDetailsCubit,
-      child: BlocBuilder<OrderDetailsCubit, OrderDetailsState>(
+      child: BlocConsumer<OrderDetailsCubit, OrderDetailsState>(
+        listener: (context, detailsState) {
+          if (detailsState is CancelOrderSuccess) {
+            OrdersCubit.instance?.getOrders(isRefresh: true);
+            context
+                .read<OrderDetailsCubit>()
+                .getOrderDetails(widget.args.orderId);
+            showSuccessSnackBar(messageTitle: detailsState.message);
+          } else if (detailsState is CancelOrderError) {
+            showFailureSnackBar(context, messageTitle: detailsState.message);
+          }
+        },
         builder: (context, detailsState) => RefreshIndicator(
           onRefresh: () async {
             await context
@@ -87,41 +98,74 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
 
                     return Padding(
                       padding: EdgeInsets.symmetric(
-                          horizontal: 40.w, vertical: 20.h),
+                        horizontal: 10.w,
+                        vertical: 20.h,
+                      ),
                       child: BlocConsumer<CheckoutCubit, CheckoutState>(
                         listener: (context, checkoutState) {},
                         builder: (context, checkoutState) {
                           return isAwaitingPayment
-                              ? CustomLargeMainButton(
-                                  text: "Complete Payment",
-                                  radius: 25.r,
-                                  isLoading: checkoutState is CheckoutLoading ||
-                                      checkoutState is PaymentWebhookLoading,
-                                  textStyle: context
-                                      .base.theme.textTheme.titleLarge!
-                                      .copyWith(
-                                          color: AppColors.white,
-                                          fontSize: 16.sp),
-                                  onPressed: () {
-                                    final savedUrl = HiveStorageHelper()
-                                        .getString(
-                                            "payment_url_order_${order.id}");
-                                    if (savedUrl != null &&
-                                        savedUrl.isNotEmpty) {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              PaymentWebViewScreen(
-                                            url: savedUrl,
-                                            cubit:
-                                                context.read<CheckoutCubit>(),
-                                            orderId: widget.args.orderId,
-                                          ),
-                                        ),
-                                      );
-                                    }
-                                  },
+                              ? Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Expanded(
+                                      child: CustomLargeMainButton(
+                                          text: "Cancel Order",
+                                          radius: 25.r,
+                                          isLoading: checkoutState
+                                                  is CheckoutLoading ||
+                                              checkoutState
+                                                  is PaymentWebhookLoading,
+                                          textStyle: context
+                                              .base.theme.textTheme.titleLarge!
+                                              .copyWith(
+                                                  color: AppColors.white,
+                                                  fontSize: 12.sp),
+                                          onPressed: () {
+                                            context
+                                                .read<OrderDetailsCubit>()
+                                                .cancelOrder(
+                                                    widget.args.orderId);
+                                          }),
+                                    ),
+                                    SizedBox(width: 12.w),
+                                    Expanded(
+                                      child: CustomLargeMainButton(
+                                        text: "Complete\n Payment",
+                                        radius: 25.r,
+                                        isLoading:
+                                            checkoutState is CheckoutLoading ||
+                                                checkoutState
+                                                    is PaymentWebhookLoading,
+                                        textStyle: context
+                                            .base.theme.textTheme.titleLarge!
+                                            .copyWith(
+                                                color: AppColors.white,
+                                                fontSize: 12.sp),
+                                        onPressed: () {
+                                          final savedUrl = HiveStorageHelper()
+                                              .getString(
+                                                  "payment_url_order_${order.id}");
+                                          if (savedUrl != null &&
+                                              savedUrl.isNotEmpty) {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    PaymentWebViewScreen(
+                                                  url: savedUrl,
+                                                  cubit: context
+                                                      .read<CheckoutCubit>(),
+                                                  orderId: widget.args.orderId,
+                                                ),
+                                              ),
+                                            );
+                                          }
+                                        },
+                                      ),
+                                    ),
+                                  ],
                                 )
                               : const SizedBox();
                         },

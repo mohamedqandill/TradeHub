@@ -1,24 +1,25 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:tradehub/core/api/api_constant/api_constant.dart';
+import 'package:tradehub/features/offers/data/models/offers_response.dart';
 
 part 'cart_response_d_t_o.g.dart';
 
 @JsonSerializable()
 class CartResponseDTO {
   @JsonKey(name: ApiConstants.id)
-  final int id;
+  final int? id;
   @JsonKey(name: ApiConstants.buyerId)
-  final String buyerId;
+  final String? buyerId;
   @JsonKey(name: ApiConstants.companyName)
-  final String companyName;
+  final String? companyName;
   @JsonKey(name: ApiConstants.companyId)
-  final String companyId;
+  final String? companyId;
   @JsonKey(name: ApiConstants.items)
-  final List<Items> items;
+  final List<Items>? items;
   @JsonKey(name: ApiConstants.logoUrl)
   final String? logoUrl;
   @JsonKey(name: ApiConstants.subTotal, defaultValue: 0)
-  final int subTotal;
+  final int? subTotal;
 
   const CartResponseDTO({
     required this.id,
@@ -27,7 +28,7 @@ class CartResponseDTO {
     required this.companyId,
     required this.items,
     required this.subTotal,
-      required this.logoUrl,
+    required this.logoUrl,
   });
 
   factory CartResponseDTO.fromJson(Map<String, dynamic> json) =>
@@ -39,32 +40,40 @@ class CartResponseDTO {
 @JsonSerializable()
 class Items {
   @JsonKey(name: ApiConstants.id)
-  final int id;
+  final int? id;
   @JsonKey(name: ApiConstants.productId)
-  final int productId;
+  final int? productId;
   @JsonKey(name: ApiConstants.productName)
-  final String productName;
+  final String? productName;
   @JsonKey(name: ApiConstants.pictureUrl)
-  final String pictureUrl;
+  final String? pictureUrl;
   @JsonKey(name: ApiConstants.price)
-  final int price;
+  final int? price;
   @JsonKey(name: ApiConstants.quantity)
-  final int quantity;
+  final int? quantity;
   @JsonKey(name: ApiConstants.total)
-  final int total;
+  final int? total;
   @JsonKey(name: ApiConstants.options)
   final List<CartOptionDTO>? options;
+  @JsonKey(name: ApiConstants.bundleOfferId)
+  final int? bundleOfferId;
+  @JsonKey(name: ApiConstants.isBunddleOffer)
+  final bool? isBundleOffer;
+  @JsonKey(name: ApiConstants.bundleOffer)
+  final OfferResponse? offerBundle;
 
-  const Items({
-    required this.id,
-    required this.productId,
-    required this.productName,
-    required this.pictureUrl,
-    required this.price,
-    required this.quantity,
-    required this.total,
-    this.options,
-  });
+  const Items(
+      {required this.id,
+      required this.productId,
+      required this.productName,
+      required this.pictureUrl,
+      required this.price,
+      required this.quantity,
+      required this.total,
+      this.options,
+      this.offerBundle,
+      this.bundleOfferId,
+      this.isBundleOffer});
 
   factory Items.fromJson(Map<String, dynamic> json) => _$ItemsFromJson(json);
 
@@ -94,5 +103,3 @@ class CartOptionDTO {
 
   Map<String, dynamic> toJson() => _$CartOptionDTOToJson(this);
 }
-
-

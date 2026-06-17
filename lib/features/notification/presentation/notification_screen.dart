@@ -30,37 +30,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
         ..fetchNotifications()
         ..fetchUnreadCount(),
       child: Scaffold(
-        appBar: MainLayoutAppBar(
-          widgets: [
-            notificationIds != null && notificationIds!.isEmpty
-                ? const SizedBox.shrink()
-                : InkWell(
-                    onTap: () {
-                      if (notificationIds!.isEmpty) {
-                        return;
-                      }
-                      cubit.markAllAsRead(notificationIds!);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      child: Container(
-                        decoration: const BoxDecoration(
-                            color: AppColors.lightGrey,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10))),
-                        child: Center(
-                            child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 5.w),
-                          child: Text(
-                            "Mark All",
-                            style: context.base.theme.textTheme.bodySmall
-                                ?.copyWith(color: Colors.blue),
-                          ),
-                        )),
-                      ),
-                    ),
-                  )
-          ],
+        appBar: const MainLayoutAppBar(
           title: "Notifications",
           enableLeading: true,
         ),
@@ -155,10 +125,12 @@ class NotificationItemWidget extends StatelessWidget {
                     children: [
                       Text(
                         notification.title,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
-                          color: Color(0xFF1A1A1A),
+                          color: context.isDarkMode
+                              ? AppColors.white
+                              : Color(0xFF1A1A1A),
                         ),
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -209,26 +181,32 @@ class NotificationItemWidget extends StatelessWidget {
                       ),
                       // 👇 Mark as read button — only shows when unread
                       if (!notification.isRead && onMarkAsRead != null)
-                        GestureDetector(
-                          onTap: onMarkAsRead,
-                          child: Container(
-                            margin: const EdgeInsets.only(top: 8),
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 4),
-                            decoration: BoxDecoration(
-                              color: const Color(0xFFE6F1FB),
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: const Text(
-                              'Mark as read',
-                              style: TextStyle(
-                                fontSize: 11,
-                                fontWeight: FontWeight.w500,
-                                color: Color(0xFF185FA5),
+                        BlocBuilder<NotificationCubit, NotificationState>(
+                          builder: (context, state) {
+                            return GestureDetector(
+                              onTap: onMarkAsRead,
+                              child: Container(
+                                margin: const EdgeInsets.only(top: 8),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 4),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFFE6F1FB),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: state is NotificationLoading
+                                    ? const CircularProgressIndicator()
+                                    : const Text(
+                                        'Mark as read',
+                                        style: TextStyle(
+                                          fontSize: 11,
+                                          fontWeight: FontWeight.w500,
+                                          color: Color(0xFF185FA5),
+                                        ),
+                                      ),
                               ),
-                            ),
-                          ),
-                        ),
+                            );
+                          },
+                        )
                     ],
                   ),
                 ),

@@ -30,7 +30,7 @@ class CartCubit extends Cubit<CartState> {
     this._updateItemQuantityUseCase,
   ) : super(CartInitial());
 
-  void getBasket() async {
+  Future<void> getBasket() async {
     if (!isCartChanged && isCartInitated) return;
     emit(GetBasketLoading());
     final result = await _getBasketUseCase.call();

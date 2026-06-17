@@ -1,21 +1,16 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:skeletonizer/skeletonizer.dart';
-import 'package:tradehub/core/colors/app_colors.dart';
-import 'package:tradehub/core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/extensions/main_color.dart';
 import 'package:tradehub/core/functions/show_snakbar.dart';
 import 'package:tradehub/core/routes/routes.dart';
-import 'package:tradehub/core/shared_services/shared_product_repository.dart';
 import 'package:tradehub/core/utils/animations/loading_product_animation.dart';
 import 'package:tradehub/core/utils/di/di.dart';
-import 'package:tradehub/features/checkout/data/models/request/checkout_request_d_t_o.dart';
 import 'package:tradehub/features/checkout/presentation/cubit/checkout_cubit.dart';
 import 'package:tradehub/features/main_layout/cart/data/models/cart_response_d_t_o.dart';
 import 'package:tradehub/features/main_layout/cart/presentation/cubit/cart_cubit.dart';
 import 'package:tradehub/features/main_layout/cart/presentation/cubit/cart_states.dart';
+import 'package:tradehub/features/main_layout/cart/presentation/widgets/bundle_offer_card.dart';
 import 'package:tradehub/features/main_layout/cart/presentation/widgets/custom_checkout_card.dart';
 import 'package:tradehub/features/main_layout/cart/presentation/widgets/empty_cart_screen_body.dart';
 import 'package:tradehub/core/shared_widgets/widgets/custom_error_widget.dart';
@@ -47,8 +42,9 @@ class _CartScreenBodyState extends State<CartScreenBody>
   }
 
   getSavedPlaceName() {
-    placeName = getIt<SharedPrefsHelper>().getString(AppConstants.savedPlace) ??
-        "10th of ramadan";
+    placeName =
+        getIt<SharedPrefsHelper>().getString(AppConstants.savedPlace) ?? "";
+    print(placeName);
   }
 
   @override
@@ -107,24 +103,29 @@ class _CartScreenBodyState extends State<CartScreenBody>
           final currentGroup = groups[_tabController!.index];
           final subTotal = currentGroup.subTotal;
 
-          return Column(
-            children: [
-              _buildCompanyTabBar(groups),
-              Expanded(
-                child: Stack(
-                  children: [
-                    TabBarView(
-                      controller: _tabController,
-                      children: groups.map((group) {
-                        return _buildItemsList(cubit, group.items);
-                      }).toList(),
-                    ),
-                    _buildCheckoutSection(
-                        state, subTotal, currentGroup.companyName),
-                  ],
+          return RefreshIndicator(
+            onRefresh: () async {
+              return await cubit.getBasket();
+            },
+            child: Column(
+              children: [
+                _buildCompanyTabBar(groups),
+                Expanded(
+                  child: Stack(
+                    children: [
+                      TabBarView(
+                        controller: _tabController,
+                        children: groups.map((group) {
+                          return _buildItemsList(cubit, group.items ?? []);
+                        }).toList(),
+                      ),
+                      _buildCheckoutSection(
+                          state, subTotal ?? 0, currentGroup.companyName ?? ""),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           );
         }
 
@@ -145,33 +146,56 @@ class _CartScreenBodyState extends State<CartScreenBody>
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
-          child: Text(
-            "ACTIVE SELLERS (${groups.length})",
-            style: TextStyle(
-              fontSize: 12.sp,
-              fontWeight: FontWeight.w800,
-              color: context.greyOrWhite,
-              letterSpacing: 1.5,
-              fontFamily: 'Poppins',
-            ),
+          padding: EdgeInsets.fromLTRB(20.w, 14.h, 20.w, 8.h),
+          child: Row(
+            children: [
+              Text(
+                "ACTIVE SELLERS",
+                style: TextStyle(
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.w800,
+                  color: context.greyOrWhite,
+                  letterSpacing: 1.5,
+                  fontFamily: 'Poppins',
+                ),
+              ),
+              SizedBox(width: 8.w),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+                decoration: BoxDecoration(
+                  color: context.mainColor.withOpacity(0.12),
+                  borderRadius: BorderRadius.circular(20.r),
+                ),
+                child: Text(
+                  "${groups.length}",
+                  style: TextStyle(
+                    fontSize: 11.sp,
+                    fontWeight: FontWeight.w800,
+                    color: context.mainColor,
+                    fontFamily: 'Poppins',
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
         SizedBox(
-          height: 145.h,
+          height: 64.h, // ← was 145.h: slimmer bar, more room for products
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             padding: EdgeInsets.symmetric(horizontal: 16.w),
             itemCount: groups.length,
             itemBuilder: (context, index) {
-              return SellerCard(
-                group: groups[index],
-                isSelected: _tabController!.index == index,
-                index: index,
-                onTap: () {
-                  _tabController!.animateTo(index);
-                  setState(() {});
-                },
+              return Center(
+                child: SellerCard(
+                  group: groups[index],
+                  isSelected: _tabController!.index == index,
+                  index: index,
+                  onTap: () {
+                    _tabController!.animateTo(index);
+                    setState(() {});
+                  },
+                ),
               );
             },
           ),
@@ -211,32 +235,56 @@ class _CartScreenBodyState extends State<CartScreenBody>
               items.removeWhere((element) => element.id == item.id);
             });
             cubit.removeItem(
-              companyId: cubit.cartGroups![_tabController!.index].id,
-              productId: item.productId,
+              companyId: cubit.cartGroups![_tabController!.index].id ?? 0,
+              productId: item.productId ?? 0,
             );
-
             return true;
           },
-          child: CustomCartCard(
-            image: item.pictureUrl,
-            title: item.productName,
-            price: item.price.toString(),
-            quantity: item.quantity,
-            options: item.options,
-            onUpdateQuantity: (q) {
-              if (q == 0) {
-                cubit.removeItem(
-                  companyId: cubit.cartGroups![_tabController!.index].id,
-                  productId: item.productId,
-                );
-              } else {
-                cubit.updateItemQuantity(
-                    companyId: cubit.cartGroups![_tabController!.index].id,
-                    productId: item.productId,
-                    quantity: q);
-              }
-            },
-          ),
+          child: (item.isBundleOffer == true && item.offerBundle != null)
+              // ── NEW: compact bundle offer card ──
+              ? BundleOfferCard(
+                  bundleOffer: item.offerBundle!,
+                  quantity: item.quantity ?? 0,
+                  onUpdateQuantity: (q) {
+                    if (q == 0) {
+                      cubit.removeItem(
+                        companyId:
+                            cubit.cartGroups![_tabController!.index].id ?? 0,
+                        productId: item.bundleOfferId ?? 0,
+                      );
+                    } else {
+                      cubit.updateItemQuantity(
+                        companyId:
+                            cubit.cartGroups![_tabController!.index].id ?? 0,
+                        productId: item.bundleOfferId ?? 0,
+                        quantity: q,
+                      );
+                    }
+                  },
+                )
+              // ── EXISTING: normal product card (unchanged) ──
+              : CustomCartCard(
+                  image: item.pictureUrl ?? "",
+                  title: item.productName ?? "",
+                  price: item.price.toString(),
+                  quantity: item.quantity ?? 0,
+                  options: item.options ?? [],
+                  onUpdateQuantity: (q) {
+                    if (q == 0) {
+                      cubit.removeItem(
+                        companyId:
+                            cubit.cartGroups![_tabController!.index].id ?? 0,
+                        productId: item.productId ?? 0,
+                      );
+                    } else {
+                      cubit.updateItemQuantity(
+                          companyId:
+                              cubit.cartGroups![_tabController!.index].id ?? 0,
+                          productId: item.productId ?? 0,
+                          quantity: q);
+                    }
+                  },
+                ),
         )
             .animate()
             .fadeIn(delay: (index * 50).ms, duration: 400.ms)
@@ -251,41 +299,27 @@ class _CartScreenBodyState extends State<CartScreenBody>
       alignment: Alignment.bottomCenter,
       child: BlocProvider<CheckoutCubit>(
         create: (context) => getIt<CheckoutCubit>(),
-        child: BlocConsumer<CheckoutCubit, CheckoutState>(
-          listener: (context, state) {
-            if (state is CheckoutLoading) {
-              showDialog(
-                context: context,
-                builder: (context) => loadingProductAnimation(),
-              );
-            }
-            if (state is CheckoutSuccess) {
-              
-              Navigator.pop(context);
-              Navigator.pushNamed(context, Routes.checkout,
-                  arguments: context.read<CheckoutCubit>());
-            }
-            if (state is CheckoutError) {
-              Navigator.pop(context);
-              showFailureSnackBar(context, messageTitle: state.error.message);
-            }
-          },
-          builder: (context, state) {
-            var checkoutCubit = context.read<CheckoutCubit>();
-            var cartCubit = context.read<CartCubit>();
+        child: Builder(
+          builder: (context) {
+            final checkoutCubit = context.read<CheckoutCubit>();
+            final cartCubit = context.read<CartCubit>();
 
             return CustomCheckoutCard(
               onTap: () {
-                var body = CheckoutRequestDTO(
-                    basketId: cartCubit.cartGroups![_tabController!.index].id,
-                    deliveryFee: 0,
-                    address: placeName);
+                // Store cart data in cubit — API call happens later on "Place Order"
                 checkoutCubit.getCheckoutData(
-                    cartItems: cartCubit.cartGroups![_tabController!.index],
-                    address: placeName);
-                checkoutCubit.checkout(body: body);
+                  basketId:
+                      cartCubit.cartGroups![_tabController!.index].id ?? 0,
+                  cartItems: cartCubit.cartGroups![_tabController!.index],
+                  address: placeName,
+                );
+                Navigator.pushNamed(
+                  context,
+                  Routes.checkout,
+                  arguments: checkoutCubit,
+                );
               },
-              isLoading: state is CheckoutLoading,
+              isLoading: false,
               subTotal: subTotal,
             );
           },

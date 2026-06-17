@@ -67,7 +67,7 @@ class _VendorsSectionState extends State<VendorsSection> {
     return Skeletonizer(
       enabled: widget.isLoading ?? false,
       child: SizedBox(
-        height: 142.h,
+        height: 149.h,
         child: ListView.separated(
           controller: _scrollController,
           scrollDirection: Axis.horizontal,

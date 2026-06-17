@@ -1,5 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:tradehub/core/api/api_constant/api_constant.dart';
+import 'package:tradehub/features/your_orders/data/models/order_response_d_t_o.dart';
 
 part 'order_details_response_d_t_o.g.dart';
 
@@ -27,6 +28,8 @@ class OrderDetailsResponseDTO {
   final String createdAt;
   @JsonKey(name: ApiConstants.items)
   final List<OrderItemDTO> items;
+  @JsonKey(name: ApiConstants.bundleItems)
+  final List<OrderBundleItemDTO>? bundleItems;
   @JsonKey(name: ApiConstants.maskedCardNumber)
   final String? maskedCardNumber;
 
@@ -42,6 +45,7 @@ class OrderDetailsResponseDTO {
     required this.companyLogo,
     required this.createdAt,
     required this.items,
+    this.bundleItems,
     required this.maskedCardNumber,
   });
 

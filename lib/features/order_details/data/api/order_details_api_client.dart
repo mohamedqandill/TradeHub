@@ -14,5 +14,8 @@ abstract class OrderDetailsApiClient {
 
   @GET("${ApiEndPoints.orders}{id}")
   Future<OrderDetailsResponseDTO> getOrderDetails(@Path("id") int id);
+
+  @PUT(ApiEndPoints.cancelOrder)
+  Future<void> cancelOrder(@Path('id') int id);
 }
 

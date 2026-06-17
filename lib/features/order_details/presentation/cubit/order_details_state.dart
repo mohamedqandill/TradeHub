@@ -11,6 +11,17 @@ class GetOrderDetailsSuccess extends OrderDetailsState {
   GetOrderDetailsSuccess(this.orderDetails);
 }
 
+class CancelOrderLoading extends OrderDetailsState {}
+
+class CancelOrderSuccess extends OrderDetailsState {
+  final String message;
+  CancelOrderSuccess(this.message);
+}
+
+class CancelOrderError extends OrderDetailsState {
+  final String message;
+  CancelOrderError(this.message);
+}
 class GetOrderDetailsError extends OrderDetailsState {
   final String message;
   GetOrderDetailsError(this.message);

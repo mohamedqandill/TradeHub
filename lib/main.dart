@@ -46,6 +46,7 @@ Future<void> main() async {
 
   await ScreenUtil.ensureScreenSize();
   await SharedPrefsHelper.init();
+
   LocalNotificationService.initialize();
   requestNotificationPermission();
   SharedPrefsHelper prefs = getIt<SharedPrefsHelper>();

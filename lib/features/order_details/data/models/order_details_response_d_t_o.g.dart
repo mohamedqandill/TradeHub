@@ -22,6 +22,9 @@ OrderDetailsResponseDTO _$OrderDetailsResponseDTOFromJson(
       items: (json['items'] as List<dynamic>)
           .map((e) => OrderItemDTO.fromJson(e as Map<String, dynamic>))
           .toList(),
+      bundleItems: (json['bundleItems'] as List<dynamic>?)
+          ?.map((e) => OrderBundleItemDTO.fromJson(e as Map<String, dynamic>))
+          .toList(),
       maskedCardNumber: json['maskedCardNumber'] as String?,
     );
 
@@ -39,6 +42,7 @@ Map<String, dynamic> _$OrderDetailsResponseDTOToJson(
       'companyLogo': instance.companyLogo,
       'createdAt': instance.createdAt,
       'items': instance.items,
+      'bundleItems': instance.bundleItems,
       'maskedCardNumber': instance.maskedCardNumber,
     };
 

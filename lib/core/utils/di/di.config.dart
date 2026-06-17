@@ -170,6 +170,9 @@ import '../../../features/notification/data/repo/notification_repository_impl.da
     as _i707;
 import '../../../features/notification/presentation/cubit/notification_cubit.dart'
     as _i366;
+import '../../../features/offers/data/api/offers_api.dart' as _i904;
+import '../../../features/offers/data/repo/offers_repo.dart' as _i415;
+import '../../../features/offers/presentation/cubit/cubit.dart' as _i888;
 import '../../../features/onBoarding/view_model/language_view_model.dart'
     as _i522;
 import '../../../features/onBoarding/view_model/theme_view_model.dart' as _i364;
@@ -183,6 +186,8 @@ import '../../../features/order_details/data/repo_impl/order_details_repository_
     as _i370;
 import '../../../features/order_details/domain/repositories/order_details_repository.dart'
     as _i904;
+import '../../../features/order_details/domain/use_cases/cancel_order_use_case.dart'
+    as _i212;
 import '../../../features/order_details/domain/use_cases/get_order_details_use_case.dart'
     as _i858;
 import '../../../features/order_details/presentation/cubit/order_details_cubit.dart'
@@ -315,6 +320,10 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i361.Dio>(),
           baseUrl: gh<String>(instanceName: 'baseUrl'),
         ));
+    gh.factory<_i904.OffersApiClient>(() => _i904.OffersApiClient(
+          gh<_i361.Dio>(),
+          baseUrl: gh<String>(instanceName: 'baseUrl'),
+        ));
     gh.singleton<_i620.CategoryDetailsApiClient>(
         () => _i620.CategoryDetailsApiClient(
               gh<_i361.Dio>(),
@@ -336,6 +345,10 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i361.Dio>(),
           baseUrl: gh<String>(instanceName: 'baseUrl'),
         ));
+    gh.singleton<_i414.NotificationApiClient>(() => _i414.NotificationApiClient(
+          gh<_i361.Dio>(),
+          baseUrl: gh<String>(instanceName: 'baseUrl'),
+        ));
     gh.singleton<_i1050.ProductDetailsApiClient>(
         () => _i1050.ProductDetailsApiClient(
               gh<_i361.Dio>(),
@@ -351,10 +364,6 @@ extension GetItInjectableX on _i174.GetIt {
               gh<_i361.Dio>(),
               baseUrl: gh<String>(instanceName: 'baseUrl'),
             ));
-    gh.singleton<_i414.NotificationApiClient>(() => _i414.NotificationApiClient(
-          gh<_i361.Dio>(),
-          baseUrl: gh<String>(instanceName: 'baseUrl'),
-        ));
     gh.factory<_i768.FavouriteDataSource>(
         () => _i768.FavouriteDataSourceImpl(gh<_i54.FavouriteApiClient>()));
     gh.factory<_i276.NewPasswordDataSourceContract>(
@@ -376,6 +385,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i788.RegisterDataSourceImpl(gh<_i891.AuthApiClient>()));
     gh.factory<_i994.VerifyOTPDataSourceContract>(
         () => _i232.VerifyOTPDataSourceImpl(gh<_i891.AuthApiClient>()));
+    gh.factory<_i415.OffersRepo>(
+        () => _i415.OffersRepoImpl(gh<_i904.OffersApiClient>()));
     gh.factory<_i1008.CheckoutDataSource>(
         () => _i343.CheckoutDataSourceImpl(gh<_i800.CheckoutApiClient>()));
     gh.factory<_i366.NotificationCubit>(
@@ -418,6 +429,8 @@ extension GetItInjectableX on _i174.GetIt {
         _i972.NewPasswordRepoImpl(gh<_i276.NewPasswordDataSourceContract>()));
     gh.factory<_i232.CartRepoContract>(
         () => _i149.CartRepoImpl(gh<_i793.CartDataSourceContract>()));
+    gh.factory<_i888.OffersCubit>(
+        () => _i888.OffersCubit(gh<_i415.OffersRepo>()));
     gh.factory<_i71.CategoryDetailsRepoContract>(() =>
         _i704.CategoryDetailsRepoImpl(gh<_i600.CategoryDetailsDataSource>()));
     gh.factory<_i581.LoginRepoContract>(
@@ -493,8 +506,6 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i855.UploadProfilePictureUseCase(gh<_i489.ProfileRepository>()));
     gh.factory<_i855.DeleteProfilePictureUseCase>(
         () => _i855.DeleteProfilePictureUseCase(gh<_i489.ProfileRepository>()));
-    gh.factory<_i429.OrdersCubit>(
-        () => _i429.OrdersCubit(gh<_i378.GetOrdersUseCase>()));
     gh.factory<_i484.GetVendorDetailsUseCase>(
         () => _i484.GetVendorDetailsUseCase(gh<_i858.VendorRepository>()));
     gh.factory<_i484.GetVendorSubcategoriesUseCase>(() =>
@@ -564,8 +575,16 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i429.VerifyOtpBloc(gh<_i550.VerifyOTPUseCase>()));
     gh.factory<_i858.GetOrderDetailsUseCase>(
         () => _i858.GetOrderDetailsUseCase(gh<_i904.OrderDetailsRepository>()));
-    gh.factory<_i984.OrderDetailsCubit>(
-        () => _i984.OrderDetailsCubit(gh<_i858.GetOrderDetailsUseCase>()));
+    gh.factory<_i212.CancelOrderUseCase>(
+        () => _i212.CancelOrderUseCase(gh<_i904.OrderDetailsRepository>()));
+    gh.factory<_i984.OrderDetailsCubit>(() => _i984.OrderDetailsCubit(
+          gh<_i858.GetOrderDetailsUseCase>(),
+          gh<_i212.CancelOrderUseCase>(),
+        ));
+    gh.factory<_i429.OrdersCubit>(() => _i429.OrdersCubit(
+          gh<_i378.GetOrdersUseCase>(),
+          gh<_i212.CancelOrderUseCase>(),
+        ));
     return this;
   }
 }

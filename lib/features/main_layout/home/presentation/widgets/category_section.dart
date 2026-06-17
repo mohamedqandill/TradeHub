@@ -25,7 +25,7 @@ class CategorySection extends StatelessWidget {
       Assets.images.resturant.path,
     ];
     return SizedBox(
-      height: 225.h,
+      height: 229.h,
       child: GridView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: cubit?.categories.length ?? 0,
@@ -48,7 +48,7 @@ class CategorySection extends StatelessWidget {
             child: Skeletonizer(
               enabled: isLoading ?? false,
               child: HomeCategoryWidget(
-                image: cubit?.categories[index].imageUrl??"",
+                image: cubit?.categories[index].imageUrl ?? "",
                 title: cubit?.categories[index].name ?? "",
               ),
             ),

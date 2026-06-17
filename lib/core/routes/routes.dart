@@ -25,4 +25,6 @@ abstract class Routes {
   static const String favourite = "favourite";
   static const String notifications = "notifications";
   static const String changePassword = "changePassword";
+  static const String offers = "offers";
+  static const String offerDetails = "offerDetails";
 }

@@ -7,4 +7,5 @@ abstract class OrdersRepository {
     int? pageIndex,
     int? pageSize,
   });
+
 }

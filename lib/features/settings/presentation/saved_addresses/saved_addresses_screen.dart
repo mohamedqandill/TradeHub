@@ -24,9 +24,7 @@ class SavedAddressesScreen extends StatefulWidget {
 
 class _SavedAddressesScreenState extends State<SavedAddressesScreen> {
   String savedPlaceName = "";
-  final List<String> availablePlaces = [
-    "10th of Ramadan City",
-  ];
+  final List<String> availablePlaces = [];
 
   @override
   void initState() {
@@ -36,10 +34,9 @@ class _SavedAddressesScreenState extends State<SavedAddressesScreen> {
 
   getSavedPlaceName() {
     String currentPlace =
-        getIt<SharedPrefsHelper>().getString(AppConstants.savedPlace) ??
-            "No Place Selected";
+        getIt<SharedPrefsHelper>().getString(AppConstants.savedPlace) ?? "";
     savedPlaceName = currentPlace;
-    if (!availablePlaces.contains(currentPlace)) {
+    if (currentPlace.isNotEmpty &&!availablePlaces.contains(currentPlace)) {
       availablePlaces.insert(0, currentPlace);
     }
     setState(() {});

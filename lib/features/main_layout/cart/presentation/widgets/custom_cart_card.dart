@@ -62,7 +62,7 @@ class _CustomCartCardState extends State<CustomCartCard> {
       padding: EdgeInsets.all(12.w),
       decoration: BoxDecoration(
         color: context.isDarkMode ? AppColors.lightBlack : Colors.white,
-        borderRadius: BorderRadius.circular(24.r),
+        borderRadius: BorderRadius.circular(20.r),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.04),
@@ -78,10 +78,12 @@ class _CustomCartCardState extends State<CustomCartCard> {
         ),
       ),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // ── Product image ──
           Container(
-            width: 90.w,
-            height: 90.w,
+            width: 84.w,
+            height: 84.w,
             decoration: BoxDecoration(
               color: context.isDarkMode
                   ? Colors.white.withOpacity(0.05)
@@ -93,20 +95,18 @@ class _CustomCartCardState extends State<CustomCartCard> {
               child: displayImage.startsWith('http')
                   ? CachedNetworkImage(
                       imageUrl: displayImage,
-                      fit: BoxFit.contain,
+                      fit: BoxFit.cover,
                       errorWidget: (context, url, error) => Icon(
                         Icons.image_not_supported_outlined,
                         color: AppColors.grey,
                         size: 24.sp,
                       ),
                     )
-                  : Image.asset(
-                      displayImage,
-                      fit: BoxFit.cover,
-                    ),
+                  : Image.asset(displayImage, fit: BoxFit.cover),
             ),
           ),
-          SizedBox(width: 10.w),
+          SizedBox(width: 12.w),
+          // ── Details ──
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -116,20 +116,21 @@ class _CustomCartCardState extends State<CustomCartCard> {
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                    fontSize: 16.sp,
+                    fontSize: 15.sp,
                     fontWeight: FontWeight.w800,
                     color:
                         context.isDarkMode ? AppColors.white : AppColors.black,
                     fontFamily: 'Poppins',
+                    height: 1.2,
                   ),
                 ),
-                SizedBox(height: 6.h),
+                SizedBox(height: 5.h),
                 Row(
                   children: [
                     Text(
                       "${widget.price} EGP",
                       style: TextStyle(
-                        fontSize: 14.sp,
+                        fontSize: 13.sp,
                         fontWeight: FontWeight.w600,
                         color: AppColors.grey,
                         fontFamily: 'Poppins',
@@ -167,27 +168,33 @@ class _CustomCartCardState extends State<CustomCartCard> {
                     }).toList(),
                   ),
                 ],
-                SizedBox(height: 12.h),
+                SizedBox(height: 10.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(
-                      "$totalPrice EGP",
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w900,
-                        color: context.mainColor,
-                        fontFamily: 'Poppins',
+                    Flexible(
+                      child: Text(
+                        "${totalPrice.toStringAsFixed(0)} EGP",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w900,
+                          color: context.mainColor,
+                          fontFamily: 'Poppins',
+                        ),
                       ),
                     ),
-                    SizedBox(width: 5.w),
+                    SizedBox(width: 8.w),
+                    // ── Quantity stepper ──
                     Container(
                       padding: EdgeInsets.all(4.w),
                       decoration: BoxDecoration(
                         color: context.isDarkMode
                             ? Colors.white.withOpacity(0.05)
                             : AppColors.grey.withOpacity(0.08),
-                        borderRadius: BorderRadius.circular(16.r),
+                        borderRadius: BorderRadius.circular(14.r),
                       ),
                       child: Row(
                         children: [
@@ -205,7 +212,7 @@ class _CustomCartCardState extends State<CustomCartCard> {
                             },
                           ),
                           Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 8.w),
+                            padding: EdgeInsets.symmetric(horizontal: 10.w),
                             child: Text(
                               count.toString(),
                               style: TextStyle(
@@ -221,9 +228,7 @@ class _CustomCartCardState extends State<CustomCartCard> {
                           _buildCounterBtn(
                             icon: Icons.add_rounded,
                             isPrimary: true,
-                            onTap: () {
-                              widget.onUpdateQuantity(count + 1);
-                            },
+                            onTap: () => widget.onUpdateQuantity(count + 1),
                           ),
                         ],
                       ),
@@ -247,7 +252,7 @@ class _CustomCartCardState extends State<CustomCartCard> {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: EdgeInsets.all(2.w),
+        padding: EdgeInsets.all(5.w),
         decoration: BoxDecoration(
           color: isPrimary ? context.mainColor : Colors.transparent,
           borderRadius: BorderRadius.circular(12.r),
