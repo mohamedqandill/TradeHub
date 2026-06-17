@@ -20,7 +20,6 @@ class OrderCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isDarkMode = context.isDarkMode;
 
-    // Premium Color System matching the Pandora obsidian-black and pure white aesthetics
     Color cardBgColor = isDarkMode ? const Color(0xFF0A0A0B) : AppColors.white;
     Color borderColor = isDarkMode
         ? Colors.white.withOpacity(0.06)
@@ -28,14 +27,16 @@ class OrderCardWidget extends StatelessWidget {
     Color textColor = isDarkMode ? AppColors.white : AppColors.black;
     Color subtitleColor = isDarkMode ? Colors.white70 : Colors.black54;
 
+    final bool hasBundles =
+        order.bundleItems != null && order.bundleItems!.isNotEmpty;
+    final bool hasItems = order.items != null && order.items!.isNotEmpty;
+
     return InkWell(
       onTap: () {
         Navigator.pushNamed(
           context,
           Routes.orderDetails,
-          arguments: OrderDetailsArgs(
-            orderId: order.id ?? 0,
-          ),
+          arguments: OrderDetailsArgs(orderId: order.id ?? 0),
         );
       },
       borderRadius: BorderRadius.circular(20.r),
@@ -43,37 +44,30 @@ class OrderCardWidget extends StatelessWidget {
         decoration: BoxDecoration(
           color: cardBgColor,
           borderRadius: BorderRadius.circular(20.r),
-          border: Border.all(
-            color: borderColor,
-            width: 1.2,
-          ),
+          border: Border.all(color: borderColor, width: 1.2),
           boxShadow: [
             BoxShadow(
               color: isDarkMode
                   ? Colors.black.withOpacity(0.4)
-                  : Colors.black.withOpacity(0.03),
-              offset: const Offset(0, 6),
-              blurRadius: 16,
-            )
+                  : Colors.black.withOpacity(0.04),
+              offset: const Offset(0, 8),
+              blurRadius: 20,
+            ),
           ],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // 1. TOP HEADER BANNER: Order ID, Clock Icon & Date
+            // ── 1. HEADER: Order ID + Date ──────────────────────────────
             Padding(
               padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 12.h),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // Monospaced Order ID Tag
                   Row(
                     children: [
-                      Icon(
-                        Icons.receipt_long_rounded,
-                        color: context.mainColor,
-                        size: 15.sp,
-                      ),
+                      Icon(Icons.receipt_long_rounded,
+                          color: context.mainColor, size: 15.sp),
                       SizedBox(width: 6.w),
                       Text(
                         "#TRD-${order.id}",
@@ -86,14 +80,10 @@ class OrderCardWidget extends StatelessWidget {
                       ),
                     ],
                   ),
-                  // Time stamp & clock indicator
                   Row(
                     children: [
-                      Icon(
-                        Icons.access_time_filled_rounded,
-                        color: subtitleColor.withOpacity(0.6),
-                        size: 13.sp,
-                      ),
+                      Icon(Icons.access_time_filled_rounded,
+                          color: subtitleColor.withOpacity(0.6), size: 13.sp),
                       SizedBox(width: 4.w),
                       Text(
                         _formatDate(order.createdAt),
@@ -109,7 +99,6 @@ class OrderCardWidget extends StatelessWidget {
               ),
             ),
 
-            // Subtle divider line
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.w),
               child: Divider(
@@ -121,13 +110,12 @@ class OrderCardWidget extends StatelessWidget {
               ),
             ),
 
-            // 2. MAIN HUB SECTION: Store Profile, Shipping Address & Dynamic Status Pill
+            // ── 2. STORE + STATUS ───────────────────────────────────────
             Padding(
               padding: EdgeInsets.all(16.w),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Dynamic Circular Logo with beautiful border
                   Container(
                     width: 48.w,
                     height: 48.w,
@@ -135,31 +123,25 @@ class OrderCardWidget extends StatelessWidget {
                       color: isDarkMode ? Colors.white12 : Colors.grey.shade100,
                       shape: BoxShape.circle,
                       border: Border.all(
-                        color: isDarkMode ? Colors.white24 : Colors.white,
-                        width: 1.5,
-                      ),
+                          color: isDarkMode ? Colors.white24 : Colors.white,
+                          width: 1.5),
                       boxShadow: const [
                         BoxShadow(
-                          color: Colors.black12,
-                          blurRadius: 4,
-                          offset: Offset(0, 1),
-                        )
+                            color: Colors.black12,
+                            blurRadius: 4,
+                            offset: Offset(0, 1))
                       ],
                     ),
                     child: ClipOval(
                       child: CachedNetworkImage(
                         imageUrl: order.companyLogo ?? "",
-                        fit: BoxFit.contain,
-                        errorWidget: (context, url, error) => Icon(
-                          Icons.store_rounded,
-                          color: context.mainColor,
-                        ),
+                        fit: BoxFit.cover,
+                        errorWidget: (context, url, error) =>
+                            Icon(Icons.store_rounded, color: context.mainColor),
                       ),
                     ),
                   ),
                   SizedBox(width: 12.w),
-
-                  // Store identity & Address details
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -176,15 +158,13 @@ class OrderCardWidget extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: 5.h),
-                        // Shipping Address with Pin
                         Row(
                           children: [
-                            Icon(
-                              Icons.local_shipping_rounded,
-                              color:
-                                  isDarkMode ? Colors.white38 : Colors.black38,
-                              size: 13.sp,
-                            ),
+                            Icon(Icons.local_shipping_rounded,
+                                color: isDarkMode
+                                    ? Colors.white38
+                                    : Colors.black38,
+                                size: 13.sp),
                             SizedBox(width: 6.w),
                             Expanded(
                               child: Text(
@@ -204,8 +184,6 @@ class OrderCardWidget extends StatelessWidget {
                     ),
                   ),
                   SizedBox(width: 8.w),
-
-                  // Dynamic Glowing Status Indicator
                   Container(
                     padding:
                         EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
@@ -216,7 +194,6 @@ class OrderCardWidget extends StatelessWidget {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        // Pulse glowing dot
                         Container(
                           width: 6.w,
                           height: 6.w,
@@ -241,10 +218,10 @@ class OrderCardWidget extends StatelessWidget {
               ),
             ),
 
-            // 3. PRODUCT PREVIEW SECTION: Horizontal images of purchased items
-            if (order.items != null && order.items!.isNotEmpty) ...[
+            // ── 3. REGULAR ITEMS ────────────────────────────────────────
+            if (hasItems) ...[
               Padding(
-                padding: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 16.h),
+                padding: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 12.h),
                 child: Container(
                   padding: EdgeInsets.all(10.w),
                   decoration: BoxDecoration(
@@ -261,41 +238,69 @@ class OrderCardWidget extends StatelessWidget {
                   ),
                   child: Row(
                     children: [
-                      // Horizontal items thumbnails (up to 3 previews)
                       Wrap(
                         spacing: 8.w,
                         children: order.items!.take(3).map((item) {
-                          return Container(
-                            width: 38.w,
-                            height: 38.w,
-                            decoration: BoxDecoration(
-                              color: isDarkMode ? Colors.white10 : Colors.white,
-                              borderRadius: BorderRadius.circular(8.r),
-                              border: Border.all(
-                                color: isDarkMode
-                                    ? Colors.white24
-                                    : Colors.grey.shade200,
-                                width: 1,
-                              ),
-                            ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(7.r),
-                              child: CachedNetworkImage(
-                                imageUrl: item.imageUrl ?? "",
-                                fit: BoxFit.contain,
-                                errorWidget: (context, url, error) => Icon(
-                                  Icons.image_outlined,
-                                  size: 14.sp,
-                                  color: Colors.grey,
+                          return Row(
+                            children: [
+                              Container(
+                                width: 38.w,
+                                height: 38.w,
+                                decoration: BoxDecoration(
+                                  color: isDarkMode
+                                      ? Colors.white10
+                                      : Colors.white,
+                                  borderRadius: BorderRadius.circular(8.r),
+                                  border: Border.all(
+                                    color: isDarkMode
+                                        ? Colors.white24
+                                        : Colors.grey.shade200,
+                                    width: 1,
+                                  ),
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(7.r),
+                                  child: CachedNetworkImage(
+                                    imageUrl: item.imageUrl ?? "",
+                                    fit: BoxFit.fill,
+                                    errorWidget: (context, url, error) => Icon(
+                                        Icons.image_outlined,
+                                        size: 14.sp,
+                                        color: Colors.grey),
+                                  ),
                                 ),
                               ),
-                            ),
+                              Padding(
+                                padding:
+                                    EdgeInsets.symmetric(horizontal: 8.0.w),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      item.productName ?? "",
+                                      style: TextStyle(
+                                        color: textColor,
+                                        fontSize: 13.sp,
+                                        fontWeight: FontWeight.w900,
+                                      ),
+                                    ),
+                                    Text(
+                                      "x${item.quantity}",
+                                      style: TextStyle(
+                                        color: context.mainColor,
+                                        fontSize: 12.sp,
+                                        fontWeight: FontWeight.w900,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           );
                         }).toList(),
                       ),
                       if (order.items!.length > 3) ...[
                         SizedBox(width: 8.w),
-                        // "+N more items" pill
                         Container(
                           padding: EdgeInsets.symmetric(
                               horizontal: 8.w, vertical: 4.h),
@@ -314,46 +319,90 @@ class OrderCardWidget extends StatelessWidget {
                         ),
                       ],
                       const Spacer(),
-                      // Billing Summary
                       Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Text(
-                            "${order.items!.length} ${order.items!.length == 1 ? "item" : "items"}",
-                            style: GoogleFonts.manrope(
-                              color: subtitleColor,
-                              fontSize: 10.sp,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          SizedBox(height: 2.h),
-                          Row(
-                            children: [
-                              Text(
-                                "${order.total} EGP",
-                                style: GoogleFonts.manrope(
-                                  color: textColor,
-                                  fontSize: 13.sp,
-                                  fontWeight: FontWeight.w900,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: order.items!.map(
+                            (item) {
+                              int totalPrice = 0;
+                              for (int i = 0; i < order.items!.length; i++) {
+                                totalPrice = totalPrice +
+                                    (order.items![i].price! *
+                                            order.items![i].quantity!.toInt())
+                                        .toInt();
+                              }
+                              return Column(
+                                children: [
+                                  Text(
+                                    "${order.items!.length} ${order.items!.length == 1 ? "item" : "items"}",
+                                    style: GoogleFonts.manrope(
+                                      color: subtitleColor,
+                                      fontSize: 10.sp,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                  SizedBox(height: 2.h),
+                                  Text(
+                                    "$totalPrice EGP",
+                                    style: GoogleFonts.manrope(
+                                      color: textColor,
+                                      fontSize: 13.sp,
+                                      fontWeight: FontWeight.w900,
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
+                          ).toList()),
                     ],
                   ),
                 ),
               ),
             ],
 
-            // 4. TRANSACTION BILL SLIP FOOTER: Price and payment status
+            // ── 4. BUNDLE OFFER ITEMS ───────────────────────────────────
+            if (hasBundles) ...[
+              Padding(
+                padding: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 12.h),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Section label
+                    Row(
+                      children: [
+                        Icon(Icons.local_offer_rounded,
+                            color: context.mainColor, size: 13.sp),
+                        SizedBox(width: 5.w),
+                        Text(
+                          "Bundle Offers",
+                          style: GoogleFonts.manrope(
+                            color: context.mainColor,
+                            fontSize: 11.sp,
+                            fontWeight: FontWeight.w800,
+                            letterSpacing: 0.2,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8.h),
+                    ...order.bundleItems!
+                        .map((bundle) => _BundleOfferCard(
+                              bundle: bundle,
+                              isDarkMode: isDarkMode,
+                              textColor: textColor,
+                              subtitleColor: subtitleColor,
+                            ))
+                        .toList(),
+                  ],
+                ),
+              ),
+            ],
+
+            // ── 5. FOOTER: Payment + Total ──────────────────────────────
             Padding(
-              padding: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 12.h),
+              padding: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 16.h),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // Payment Status indicator
                   Row(
                     children: [
                       Icon(
@@ -378,7 +427,6 @@ class OrderCardWidget extends StatelessWidget {
                       ),
                     ],
                   ),
-                  // Total details label
                   Row(
                     children: [
                       Text(
@@ -400,75 +448,6 @@ class OrderCardWidget extends StatelessWidget {
                     ],
                   ),
                 ],
-              ),
-            ),
-
-            // Divider Line
-            Divider(
-              height: 1,
-              thickness: 1.2,
-              color: isDarkMode
-                  ? Colors.white.withOpacity(0.06)
-                  : AppColors.lightGrey.withOpacity(0.8),
-            ),
-
-            // 5. INTERACTIVE CTA ACTIONS: Re-Order & Rate Order Quick Actions
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  _buildActionButton(
-                    context: context,
-                    icon: Icons.cached_rounded,
-                    label: tr(LocaleKeys.reOrder),
-                    color: context.mainColor,
-                    onTap: () {},
-                  ),
-                  Container(
-                    width: 1.2,
-                    height: 14.h,
-                    color: isDarkMode ? Colors.white12 : Colors.black12,
-                  ),
-                  _buildActionButton(
-                    context: context,
-                    icon: Icons.star_border_rounded,
-                    label: tr(LocaleKeys.rateOrder),
-                    color: Colors.amber.shade700,
-                    onTap: () {},
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildActionButton({
-    required BuildContext context,
-    required IconData icon,
-    required String label,
-    required Color color,
-    required VoidCallback onTap,
-  }) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(10.r),
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(icon, color: color, size: 16.sp),
-            SizedBox(width: 6.w),
-            Text(
-              label,
-              style: GoogleFonts.manrope(
-                color: color,
-                fontWeight: FontWeight.w800,
-                fontSize: 12.sp,
               ),
             ),
           ],
@@ -511,5 +490,257 @@ class OrderCardWidget extends StatelessWidget {
     } catch (e) {
       return dateString;
     }
+  }
+}
+
+// ── Bundle Offer Card ────────────────────────────────────────────────────────
+
+class _BundleOfferCard extends StatelessWidget {
+  final dynamic bundle;
+  final bool isDarkMode;
+  final Color textColor;
+  final Color subtitleColor;
+
+  const _BundleOfferCard({
+    required this.bundle,
+    required this.isDarkMode,
+    required this.textColor,
+    required this.subtitleColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final int savings =
+        (bundle.originalTotalPrice ?? 0) - (bundle.finalPrice ?? 0);
+    final bool hasSavings = savings > 0;
+
+    return Container(
+      margin: EdgeInsets.only(bottom: 8.h),
+      decoration: BoxDecoration(
+        color: isDarkMode
+            ? context.mainColor.withOpacity(0.06)
+            : context.mainColor.withOpacity(0.04),
+        borderRadius: BorderRadius.circular(14.r),
+        border: Border.all(
+          color: context.mainColor.withOpacity(0.18),
+          width: 1,
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Bundle Header Row
+          Padding(
+            padding: EdgeInsets.fromLTRB(12.w, 10.h, 12.w, 8.h),
+            child: Row(
+              children: [
+                // Bundle icon badge
+                Container(
+                  width: 28.w,
+                  height: 28.w,
+                  decoration: BoxDecoration(
+                    color: context.mainColor.withOpacity(0.15),
+                    borderRadius: BorderRadius.circular(8.r),
+                  ),
+                  child: Icon(Icons.layers_rounded,
+                      color: context.mainColor, size: 15.sp),
+                ),
+                SizedBox(width: 8.w),
+
+                // Bundle name + quantity
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        bundle.bundleName ?? "Bundle",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: GoogleFonts.manrope(
+                          color: textColor,
+                          fontSize: 13.sp,
+                          fontWeight: FontWeight.w800,
+                          letterSpacing: -0.2,
+                        ),
+                      ),
+                      Text(
+                        "x${bundle.quantity}",
+                        style: GoogleFonts.manrope(
+                          color: subtitleColor,
+                          fontSize: 10.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                // Pricing column
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    if (hasSavings)
+                      Text(
+                        "${bundle.originalTotalPrice} EGP",
+                        style: GoogleFonts.manrope(
+                          color: subtitleColor.withOpacity(0.6),
+                          fontSize: 10.sp,
+                          fontWeight: FontWeight.w600,
+                          decoration: TextDecoration.lineThrough,
+                        ),
+                      ),
+                    Text(
+                      "${bundle.totalPrice} EGP",
+                      style: GoogleFonts.manrope(
+                        color: context.mainColor,
+                        fontSize: 13.sp,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                    if (hasSavings)
+                      Container(
+                        margin: EdgeInsets.only(top: 2.h),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 6.w, vertical: 2.h),
+                        decoration: BoxDecoration(
+                          color: Colors.green.withOpacity(0.12),
+                          borderRadius: BorderRadius.circular(20.r),
+                        ),
+                        child: Text(
+                          "Save ${savings.toStringAsFixed(0)} EGP",
+                          style: GoogleFonts.manrope(
+                            color: Colors.green,
+                            fontSize: 9.sp,
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+
+          // Products inside the bundle
+          if (bundle.products != null && bundle.products!.isNotEmpty) ...[
+            Padding(
+              padding: EdgeInsets.only(left: 12.w, right: 12.w, bottom: 10.h),
+              child: Wrap(
+                spacing: 6.w,
+                runSpacing: 6.h,
+                children: (bundle.products as List).map<Widget>((product) {
+                  return _BundleProductChip(
+                    product: product,
+                    isDarkMode: isDarkMode,
+                    subtitleColor: subtitleColor,
+                    textColor: textColor,
+                  );
+                }).toList(),
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+// ── Bundle Product Chip ──────────────────────────────────────────────────────
+
+class _BundleProductChip extends StatelessWidget {
+  final dynamic product;
+  final bool isDarkMode;
+  final Color subtitleColor;
+  final Color textColor;
+
+  const _BundleProductChip({
+    required this.product,
+    required this.isDarkMode,
+    required this.subtitleColor,
+    required this.textColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 5.h),
+      decoration: BoxDecoration(
+        color: isDarkMode ? Colors.white.withOpacity(0.05) : Colors.white,
+        borderRadius: BorderRadius.circular(10.r),
+        border: Border.all(
+          color: isDarkMode
+              ? Colors.white.withOpacity(0.08)
+              : Colors.grey.shade200,
+          width: 1,
+        ),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // Product thumbnail
+          ClipRRect(
+            borderRadius: BorderRadius.circular(6.r),
+            child: CachedNetworkImage(
+              imageUrl: product.imageUrl ?? "",
+              width: 28.w,
+              height: 28.w,
+              fit: BoxFit.cover,
+              errorWidget: (context, url, error) => Container(
+                width: 28.w,
+                height: 28.w,
+                color: isDarkMode ? Colors.white10 : Colors.grey.shade100,
+                child:
+                    Icon(Icons.image_outlined, size: 14.sp, color: Colors.grey),
+              ),
+            ),
+          ),
+          SizedBox(width: 7.w),
+
+          // Name + price
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                product.productName ?? "",
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: GoogleFonts.manrope(
+                  color: textColor,
+                  fontSize: 11.sp,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              Row(
+                children: [
+                  Text(
+                    "x${product.quantity}",
+                    style: GoogleFonts.manrope(
+                      color: subtitleColor,
+                      fontSize: 10.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  if (product.unitPrice != null) ...[
+                    Text(
+                      "  ·  ${product.unitPrice} EGP",
+                      style: GoogleFonts.manrope(
+                        color: subtitleColor,
+                        fontSize: 10.sp,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                  if (product.isGift == true) ...[
+                    SizedBox(width: 4.w),
+                    Icon(Icons.card_giftcard_rounded,
+                        color: Colors.amber.shade600, size: 11.sp),
+                  ],
+                ],
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 }

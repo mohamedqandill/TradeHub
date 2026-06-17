@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:tradehub/core/api/api_result/api_result.dart';
 import 'package:tradehub/features/your_orders/domain/entities/order_status_filter.dart';
+import 'package:tradehub/features/order_details/domain/use_cases/cancel_order_use_case.dart';
 import 'package:tradehub/main.dart';
 import '../../data/models/order_response_d_t_o.dart';
 import '../../domain/use_cases/get_orders_use_case.dart';
@@ -11,9 +12,10 @@ part 'orders_state.dart';
 @injectable
 class OrdersCubit extends Cubit<OrdersState> {
   final GetOrdersUseCase _getOrdersUseCase;
+  final CancelOrderUseCase _cancelOrderUseCase;
   static OrdersCubit? instance;
 
-  OrdersCubit(this._getOrdersUseCase) : super(const OrdersState()) {
+  OrdersCubit(this._getOrdersUseCase, this._cancelOrderUseCase) : super(const OrdersState()) {
     instance = this;
   }
 
@@ -89,4 +91,6 @@ class OrdersCubit extends Cubit<OrdersState> {
         ));
     }
   }
+
+ 
 }

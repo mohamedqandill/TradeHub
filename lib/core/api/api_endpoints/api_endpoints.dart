@@ -24,6 +24,7 @@ abstract class ApiEndPoints {
   static const String companiesByCategory = "api/CompanyCategory/category/";
   static const String checkout = "api/Orders/checkout/";
   static const String orders = "api/Orders/";
+  static const String cancelOrder = "api/Orders/{id}/cancel/";
   static const String paymentWebhook = "api/Paymobwebhook/webhook/";
   static const String deleteProfilePicture = "api/user/delete-profile-picture";
   static const String uploadProfilePicture = "api/user/upload-profile-picture";
@@ -32,4 +33,6 @@ abstract class ApiEndPoints {
   static const String notificationsUnreadCount = "api/Notifications/unread-count";
   static const String notificationRead = "api/Notifications/{id}/read";
   static const String productOptions = "api/ProductOptions";
+  static const String offers = "api/BundleOffers";
+  static const String addOfferToCart = "api/Basket/add-bundle-offer";
 }

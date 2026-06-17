@@ -52,6 +52,9 @@ class OrderDataResponseDTO {
   @JsonKey(name: ApiConstants.items)
   final List<OrderItemDTO>? items;
 
+  @JsonKey(name: ApiConstants.bundleItems)
+  final List<OrderBundleItemDTO>? bundleItems;
+
   const OrderDataResponseDTO({
     required this.id,
     required this.subTotal,
@@ -64,6 +67,7 @@ class OrderDataResponseDTO {
     required this.companyLogo,
     required this.createdAt,
     required this.items,
+    this.bundleItems
   });
 
   factory OrderDataResponseDTO.fromJson(Map<String, dynamic> json) =>
@@ -97,4 +101,78 @@ class OrderItemDTO {
       _$OrderItemDTOFromJson(json);
 
   Map<String, dynamic> toJson() => _$OrderItemDTOToJson(this);
+}
+
+
+@JsonSerializable()
+class OrderBundleItemDTO {
+  @JsonKey(name: ApiConstants.bundleOfferId)
+  final int? bundleOfferId;
+
+  @JsonKey(name: ApiConstants.bundleName)
+  final String? bundleName;
+
+  @JsonKey(name: ApiConstants.quantity)
+  final int? quantity;
+
+  @JsonKey(name: ApiConstants.originalTotalPrice)
+  final int? originalTotalPrice;
+
+  @JsonKey(name: ApiConstants.finalPrice)
+  final int? finalPrice;
+
+  @JsonKey(name: ApiConstants.totalPrice)
+  final int? totalPrice;
+
+  @JsonKey(name: ApiConstants.products)
+  final List<OrderBundleProductDTO>? products;
+
+  const OrderBundleItemDTO({
+    required this.bundleOfferId,
+    required this.bundleName,
+    required this.quantity,
+    required this.originalTotalPrice,
+    required this.finalPrice,
+    required this.totalPrice,
+    required this.products,
+  });
+
+  factory OrderBundleItemDTO.fromJson(Map<String, dynamic> json) =>
+      _$OrderBundleItemDTOFromJson(json);
+
+  Map<String, dynamic> toJson() => _$OrderBundleItemDTOToJson(this);
+}
+@JsonSerializable()
+class OrderBundleProductDTO {
+  @JsonKey(name: ApiConstants.productId)
+  final int? productId;
+
+  @JsonKey(name: ApiConstants.productName)
+  final String? productName;
+
+  @JsonKey(name: ApiConstants.imageUrl)
+  final String? imageUrl;
+
+  @JsonKey(name: ApiConstants.unitPrice)
+  final int? unitPrice;
+
+  @JsonKey(name: ApiConstants.quantity)
+  final int? quantity;
+
+  @JsonKey(name: ApiConstants.isGift)
+  final bool? isGift;
+
+  const OrderBundleProductDTO({
+    required this.productId,
+    required this.productName,
+    required this.imageUrl,
+    required this.unitPrice,
+    required this.quantity,
+    required this.isGift,
+  });
+
+  factory OrderBundleProductDTO.fromJson(Map<String, dynamic> json) =>
+      _$OrderBundleProductDTOFromJson(json);
+
+  Map<String, dynamic> toJson() => _$OrderBundleProductDTOToJson(this);
 }

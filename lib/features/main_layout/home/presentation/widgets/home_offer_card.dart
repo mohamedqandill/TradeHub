@@ -63,7 +63,7 @@ class HomeOfferCard extends StatelessWidget {
                 SizedBox(height: 10.h),
                 // Title
                 Text(
-                  "Get 30% off\nyour first order",
+                  "Discover Our\nOffers!",
                   style: context.base.theme.textTheme.titleLarge?.copyWith(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -74,7 +74,7 @@ class HomeOfferCard extends StatelessWidget {
                 SizedBox(height: 4.h),
                 // Subtitle
                 Text(
-                  "Shop from top vendors today",
+                  "Don't miss out on our exclusive deals",
                   style: context.base.theme.textTheme.bodyMedium?.copyWith(
                     color: Colors.white70,
                     fontSize: 10.sp,
@@ -93,7 +93,7 @@ class HomeOfferCard extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        "Shop Now",
+                        "View Offers",
                         style:
                             context.base.theme.textTheme.labelMedium?.copyWith(
                           color: Colors.white,

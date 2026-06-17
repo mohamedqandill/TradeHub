@@ -40,6 +40,9 @@ OrderDataResponseDTO _$OrderDataResponseDTOFromJson(
       items: (json['items'] as List<dynamic>?)
           ?.map((e) => OrderItemDTO.fromJson(e as Map<String, dynamic>))
           .toList(),
+      bundleItems: (json['bundleItems'] as List<dynamic>?)
+          ?.map((e) => OrderBundleItemDTO.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$OrderDataResponseDTOToJson(
@@ -56,6 +59,7 @@ Map<String, dynamic> _$OrderDataResponseDTOToJson(
       'companyLogo': instance.companyLogo,
       'createdAt': instance.createdAt,
       'items': instance.items,
+      'bundleItems': instance.bundleItems,
     };
 
 OrderItemDTO _$OrderItemDTOFromJson(Map<String, dynamic> json) => OrderItemDTO(
@@ -73,4 +77,51 @@ Map<String, dynamic> _$OrderItemDTOToJson(OrderItemDTO instance) =>
       'imageUrl': instance.imageUrl,
       'price': instance.price,
       'quantity': instance.quantity,
+    };
+
+OrderBundleItemDTO _$OrderBundleItemDTOFromJson(Map<String, dynamic> json) =>
+    OrderBundleItemDTO(
+      bundleOfferId: (json['bundleOfferId'] as num?)?.toInt(),
+      bundleName: json['bundleName'] as String?,
+      quantity: (json['quantity'] as num?)?.toInt(),
+      originalTotalPrice: (json['originalTotalPrice'] as num?)?.toInt(),
+      finalPrice: (json['finalPrice'] as num?)?.toInt(),
+      totalPrice: (json['totalPrice'] as num?)?.toInt(),
+      products: (json['products'] as List<dynamic>?)
+          ?.map(
+              (e) => OrderBundleProductDTO.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$OrderBundleItemDTOToJson(OrderBundleItemDTO instance) =>
+    <String, dynamic>{
+      'bundleOfferId': instance.bundleOfferId,
+      'bundleName': instance.bundleName,
+      'quantity': instance.quantity,
+      'originalTotalPrice': instance.originalTotalPrice,
+      'finalPrice': instance.finalPrice,
+      'totalPrice': instance.totalPrice,
+      'products': instance.products,
+    };
+
+OrderBundleProductDTO _$OrderBundleProductDTOFromJson(
+        Map<String, dynamic> json) =>
+    OrderBundleProductDTO(
+      productId: (json['productId'] as num?)?.toInt(),
+      productName: json['productName'] as String?,
+      imageUrl: json['imageUrl'] as String?,
+      unitPrice: (json['unitPrice'] as num?)?.toInt(),
+      quantity: (json['quantity'] as num?)?.toInt(),
+      isGift: json['isGift'] as bool?,
+    );
+
+Map<String, dynamic> _$OrderBundleProductDTOToJson(
+        OrderBundleProductDTO instance) =>
+    <String, dynamic>{
+      'productId': instance.productId,
+      'productName': instance.productName,
+      'imageUrl': instance.imageUrl,
+      'unitPrice': instance.unitPrice,
+      'quantity': instance.quantity,
+      'isGift': instance.isGift,
     };

@@ -14,4 +14,8 @@ class OrderDetailsRepositoryImpl implements OrderDetailsRepository {
   Future<ApiResult<OrderDetailsResponseDTO>> getOrderDetails(int id) {
     return _remoteDataSource.getOrderDetails(id);
   }
+  @override
+  Future<ApiResult<void>> cancelOrder({required int id}) {
+    return _remoteDataSource.cancelOrder(id: id);
+  }
 }

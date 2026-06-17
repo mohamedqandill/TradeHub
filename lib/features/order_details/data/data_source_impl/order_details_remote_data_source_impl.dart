@@ -17,4 +17,10 @@ class OrderDetailsRemoteDataSourceImpl implements OrderDetailsRemoteDataSource {
       apiCall: () => _apiClient.getOrderDetails(id),
     );
   }
+  @override
+  Future<ApiResult<void>> cancelOrder({required int id}) async {
+    return await ApiExecutor.executeApi<void>(
+      apiCall: () => _apiClient.cancelOrder(id),
+    );
+  }
 }

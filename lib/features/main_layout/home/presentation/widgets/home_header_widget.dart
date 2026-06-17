@@ -70,7 +70,7 @@ class HomeHeaderWidget extends StatelessWidget {
                               : address,
                           style:
                               context.base.theme.textTheme.bodyMedium?.copyWith(
-                            fontSize: 14.sp,
+                            fontSize: 12.sp,
                             color: Colors.white,
                             fontWeight: FontWeight.w700,
                           ),

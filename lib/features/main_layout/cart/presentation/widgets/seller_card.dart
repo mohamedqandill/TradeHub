@@ -23,94 +23,106 @@ class SellerCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Color selectedBg = context.isDarkMode
+        ? context.mainColor.withOpacity(0.4)
+        : AppColors.mainColor;
+    final Color unselectedBg =
+        context.isDarkMode ? AppColors.lightBlack : Colors.white;
+
+    final Color nameColor = isSelected
+        ? Colors.white
+        : (context.isDarkMode ? Colors.white : AppColors.black);
+    final Color subColor =
+        isSelected ? Colors.white.withOpacity(0.85) : AppColors.grey;
+
+    final int itemCount = group.items?.length ?? 0;
+
     return GestureDetector(
       onTap: onTap,
-      child: Container(
-        width: 160.w,
-        margin: EdgeInsets.symmetric(horizontal: 6.w, vertical: 8.h),
-        padding: EdgeInsets.all(16.w),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 250),
+        curve: Curves.easeOut,
+        margin: EdgeInsets.only(right: 10.w),
+        padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 8.h),
         decoration: BoxDecoration(
-          color: isSelected
-              ? (context.isDarkMode
-                  ? context.mainColor.withOpacity(0.5)
-                  : AppColors.mainColor)
-              : (context.isDarkMode ? AppColors.lightBlack : Colors.white),
-          borderRadius: BorderRadius.circular(24.r),
+          color: isSelected ? selectedBg : unselectedBg,
+          borderRadius: BorderRadius.circular(16.r),
           border: Border.all(
             color: isSelected
                 ? Colors.transparent
                 : (context.isDarkMode
                     ? Colors.white10
-                    : Colors.black.withOpacity(0.05)),
+                    : Colors.black.withOpacity(0.06)),
             width: 1,
           ),
+          boxShadow: isSelected
+              ? [
+                  BoxShadow(
+                    color: context.mainColor.withOpacity(0.30),
+                    blurRadius: 5,
+                    offset: const Offset(0, 2),
+                  ),
+                ]
+              : null,
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                group.logoUrl != null
+            // ── Logo avatar ──
+            Container(
+              width: 36.w,
+              height: 36.w,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: isSelected
+                    ? Colors.white.withOpacity(0.2)
+                    : context.mainColor.withOpacity(0.08),
+              ),
+              child: ClipOval(
+                child: group.logoUrl != null
                     ? CachedNetworkImage(
                         imageUrl: group.logoUrl!,
-                        width: 50.w,
-                        height: 50.w,
-                        fit: BoxFit.fill,
+                        fit: BoxFit.cover,
+                        errorWidget: (_, __, ___) => Icon(
+                          Icons.storefront_rounded,
+                          size: 18.sp,
+                          color: isSelected ? Colors.white : context.mainColor,
+                        ),
                       )
-                    : Icon(Icons.storefront_rounded,
-                        size: 20.sp,
-                        color: isSelected ? Colors.white : context.mainColor),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
-                  decoration: BoxDecoration(
-                    color: isSelected
-                        ? Colors.white.withOpacity(0.2)
-                        : context.mainColor.withOpacity(0.08),
-                    borderRadius: BorderRadius.circular(10.r),
-                  ),
-                  child: Text(
-                    "SELLER",
-                    style: TextStyle(
-                      fontSize: 9.sp,
-                      fontWeight: FontWeight.w800,
-                      color: isSelected ? Colors.white : context.mainColor,
-                      letterSpacing: 0.5,
-                      fontFamily: 'Poppins',
-                    ),
-                  ),
-                ),
-              ],
+                    : Icon(
+                        Icons.storefront_rounded,
+                        size: 18.sp,
+                        color: isSelected ? Colors.white : context.mainColor,
+                      ),
+              ),
             ),
+            SizedBox(width: 10.w),
+            // ── Name + item count ──
             Column(
+              mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                FittedBox(
+                ConstrainedBox(
+                  constraints: BoxConstraints(maxWidth: 120.w),
                   child: Text(
-                    group.companyName,
-                    maxLines: 2,
+                    group.companyName ?? "",
+                    maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
-                      fontSize: 14.sp,
+                      fontSize: 13.sp,
                       fontWeight: FontWeight.w800,
-                      color: isSelected
-                          ? Colors.white
-                          : (context.isDarkMode ? Colors.white : AppColors.black),
+                      color: nameColor,
                       fontFamily: 'Poppins',
                     ),
                   ),
                 ),
-                SizedBox(height: 2.h),
+                SizedBox(height: 1.h),
                 Text(
-                  "${group.items.length} ITEMS",
+                  "$itemCount items",
                   style: TextStyle(
                     fontSize: 10.sp,
                     fontWeight: FontWeight.w600,
-                    color: isSelected
-                        ? Colors.white.withOpacity(0.7)
-                        : context.greyOrWhite.withOpacity(0.4),
+                    color: subColor,
                     fontFamily: 'Poppins',
                   ),
                 ),
@@ -119,9 +131,6 @@ class SellerCard extends StatelessWidget {
           ],
         ),
       ),
-    )
-        .animate()
-        .fadeIn(delay: (index * 100).ms)
-        .slideX(begin: 0.2, end: 0);
+    ).animate().fadeIn(delay: (index * 80).ms).slideX(begin: 0.2, end: 0);
   }
 }

@@ -109,4 +109,17 @@ abstract class ApiConstants {
   static const String offerEndDate = "offerEndDate";
   static const String finalPrice = "finalPrice";
   static const String isOfferActive = "isOfferActive";
+  static const String bundleOfferId = "bundleOfferId"
+              ;
+  static const String isBunddleOffer = "isBundleOffer";
+  static const String bundleOffer = "bundleOffer";
+
+static const String bundleItems = "bundleItems";
+static const String bundleName = "bundleName";
+static const String originalTotalPrice = "originalTotalPrice";
+static const String totalPrice = "totalPrice";
+static const String products = "products";
+static const String unitPrice = "unitPrice";
+static const String isGift = "isGift";
+
 }

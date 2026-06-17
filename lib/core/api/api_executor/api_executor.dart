@@ -13,7 +13,7 @@ abstract class ApiExecutor {
       var serverException = handleDioErrors(dioError);
       return Error(error: serverException.errorsModel);
     } catch (error) {
-      return Error(error: ErrorsModel(message: "Unexpected error occurred."));
+      return Error(error: ErrorsModel(message: "Unexpected error occurred.please try again later"));
     }
   }
 }

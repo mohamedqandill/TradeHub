@@ -19,4 +19,5 @@ abstract class OrdersApiClient {
     @Query('pageIndex') int? pageIndex,
     @Query('pageSize') int? pageSize,
   });
+
 }

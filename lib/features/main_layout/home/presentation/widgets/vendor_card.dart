@@ -174,7 +174,7 @@ class _VendorLogo extends StatelessWidget {
         borderRadius: BorderRadius.circular(11.r),
         child: CachedNetworkImage(
           imageUrl: logoUrl ?? '',
-          fit: BoxFit.contain,
+          fit: BoxFit.fill,
           placeholder: (_, __) => Center(
             child: SizedBox(
               width: 20.w,

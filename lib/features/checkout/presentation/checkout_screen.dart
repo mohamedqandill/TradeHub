@@ -24,7 +24,8 @@ class CheckoutScreen extends StatefulWidget {
 }
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
-  bool _canPop = false;
+  bool _hasCheckoutStarted = false;
+bool _paymentSuccess = false;
 
   Future<bool> _showAwaitingPaymentDialog(BuildContext context) async {
     final bool? result = await showDialog<bool>(
@@ -118,8 +119,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
             // 3. Navigate to Order Details
             setState(() {
-              _canPop = true;
-            });
+  _paymentSuccess = true;
+});
             Navigator.pushNamedAndRemoveUntil(
               context,
               Routes.orderDetails,
@@ -133,38 +134,48 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           }
         },
         child: PopScope(
-          canPop: _canPop,
+          canPop: !_hasCheckoutStarted || _paymentSuccess,
           onPopInvoked: (didPop) async {
-            if (didPop) return;
+  if (didPop) return;
 
-            final cubit = context.read<CheckoutCubit>();
-            if (cubit.state is PaymentWebhookSuccess) {
-              setState(() {
-                _canPop = true;
-              });
-              Navigator.of(context).pop();
-              return;
-            }
+  final cubit = context.read<CheckoutCubit>();
 
-            final shouldPop = await _showAwaitingPaymentDialog(context);
-            if (shouldPop && context.mounted) {
-              final orderId = cubit.checkoutResponse?.orderId;
-              final paymentUrl = cubit.checkoutResponse?.paymentUrl;
-              if (orderId != null && paymentUrl != null) {
-                await HiveStorageHelper().saveString(
-                  "payment_url_order_$orderId",
-                  paymentUrl,
-                );
-              }
-              setState(() {
-                _canPop = true;
-              });
-              if (context.mounted) {
-                Navigator.of(context).pop();
-              }
-            }
-          },
-          child: const CheckoutScreenBody(),
+  // لسه معملش Checkout
+  if (!_hasCheckoutStarted) {
+    Navigator.of(context).pop();
+    return;
+  }
+
+  // الدفع نجح
+  if (_paymentSuccess) {
+    Navigator.of(context).pop();
+    return;
+  }
+
+  // عمل Checkout ولسه مستني الدفع
+  final shouldPop = await _showAwaitingPaymentDialog(context);
+
+  if (!shouldPop || !context.mounted) return;
+
+  final orderId = cubit.checkoutResponse?.orderId;
+  final paymentUrl = cubit.checkoutResponse?.paymentUrl;
+
+  if (orderId != null && paymentUrl != null) {
+    await HiveStorageHelper().saveString(
+      "payment_url_order_$orderId",
+      paymentUrl,
+    );
+  }
+
+  if (context.mounted) {
+    Navigator.of(context).pop();
+  }
+},
+          child:  CheckoutScreenBody(onCheckout: ({required isCheckoutSucess}) {
+            setState(() {
+              _hasCheckoutStarted = isCheckoutSucess;
+            });
+          },),
         ),
       ),
     );

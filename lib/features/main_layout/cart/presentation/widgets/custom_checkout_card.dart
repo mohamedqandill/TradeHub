@@ -1,11 +1,8 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tradehub/core/colors/app_colors.dart';
 import 'package:tradehub/core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/extensions/main_color.dart';
-import 'package:tradehub/core/localization/locale_keys.g.dart';
-import 'package:tradehub/core/routes/routes.dart';
 
 class CustomCheckoutCard extends StatelessWidget {
   const CustomCheckoutCard({
@@ -29,13 +26,16 @@ class CustomCheckoutCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool isDarkMode = context.isDarkMode;
 
+    final String formatted = subTotal.toString().replaceAllMapped(
+        RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},');
+
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 20.h),
+      padding: EdgeInsets.fromLTRB(16.w, 10.h, 16.w, 16.h),
       decoration: BoxDecoration(
         color: isDarkMode ? AppColors.lightBlack : Colors.white,
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(32.r),
-          topRight: Radius.circular(32.r),
+          topLeft: Radius.circular(28.r),
+          topRight: Radius.circular(28.r),
         ),
         boxShadow: [
           BoxShadow(
@@ -47,78 +47,102 @@ class CustomCheckoutCard extends StatelessWidget {
       ),
       child: SafeArea(
         top: false,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "TOTAL PAYABLE",
-                  style: TextStyle(
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.w700,
-                    color: AppColors.grey,
-                    letterSpacing: 1.2,
-                    fontFamily: 'Poppins',
-                  ),
-                ),
-                SizedBox(height: 4.h),
-                Flexible(
-                  child: Text(
-                    "${subTotal.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} EGP",
-                    style: TextStyle(
-                      fontSize: 24.sp,
-                      fontWeight: FontWeight.w900,
-                      color:
-                          isDarkMode ? Colors.white : const Color(0xFF1A1D21),
-                      fontFamily: 'Poppins',
-                    ),
-                  ),
-                ),
-              ],
+            // ── Grabber handle ──
+            Container(
+              width: 40.w,
+              height: 4.h,
+              margin: EdgeInsets.only(bottom: 14.h),
+              decoration: BoxDecoration(
+                color: AppColors.grey.withOpacity(0.3),
+                borderRadius: BorderRadius.circular(10.r),
+              ),
             ),
-            SizedBox(width: 5.w),
-            GestureDetector(
-              onTap: onTap,
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
-                decoration: BoxDecoration(
-                  color: context.isDarkMode
-                      ? context.mainColor.withOpacity(0.5)
-                      : AppColors.mainColor,
-                  borderRadius: BorderRadius.circular(20.r),
-                  boxShadow: [
-                    BoxShadow(
-                      color: context.mainColor.withOpacity(0.3),
-                      blurRadius: 10,
-                      offset: const Offset(0, 8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "TOTAL PAYABLE",
+                      style: TextStyle(
+                        fontSize: 11.sp,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.grey,
+                        letterSpacing: 1.2,
+                        fontFamily: 'Poppins',
+                      ),
+                    ),
+                    SizedBox(height: 4.h),
+                    Text(
+                      "$formatted EGP",
+                      style: TextStyle(
+                        fontSize: 24.sp,
+                        fontWeight: FontWeight.w900,
+                        color:
+                            isDarkMode ? Colors.white : const Color(0xFF1A1D21),
+                        fontFamily: 'Poppins',
+                      ),
                     ),
                   ],
                 ),
-                child: 
-                Row(
-                      children: [
-                          Text(
-                            buttonText ?? "CHECKOUT",
-                            style: TextStyle(
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w800,
-                              color: Colors.white,
-                              letterSpacing: 1,
-                              fontFamily: 'Poppins',
+                SizedBox(width: 12.w),
+                GestureDetector(
+                  onTap: onTap,
+                  child: Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
+                    decoration: BoxDecoration(
+                      color: isDarkMode
+                          ? context.mainColor.withOpacity(0.4)
+                          : AppColors.mainColor,
+                      borderRadius: BorderRadius.circular(18.r),
+                      boxShadow: [
+                        BoxShadow(
+                          color: context.mainColor.withOpacity(0.3),
+                          blurRadius: 5,
+                          offset: const Offset(0, 0),
+                        ),
+                      ],
+                    ),
+                    child: (isLoading ?? false)
+                        ? SizedBox(
+                            width: 20.w,
+                            height: 20.w,
+                            child: const CircularProgressIndicator(
+                              strokeWidth: 2,
+                              valueColor:
+                                  AlwaysStoppedAnimation<Color>(Colors.white),
                             ),
+                          )
+                        : Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                buttonText ?? "CHECKOUT",
+                                style: TextStyle(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w800,
+                                  color: Colors.white,
+                                  letterSpacing: 1,
+                                  fontFamily: 'Poppins',
+                                ),
+                              ),
+                              SizedBox(width: 12.w),
+                              Icon(
+                                buttonIcon ?? Icons.arrow_forward,
+                                color: Colors.white,
+                                size: 18.sp,
+                              ),
+                            ],
                           ),
-                          SizedBox(width: 12.w),
-                          Icon(
-                            buttonIcon ?? Icons.arrow_forward,
-                            color: Colors.white,
-                            size: 18.sp,
-                          ),
-                        ],
-                      ),
-              ),
+                  ),
+                ),
+              ],
             ),
           ],
         ),

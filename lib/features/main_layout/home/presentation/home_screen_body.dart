@@ -10,6 +10,7 @@ import 'package:tradehub/core/constants/app_constants.dart';
 import 'package:tradehub/core/extensions/main_color.dart';
 import 'package:tradehub/core/functions/show_snakbar.dart';
 import 'package:tradehub/core/localization/locale_keys.g.dart';
+import 'package:tradehub/core/routes/routes.dart';
 import 'package:tradehub/core/shared_services/shared_product_repository.dart';
 import 'package:tradehub/core/shared_widgets/fields/custom_search_field.dart';
 import 'package:tradehub/core/shared_widgets/widgets/custom_error_widget.dart';
@@ -250,10 +251,15 @@ class _HomeScreenBodyState extends State<HomeScreenBody> with RouteAware {
                             isLoading:
                                 state.getCategoryState == RequestStates.loading,
                           ).animate().fadeIn(delay: 300.ms).slideY(begin: 0.1),
-                          const HomeOfferCard()
-                              .animate()
-                              .fadeIn(delay: 400.ms)
-                              .scale(begin: const Offset(0.95, 0.95)),
+                          InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(context, Routes.offers);
+                            },
+                            child: const HomeOfferCard()
+                                .animate()
+                                .fadeIn(delay: 400.ms)
+                                .scale(begin: const Offset(0.95, 0.95)),
+                          ),
                           SizedBox(height: 28.h),
                           CustomRowHeadline(
                             title: LocaleKeys.featuredVendors.tr(),

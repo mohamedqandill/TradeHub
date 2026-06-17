@@ -3,4 +3,5 @@ import 'package:tradehub/features/order_details/data/models/order_details_respon
 
 abstract class OrderDetailsRepository {
   Future<ApiResult<OrderDetailsResponseDTO>> getOrderDetails(int id);
+  Future<ApiResult<void>> cancelOrder({required int id});
 }

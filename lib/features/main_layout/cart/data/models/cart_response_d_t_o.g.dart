@@ -8,12 +8,12 @@ part of 'cart_response_d_t_o.dart';
 
 CartResponseDTO _$CartResponseDTOFromJson(Map<String, dynamic> json) =>
     CartResponseDTO(
-      id: (json['id'] as num).toInt(),
-      buyerId: json['buyerId'] as String,
-      companyName: json['companyName'] as String,
-      companyId: json['companyId'] as String,
-      items: (json['items'] as List<dynamic>)
-          .map((e) => Items.fromJson(e as Map<String, dynamic>))
+      id: (json['id'] as num?)?.toInt(),
+      buyerId: json['buyerId'] as String?,
+      companyName: json['companyName'] as String?,
+      companyId: json['companyId'] as String?,
+      items: (json['items'] as List<dynamic>?)
+          ?.map((e) => Items.fromJson(e as Map<String, dynamic>))
           .toList(),
       subTotal: (json['subTotal'] as num?)?.toInt() ?? 0,
       logoUrl: json['logoUrl'] as String?,
@@ -31,16 +31,21 @@ Map<String, dynamic> _$CartResponseDTOToJson(CartResponseDTO instance) =>
     };
 
 Items _$ItemsFromJson(Map<String, dynamic> json) => Items(
-      id: (json['id'] as num).toInt(),
-      productId: (json['productId'] as num).toInt(),
-      productName: json['productName'] as String,
-      pictureUrl: json['pictureUrl'] as String,
-      price: (json['price'] as num).toInt(),
-      quantity: (json['quantity'] as num).toInt(),
-      total: (json['total'] as num).toInt(),
+      id: (json['id'] as num?)?.toInt(),
+      productId: (json['productId'] as num?)?.toInt(),
+      productName: json['productName'] as String?,
+      pictureUrl: json['pictureUrl'] as String?,
+      price: (json['price'] as num?)?.toInt(),
+      quantity: (json['quantity'] as num?)?.toInt(),
+      total: (json['total'] as num?)?.toInt(),
       options: (json['options'] as List<dynamic>?)
           ?.map((e) => CartOptionDTO.fromJson(e as Map<String, dynamic>))
           .toList(),
+      offerBundle: json['bundleOffer'] == null
+          ? null
+          : OfferResponse.fromJson(json['bundleOffer'] as Map<String, dynamic>),
+      bundleOfferId: (json['bundleOfferId'] as num?)?.toInt(),
+      isBundleOffer: json['isBundleOffer'] as bool?,
     );
 
 Map<String, dynamic> _$ItemsToJson(Items instance) => <String, dynamic>{
@@ -52,6 +57,9 @@ Map<String, dynamic> _$ItemsToJson(Items instance) => <String, dynamic>{
       'quantity': instance.quantity,
       'total': instance.total,
       'options': instance.options,
+      'bundleOfferId': instance.bundleOfferId,
+      'isBundleOffer': instance.isBundleOffer,
+      'bundleOffer': instance.offerBundle,
     };
 
 CartOptionDTO _$CartOptionDTOFromJson(Map<String, dynamic> json) =>

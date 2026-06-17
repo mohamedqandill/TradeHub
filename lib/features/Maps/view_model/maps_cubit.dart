@@ -6,6 +6,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:tradehub/features/Maps/utils/location_services.dart';
 import 'package:tradehub/features/Maps/utils/maps_services.dart';
 
+import '../../../core/constants/app_constants.dart';
+import '../../../core/utils/shared_prefs/prefs.dart';
 import 'maps_state.dart';
 
 class MapsCubit extends Cubit<MapsState> {
@@ -27,6 +29,16 @@ class MapsCubit extends Cubit<MapsState> {
       locationRequested = true;
       updateMyLocation(isFirstTime: true);
     }
+  }
+
+  updatePlaceName(String name) async {
+    await SharedPrefsHelper.init();
+    await SharedPrefsHelper().saveString(AppConstants.savedPlace, name);
+    emit(
+      state.copyWith(
+        selectedPlaceName: name,
+      ),
+    );
   }
 
   Future<bool> requestService() async {
