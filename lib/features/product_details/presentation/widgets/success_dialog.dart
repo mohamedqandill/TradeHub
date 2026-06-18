@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tradehub/core/colors/app_colors.dart';
 import 'package:tradehub/core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/routes/routes.dart';
+import 'package:tradehub/core/shared_services/shared_product_repository.dart';
+import 'package:tradehub/core/utils/di/di.dart';
+import 'package:tradehub/features/main_layout/cart/presentation/cubit/cart_cubit.dart';
+import 'package:tradehub/features/main_layout/cart/presentation/cubit/cart_states.dart';
 
-Future<dynamic> successDialog(BuildContext context) {
+Future<dynamic> successDialog(BuildContext context,void Function()? onTap) {
   return showDialog(
     context: context,
     barrierColor: Colors.black.withOpacity(0.5),
@@ -115,60 +120,56 @@ Future<dynamic> successDialog(BuildContext context) {
                   ),
                   SizedBox(width: 12.w),
 
-                  // Go to Cart
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.pushReplacementNamed(
-                          context,
-                          Routes.mainLayout,
-                          arguments: 2,
-                        );
-                      },
-                      child: Container(
-                        padding: EdgeInsets.symmetric(vertical: 12.h),
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              AppColors.mainColor,
-                              Color.lerp(AppColors.mainColor, Colors.white,
-                                  context.isDarkMode ? 0.15 : 0.25)!,
-                            ],
-                            begin: Alignment.centerLeft,
-                            end: Alignment.centerRight,
-                          ),
-                          borderRadius: BorderRadius.circular(14.r),
-                          boxShadow: [
-                            BoxShadow(
-                              color: AppColors.mainColor.withOpacity(0.3),
-                              blurRadius: 10,
-                              offset: const Offset(0, 4),
-                            ),
-                          ],
-                        ),
-                        child: Center(
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(
-                                Icons.shopping_cart_rounded,
-                                size: 13.sp,
-                                color: Colors.white,
+                  
+                   
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: onTap,
+                          child: Container(
+                            padding: EdgeInsets.symmetric(vertical: 12.h),
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [
+                                  AppColors.mainColor,
+                                  Color.lerp(AppColors.mainColor, Colors.white,
+                                      context.isDarkMode ? 0.15 : 0.25)!,
+                                ],
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight,
                               ),
-                              SizedBox(width: 5.w),
-                              Text(
-                                "Go to Cart",
-                                style: GoogleFonts.manrope(
-                                  color: Colors.white,
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.w800,
+                              borderRadius: BorderRadius.circular(14.r),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: AppColors.mainColor.withOpacity(0.3),
+                                  blurRadius: 10,
+                                  offset: const Offset(0, 4),
                                 ),
+                              ],
+                            ),
+                            child: Center(
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    Icons.shopping_cart_rounded,
+                                    size: 13.sp,
+                                    color: Colors.white,
+                                  ),
+                                  SizedBox(width: 5.w),
+                                  Text(
+                                    "Go to Cart",
+                                    style: GoogleFonts.manrope(
+                                      color: Colors.white,
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w800,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
+                            ),
                           ),
                         ),
-                      ),
-                    ),
+                    
                   ),
                 ],
               ),

@@ -26,7 +26,7 @@ class HomeCubit extends Cubit<HomeState> {
     this._getAllCompaniesUseCase,
     this._getRandomProductsUseCase,
   ) : super(const HomeState.initial()) {
-    loadAllProductsLocally();
+    
   }
 
   List<GetCategoryEntity> categories = [];

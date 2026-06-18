@@ -23,48 +23,34 @@ class ProductsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Skeletonizer(
       enabled: isLoading ?? false,
-      child: MultiBlocListener(
-          listeners: [
-            BlocListener<CartCubit, CartState>(listener: (context, state) {
-              if (state is AddToCartSuccessState) {
-                showSuccessSnackBar(messageTitle: "Added To Cart");
-              }
-
-              if (state is AddToCartErrorState) {
-                showFailureSnackBar(context, messageTitle: "Failed");
-              }
-            }),
-          ],
-          child: BlocBuilder<HomeCubit, HomeState>(builder: (context, state) {
-            var cartCubit = context.watch<CartCubit>();
-            final isLoadingEmpty = (isLoading ?? false) &&
-                state.randomProducts.isEmpty;
-            final itemCount = isLoadingEmpty
-                ? 3
-                : state.randomProducts.length;
-
-            return ListView.separated(
-              padding: EdgeInsets.zero,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: itemCount,
-              separatorBuilder: (context, index) => SizedBox(height: 14.h),
-              itemBuilder: (context, index) {
-                if (isLoadingEmpty) {
-                  return _ProductSkeletonPlaceholder(
-                    isDark: context.isDarkMode,
-                  );
-                }
-
-                return ProductCard(
-                  product: state.randomProducts[index],
-                  cartCubit: cartCubit,
-                  isDark: context.isDarkMode,
-                  mainColor: context.mainColor,
-                );
-              },
+      child: BlocBuilder<HomeCubit, HomeState>(builder: (context, state) {
+        var cartCubit = context.watch<CartCubit>();
+        final isLoadingEmpty =
+            (isLoading ?? false) && state.randomProducts.isEmpty;
+        final itemCount = isLoadingEmpty ? 3 : state.randomProducts.length;
+    
+        return ListView.separated(
+          padding: EdgeInsets.zero,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: itemCount,
+          separatorBuilder: (context, index) => SizedBox(height: 14.h),
+          itemBuilder: (context, index) {
+            if (isLoadingEmpty) {
+              return _ProductSkeletonPlaceholder(
+                isDark: context.isDarkMode,
+              );
+            }
+    
+            return ProductCard(
+              product: state.randomProducts[index],
+              cartCubit: cartCubit,
+              isDark: context.isDarkMode,
+              mainColor: context.mainColor,
             );
-          })),
+          },
+        );
+      }),
     );
   }
 }
@@ -88,4 +74,3 @@ class _ProductSkeletonPlaceholder extends StatelessWidget {
     );
   }
 }
-

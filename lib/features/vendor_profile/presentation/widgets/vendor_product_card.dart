@@ -94,7 +94,8 @@ class VendorProductCard extends StatelessWidget {
                   top: 8.h,
                   left: 8.w,
                   child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 3.h),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 6.w, vertical: 3.h),
                     decoration: BoxDecoration(
                       color: Colors.black.withOpacity(0.65),
                       borderRadius: BorderRadius.circular(10.r),
@@ -127,7 +128,8 @@ class VendorProductCard extends StatelessWidget {
                   child: Container(
                     padding: EdgeInsets.all(4.sp),
                     decoration: BoxDecoration(
-                      color: (isDark ? const Color(0xFF0F0F10) : Colors.white).withOpacity(0.9),
+                      color: (isDark ? const Color(0xFF0F0F10) : Colors.white)
+                          .withOpacity(0.9),
                       shape: BoxShape.circle,
                       boxShadow: const [
                         BoxShadow(
@@ -205,56 +207,6 @@ class VendorProductCard extends StatelessWidget {
                           color: mainColor,
                           fontWeight: FontWeight.bold,
                           fontSize: 14.5.sp,
-                        ),
-                      ),
-                    ),
-
-                    // Compact premium gradient cart button
-                    Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                        onTap: isAddingToCart
-                            ? null
-                            : () {
-                                cartCubit.addToCart(product.id);
-                              },
-                        borderRadius: BorderRadius.circular(10.r),
-                        child: AnimatedContainer(
-                          duration: const Duration(milliseconds: 200),
-                          width: 32.w,
-                          height: 32.w,
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [
-                                mainColor,
-                                Color.lerp(mainColor, Colors.white, isDark ? 0.15 : 0.25)!,
-                              ],
-                            ),
-                            borderRadius: BorderRadius.circular(10.r),
-                            boxShadow: [
-                              BoxShadow(
-                                color: mainColor.withOpacity(isDark ? 0.25 : 0.18),
-                                blurRadius: 6,
-                                offset: const Offset(0, 3),
-                              ),
-                            ],
-                          ),
-                          child: Center(
-                            child: isAddingToCart
-                                ? SizedBox(
-                                    width: 12.sp,
-                                    height: 12.sp,
-                                    child: const CircularProgressIndicator(
-                                      strokeWidth: 2,
-                                      color: Colors.white,
-                                    ),
-                                  )
-                                : Icon(
-                                    Icons.add_shopping_cart_rounded,
-                                    size: 13.sp,
-                                    color: Colors.white,
-                                  ),
-                          ),
                         ),
                       ),
                     ),

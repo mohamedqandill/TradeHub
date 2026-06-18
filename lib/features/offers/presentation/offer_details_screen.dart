@@ -8,6 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tradehub/core/functions/show_snakbar.dart';
 import 'package:tradehub/core/utils/animations/loading_product_animation.dart';
 import 'package:tradehub/core/utils/di/di.dart';
+import 'package:tradehub/features/main_layout/cart/presentation/cubit/cart_cubit.dart';
 import 'package:tradehub/features/offers/data/models/add_offer_request_body.dart';
 import 'package:tradehub/features/offers/data/models/offers_response.dart';
 import 'package:tradehub/features/offers/presentation/cubit/cubit.dart';
@@ -99,6 +100,12 @@ class _OfferDetailScreenState extends State<OfferDetailScreen>
       CurvedAnimation(parent: _slideController, curve: Curves.easeOut),
     );
   }
+  int getDaysLeft(OfferResponse? offer) {
+  if (offer == null || offer.endDate!.isEmpty) return 0;
+
+  final end = DateTime.parse(offer.endDate!);
+  return end.difference(DateTime.now()).inDays;
+}
 
   @override
   void dispose() {
@@ -121,18 +128,19 @@ class _OfferDetailScreenState extends State<OfferDetailScreen>
         final String endDate = offer?.endDate ?? "";
         final String startDate = offer?.startDate ?? "";
         final bool active = offer?.isCurrentlyActive ?? false;
-        // final int daysLeft =
-        //     DateTime.parse(endDate).difference(DateTime.now()).inDays;
-        if (state is AddOfferToCartError) {
-          showFailureSnackBar(context, messageTitle: state.message);
-        }
+        int daysLeft = 0;
 
         if (state is AddOfferToCartLoaded && isSnackbarShown == false) {
           showSuccessSnackBar(messageTitle: " Offer Added Successfully");
+          context.read<CartCubit>().isCartChanged = true;
           isSnackbarShown = true;
         } else if (state is AddOfferToCartError && isSnackbarShown == false) {
           showFailureSnackBar(context, messageTitle: "Failed To Add Offer");
           isSnackbarShown = true;
+        }
+        daysLeft = getDaysLeft(offer);
+        if (state is AddOfferToCartError) {
+          showFailureSnackBar(context, messageTitle: state.message);
         }
 
         return state is OfferDetailsLoading
@@ -177,7 +185,8 @@ class _OfferDetailScreenState extends State<OfferDetailScreen>
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    _buildOfferTitleSection(offer, active, 10),
+                                    _buildOfferTitleSection(
+                                        offer, active, daysLeft),
                                     const SizedBox(height: 24),
                                     _buildSavingsBanner(saved, discount),
                                     const SizedBox(height: 24),
@@ -187,7 +196,7 @@ class _OfferDetailScreenState extends State<OfferDetailScreen>
                                     _buildWhatYouGet(items),
                                     const SizedBox(height: 24),
                                     _buildValiditySection(
-                                        startDate, endDate, 10),
+                                        startDate, endDate, daysLeft),
                                     const SizedBox(height: 24),
                                     _buildWhyThisOffer(offer),
                                   ],

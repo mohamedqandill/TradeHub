@@ -48,7 +48,7 @@ Future<void> main() async {
   await SharedPrefsHelper.init();
 
   LocalNotificationService.initialize();
-  requestNotificationPermission();
+ await requestNotificationPermission();
   SharedPrefsHelper prefs = getIt<SharedPrefsHelper>();
   await HiveStorageHelper.init();
   final languageViewModel = getIt<LanguageViewModel>();

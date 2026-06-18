@@ -1,11 +1,14 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tradehub/Core/extensions/base_inherited_context.dart';
 import 'package:tradehub/core/assets/assets.gen.dart';
 import 'package:tradehub/core/extensions/main_color.dart';
 import 'package:tradehub/core/localization/locale_keys.g.dart';
 import 'package:tradehub/core/shared_widgets/buttons/custom_large_main_button.dart';
+import 'package:tradehub/features/main_layout/cart/presentation/cubit/cart_cubit.dart';
+import 'package:tradehub/features/main_layout/cart/presentation/cubit/cart_states.dart';
 
 class EmptyCartScreenBody extends StatelessWidget {
   const EmptyCartScreenBody({super.key});
@@ -44,13 +47,20 @@ class EmptyCartScreenBody extends StatelessWidget {
         SizedBox(
           height: 46.h,
         ),
-        CustomLargeMainButton(
-            textStyle: context.base.theme.textTheme.titleLarge!
-                .copyWith(fontSize: 18.sp, color: Colors.white),
-            onPressed: () {},
-            radius: 50.r,
-            height: 56.h,
-            text: LocaleKeys.startShopping.tr())
+        BlocBuilder<CartCubit, CartState>(
+          builder: (context, state) {
+            return CustomLargeMainButton(
+                textStyle: context.base.theme.textTheme.titleLarge!
+                    .copyWith(fontSize: 18.sp, color: Colors.white),
+                onPressed: () {
+                  context.read<CartCubit>().changeTap(0);
+                  context.read<CartCubit>().requestScrollToProduct();
+                },
+                radius: 50.r,
+                height: 56.h,
+                text: LocaleKeys.startShopping.tr());
+          },
+        )
       ],
     );
   }

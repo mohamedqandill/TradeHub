@@ -20,10 +20,13 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
   @override
   void initState() {
     bool isFavoriteChange = getIt<SharedProductRepository>().isFavoriteChange;
-    if (isFavoriteChange) {
+    bool isFirstTimeAtFavorite =
+        getIt<SharedProductRepository>().isFirstTimeAtFavorite;
+    if (isFavoriteChange || isFirstTimeAtFavorite) {
       context.read<FavouriteCubit>().getFavorites();
       getIt<SharedProductRepository>().clearUpdates();
       getIt<SharedProductRepository>().clearFavoriteStateUpdate();
+      getIt<SharedProductRepository>().markFirstTimeAtFavorite();
     }
     super.initState();
   }

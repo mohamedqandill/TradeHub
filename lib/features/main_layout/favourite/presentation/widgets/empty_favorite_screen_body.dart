@@ -49,7 +49,9 @@ class EmptyFavoriteScreenBody extends StatelessWidget {
           height: 46.h,
         ),
         CustomLargeMainButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pop(context);
+            },
             radius: 50.r,
             height: 56.h,
             text: LocaleKeys.startShopping.tr())

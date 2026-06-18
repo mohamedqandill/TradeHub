@@ -21,6 +21,8 @@ class CartCubit extends Cubit<CartState> {
   int? loadingProductId;
   bool isCartChanged = false;
   bool isCartInitated = false;
+  bool scrollToProduct = false;
+
 
   CartCubit(
     this._getBasketUseCase,
@@ -43,6 +45,17 @@ class CartCubit extends Cubit<CartState> {
       case Error():
         emit(GetBasketError(result.error?.message ?? "Failed To Get Cart"));
     }
+  }
+
+void requestScrollToProduct(){
+  scrollToProduct = true;
+  emit(ScrollToProduct());
+}
+  int selectedIndex = 0;
+
+  changeTap(int index) {
+    selectedIndex = index;
+    emit(ChangeTap(index));
   }
 
   Future<void> addToCart(int productId,

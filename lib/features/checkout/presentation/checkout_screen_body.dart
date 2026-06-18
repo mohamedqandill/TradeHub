@@ -23,13 +23,12 @@ import 'widgets/order_summary_card.dart';
 import 'widgets/sticky_bottom_bar.dart';
 
 class CheckoutScreenBody extends StatefulWidget {
-  const CheckoutScreenBody({super.key , required this.onCheckout});
+  const CheckoutScreenBody({super.key, required this.onCheckout});
   final Function({required bool isCheckoutSucess}) onCheckout;
 
   @override
   State<CheckoutScreenBody> createState() => _CheckoutScreenBodyState();
 }
-
 
 class _CheckoutScreenBodyState extends State<CheckoutScreenBody> {
   String recipientName = "";
@@ -39,7 +38,7 @@ class _CheckoutScreenBodyState extends State<CheckoutScreenBody> {
   int selectedPaymentMethod = 0; // 0 for Credit Card, 1 for COD
   int activeStep = 1; // 1 for Payment Method, 2 for Review & Place Order
   bool isCheckedOut = false;
-bool isPaying = false;
+  bool isPaying = false;
 
   @override
   void initState() {
@@ -150,15 +149,13 @@ bool isPaying = false;
         if (state is CheckoutSuccess) {
           // Checkout succeede  d → proceed to payment based on selected method
           widget.onCheckout(isCheckoutSucess: true);
-        setState(() {
-    isCheckedOut = true;
-  });
+          setState(() {
+            isCheckedOut = true;
+          });
         } else if (state is CheckoutError) {
           showFailureSnackBar(context, messageTitle: state.error.message);
         } else if (state is PaymentWebhookSuccess) {
           showSuccessSnackBar(messageTitle: "Order placed successfully!");
-          // Navigate back to home or orders
-          Navigator.of(context).popUntil((route) => route.isFirst);
         } else if (state is PaymentWebhookError) {
           showFailureSnackBar(context, messageTitle: state.error.message);
         }
@@ -278,14 +275,14 @@ bool isPaying = false;
                       isLast: true,
                       activeContent: cartItems != null
                           ? OrderSummaryCard(
-                              items: cartItems.items??[],
+                              items: cartItems.items ?? [],
                               subTotal: subTotal,
                               initiallyExpanded: true,
                             )
                           : const SizedBox.shrink(),
                       collapsedContent: cartItems != null
                           ? OrderSummaryCard(
-                              items: cartItems.items??[],
+                              items: cartItems.items ?? [],
                               subTotal: subTotal,
                               initiallyExpanded: false,
                             )
@@ -302,10 +299,10 @@ bool isPaying = false;
               child: StickyBottomBar(
                 totalPrice: subTotal,
                 buttonText: activeStep == 1
-    ? "Continue"
-    : isCheckedOut
-        ? "Pay Now"
-        : "Place Order",
+                    ? "Continue"
+                    : isCheckedOut
+                        ? "Pay Now"
+                        : "Place Order",
                 isLoading: isLoading,
                 onTap: () async {
                   if (activeStep == 1) {
@@ -314,25 +311,43 @@ bool isPaying = false;
                     });
                   } else {
                     // Place order: call checkout API, then handle payment
-                   if (!isCheckedOut) {
-  if(shippingAddress.isNotEmpty){
-    await _placeOrder(cubit, selectedPaymentMethod);
-  }
-} else {
-  final paymentUrl = cubit.checkoutResponse?.paymentUrl;
+                    if (!isCheckedOut) {
+                      if (shippingAddress.isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            backgroundColor: Colors.black,
+                            content: Row(
+                              children: [
+                                const Icon(Icons.info_outline,
+                                    color: Colors.white),
+                                Text(
+                                  "Please select your shipping address",
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 12.sp),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      }
+                      if (shippingAddress.isNotEmpty) {
+                        await _placeOrder(cubit, selectedPaymentMethod);
+                      }
+                    } else {
+                      final paymentUrl = cubit.checkoutResponse?.paymentUrl;
 
-  if (paymentUrl != null) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => PaymentWebViewScreen(
-          url: paymentUrl,
-          cubit: cubit,
-        ),
-      ),
-    );
-  }
-}
+                      if (paymentUrl != null) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => PaymentWebViewScreen(
+                              url: paymentUrl,
+                              cubit: cubit,
+                            ),
+                          ),
+                        );
+                      }
+                    }
                   }
                 },
               ),
@@ -417,8 +432,7 @@ bool isPaying = false;
                     shape: BoxShape.circle,
                   ),
                   child: Icon(
-                    hasPlace ? Icons.location_pin
-                        : Icons.near_me_rounded,
+                    hasPlace ? Icons.location_pin : Icons.near_me_rounded,
                     color: hasPlace ? primary : AppColors.grey,
                     size: 22.sp,
                   ),
@@ -429,9 +443,9 @@ bool isPaying = false;
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                           
-                           
-                        hasPlace ? "Selected Location" : "Set Delivery Location",
+                        hasPlace
+                            ? "Selected Location"
+                            : "Set Delivery Location",
                         style: TextStyle(
                           fontSize: 11.sp,
                           fontWeight: FontWeight.w600,
