@@ -74,6 +74,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> with RouteAware {
   void initState() {
     super.initState();
     getSavedPlaceName();
+    cubit = context.read<HomeCubit>();
     _scrollController = ScrollController()..addListener(_onScroll);
   }
 
@@ -169,270 +170,315 @@ class _HomeScreenBodyState extends State<HomeScreenBody> with RouteAware {
     bool isDarkMode = context.isDarkMode;
     Color scaffoldBg = isDarkMode ? AppColors.black : Colors.white;
 
-    return BlocConsumer<HomeCubit, HomeState>(
+    return BlocListener<CartCubit, CartState>(
+      listenWhen: (previous, current) {
+        return current is AddToCartSuccessState ||
+            current is AddToCartErrorState;
+      },
       listener: (context, state) {
-        if (state.getRandomProductsState == RequestStates.success) {
-          context.read<FavouriteCubit>().setFavorites(
-                state.randomProducts
-                    .where((e) => e.isFavourite == true)
-                    .map((e) => e.id)
-                    .toList(),
-              );
+        print("home state");
 
-          if (_scrollAfterSortLoad) {
-            _scrollAfterSortLoad = false;
-            _scrollToProductsSection();
-          }
+        final cartCubit = context.read<CartCubit>();
+
+        if (cartCubit.scrollToProduct) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            _scrollToProductsSection(fromSort: true);
+            cartCubit.scrollToProduct = false;
+          });
         }
       },
-      builder: (context, state) {
-        cubit = context.watch<HomeCubit>();
+      child: BlocConsumer<HomeCubit, HomeState>(
+        listener: (context, state) {
+          if (state.getRandomProductsState == RequestStates.success) {
+            context.read<FavouriteCubit>().setFavorites(
+                  state.randomProducts
+                      .where((e) => e.isFavourite == true)
+                      .map((e) => e.id)
+                      .toList(),
+                );
 
-        if (state.getCategoryState == RequestStates.error &&
-            state.getCompaniesState == RequestStates.error &&
-            state.getRandomProductsState == RequestStates.error) {
-          return CustomErrorWidget(
-            message: state.errorMessage ?? "Failed to load home data.",
-            onRetry: () => cubit.revokeHomeApis(),
-          );
-        }
-
-        return WillPopScope(
-          onWillPop: () async {
-            if (_isSearchActive) {
-              setState(() {
-                _isSearchActive = false;
-                _searchQuery = "";
-                _searchController.clear();
-                _searchFocusNode.unfocus();
-              });
-              return false;
+            if (_scrollAfterSortLoad) {
+              _scrollAfterSortLoad = false;
+              _scrollToProductsSection();
             }
-            return true;
-          },
-          child: Stack(
-            children: [
-              // Main Home Scrollable Listing
-              RefreshIndicator(
-                color: context.mainColor,
-                onRefresh: () async {
-                  getSavedPlaceName();
-                  await cubit.getRandomProducts();
-                },
-                child: ListView(
-                  controller: _scrollController,
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  padding: EdgeInsets.zero,
-                  children: [
-                    HomeHeaderWidget(
-                      address: address,
-                      onPlaceSelected: updateAddress,
-                      onSearchTap: () {
-                        setState(() {
-                          _isSearchActive = true;
-                        });
-                        WidgetsBinding.instance.addPostFrameCallback((_) {
-                          _searchFocusNode.requestFocus();
-                        });
-                      },
-                    ).animate().fadeIn(duration: 400.ms).slideY(begin: -0.1),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.w),
+            final cartCubit = context.read<CartCubit>();
+            if (cartCubit.scrollToProduct) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                _scrollToProductsSection(fromSort: true);
+                cartCubit.scrollToProduct = false;
+              });
+            }
+          }
+        },
+        builder: (context, state) {
+          if (state.getCategoryState == RequestStates.error &&
+              state.getCompaniesState == RequestStates.error &&
+              state.getRandomProductsState == RequestStates.error) {
+            return CustomErrorWidget(
+              message: state.errorMessage ?? "Failed to load home data.",
+              onRetry: () => cubit.revokeHomeApis(),
+            );
+          }
+
+          return WillPopScope(
+            onWillPop: () async {
+              if (_isSearchActive) {
+                setState(() {
+                  _isSearchActive = false;
+                  _searchQuery = "";
+                  _searchController.clear();
+                  _searchFocusNode.unfocus();
+                });
+                return false;
+              }
+              return true;
+            },
+            child: Stack(
+              children: [
+                // Main Home Scrollable Listing
+                RefreshIndicator(
+                  color: context.mainColor,
+                  onRefresh: () async {
+                    getSavedPlaceName();
+                    await cubit.getRandomProducts();
+                  },
+                  child: ListView(
+                    controller: _scrollController,
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    padding: EdgeInsets.zero,
+                    children: [
+                      HomeHeaderWidget(
+                        address: address,
+                        onPlaceSelected: updateAddress,
+                        onSearchTap: () {
+                          setState(() {
+                            _isSearchActive = true;
+                          });
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
+                            _searchFocusNode.requestFocus();
+                          });
+                        },
+                      ).animate().fadeIn(duration: 400.ms).slideY(begin: -0.1),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16.w),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            CustomRowHeadline(
+                              title: LocaleKeys.categories.tr(),
+                              subTitle: "",
+                            )
+                                .animate()
+                                .fadeIn(delay: 200.ms)
+                                .slideX(begin: -0.2),
+                            SizedBox(height: 6.h),
+                            CategorySection(
+                              cubit: cubit,
+                              isLoading: state.getCategoryState ==
+                                  RequestStates.loading,
+                            )
+                                .animate()
+                                .fadeIn(delay: 300.ms)
+                                .slideY(begin: 0.1),
+                            InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(context, Routes.offers);
+                              },
+                              child: const HomeOfferCard()
+                                  .animate()
+                                  .fadeIn(delay: 400.ms)
+                                  .scale(begin: const Offset(0.95, 0.95)),
+                            ),
+                            SizedBox(height: 28.h),
+                            CustomRowHeadline(
+                              title: LocaleKeys.featuredVendors.tr(),
+                              subTitle: "",
+                            )
+                                .animate()
+                                .fadeIn(delay: 500.ms)
+                                .slideX(begin: -0.2),
+                            SizedBox(height: 6.h),
+                            VendorsSection(
+                              isLoading: state.getCompaniesState ==
+                                  RequestStates.loading,
+                              cubit: cubit,
+                            )
+                                .animate()
+                                .fadeIn(delay: 600.ms)
+                                .slideY(begin: 0.1),
+                            SizedBox(height: 20.h),
+                            KeyedSubtree(
+                              key: _productsSectionKey,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  CustomRowHeadline(
+                                    title: LocaleKeys.popularProducts.tr(),
+                                    subTitle: "",
+                                    trailing: BlocBuilder<HomeCubit, HomeState>(
+                                      buildWhen: (prev, curr) =>
+                                          prev.productsSort !=
+                                          curr.productsSort,
+                                      builder: (context, state) {
+                                        final hasActiveSort =
+                                            state.productsSort != null &&
+                                                state.productsSort!.isNotEmpty;
+                                        return ProductSortFilterButton(
+                                          isActive: hasActiveSort,
+                                          onTap: () =>
+                                              showProductSortBottomSheet(
+                                            context,
+                                            onSortSelected: () =>
+                                                _scrollToProductsSection(
+                                              fromSort: true,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  )
+                                      .animate()
+                                      .fadeIn(delay: 700.ms)
+                                      .slideX(begin: -0.2),
+                                  SizedBox(height: 6.h),
+                                  ProductsSection(
+                                    isLoading: state.getRandomProductsState ==
+                                        RequestStates.loading,
+                                  )
+                                      .animate()
+                                      .fadeIn(delay: 800.ms)
+                                      .slideY(begin: 0.1),
+                                ],
+                              ),
+                            ),
+                            if (state.isFetchingMoreProducts)
+                              Padding(
+                                padding: EdgeInsets.symmetric(vertical: 16.h),
+                                child: Center(
+                                  child: CircularProgressIndicator(
+                                    color: context.mainColor,
+                                  ),
+                                ),
+                              ),
+                            SizedBox(height: 24.h),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                // Full-Screen Search View Overlay & Transitions
+                if (_isSearchActive)
+                  Positioned.fill(
+                    child: Container(
+                      color: scaffoldBg,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          CustomRowHeadline(
-                            title: LocaleKeys.categories.tr(),
-                            subTitle: "",
-                          ).animate().fadeIn(delay: 200.ms).slideX(begin: -0.2),
-                          SizedBox(height: 6.h),
-                          CategorySection(
-                            cubit: cubit,
-                            isLoading:
-                                state.getCategoryState == RequestStates.loading,
-                          ).animate().fadeIn(delay: 300.ms).slideY(begin: 0.1),
-                          InkWell(
-                            onTap: () {
-                              Navigator.pushNamed(context, Routes.offers);
-                            },
-                            child: const HomeOfferCard()
-                                .animate()
-                                .fadeIn(delay: 400.ms)
-                                .scale(begin: const Offset(0.95, 0.95)),
-                          ),
-                          SizedBox(height: 28.h),
-                          CustomRowHeadline(
-                            title: LocaleKeys.featuredVendors.tr(),
-                            subTitle: "",
-                          ).animate().fadeIn(delay: 500.ms).slideX(begin: -0.2),
-                          SizedBox(height: 6.h),
-                          VendorsSection(
-                            isLoading: state.getCompaniesState ==
-                                RequestStates.loading,
-                            cubit: cubit,
-                          ).animate().fadeIn(delay: 600.ms).slideY(begin: 0.1),
-                          SizedBox(height: 20.h),
-                          KeyedSubtree(
-                            key: _productsSectionKey,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                          // Search bar header positioned at the top of the search view
+                          Container(
+                            padding: EdgeInsets.only(
+                              top:
+                                  MediaQuery.of(context).viewPadding.top + 12.h,
+                              left: 8.w,
+                              right: 16.w,
+                              bottom: 12.h,
+                            ),
+                            decoration: BoxDecoration(
+                              color:
+                                  isDarkMode ? AppColors.black : Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.04),
+                                  blurRadius: 10,
+                                  offset: const Offset(0, 4),
+                                ),
+                              ],
+                            ),
+                            child: Row(
                               children: [
-                                CustomRowHeadline(
-                                  title: LocaleKeys.popularProducts.tr(),
-                                  subTitle: "",
-                                  trailing: BlocBuilder<HomeCubit, HomeState>(
-                                    buildWhen: (prev, curr) =>
-                                        prev.productsSort != curr.productsSort,
-                                    builder: (context, state) {
-                                      final hasActiveSort =
-                                          state.productsSort != null &&
-                                              state.productsSort!.isNotEmpty;
-                                      return ProductSortFilterButton(
-                                        isActive: hasActiveSort,
-                                        onTap: () => showProductSortBottomSheet(
-                                          context,
-                                          onSortSelected: () =>
-                                              _scrollToProductsSection(
-                                            fromSort: true,
-                                          ),
-                                        ),
-                                      );
-                                    },
+                                IconButton(
+                                  icon: Icon(
+                                    Icons.arrow_back_ios_new_rounded,
+                                    size: 20.sp,
+                                    color: context.mainColor,
                                   ),
-                                ).animate().fadeIn(delay: 700.ms).slideX(begin: -0.2),
-                                SizedBox(height: 6.h),
-                                ProductsSection(
-                                  isLoading: state.getRandomProductsState ==
-                                      RequestStates.loading,
-                                ).animate().fadeIn(delay: 800.ms).slideY(begin: 0.1),
+                                  onPressed: () {
+                                    setState(() {
+                                      _isSearchActive = false;
+                                      _searchQuery = "";
+                                      _searchController.clear();
+                                      _searchFocusNode.unfocus();
+                                    });
+                                  },
+                                ),
+                                Expanded(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(50.r),
+                                    ),
+                                    child: CustomSearchField(
+                                      controller: _searchController,
+                                      focusNode: _searchFocusNode,
+                                      autofocus: true,
+                                      onChanged: _onSearchChanged,
+                                      fillColor: isDarkMode
+                                          ? Colors.white.withOpacity(0.05)
+                                          : AppColors.grey.withOpacity(0.08),
+                                      borderColor: isDarkMode
+                                          ? Colors.white.withOpacity(0.1)
+                                          : AppColors.lightGrey,
+                                      hintColor: isDarkMode
+                                          ? Colors.white54
+                                          : AppColors.grey.withOpacity(0.6),
+                                      prefixIcon: Icon(
+                                        Icons.search_rounded,
+                                        size: 22.sp,
+                                        color: context.mainColor,
+                                      ),
+                                      suffixIcon:
+                                          _searchController.text.isNotEmpty
+                                              ? IconButton(
+                                                  icon: Icon(
+                                                    Icons.clear_rounded,
+                                                    size: 20.sp,
+                                                    color: isDarkMode
+                                                        ? Colors.white70
+                                                        : Colors.black54,
+                                                  ),
+                                                  onPressed: () {
+                                                    _searchController.clear();
+                                                    _onSearchChanged("");
+                                                  },
+                                                )
+                                              : null,
+                                      hintText: "Search products, brands...",
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
                           ),
-                          if (state.isFetchingMoreProducts)
-                            Padding(
-                              padding: EdgeInsets.symmetric(vertical: 16.h),
-                              child: Center(
-                                child: CircularProgressIndicator(
-                                  color: context.mainColor,
-                                ),
-                              ),
-                            ),
-                          SizedBox(height: 24.h),
+                          Expanded(
+                            child: _searchQuery.isEmpty
+                                ? _buildSearchDescription(context)
+                                : _searchResults.isEmpty
+                                    ? _buildNotFoundWidget(context)
+                                    : _buildSearchResultsList(context),
+                          ),
                         ],
                       ),
-                    ),
-                  ],
-                ),
-              ),
-
-              // Full-Screen Search View Overlay & Transitions
-              if (_isSearchActive)
-                Positioned.fill(
-                  child: Container(
-                    color: scaffoldBg,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Search bar header positioned at the top of the search view
-                        Container(
-                          padding: EdgeInsets.only(
-                            top: MediaQuery.of(context).viewPadding.top + 12.h,
-                            left: 8.w,
-                            right: 16.w,
-                            bottom: 12.h,
-                          ),
-                          decoration: BoxDecoration(
-                            color: isDarkMode ? AppColors.black : Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.04),
-                                blurRadius: 10,
-                                offset: const Offset(0, 4),
-                              ),
-                            ],
-                          ),
-                          child: Row(
-                            children: [
-                              IconButton(
-                                icon: Icon(
-                                  Icons.arrow_back_ios_new_rounded,
-                                  size: 20.sp,
-                                  color: context.mainColor,
-                                ),
-                                onPressed: () {
-                                  setState(() {
-                                    _isSearchActive = false;
-                                    _searchQuery = "";
-                                    _searchController.clear();
-                                    _searchFocusNode.unfocus();
-                                  });
-                                },
-                              ),
-                              Expanded(
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(50.r),
-                                  ),
-                                  child: CustomSearchField(
-                                    controller: _searchController,
-                                    focusNode: _searchFocusNode,
-                                    autofocus: true,
-                                    onChanged: _onSearchChanged,
-                                    fillColor: isDarkMode
-                                        ? Colors.white.withOpacity(0.05)
-                                        : AppColors.grey.withOpacity(0.08),
-                                    borderColor: isDarkMode
-                                        ? Colors.white.withOpacity(0.1)
-                                        : AppColors.lightGrey,
-                                    hintColor: isDarkMode
-                                        ? Colors.white54
-                                        : AppColors.grey.withOpacity(0.6),
-                                    prefixIcon: Icon(
-                                      Icons.search_rounded,
-                                      size: 22.sp,
-                                      color: context.mainColor,
-                                    ),
-                                    suffixIcon:
-                                        _searchController.text.isNotEmpty
-                                            ? IconButton(
-                                                icon: Icon(
-                                                  Icons.clear_rounded,
-                                                  size: 20.sp,
-                                                  color: isDarkMode
-                                                      ? Colors.white70
-                                                      : Colors.black54,
-                                                ),
-                                                onPressed: () {
-                                                  _searchController.clear();
-                                                  _onSearchChanged("");
-                                                },
-                                              )
-                                            : null,
-                                    hintText: "Search products, brands...",
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          child: _searchQuery.isEmpty
-                              ? _buildSearchDescription(context)
-                              : _searchResults.isEmpty
-                                  ? _buildNotFoundWidget(context)
-                                  : _buildSearchResultsList(context),
-                        ),
-                      ],
-                    ),
-                  )
-                      .animate()
-                      .fadeIn(duration: 300.ms)
-                      .slideY(begin: 0.1, curve: Curves.easeOutQuad),
-                ),
-            ],
-          ),
-        );
-      },
+                    )
+                        .animate()
+                        .fadeIn(duration: 300.ms)
+                        .slideY(begin: 0.1, curve: Curves.easeOutQuad),
+                  ),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 

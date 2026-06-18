@@ -50,15 +50,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       ],
       child: MultiBlocListener(
         listeners: [
-          BlocListener<CartCubit, CartState>(
-            listener: (context, state) {
-              if (state is AddToCartSuccessState) {
-                successDialog(context);
-              } else if (state is AddToCartErrorState) {
-                showFailureSnackBar(context, messageTitle: state.message);
-              }
-            },
-          ),
+         
           BlocListener<ProductDetailsCubit, ProductDetailsStates>(
             listener: (context, state) {
               if (state is ToggleFavoriteErrorState) {
@@ -221,12 +213,33 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                   isLoading: cartState is AddToCartLoadingState,
                                   onPressed: cartState is AddToCartLoadingState
                                       ? null
-                                      : () =>
-                                          context.read<CartCubit>().addToCart(
+                                      : () => context
+                                              .read<CartCubit>()
+                                              .addToCart(
                                                 id,
                                                 selectedOptionValueIds: prodCubit
                                                     ?.selectedOptionValueIds,
-                                              ),
+                                              )
+                                              .then((value) {
+                                            successDialog(
+                                              context,
+                                              () {
+                                                context
+                                                    .read<CartCubit>()
+                                                    .isCartChanged = true;
+                                                context
+                                                    .read<CartCubit>()
+                                                    .getBasket();
+                                                Navigator.pushReplacementNamed(
+                                                  context,
+                                                  Routes.mainLayout,
+                                                );
+                                                context
+                                                    .read<CartCubit>()
+                                                    .changeTap(2);
+                                              },
+                                            );
+                                          }),
                                   text: LocaleKeys.addToCart.tr(),
                                   radius: 20.r,
                                   textStyle: TextStyle(

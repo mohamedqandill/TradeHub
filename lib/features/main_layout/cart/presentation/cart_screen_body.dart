@@ -133,10 +133,12 @@ class _CartScreenBodyState extends State<CartScreenBody>
           return const EmptyCartScreenBody();
         }
 
-        return CustomErrorWidget(
-          message: "Something went wrong loading your cart.",
-          onRetry: () => cubit.getBasket(),
-        );
+        return state is GetBasketError
+            ? CustomErrorWidget(
+                message: "Something went wrong loading your cart.",
+                onRetry: () => cubit.getBasket(),
+              )
+            : loadingProductAnimation();
       },
     );
   }

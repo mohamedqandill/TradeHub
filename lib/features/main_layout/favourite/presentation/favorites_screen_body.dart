@@ -33,9 +33,10 @@ class _FavoritesScreenBodyState extends State<FavoritesScreenBody> {
     return BlocListener<CartCubit, CartState>(
       listenWhen: (previous, current) => current is AddToCartLoadingState,
       listener: (context, state) {
-        if (state is AddToCartSuccessState) {
-          showSuccessSnackBar(messageTitle: "Added To Cart");
-        }
+        print("favorite state");
+        // if (state is AddToCartSuccessState) {;
+        //   showSuccessSnackBar(messageTitle: "Added To Cart");
+        // }
 
         if (state is AddToCartErrorState) {
           showFailureSnackBar(context, messageTitle: state.message);

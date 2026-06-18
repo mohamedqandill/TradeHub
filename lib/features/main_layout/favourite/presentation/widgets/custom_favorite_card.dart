@@ -84,9 +84,7 @@ class _CustomFavoriteCardState extends State<CustomFavoriteCard> {
                       ],
                     ),
                     child: BlocBuilder<FavouriteCubit, FavouriteState>(
-                      buildWhen: (prev, curr) =>
-                          curr.favoritesUpdate ==
-                          RequestStates.success, // يبني بس لما الفافوريت تتغير
+                      // يبني بس لما الفافوريت تتغير
                       builder: (context, state) {
                         return HeartButton(
                           isTapped: true, // ← مش hardcoded true
@@ -94,7 +92,6 @@ class _CustomFavoriteCardState extends State<CustomFavoriteCard> {
                             context
                                 .read<FavouriteCubit>()
                                 .toggleFavorite(widget.id);
-                            
                           },
                         );
                       },

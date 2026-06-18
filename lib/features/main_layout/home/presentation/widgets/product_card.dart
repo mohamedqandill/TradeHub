@@ -35,7 +35,6 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final int rating = product.averageRating ?? 0;
-    final bool isAddingToCart = cartCubit.loadingProductId == product.id;
 
     Color cardBgColor = isDark ? const Color(0xFF0A0A0B) : AppColors.white;
     Color borderColor = isDark
@@ -135,7 +134,7 @@ class ProductCard extends StatelessWidget {
                     SizedBox(height: 8.h),
                   ],
 
-                  _buildBottomAction(context, isAddingToCart),
+                  // _buildBottomAction(context, isAddingToCart),
                 ],
               ),
             ),
@@ -502,73 +501,73 @@ class ProductCard extends StatelessWidget {
 
   // ─── Bottom Action Button ─────────────────────────────────────────────────────
 
-  Widget _buildBottomAction(BuildContext context, bool isAddingToCart) {
-    final Gradient premiumGradient = LinearGradient(
-      colors: [
-        mainColor,
-        Color.lerp(mainColor, Colors.white, isDark ? 0.15 : 0.25)!,
-      ],
-      begin: Alignment.centerLeft,
-      end: Alignment.centerRight,
-    );
+  // Widget _buildBottomAction(BuildContext context, bool isAddingToCart) {
+  //   final Gradient premiumGradient = LinearGradient(
+  //     colors: [
+  //       mainColor,
+  //       Color.lerp(mainColor, Colors.white, isDark ? 0.15 : 0.25)!,
+  //     ],
+  //     begin: Alignment.centerLeft,
+  //     end: Alignment.centerRight,
+  //   );
 
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: isAddingToCart
-            ? null
-            : () {
-                cartCubit.addToCart(product.id ?? 0);
-              },
-        borderRadius: BorderRadius.circular(10.r),
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
-          width: double.infinity,
-          padding: EdgeInsets.symmetric(vertical: 8.h),
-          decoration: BoxDecoration(
-            gradient: premiumGradient,
-            borderRadius: BorderRadius.circular(10.r),
-            boxShadow: [
-              BoxShadow(
-                color: mainColor.withOpacity(isDark ? 0.25 : 0.18),
-                blurRadius: 8,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          child: Center(
-            child: isAddingToCart
-                ? SizedBox(
-                    width: 14.sp,
-                    height: 14.sp,
-                    child: const CircularProgressIndicator(
-                      strokeWidth: 2,
-                      color: Colors.white,
-                    ),
-                  )
-                : Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.add_shopping_cart_rounded,
-                        size: 14.sp,
-                        color: Colors.white,
-                      ),
-                      SizedBox(width: 6.w),
-                      Text(
-                        "ADD TO CART",
-                        style: GoogleFonts.manrope(
-                          color: Colors.white,
-                          fontSize: 10.sp,
-                          fontWeight: FontWeight.w800,
-                          letterSpacing: 0.5,
-                        ),
-                      ),
-                    ],
-                  ),
-          ),
-        ),
-      ),
-    );
-  }
+  //   return Material(
+  //     color: Colors.transparent,
+  //     child: InkWell(
+  //       onTap: isAddingToCart
+  //           ? null
+  //           : () {
+  //               cartCubit.addToCart(product.id ?? 0);
+  //             },
+  //       borderRadius: BorderRadius.circular(10.r),
+  //       child: AnimatedContainer(
+  //         duration: const Duration(milliseconds: 200),
+  //         width: double.infinity,
+  //         padding: EdgeInsets.symmetric(vertical: 8.h),
+  //         decoration: BoxDecoration(
+  //           gradient: premiumGradient,
+  //           borderRadius: BorderRadius.circular(10.r),
+  //           boxShadow: [
+  //             BoxShadow(
+  //               color: mainColor.withOpacity(isDark ? 0.25 : 0.18),
+  //               blurRadius: 8,
+  //               offset: const Offset(0, 4),
+  //             ),
+  //           ],
+  //         ),
+  //         child: Center(
+  //           child: isAddingToCart
+  //               ? SizedBox(
+  //                   width: 14.sp,
+  //                   height: 14.sp,
+  //                   child: const CircularProgressIndicator(
+  //                     strokeWidth: 2,
+  //                     color: Colors.white,
+  //                   ),
+  //                 )
+  //               : Row(
+  //                   mainAxisAlignment: MainAxisAlignment.center,
+  //                   children: [
+  //                     Icon(
+  //                       Icons.add_shopping_cart_rounded,
+  //                       size: 14.sp,
+  //                       color: Colors.white,
+  //                     ),
+  //                     SizedBox(width: 6.w),
+  //                     Text(
+  //                       "ADD TO CART",
+  //                       style: GoogleFonts.manrope(
+  //                         color: Colors.white,
+  //                         fontSize: 10.sp,
+  //                         fontWeight: FontWeight.w800,
+  //                         letterSpacing: 0.5,
+  //                       ),
+  //                     ),
+  //                   ],
+  //                 ),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 }

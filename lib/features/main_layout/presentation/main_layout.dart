@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:tradehub/core/shared_services/app_providers.dart';
 import 'package:tradehub/features/main_layout/cart/presentation/cubit/cart_cubit.dart';
+import 'package:tradehub/features/main_layout/cart/presentation/cubit/cart_states.dart';
 import 'package:tradehub/features/main_layout/presentation/widgets/custom_bottomnavbar.dart';
 import 'package:tradehub/features/your_orders/presentation/your_orders_screen.dart';
 
@@ -18,8 +19,6 @@ class MainLayout extends StatefulWidget {
 }
 
 class _MainLayoutState extends State<MainLayout> {
-  int selectedIndex = 0;
-
   List<Widget> screens = [
     const HomeScreen(),
     const YourOrdersScreen(),
@@ -28,33 +27,24 @@ class _MainLayoutState extends State<MainLayout> {
   ];
 
   @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (ModalRoute.of(context)!.settings.arguments != null) {
-        selectedIndex = ModalRoute.of(context)!.settings.arguments as int;
-        setState(() {});
-      }
-    });
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        bottomNavigationBar: CustomBottomNavbar(
-          currentIndex: selectedIndex,
-          getSelectedIndex: (index) {
-            setState(() {
-              selectedIndex = index;
-            });
-            if (index == 2) {
-              context.read<CartCubit>().getBasket();
-            }
-          },
-        ),
-        body: IndexedStack(
-          index: selectedIndex,
-          children: screens,
-        ));
+    return BlocBuilder<CartCubit, CartState>(builder: (context, state) {
+      int selectedIndex = context.read<CartCubit>().selectedIndex;
+      return Scaffold(
+          bottomNavigationBar: CustomBottomNavbar(
+            currentIndex: selectedIndex,
+            getSelectedIndex: (index) {
+              context.read<CartCubit>().changeTap(index);
+
+              if (index == 2) {
+                context.read<CartCubit>().getBasket();
+              }
+            },
+          ),
+          body: IndexedStack(
+            index: selectedIndex,
+            children: screens,
+          ));
+    });
   }
 }

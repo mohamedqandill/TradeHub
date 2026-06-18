@@ -30,6 +30,8 @@ class OrderCardWidget extends StatelessWidget {
     final bool hasBundles =
         order.bundleItems != null && order.bundleItems!.isNotEmpty;
     final bool hasItems = order.items != null && order.items!.isNotEmpty;
+    late int totalPrice = 0;
+    
 
     return InkWell(
       onTap: () {
@@ -241,6 +243,13 @@ class OrderCardWidget extends StatelessWidget {
                       Wrap(
                         spacing: 8.w,
                         children: order.items!.take(3).map((item) {
+                          
+                              for (int i = 0; i < order.items!.length; i++) {
+                                totalPrice = totalPrice +
+                                    (order.items![i].price! *
+                                            order.items![i].quantity!.toInt())
+                                        .toInt();
+                              }
                           return Row(
                             children: [
                               Container(
@@ -270,31 +279,6 @@ class OrderCardWidget extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              Padding(
-                                padding:
-                                    EdgeInsets.symmetric(horizontal: 8.0.w),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      item.productName ?? "",
-                                      style: TextStyle(
-                                        color: textColor,
-                                        fontSize: 13.sp,
-                                        fontWeight: FontWeight.w900,
-                                      ),
-                                    ),
-                                    Text(
-                                      "x${item.quantity}",
-                                      style: TextStyle(
-                                        color: context.mainColor,
-                                        fontSize: 12.sp,
-                                        fontWeight: FontWeight.w900,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
                             ],
                           );
                         }).toList(),
@@ -321,16 +305,9 @@ class OrderCardWidget extends StatelessWidget {
                       const Spacer(),
                       Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
-                          children: order.items!.map(
-                            (item) {
-                              int totalPrice = 0;
-                              for (int i = 0; i < order.items!.length; i++) {
-                                totalPrice = totalPrice +
-                                    (order.items![i].price! *
-                                            order.items![i].quantity!.toInt())
-                                        .toInt();
-                              }
-                              return Column(
+                          children:[
+
+                            Column(
                                 children: [
                                   Text(
                                     "${order.items!.length} ${order.items!.length == 1 ? "item" : "items"}",
@@ -350,9 +327,9 @@ class OrderCardWidget extends StatelessWidget {
                                     ),
                                   ),
                                 ],
-                              );
-                            },
-                          ).toList()),
+                              )
+                          ] 
+                         ),
                     ],
                   ),
                 ),
