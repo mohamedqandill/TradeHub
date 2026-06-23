@@ -25,6 +25,8 @@ Map<String, dynamic> _$GetCompaniesToJson(GetCompanies instance) =>
 
 CompanyData _$CompanyDataFromJson(Map<String, dynamic> json) => CompanyData(
       id: json['id'] as String?,
+      ratingCount: (json['ratingCount'] as num?)?.toInt(),
+      averageRating: (json['averageRating'] as num?)?.toInt(),
       businessName: json['businessName'] as String?,
       businessTypeId: (json['businessTypeId'] as num?)?.toInt(),
       taxNumber: json['taxNumber'] as String?,
@@ -46,4 +48,6 @@ Map<String, dynamic> _$CompanyDataToJson(CompanyData instance) =>
       'locationId': instance.locationId,
       'businessTypeName': instance.businessTypeName,
       'locationName': instance.locationName,
+      'ratingCount': instance.ratingCount,
+      'averageRating': instance.averageRating,
     };

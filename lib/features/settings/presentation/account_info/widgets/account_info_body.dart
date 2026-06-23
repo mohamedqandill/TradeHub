@@ -60,6 +60,12 @@ class _AccountInfoBodyState extends State<AccountInfoBody> {
           ),
           SizedBox(height: 16.h),
           InfoCardWidget(
+            icon: Icons.phone_android,
+            title: LocaleKeys.phoneNumber.tr(),
+            value: userInfo[ApiConstants.phoneNumber] ?? "01552191457",
+          ),
+          SizedBox(height: 16.h),
+          InfoCardWidget(
             icon: Icons.location_on_outlined,
             title: LocaleKeys.savedAddresses.tr(),
             value: savedAddress ?? "--",

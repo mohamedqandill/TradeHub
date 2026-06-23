@@ -9,8 +9,14 @@ class VendorDetailsEntity {
   final String businessTypeName;
   final String locationName;
 
+
+    final int? avgRating;
+  final int? reviewCount;
+
   VendorDetailsEntity({
     required this.id,
+     this.avgRating,
+  this.reviewCount,
     required this.businessName,
     required this.businessTypeId,
     required this.taxNumber,

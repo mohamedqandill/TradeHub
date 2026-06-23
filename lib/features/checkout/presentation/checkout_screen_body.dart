@@ -198,7 +198,7 @@ class _CheckoutScreenBodyState extends State<CheckoutScreenBody> {
 
                     // Step 2: Payment Method
                     CheckoutStep(
-                      stepNumber: 2,
+                      stepNumber: 1,
                       title: "Payment Method",
                       isCompleted: activeStep > 1,
                       isActive: activeStep == 1,
@@ -234,17 +234,13 @@ class _CheckoutScreenBodyState extends State<CheckoutScreenBody> {
                           child: Row(
                             children: [
                               Icon(
-                                selectedPaymentMethod == 0
-                                    ? Icons.credit_card_outlined
-                                    : Icons.payments_outlined,
+                                Icons.credit_card_outlined,
                                 color: context.mainColor,
                                 size: 20.sp,
                               ),
                               SizedBox(width: 12.w),
                               Text(
-                                selectedPaymentMethod == 0
-                                    ? "Credit/Debit Card"
-                                    : "Cash on Delivery (COD)",
+                                "Credit/Debit Card",
                                 style: TextStyle(
                                   fontSize: 13.sp,
                                   fontWeight: FontWeight.w700,
@@ -331,7 +327,7 @@ class _CheckoutScreenBodyState extends State<CheckoutScreenBody> {
                         );
                       }
                       if (shippingAddress.isNotEmpty) {
-                        await _placeOrder(cubit, selectedPaymentMethod);
+                        await _placeOrder(cubit, 0);
                       }
                     } else {
                       final paymentUrl = cubit.checkoutResponse?.paymentUrl;

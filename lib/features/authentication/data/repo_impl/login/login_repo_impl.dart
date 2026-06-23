@@ -37,7 +37,7 @@ class LoginRepoImpl implements LoginRepoContract {
           ApiConstants.phoneNumber: result.data?.phoneNumber,
           ApiConstants.profilePicture: result.data?.profilePicture ?? "",
         };
-       await SignalRService().start(result.data!.token!);
+        await SignalRService().start(result.data!.token!);
         await getIt<HiveStorageHelper>()
             .saveMap(AppConstants.userInfo, userInfo);
         return Success(data: null);

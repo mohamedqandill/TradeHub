@@ -17,8 +17,8 @@ class VendorCard extends StatelessWidget {
 
   bool get _hasOffers => vendor?.id != null && vendor!.id!.hashCode.isEven;
 
-  static const double _rating = 4.5;
-  static const int _ratingCount = 138;
+  
+
 
   @override
   Widget build(BuildContext context) {
@@ -119,8 +119,8 @@ class VendorCard extends StatelessWidget {
                         ],
                         SizedBox(height: 6.h),
                         _StarRatingBar(
-                          rating: _rating,
-                          ratingCount: _ratingCount,
+                          rating: double.parse((vendor?.avgRating??0).toString()),
+                          ratingCount: vendor!.reviewCount??0,
                           labelColor: labelColor,
                         ),
                         SizedBox(height: 10.h),

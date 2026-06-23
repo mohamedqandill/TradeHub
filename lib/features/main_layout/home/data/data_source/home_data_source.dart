@@ -13,6 +13,7 @@ abstract class HomeDataSource {
     int? pageIndex,
     int? pageSize,
     String? sort,
+    String? search,
   });
 }
 
@@ -53,12 +54,14 @@ class HomeDataSourceImpl implements HomeDataSource {
     int? pageIndex,
     int? pageSize,
     String? sort,
+    String? search,
   }) async {
     var result = await ApiExecutor.executeApi(
       apiCall: () => _homeApiClient.getRandomProducts(
         pageIndex: pageIndex,
         pageSize: pageSize,
         sort: sort,
+        search: search,
       ),
     );
     switch (result) {

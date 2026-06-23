@@ -121,5 +121,6 @@ static const String totalPrice = "totalPrice";
 static const String products = "products";
 static const String unitPrice = "unitPrice";
 static const String isGift = "isGift";
+static const String basketItems = "basketItems";
 
 }

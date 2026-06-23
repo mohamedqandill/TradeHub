@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tradehub/Core/assets/app_assets.dart';
 import 'package:tradehub/Core/extensions/base_inherited_context.dart';
 import 'package:tradehub/Core/extensions/is_dark_mode.dart';
 import 'package:tradehub/core/base/base_inherited_widgets.dart';
@@ -288,31 +289,26 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                         SizedBox(
                           height: bloc.spaceHeight,
                         ),
-                        Center(
-                          child: SizedBox(
-                            height: 48.h,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: List.generate(
-                                socialIcons.length,
-                                (index) {
-                                  return InkWell(
-                                    onTap: () {
-                                      switch (index) {
-                                        case 1:
-                                          bloc.add(const SignWithGoogle());
-                                        // case 0:
-                                        //   bloc.add(const SignWithFacebook());
-                                      }
-                                    },
-                                    child: Padding(
+                        InkWell(
+                          onTap: () {
+                            bloc.add(const SignWithGoogle());
+                          },
+                          child: Center(
+                            child: SizedBox(
+                              height: 48.h,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: List.generate(
+                                  1,
+                                  (index) {
+                                    return Padding(
                                       padding: EdgeInsets.only(right: 10.sp),
                                       child: CustomSocialContainer(
-                                        icon: socialIcons[index],
+                                        icon:AppAssets.google,
                                       ),
-                                    ),
-                                  );
-                                },
+                                    );
+                                  },
+                                ),
                               ),
                             ),
                           ),

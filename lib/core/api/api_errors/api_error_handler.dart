@@ -42,17 +42,19 @@ ServerExceptions handleDioErrors(DioException e) {
                   ErrorsModel(message: e.response!.data[ApiConstants.message]));
         case 404:
           return ServerExceptions(
-              errorsModel: ErrorsModel(message: LocaleKeys.errorNotFound.tr()));
+              errorsModel:
+                  ErrorsModel(message: e.response!.data[ApiConstants.message]));
         case 500:
         case 502:
         case 503:
         case 504:
           return ServerExceptions(
-              errorsModel: ErrorsModel(message: LocaleKeys.errorServer.tr()));
+              errorsModel:
+                  ErrorsModel(message: e.response!.data[ApiConstants.message]));
         default:
           return ServerExceptions(
               errorsModel:
-                  ErrorsModel(message: LocaleKeys.errorUnexpected.tr()));
+                  ErrorsModel(message: e.response!.data[ApiConstants.message]));
       }
 
     case DioExceptionType.badCertificate:

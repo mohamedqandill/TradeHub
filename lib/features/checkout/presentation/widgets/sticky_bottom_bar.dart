@@ -85,6 +85,10 @@ class StickyBottomBar extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: isLoading ? null : onTap,
                   style: ElevatedButton.styleFrom(
+                    splashFactory: NoSplash.splashFactory,
+                    overlayColor: Colors.transparent,
+                    shadowColor: Colors.transparent,
+                    surfaceTintColor: Colors.transparent,
                     backgroundColor: primaryColor,
                     foregroundColor: Colors.white,
                     disabledBackgroundColor: primaryColor.withOpacity(0.6),

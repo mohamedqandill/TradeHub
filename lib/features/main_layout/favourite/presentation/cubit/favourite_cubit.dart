@@ -56,15 +56,15 @@ class FavouriteCubit extends Cubit<FavouriteState> {
     } else {
       favoritesIds.add(id);
     }
-    emit(state.copyWith(toggleFavoriteState: RequestStates.loading));
+    // emit(state.copyWith(toggleFavoriteState: RequestStates.loading));
     var result = await _toggleFavoriteUseCase(id);
 
     switch (result) {
       case Success():
-        emit(state.copyWith(toggleFavoriteState: RequestStates.success));
+        // emit(state.copyWith(toggleFavoriteState: RequestStates.success));
         getIt<SharedProductRepository>().markUpdated();
         getIt<SharedProductRepository>().markThatFavoriteChange();
-        getFavorites();
+        await getFavorites();
       case Error():
         if (favoritesIds.contains(id)) {
           favoritesIds.remove(id);

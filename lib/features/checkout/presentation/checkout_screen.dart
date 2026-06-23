@@ -25,7 +25,7 @@ class CheckoutScreen extends StatefulWidget {
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
   bool _hasCheckoutStarted = false;
-bool _paymentSuccess = false;
+  bool _paymentSuccess = false;
 
   Future<bool> _showAwaitingPaymentDialog(BuildContext context) async {
     final bool? result = await showDialog<bool>(
@@ -102,6 +102,24 @@ bool _paymentSuccess = false;
     return Scaffold(
       appBar: MainLayoutAppBar(
         title: LocaleKeys.checkout.tr(),
+        onBack: _hasCheckoutStarted
+            ? () async {
+                final cubit = context.read<CheckoutCubit>();
+                final orderId = cubit.checkoutResponse?.orderId;
+                final paymentUrl = cubit.checkoutResponse?.paymentUrl;
+
+                if (orderId != null && paymentUrl != null) {
+                  await HiveStorageHelper().saveString(
+                    "payment_url_order_$orderId",
+                    paymentUrl,
+                  );
+                }
+                final res = await _showAwaitingPaymentDialog(context);
+                if (res) {
+                  Navigator.of(context).pop();
+                }
+              }
+            : null,
         enableLeading: true,
       ),
       body: BlocListener<CheckoutCubit, CheckoutState>(
@@ -119,8 +137,8 @@ bool _paymentSuccess = false;
 
             // 3. Navigate to Order Details
             setState(() {
-  _paymentSuccess = true;
-});
+              _paymentSuccess = true;
+            });
             Navigator.pushNamedAndRemoveUntil(
               context,
               Routes.orderDetails,
@@ -135,47 +153,49 @@ bool _paymentSuccess = false;
         },
         child: PopScope(
           canPop: !_hasCheckoutStarted || _paymentSuccess,
-          onPopInvoked: (didPop) async {
-  if (didPop) return;
+          onPopInvokedWithResult: (didPop, result) async {
+            if (didPop) return;
 
-  final cubit = context.read<CheckoutCubit>();
+            final cubit = context.read<CheckoutCubit>();
 
-  // لسه معملش Checkout
-  if (!_hasCheckoutStarted) {
-    Navigator.of(context).pop();
-    return;
-  }
+            // لسه معملش Checkout
+            if (!_hasCheckoutStarted) {
+              Navigator.of(context).pop();
+              return;
+            }
 
-  // الدفع نجح
-  if (_paymentSuccess) {
-    Navigator.of(context).pop();
-    return;
-  }
+            // الدفع نجح
+            if (_paymentSuccess) {
+              Navigator.of(context).pop();
+              return;
+            }
 
-  // عمل Checkout ولسه مستني الدفع
-  final shouldPop = await _showAwaitingPaymentDialog(context);
+            // عمل Checkout ولسه مستني الدفع
+            final shouldPop = await _showAwaitingPaymentDialog(context);
 
-  if (!shouldPop || !context.mounted) return;
+            if (!shouldPop || !context.mounted) return;
 
-  final orderId = cubit.checkoutResponse?.orderId;
-  final paymentUrl = cubit.checkoutResponse?.paymentUrl;
+            final orderId = cubit.checkoutResponse?.orderId;
+            final paymentUrl = cubit.checkoutResponse?.paymentUrl;
 
-  if (orderId != null && paymentUrl != null) {
-    await HiveStorageHelper().saveString(
-      "payment_url_order_$orderId",
-      paymentUrl,
-    );
-  }
+            if (orderId != null && paymentUrl != null) {
+              await HiveStorageHelper().saveString(
+                "payment_url_order_$orderId",
+                paymentUrl,
+              );
+            }
 
-  if (context.mounted) {
-    Navigator.of(context).pop();
-  }
-},
-          child:  CheckoutScreenBody(onCheckout: ({required isCheckoutSucess}) {
-            setState(() {
-              _hasCheckoutStarted = isCheckoutSucess;
-            });
-          },),
+            if (context.mounted) {
+              Navigator.of(context).pop();
+            }
+          },
+          child: CheckoutScreenBody(
+            onCheckout: ({required isCheckoutSucess}) {
+              setState(() {
+                _hasCheckoutStarted = isCheckoutSucess;
+              });
+            },
+          ),
         ),
       ),
     );

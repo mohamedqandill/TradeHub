@@ -13,7 +13,7 @@ class CustomSocialContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 70.w,
+      padding: EdgeInsets.symmetric(horizontal: 15.w),
       decoration: BoxDecoration(
           color: context.isDarkMode ? AppColors.grey : AppColors.white,
           border: Border.all(
@@ -22,11 +22,22 @@ class CustomSocialContainer extends StatelessWidget {
                   ? AppColors.mainDarkColor
                   : AppColors.mainColor),
           borderRadius: BorderRadius.circular(10.r)),
-      child: Center(
-        child: SvgWidget(
-          assetName: icon,
-          height: 30.h,
-        ),
+      child: Row(
+        children: [
+          Center(
+            child: SvgWidget(
+              assetName: icon,
+              height: 30.h,
+            ),
+          ),
+          SizedBox(width: 10.w),
+          Text(
+            context.isArabic
+                ? "تسجيل الدخول باستخدام جوجل"
+                : "Login with Google",
+            style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w500),
+          ),
+        ],
       ),
     );
   }

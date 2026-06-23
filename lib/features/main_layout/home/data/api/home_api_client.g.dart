@@ -97,12 +97,14 @@ class _HomeApiClient implements HomeApiClient {
     int? pageIndex,
     int? pageSize,
     String? sort,
+    String? search,
   }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'pageIndex': pageIndex,
       r'pageSize': pageSize,
       r'sort': sort,
+      r'search': search,
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};

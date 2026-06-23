@@ -14,7 +14,7 @@ class CartResponseDTO {
   final String? companyName;
   @JsonKey(name: ApiConstants.companyId)
   final String? companyId;
-  @JsonKey(name: ApiConstants.items)
+  @JsonKey(name: ApiConstants.basketItems)
   final List<Items>? items;
   @JsonKey(name: ApiConstants.logoUrl)
   final String? logoUrl;

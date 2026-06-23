@@ -308,6 +308,10 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i361.Dio>(),
           baseUrl: gh<String>(instanceName: 'baseUrl'),
         ));
+    gh.factory<_i904.OffersApiClient>(() => _i904.OffersApiClient(
+          gh<_i361.Dio>(),
+          baseUrl: gh<String>(instanceName: 'baseUrl'),
+        ));
     gh.factory<_i426.OrderDetailsApiClient>(() => _i426.OrderDetailsApiClient(
           gh<_i361.Dio>(),
           baseUrl: gh<String>(instanceName: 'baseUrl'),
@@ -317,10 +321,6 @@ extension GetItInjectableX on _i174.GetIt {
           baseUrl: gh<String>(instanceName: 'baseUrl'),
         ));
     gh.factory<_i639.OrdersApiClient>(() => _i639.OrdersApiClient(
-          gh<_i361.Dio>(),
-          baseUrl: gh<String>(instanceName: 'baseUrl'),
-        ));
-    gh.factory<_i904.OffersApiClient>(() => _i904.OffersApiClient(
           gh<_i361.Dio>(),
           baseUrl: gh<String>(instanceName: 'baseUrl'),
         ));
@@ -512,11 +512,10 @@ extension GetItInjectableX on _i174.GetIt {
         _i484.GetVendorSubcategoriesUseCase(gh<_i858.VendorRepository>()));
     gh.factory<_i484.GetProductsBySubcategoryUseCase>(() =>
         _i484.GetProductsBySubcategoryUseCase(gh<_i858.VendorRepository>()));
-    gh.factory<_i538.VendorProfileCubit>(() => _i538.VendorProfileCubit(
-          gh<_i484.GetVendorDetailsUseCase>(),
-          gh<_i484.GetVendorSubcategoriesUseCase>(),
-          gh<_i484.GetProductsBySubcategoryUseCase>(),
-        ));
+    gh.factory<_i484.GetCompanyRatingsUseCase>(
+        () => _i484.GetCompanyRatingsUseCase(gh<_i858.VendorRepository>()));
+    gh.factory<_i484.AddCompanyRatingUseCase>(
+        () => _i484.AddCompanyRatingUseCase(gh<_i858.VendorRepository>()));
     gh.factory<_i550.VerifyOTPUseCase>(
         () => _i550.VerifyOTPUseCase(gh<_i95.VerifyOTPRepoContract>()));
     gh.factory<_i747.NewPasswordUseCase>(
@@ -557,6 +556,13 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.factory<_i459.ForgetPasswordBloc>(
         () => _i459.ForgetPasswordBloc(gh<_i501.SendOTPUseCase>()));
+    gh.factory<_i538.VendorProfileCubit>(() => _i538.VendorProfileCubit(
+          gh<_i484.GetVendorDetailsUseCase>(),
+          gh<_i484.GetVendorSubcategoriesUseCase>(),
+          gh<_i484.GetProductsBySubcategoryUseCase>(),
+          gh<_i484.GetCompanyRatingsUseCase>(),
+          gh<_i484.AddCompanyRatingUseCase>(),
+        ));
     gh.factory<_i720.CartCubit>(() => _i720.CartCubit(
           gh<_i255.GetBasketUseCase>(),
           gh<_i875.AddToCartUseCase>(),
@@ -573,10 +579,10 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.factory<_i429.VerifyOtpBloc>(
         () => _i429.VerifyOtpBloc(gh<_i550.VerifyOTPUseCase>()));
-    gh.factory<_i858.GetOrderDetailsUseCase>(
-        () => _i858.GetOrderDetailsUseCase(gh<_i904.OrderDetailsRepository>()));
     gh.factory<_i212.CancelOrderUseCase>(
         () => _i212.CancelOrderUseCase(gh<_i904.OrderDetailsRepository>()));
+    gh.factory<_i858.GetOrderDetailsUseCase>(
+        () => _i858.GetOrderDetailsUseCase(gh<_i904.OrderDetailsRepository>()));
     gh.factory<_i984.OrderDetailsCubit>(() => _i984.OrderDetailsCubit(
           gh<_i858.GetOrderDetailsUseCase>(),
           gh<_i212.CancelOrderUseCase>(),
