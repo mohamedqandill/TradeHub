@@ -91,6 +91,7 @@ dependencies:
 
 dev_dependencies:
   build_runner: ^2.4.13
+  flutter_launcher_icons:
   easy_localization_generator:
   json_serializable: ^6.9.0
   retrofit_generator:
@@ -100,6 +101,13 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icon/icon.png"
+  min_sdk_android: 21
+  adaptive_icon_background: "#FFFFFF"
+  adaptive_icon_foreground: "assets/icon/icon.png"
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
@@ -126,6 +134,7 @@ flutter:
      - assets/icons/
      - assets/translations/
      - assets/lottie/
+     - assets/icon/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

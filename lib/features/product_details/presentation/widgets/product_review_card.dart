@@ -18,8 +18,16 @@ class ProductReviewCard extends StatelessWidget {
     final name = (rating.userFullname ?? "").trim();
     final comment = (rating.comment ?? "").trim();
     final value = rating.ratingValue ?? 0;
-    final createdAt =
-        DateTime.tryParse(rating.createdAt ?? "") ?? DateTime.now();
+    final createdAt = DateTime.parse(rating.createdAt!).toLocal();
+
+    // الوقت الحالي
+    final now = DateTime.now( );
+    print("now: $now");
+    print("createdAt: $createdAt");
+
+    // الفرق الحقيقي
+    final diff = now.difference(createdAt);
+    print("diff: $diff");
 
     return Container(
       padding: EdgeInsets.all(14.w),
@@ -47,7 +55,13 @@ class ProductReviewCard extends StatelessWidget {
                     ),
                     SizedBox(height: 2.h),
                     Text(
-                      timeago.format(createdAt),
+                      diff.inDays > 0
+                          ? "${diff.inDays}d ago"
+                          : diff.inHours > 0
+                              ? "${diff.inHours}h ago"
+                              : diff.inMinutes > 0
+                                  ? "${diff.inMinutes}m ago"
+                                  : "just now",
                       style: TextStyle(
                         fontSize: 10.sp,
                         color: AppColors.grey.withOpacity(0.7),

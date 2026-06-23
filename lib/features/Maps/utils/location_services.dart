@@ -1,9 +1,11 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:location/location.dart';
 
 class LocationService {
   static Location location = Location();
+  StreamSubscription<LocationData>? _streamSubscription;
 
   Future<bool> checkAndRequestLocationService() async {
     var isServiceEnabled = await location.serviceEnabled();
@@ -32,7 +34,11 @@ class LocationService {
 
   void getRealTimeLocationData(void Function(LocationData)? onData) {
     location.changeSettings(distanceFilter: 2);
-    location.onLocationChanged.listen(onData);
+    _streamSubscription = location.onLocationChanged.listen(onData);
+  }
+
+  void closeStream() {
+    _streamSubscription?.cancel();
   }
 
   Future<bool> isServiceEnabled() async {

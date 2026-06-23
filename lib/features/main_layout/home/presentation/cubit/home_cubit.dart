@@ -31,27 +31,65 @@ class HomeCubit extends Cubit<HomeState> {
 
   List<GetCategoryEntity> categories = [];
   List<GetCompanyEntity> companies = [];
-  List<GetRandomProductEntity> allLocalProducts = [];
 
-  Future<void> loadAllProductsLocally() async {
+  Future<void> searchProducts(String query) async {
+    final searchVal = query.trim();
+    if (searchVal.isEmpty) {
+      clearSearch();
+      return;
+    }
+
+    emit(state.copyWith(searchProductsState: RequestStates.loading));
+
     var result = await _getRandomProductsUseCase(
       pageIndex: 1,
-      pageSize: 100,
+      pageSize: 20,
+      search: searchVal,
     );
+
+    if (isClosed) return;
+
     switch (result) {
       case Success():
-        allLocalProducts = result.data?.products ?? [];
-        break;
+        emit(state.copyWith(
+          searchProductsState: RequestStates.success,
+          searchProducts: result.data?.products ?? [],
+        ));
       case Error():
-        break;
+        emit(state.copyWith(
+          searchProductsState: RequestStates.error,
+          searchProducts: [],
+          errorMessage: result.error?.message,
+        ));
     }
   }
+
+  void clearSearch() {
+    emit(state.copyWith(
+      searchProductsState: RequestStates.initial,
+      searchProducts: [],
+    ));
+  }
+
+  // Future<void> loadAllProductsLocally() async {
+  //   var result = await _getRandomProductsUseCase(
+  //     pageIndex: 1,
+  //     pageSize: 100,
+  //   );
+  //   switch (result) {
+  //     case Success():
+  //       allLocalProducts = result.data?.products ?? [];
+  //       break;
+  //     case Error():
+  //       break;
+  //   }
+  // }
 
   Future<void> revokeHomeApis() async {
     await Future.wait([
       getCategories().catchError((_) {}),
       getCompanies().catchError((_) {}),
-      loadAllProductsLocally().catchError((_) {}),
+      
     ]);
     unawaited(getRandomProducts(isRefresh: true));
   }
@@ -97,6 +135,7 @@ class HomeCubit extends Cubit<HomeState> {
   Future<void> getRandomProducts({
     bool isRefresh = false,
     String? sort,
+    String? search,
   }) async {
     final effectiveSort = sort ?? state.productsSort;
     final pageIndex = isRefresh ? 1 : state.productsPageIndex;
@@ -125,7 +164,9 @@ class HomeCubit extends Cubit<HomeState> {
       pageIndex: pageIndex,
       pageSize: 5,
       sort: effectiveSort,
+      search: search,
     );
+   
 
     if (isClosed) return;
 

@@ -238,7 +238,7 @@ class _CartScreenBodyState extends State<CartScreenBody>
             });
             cubit.removeItem(
               companyId: cubit.cartGroups![_tabController!.index].id ?? 0,
-              productId: item.productId ?? 0,
+              productId: item.id ?? 0,
             );
             return true;
           },
@@ -252,13 +252,13 @@ class _CartScreenBodyState extends State<CartScreenBody>
                       cubit.removeItem(
                         companyId:
                             cubit.cartGroups![_tabController!.index].id ?? 0,
-                        productId: item.bundleOfferId ?? 0,
+                        productId: item.id ?? 0,
                       );
                     } else {
                       cubit.updateItemQuantity(
                         companyId:
                             cubit.cartGroups![_tabController!.index].id ?? 0,
-                        productId: item.bundleOfferId ?? 0,
+                        productId: item.id ?? 0,
                         quantity: q,
                       );
                     }
@@ -276,13 +276,13 @@ class _CartScreenBodyState extends State<CartScreenBody>
                       cubit.removeItem(
                         companyId:
                             cubit.cartGroups![_tabController!.index].id ?? 0,
-                        productId: item.productId ?? 0,
+                        productId: item.id ?? 0,
                       );
                     } else {
                       cubit.updateItemQuantity(
                           companyId:
                               cubit.cartGroups![_tabController!.index].id ?? 0,
-                          productId: item.productId ?? 0,
+                          productId: item.id ?? 0,
                           quantity: q);
                     }
                   },

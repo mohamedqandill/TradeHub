@@ -20,7 +20,10 @@ mixin _$HomeState {
   RequestStates get getCompaniesState => throw _privateConstructorUsedError;
   RequestStates get getRandomProductsState =>
       throw _privateConstructorUsedError;
+  RequestStates get searchProductsState => throw _privateConstructorUsedError;
   List<GetRandomProductEntity> get randomProducts =>
+      throw _privateConstructorUsedError;
+  List<GetRandomProductEntity> get searchProducts =>
       throw _privateConstructorUsedError;
   int get productsPageIndex => throw _privateConstructorUsedError;
   bool get productsHasReachedMax => throw _privateConstructorUsedError;
@@ -33,7 +36,9 @@ mixin _$HomeState {
             RequestStates getCategoryState,
             RequestStates getCompaniesState,
             RequestStates getRandomProductsState,
+            RequestStates searchProductsState,
             List<GetRandomProductEntity> randomProducts,
+            List<GetRandomProductEntity> searchProducts,
             int productsPageIndex,
             bool productsHasReachedMax,
             bool isFetchingMoreProducts,
@@ -48,7 +53,9 @@ mixin _$HomeState {
             RequestStates getCategoryState,
             RequestStates getCompaniesState,
             RequestStates getRandomProductsState,
+            RequestStates searchProductsState,
             List<GetRandomProductEntity> randomProducts,
+            List<GetRandomProductEntity> searchProducts,
             int productsPageIndex,
             bool productsHasReachedMax,
             bool isFetchingMoreProducts,
@@ -63,7 +70,9 @@ mixin _$HomeState {
             RequestStates getCategoryState,
             RequestStates getCompaniesState,
             RequestStates getRandomProductsState,
+            RequestStates searchProductsState,
             List<GetRandomProductEntity> randomProducts,
+            List<GetRandomProductEntity> searchProducts,
             int productsPageIndex,
             bool productsHasReachedMax,
             bool isFetchingMoreProducts,
@@ -106,7 +115,9 @@ abstract class $HomeStateCopyWith<$Res> {
       {RequestStates getCategoryState,
       RequestStates getCompaniesState,
       RequestStates getRandomProductsState,
+      RequestStates searchProductsState,
       List<GetRandomProductEntity> randomProducts,
+      List<GetRandomProductEntity> searchProducts,
       int productsPageIndex,
       bool productsHasReachedMax,
       bool isFetchingMoreProducts,
@@ -132,7 +143,9 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
     Object? getCategoryState = null,
     Object? getCompaniesState = null,
     Object? getRandomProductsState = null,
+    Object? searchProductsState = null,
     Object? randomProducts = null,
+    Object? searchProducts = null,
     Object? productsPageIndex = null,
     Object? productsHasReachedMax = null,
     Object? isFetchingMoreProducts = null,
@@ -152,9 +165,17 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
           ? _value.getRandomProductsState
           : getRandomProductsState // ignore: cast_nullable_to_non_nullable
               as RequestStates,
+      searchProductsState: null == searchProductsState
+          ? _value.searchProductsState
+          : searchProductsState // ignore: cast_nullable_to_non_nullable
+              as RequestStates,
       randomProducts: null == randomProducts
           ? _value.randomProducts
           : randomProducts // ignore: cast_nullable_to_non_nullable
+              as List<GetRandomProductEntity>,
+      searchProducts: null == searchProducts
+          ? _value.searchProducts
+          : searchProducts // ignore: cast_nullable_to_non_nullable
               as List<GetRandomProductEntity>,
       productsPageIndex: null == productsPageIndex
           ? _value.productsPageIndex
@@ -192,7 +213,9 @@ abstract class _$$InitialImplCopyWith<$Res>
       {RequestStates getCategoryState,
       RequestStates getCompaniesState,
       RequestStates getRandomProductsState,
+      RequestStates searchProductsState,
       List<GetRandomProductEntity> randomProducts,
+      List<GetRandomProductEntity> searchProducts,
       int productsPageIndex,
       bool productsHasReachedMax,
       bool isFetchingMoreProducts,
@@ -216,7 +239,9 @@ class __$$InitialImplCopyWithImpl<$Res>
     Object? getCategoryState = null,
     Object? getCompaniesState = null,
     Object? getRandomProductsState = null,
+    Object? searchProductsState = null,
     Object? randomProducts = null,
+    Object? searchProducts = null,
     Object? productsPageIndex = null,
     Object? productsHasReachedMax = null,
     Object? isFetchingMoreProducts = null,
@@ -236,9 +261,17 @@ class __$$InitialImplCopyWithImpl<$Res>
           ? _value.getRandomProductsState
           : getRandomProductsState // ignore: cast_nullable_to_non_nullable
               as RequestStates,
+      searchProductsState: null == searchProductsState
+          ? _value.searchProductsState
+          : searchProductsState // ignore: cast_nullable_to_non_nullable
+              as RequestStates,
       randomProducts: null == randomProducts
           ? _value._randomProducts
           : randomProducts // ignore: cast_nullable_to_non_nullable
+              as List<GetRandomProductEntity>,
+      searchProducts: null == searchProducts
+          ? _value._searchProducts
+          : searchProducts // ignore: cast_nullable_to_non_nullable
               as List<GetRandomProductEntity>,
       productsPageIndex: null == productsPageIndex
           ? _value.productsPageIndex
@@ -271,13 +304,16 @@ class _$InitialImpl implements _Initial {
       {this.getCategoryState = RequestStates.initial,
       this.getCompaniesState = RequestStates.initial,
       this.getRandomProductsState = RequestStates.initial,
+      this.searchProductsState = RequestStates.initial,
       final List<GetRandomProductEntity> randomProducts = const [],
+      final List<GetRandomProductEntity> searchProducts = const [],
       this.productsPageIndex = 1,
       this.productsHasReachedMax = false,
       this.isFetchingMoreProducts = false,
       this.productsSort,
       this.errorMessage})
-      : _randomProducts = randomProducts;
+      : _randomProducts = randomProducts,
+        _searchProducts = searchProducts;
 
   @override
   @JsonKey()
@@ -288,6 +324,9 @@ class _$InitialImpl implements _Initial {
   @override
   @JsonKey()
   final RequestStates getRandomProductsState;
+  @override
+  @JsonKey()
+  final RequestStates searchProductsState;
   final List<GetRandomProductEntity> _randomProducts;
   @override
   @JsonKey()
@@ -295,6 +334,15 @@ class _$InitialImpl implements _Initial {
     if (_randomProducts is EqualUnmodifiableListView) return _randomProducts;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_randomProducts);
+  }
+
+  final List<GetRandomProductEntity> _searchProducts;
+  @override
+  @JsonKey()
+  List<GetRandomProductEntity> get searchProducts {
+    if (_searchProducts is EqualUnmodifiableListView) return _searchProducts;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_searchProducts);
   }
 
   @override
@@ -313,7 +361,7 @@ class _$InitialImpl implements _Initial {
 
   @override
   String toString() {
-    return 'HomeState.initial(getCategoryState: $getCategoryState, getCompaniesState: $getCompaniesState, getRandomProductsState: $getRandomProductsState, randomProducts: $randomProducts, productsPageIndex: $productsPageIndex, productsHasReachedMax: $productsHasReachedMax, isFetchingMoreProducts: $isFetchingMoreProducts, productsSort: $productsSort, errorMessage: $errorMessage)';
+    return 'HomeState.initial(getCategoryState: $getCategoryState, getCompaniesState: $getCompaniesState, getRandomProductsState: $getRandomProductsState, searchProductsState: $searchProductsState, randomProducts: $randomProducts, searchProducts: $searchProducts, productsPageIndex: $productsPageIndex, productsHasReachedMax: $productsHasReachedMax, isFetchingMoreProducts: $isFetchingMoreProducts, productsSort: $productsSort, errorMessage: $errorMessage)';
   }
 
   @override
@@ -327,8 +375,12 @@ class _$InitialImpl implements _Initial {
                 other.getCompaniesState == getCompaniesState) &&
             (identical(other.getRandomProductsState, getRandomProductsState) ||
                 other.getRandomProductsState == getRandomProductsState) &&
+            (identical(other.searchProductsState, searchProductsState) ||
+                other.searchProductsState == searchProductsState) &&
             const DeepCollectionEquality()
                 .equals(other._randomProducts, _randomProducts) &&
+            const DeepCollectionEquality()
+                .equals(other._searchProducts, _searchProducts) &&
             (identical(other.productsPageIndex, productsPageIndex) ||
                 other.productsPageIndex == productsPageIndex) &&
             (identical(other.productsHasReachedMax, productsHasReachedMax) ||
@@ -347,7 +399,9 @@ class _$InitialImpl implements _Initial {
       getCategoryState,
       getCompaniesState,
       getRandomProductsState,
+      searchProductsState,
       const DeepCollectionEquality().hash(_randomProducts),
+      const DeepCollectionEquality().hash(_searchProducts),
       productsPageIndex,
       productsHasReachedMax,
       isFetchingMoreProducts,
@@ -369,7 +423,9 @@ class _$InitialImpl implements _Initial {
             RequestStates getCategoryState,
             RequestStates getCompaniesState,
             RequestStates getRandomProductsState,
+            RequestStates searchProductsState,
             List<GetRandomProductEntity> randomProducts,
+            List<GetRandomProductEntity> searchProducts,
             int productsPageIndex,
             bool productsHasReachedMax,
             bool isFetchingMoreProducts,
@@ -381,7 +437,9 @@ class _$InitialImpl implements _Initial {
         getCategoryState,
         getCompaniesState,
         getRandomProductsState,
+        searchProductsState,
         randomProducts,
+        searchProducts,
         productsPageIndex,
         productsHasReachedMax,
         isFetchingMoreProducts,
@@ -396,7 +454,9 @@ class _$InitialImpl implements _Initial {
             RequestStates getCategoryState,
             RequestStates getCompaniesState,
             RequestStates getRandomProductsState,
+            RequestStates searchProductsState,
             List<GetRandomProductEntity> randomProducts,
+            List<GetRandomProductEntity> searchProducts,
             int productsPageIndex,
             bool productsHasReachedMax,
             bool isFetchingMoreProducts,
@@ -408,7 +468,9 @@ class _$InitialImpl implements _Initial {
         getCategoryState,
         getCompaniesState,
         getRandomProductsState,
+        searchProductsState,
         randomProducts,
+        searchProducts,
         productsPageIndex,
         productsHasReachedMax,
         isFetchingMoreProducts,
@@ -423,7 +485,9 @@ class _$InitialImpl implements _Initial {
             RequestStates getCategoryState,
             RequestStates getCompaniesState,
             RequestStates getRandomProductsState,
+            RequestStates searchProductsState,
             List<GetRandomProductEntity> randomProducts,
+            List<GetRandomProductEntity> searchProducts,
             int productsPageIndex,
             bool productsHasReachedMax,
             bool isFetchingMoreProducts,
@@ -437,7 +501,9 @@ class _$InitialImpl implements _Initial {
           getCategoryState,
           getCompaniesState,
           getRandomProductsState,
+          searchProductsState,
           randomProducts,
+          searchProducts,
           productsPageIndex,
           productsHasReachedMax,
           isFetchingMoreProducts,
@@ -481,7 +547,9 @@ abstract class _Initial implements HomeState {
       {final RequestStates getCategoryState,
       final RequestStates getCompaniesState,
       final RequestStates getRandomProductsState,
+      final RequestStates searchProductsState,
       final List<GetRandomProductEntity> randomProducts,
+      final List<GetRandomProductEntity> searchProducts,
       final int productsPageIndex,
       final bool productsHasReachedMax,
       final bool isFetchingMoreProducts,
@@ -495,7 +563,11 @@ abstract class _Initial implements HomeState {
   @override
   RequestStates get getRandomProductsState;
   @override
+  RequestStates get searchProductsState;
+  @override
   List<GetRandomProductEntity> get randomProducts;
+  @override
+  List<GetRandomProductEntity> get searchProducts;
   @override
   int get productsPageIndex;
   @override

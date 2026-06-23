@@ -29,5 +29,6 @@ abstract class HomeApiClient {
     @Query('pageIndex') int? pageIndex,
     @Query('pageSize') int? pageSize,
     @Query('sort') String? sort,
+    @Query('search') String? search,
   });
 }

@@ -147,67 +147,67 @@ class _CustomFavoriteCardState extends State<CustomFavoriteCard> {
                         SizedBox(
                           width: 2.w,
                         ),
-                        Material(
-                          color: Colors.transparent,
-                          child: InkWell(
-                            onTap: widget.isAddingToCart ?? false
-                                ? null
-                                : () {
-                                    context
-                                        .read<CartCubit>()
-                                        .addToCart(widget.id);
-                                  },
-                            borderRadius: BorderRadius.circular(10.r),
-                            child: AnimatedContainer(
-                              duration: const Duration(milliseconds: 250),
-                              curve: Curves.easeInOut,
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 10.w, vertical: 7.h),
-                              decoration: BoxDecoration(
-                                gradient: context.isDarkMode
-                                    ? AppColors.linearDarkColor
-                                    : AppColors.linearLight,
-                                borderRadius: BorderRadius.circular(10.r),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: context.mainColor.withOpacity(0.3),
-                                    blurRadius: 8,
-                                    offset: const Offset(0, 3),
-                                  ),
-                                ],
-                              ),
-                              child: widget.isAddingToCart ?? false
-                                  ? SizedBox(
-                                      width: 16.sp,
-                                      height: 16.sp,
-                                      child: const CircularProgressIndicator(
-                                        strokeWidth: 2,
-                                        color: Colors.white,
-                                      ),
-                                    )
-                                  : Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Icon(
-                                          Icons.add_shopping_cart_rounded,
-                                          size: 15.sp,
-                                          color: Colors.white,
-                                        ),
-                                        SizedBox(width: 4.w),
-                                        Text(
-                                          "Add",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 11.sp,
-                                            fontWeight: FontWeight.w700,
-                                            letterSpacing: 0.3,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                            ),
-                          ),
-                        ),
+                        // Material(
+                        //   color: Colors.transparent,
+                        //   child: InkWell(
+                        //     onTap: widget.isAddingToCart ?? false
+                        //         ? null
+                        //         : () {
+                        //             context
+                        //                 .read<CartCubit>()
+                        //                 .addToCart(widget.id);
+                        //           },
+                        //     borderRadius: BorderRadius.circular(10.r),
+                        //     child: AnimatedContainer(
+                        //       duration: const Duration(milliseconds: 250),
+                        //       curve: Curves.easeInOut,
+                        //       padding: EdgeInsets.symmetric(
+                        //           horizontal: 10.w, vertical: 7.h),
+                        //       decoration: BoxDecoration(
+                        //         gradient: context.isDarkMode
+                        //             ? AppColors.linearDarkColor
+                        //             : AppColors.linearLight,
+                        //         borderRadius: BorderRadius.circular(10.r),
+                        //         boxShadow: [
+                        //           BoxShadow(
+                        //             color: context.mainColor.withOpacity(0.3),
+                        //             blurRadius: 8,
+                        //             offset: const Offset(0, 3),
+                        //           ),
+                        //         ],
+                        //       ),
+                        //       child: widget.isAddingToCart ?? false
+                        //           ? SizedBox(
+                        //               width: 16.sp,
+                        //               height: 16.sp,
+                        //               child: const CircularProgressIndicator(
+                        //                 strokeWidth: 2,
+                        //                 color: Colors.white,
+                        //               ),
+                        //             )
+                        //           : Row(
+                        //               mainAxisSize: MainAxisSize.min,
+                        //               children: [
+                        //                 Icon(
+                        //                   Icons.add_shopping_cart_rounded,
+                        //                   size: 15.sp,
+                        //                   color: Colors.white,
+                        //                 ),
+                        //                 SizedBox(width: 4.w),
+                        //                 Text(
+                        //                   "Add",
+                        //                   style: TextStyle(
+                        //                     color: Colors.white,
+                        //                     fontSize: 11.sp,
+                        //                     fontWeight: FontWeight.w700,
+                        //                     letterSpacing: 0.3,
+                        //                   ),
+                        //                 ),
+                        //               ],
+                        //             ),
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),

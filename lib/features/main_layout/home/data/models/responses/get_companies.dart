@@ -49,9 +49,15 @@ class CompanyData {
   final String? businessTypeName;
   @JsonKey(name: ApiConstants.locationName)
   final String? locationName;
+  @JsonKey(name: ApiConstants.ratingCount)
+  final int? ratingCount;
+  @JsonKey(name: ApiConstants.averageRating)
+  final int? averageRating;
 
   const CompanyData({
     this.id,
+    this.ratingCount,
+    this.averageRating,
     this.businessName,
     this.businessTypeId,
     this.taxNumber,
@@ -70,14 +76,16 @@ class CompanyData {
   toEntity() {
     return GetCompanyEntity(
       id: id,
-      businessName: businessName??"",
+      businessName: businessName ?? "",
       businessTypeId: businessTypeId,
-      taxNumber: taxNumber??"",
-      logoUrl: logoUrl??"",
-      createdById: createdById??"",
-      locationId: locationId??0,
+      taxNumber: taxNumber ?? "",
+      logoUrl: logoUrl ?? "",
+      createdById: createdById ?? "",
+      locationId: locationId ?? 0,
       businessTypeName: businessTypeName,
       locationName: locationName,
+      avgRating: averageRating,
+      reviewCount: ratingCount,
     );
   }
 }

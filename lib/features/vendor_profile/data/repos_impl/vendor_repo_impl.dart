@@ -3,6 +3,7 @@ import 'package:tradehub/core/api/api_result/api_result.dart';
 import 'package:tradehub/features/vendor_profile/data/data_sources/vendor_data_source.dart';
 import 'package:tradehub/features/vendor_profile/domain/entities/vendor_entities.dart';
 import 'package:tradehub/features/vendor_profile/domain/repos/vendor_repo.dart';
+import 'package:tradehub/features/product_ratings/data/models/product_rating_d_t_o.dart';
 
 @Injectable(as: VendorRepository)
 class VendorRepositoryImpl implements VendorRepository {
@@ -43,5 +44,24 @@ class VendorRepositoryImpl implements VendorRepository {
       case Error():
         return Error(error: result.error);
     }
+  }
+
+  @override
+  Future<ApiResult<List<ProductRatingDTO>>> getCompanyRatings(
+      String companyId) async {
+    return _dataSource.getCompanyRatings(companyId);
+  }
+
+  @override
+  Future<ApiResult<ProductRatingDTO>> addCompanyRating({
+    required String companyId,
+    required int ratingValue,
+    required String comment,
+  }) async {
+    return _dataSource.addCompanyRating(
+      companyId: companyId,
+      ratingValue: ratingValue,
+      comment: comment,
+    );
   }
 }

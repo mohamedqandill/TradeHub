@@ -34,27 +34,33 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  configureDependencies();
-  await EasyLocalization.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
+  try {
+    WidgetsFlutterBinding.ensureInitialized();
+    configureDependencies();
+    await EasyLocalization.ensureInitialized();
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
 
-  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
 
-  await ScreenUtil.ensureScreenSize();
-  await SharedPrefsHelper.init();
+    await ScreenUtil.ensureScreenSize();
+    await SharedPrefsHelper.init();
 
-  LocalNotificationService.initialize();
- await requestNotificationPermission();
-  SharedPrefsHelper prefs = getIt<SharedPrefsHelper>();
-  await HiveStorageHelper.init();
-  final languageViewModel = getIt<LanguageViewModel>();
-  await languageViewModel.loadLanguage();
+    LocalNotificationService.initialize();
+    await requestNotificationPermission();
+   
+    await HiveStorageHelper.init();
+    final languageViewModel = getIt<LanguageViewModel>();
+    await languageViewModel.loadLanguage();
+    
+  } catch (e) {
+    print(e.toString());
+  }
+   SharedPrefsHelper prefs = getIt<SharedPrefsHelper>();
   bool isFirstTime = prefs.getBool(AppConstants.firstTime) ?? true;
-  String? token = await getIt<SecureStorageHelper>().read(ApiConstants.token);
+    String? token = await getIt<SecureStorageHelper>().read(ApiConstants.token);
 
   // if (token != null) {
   //   DioServiceExtension.updateDioWithToken(token);
@@ -89,12 +95,10 @@ Future<void> main() async {
               create: (context) => getIt<OrdersCubit>(),
             ),
           ],
-          
-            child: MyApp(
-              isFirstTime: isFirstTime,
-              token: token,
-            ),
-          
+          child: MyApp(
+            isFirstTime: isFirstTime,
+            token: token,
+          ),
         ),
       ),
     ),

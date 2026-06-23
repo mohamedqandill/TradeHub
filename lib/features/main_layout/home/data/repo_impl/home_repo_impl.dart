@@ -60,11 +60,13 @@ class HomeRepoImpl implements HomeRepoContract {
     int? pageIndex,
     int? pageSize,
     String? sort,
+    String? search,
   }) async {
     var result = await _homeDataSource.getRandomProducts(
       pageIndex: pageIndex,
       pageSize: pageSize,
       sort: sort,
+      search: search,
     );
 
     switch (result) {

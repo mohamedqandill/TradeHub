@@ -151,6 +151,8 @@ class MapsCubit extends Cubit<MapsState> {
   @override
   Future<void> close() {
     _debounce?.cancel();
+    _locationService.closeStream();
+
     return super.close();
   }
 }

@@ -12,6 +12,8 @@ VendorDetailsModel _$VendorDetailsModelFromJson(Map<String, dynamic> json) =>
       businessName: json['businessName'] as String?,
       businessTypeId: (json['businessTypeId'] as num?)?.toInt(),
       taxNumber: json['taxNumber'] as String?,
+      avgRating: (json['averageRating'] as num?)?.toInt(),
+      reviewCount: (json['ratingCount'] as num?)?.toInt(),
       logoUrl: json['logoUrl'] as String?,
       createdById: json['createdById'] as String?,
       locationId: (json['locationId'] as num?)?.toInt(),
@@ -30,6 +32,8 @@ Map<String, dynamic> _$VendorDetailsModelToJson(VendorDetailsModel instance) =>
       'locationId': instance.locationId,
       'businessTypeName': instance.businessTypeName,
       'locationName': instance.locationName,
+      'averageRating': instance.avgRating,
+      'ratingCount': instance.reviewCount,
     };
 
 VendorSubcategoryModel _$VendorSubcategoryModelFromJson(

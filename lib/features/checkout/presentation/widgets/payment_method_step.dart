@@ -26,14 +26,6 @@ class PaymentMethodStep extends StatelessWidget {
           subtitle: "Visa, Mastercard, American Express",
           icon: Icons.credit_card_outlined,
         ),
-        SizedBox(height: 12.h),
-        _buildMethodCard(
-          context: context,
-          index: 1,
-          title: "Cash on Delivery (COD)",
-          subtitle: "Pay with cash upon delivery",
-          icon: Icons.payments_outlined,
-        ),
       ],
     );
   }
@@ -138,7 +130,9 @@ class PaymentMethodStep extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
-                  color: isSelected ? primaryColor : AppColors.grey.withOpacity(0.4),
+                  color: isSelected
+                      ? primaryColor
+                      : AppColors.grey.withOpacity(0.4),
                   width: isSelected ? 6.w : 1.5.w,
                 ),
               ),

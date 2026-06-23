@@ -23,8 +23,16 @@ class GetCompanyEntity {
   @JsonKey(name: ApiConstants.locationName)
   final String? locationName;
 
+  @JsonKey(name: ApiConstants.averageRating)
+  final int? avgRating;
+
+  @JsonKey(name: ApiConstants.ratingCount)
+  final int? reviewCount;
+
   GetCompanyEntity({
     required this.id,
+     this.avgRating,
+     this.reviewCount,
     required this.businessName,
     required this.businessTypeId,
     required this.taxNumber,

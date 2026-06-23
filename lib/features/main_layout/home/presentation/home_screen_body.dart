@@ -47,7 +47,6 @@ class _HomeScreenBodyState extends State<HomeScreenBody> with RouteAware {
   // Search State & Transition variables
   bool _isSearchActive = false;
   String _searchQuery = "";
-  List<GetRandomProductEntity> _searchResults = [];
   Timer? _debounceTimer;
   final TextEditingController _searchController = TextEditingController();
   final FocusNode _searchFocusNode = FocusNode();
@@ -137,31 +136,19 @@ class _HomeScreenBodyState extends State<HomeScreenBody> with RouteAware {
   }
 
   void _onSearchChanged(String query) {
+    setState(() {
+      _searchQuery = query.trim();
+    });
+
     if (_debounceTimer?.isActive ?? false) _debounceTimer!.cancel();
-    _debounceTimer = Timer(const Duration(milliseconds: 300), () {
-      setState(() {
-        _searchQuery = query.trim();
-        if (_searchQuery.isEmpty) {
-          _searchResults = [];
-        } else {
-          final homeCubit = context.read<HomeCubit>();
-          _searchResults = homeCubit.allLocalProducts.where((product) {
-            final nameMatch = product.name
-                    ?.toLowerCase()
-                    .contains(_searchQuery.toLowerCase()) ??
-                false;
-            final descMatch = product.description
-                    ?.toLowerCase()
-                    .contains(_searchQuery.toLowerCase()) ??
-                false;
-            final sellerMatch = product.companyName
-                    ?.toLowerCase()
-                    .contains(_searchQuery.toLowerCase()) ??
-                false;
-            return nameMatch || descMatch || sellerMatch;
-          }).toList();
-        }
-      });
+
+    if (_searchQuery.isEmpty) {
+      cubit.clearSearch();
+      return;
+    }
+
+    _debounceTimer = Timer(const Duration(milliseconds: 500), () {
+      cubit.searchProducts(_searchQuery);
     });
   }
 
@@ -229,6 +216,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> with RouteAware {
                   _searchController.clear();
                   _searchFocusNode.unfocus();
                 });
+                cubit.clearSearch();
                 return false;
               }
               return true;
@@ -411,6 +399,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> with RouteAware {
                                       _searchController.clear();
                                       _searchFocusNode.unfocus();
                                     });
+                                    cubit.clearSearch();
                                   },
                                 ),
                                 Expanded(
@@ -463,9 +452,13 @@ class _HomeScreenBodyState extends State<HomeScreenBody> with RouteAware {
                           Expanded(
                             child: _searchQuery.isEmpty
                                 ? _buildSearchDescription(context)
-                                : _searchResults.isEmpty
-                                    ? _buildNotFoundWidget(context)
-                                    : _buildSearchResultsList(context),
+                                : state.searchProductsState == RequestStates.loading
+                                    ? _buildSearchLoadingWidget(context)
+                                    : state.searchProductsState == RequestStates.error
+                                        ? _buildSearchErrorWidget(context, state.errorMessage ?? "An error occurred")
+                                        : state.searchProducts.isEmpty
+                                            ? _buildNotFoundWidget(context)
+                                            : _buildSearchResultsList(context, state.searchProducts),
                           ),
                         ],
                       ),
@@ -576,8 +569,73 @@ class _HomeScreenBodyState extends State<HomeScreenBody> with RouteAware {
     );
   }
 
+  // ─────────────────── SEARCH LOADING WIDGET ───────────────────
+  Widget _buildSearchLoadingWidget(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          CircularProgressIndicator(
+            color: context.mainColor,
+          ),
+          SizedBox(height: 16.h),
+          Text(
+            "Searching for products...",
+            style: TextStyle(
+              color: context.isDarkMode ? Colors.white70 : Colors.black54,
+              fontSize: 14.sp,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // ─────────────────── SEARCH ERROR WIDGET ───────────────────
+  Widget _buildSearchErrorWidget(BuildContext context, String message) {
+    return Center(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 24.w),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.error_outline_rounded,
+              color: Colors.red.shade400,
+              size: 48.sp,
+            ),
+            SizedBox(height: 16.h),
+            Text(
+              message,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.red.shade400,
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            SizedBox(height: 12.h),
+            ElevatedButton(
+              onPressed: () {
+                cubit.searchProducts(_searchQuery);
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: context.mainColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.r),
+                ),
+              ),
+              child: const Text("Retry", style: TextStyle(color: Colors.white)),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   // ─────────────────── SEARCH RESULTS DISPLAY LIST ───────────────────
-  Widget _buildSearchResultsList(BuildContext context) {
+  Widget _buildSearchResultsList(BuildContext context, List<GetRandomProductEntity> searchResults) {
     var cartCubit = context.watch<CartCubit>();
     return MultiBlocListener(
       listeners: [
@@ -592,10 +650,10 @@ class _HomeScreenBodyState extends State<HomeScreenBody> with RouteAware {
       child: ListView.separated(
         padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
         physics: const BouncingScrollPhysics(),
-        itemCount: _searchResults.length,
+        itemCount: searchResults.length,
         separatorBuilder: (context, index) => SizedBox(height: 14.h),
         itemBuilder: (context, index) {
-          final product = _searchResults[index];
+          final product = searchResults[index];
           return ProductCard(
             product: product,
             cartCubit: cartCubit,

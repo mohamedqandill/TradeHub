@@ -57,18 +57,18 @@ class _FavoritesScreenBodyState extends State<FavoritesScreenBody> {
           child: Column(
             children: [
               SizedBox(
-                height: 5.h,
+                height: 10.h,
               ),
-              CustomSearchField(
-                prefixIcon: Icon(
-                  Icons.search_sharp,
-                  size: 24.sp,
-                  color: context.isDarkMode
-                      ? AppColors.white
-                      : AppColors.grey.withOpacity(0.8),
-                ),
-                hintText: LocaleKeys.searchYourFavorites.tr(),
-              ).animate().fadeIn(duration: 400.ms).slideY(begin: -0.1),
+              // CustomSearchField(
+              //   prefixIcon: Icon(
+              //     Icons.search_sharp,
+              //     size: 24.sp,
+              //     color: context.isDarkMode
+              //         ? AppColors.white
+              //         : AppColors.grey.withOpacity(0.8),
+              //   ),
+              //   hintText: LocaleKeys.searchYourFavorites.tr(),
+              // ).animate().fadeIn(duration: 400.ms).slideY(begin: -0.1),
               Expanded(
                 child: CustomScrollView(
                   physics: const BouncingScrollPhysics(),

@@ -25,11 +25,20 @@ class VendorDetailsModel {
   @JsonKey(name: ApiConstants.locationName)
   final String? locationName;
 
+
+    @JsonKey(name: ApiConstants.averageRating)
+  final int? avgRating;
+
+  @JsonKey(name: ApiConstants.ratingCount)
+  final int? reviewCount;
+
   VendorDetailsModel({
     this.id,
     this.businessName,
     this.businessTypeId,
     this.taxNumber,
+      this.avgRating,
+  this.reviewCount,
     this.logoUrl,
     this.createdById,
     this.locationId,
@@ -50,6 +59,8 @@ class VendorDetailsModel {
         locationId: locationId ?? 0,
         businessTypeName: businessTypeName ?? "",
         locationName: locationName ?? "",
+           avgRating: avgRating,
+  reviewCount: reviewCount,
       );
 }
 

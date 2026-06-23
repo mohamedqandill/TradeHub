@@ -12,11 +12,13 @@ class GetRandomProductsUseCase {
     int? pageIndex,
     int? pageSize,
     String? sort,
+    String? search,
   }) {
     return _homeRepoContract.getRandomProducts(
       pageIndex: pageIndex,
       pageSize: pageSize,
       sort: sort,
+      search: search,
     );
   }
 }

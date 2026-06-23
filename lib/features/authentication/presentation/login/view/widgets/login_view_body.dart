@@ -239,33 +239,28 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                             SizedBox(
                               height: 16.h,
                             ),
-                            Center(
-                              child: SizedBox(
-                                height: 48.h,
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: List.generate(
-                                    socialIcons.length,
-                                    (index) {
-                                      return InkWell(
-                                        onTap: () {
-                                          switch (index) {
-                                            // case 0:
-                                            //   // bloc.add(const SignWithFacebook());
-                                            case 1:
-                                              bloc.add(const SignWithGoogle());
-                                          }
-                                        },
-                                        child: Padding(
+                            InkWell(
+                              onTap: () {
+                                bloc.add(const SignWithGoogle());
+                              },
+                              child: Center(
+                                child: SizedBox(
+                                  height: 48.h,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: List.generate(
+                                      1,
+                                      (index) {
+                                        return Padding(
                                           padding:
                                               EdgeInsets.only(right: 10.sp),
                                           child: CustomSocialContainer(
-                                            icon: socialIcons[index],
+                                            icon: AppAssets.google,
                                           ),
-                                        ),
-                                      );
-                                    },
+                                        );
+                                      },
+                                    ),
                                   ),
                                 ),
                               ),
@@ -295,7 +290,4 @@ class _LoginViewBodyState extends State<LoginViewBody> {
   }
 }
 
-List<String> socialIcons = [
-  AppAssets.facebook,
-  AppAssets.google,
-];
+

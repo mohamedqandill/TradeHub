@@ -13,10 +13,11 @@ class MainLayoutAppBar extends StatelessWidget implements PreferredSizeWidget {
       {super.key,
       required this.title,
       this.enableLeading,
-      this.widgets});
+      this.widgets, this.onBack});
   final String title;
   final bool? enableLeading;
   final List<Widget>? widgets;
+  final VoidCallback? onBack;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,7 @@ class MainLayoutAppBar extends StatelessWidget implements PreferredSizeWidget {
       leading: enableLeading == true
           ? InkWell(
               onTap: () =>
-                  Navigator.pop(context),
+                  onBack != null ? onBack!() : Navigator.pop(context),
               child: Container(
                 margin: context.locale.languageCode == AppConstants.en
                     ? EdgeInsets.only(left: 20.sp)

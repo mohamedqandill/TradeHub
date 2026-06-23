@@ -10,5 +10,6 @@ abstract class HomeRepoContract {
     int? pageIndex,
     int? pageSize,
     String? sort,
+    String? search,
   });
 }
