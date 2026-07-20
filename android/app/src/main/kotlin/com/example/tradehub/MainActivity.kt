@@ -1,4 +1,4 @@
-package com.qandil.tradehub
+package com.example.tradehub
 
 import io.flutter.embedding.android.FlutterActivity
 
